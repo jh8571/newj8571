@@ -1,14 +1,54 @@
-<!doctype html>
-<html lang="en">
+<!DOCTYPE html>
+<html lang="ko">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Hello World</title>
-  <link href='/style.css' rel='stylesheet'>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>의약품 정보 센터</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <h1>Hello, world!</h1>
-  <button onclick="console.log('hello');">Press me</button>
-  <script defer type="text/javascript" src="/main.js"></script>
+    <header>
+        <div class="container">
+            <h1>의약품 정보 센터</h1>
+            <div class="search-box">
+                <input type="text" id="search-input" placeholder="의약품명, 성분명, 제조사 검색...">
+            </div>
+        </div>
+    </header>
+
+    <nav>
+        <div class="container">
+            <div class="category-tabs">
+                <button class="cat-btn active" data-category="전체">전체</button>
+                <button class="cat-btn" data-category="전문의약품">전문의약품</button>
+                <button class="cat-btn" data-category="일반의약품">일반의약품</button>
+                <button class="cat-btn" data-category="건강기능식품">건강기능식품</button>
+            </div>
+        </div>
+    </nav>
+
+    <main class="container">
+        <div id="drug-list" class="drug-grid">
+            <!-- Drug cards will be injected here -->
+        </div>
+    </main>
+
+    <!-- Detail Modal -->
+    <div id="drug-modal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <div id="modal-body">
+                <!-- Detailed info will be injected here -->
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2026 의약품 정보 센터. 모든 데이터는 참고용이며, 전문의와 상담하십시오.</p>
+        </div>
+    </footer>
+
+    <script src="main.js"></script>
 </body>
 </html>
