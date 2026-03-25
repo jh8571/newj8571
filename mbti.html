@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>정밀 MBTI 테스트 - MediInfo</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        .test-container {
+            max-width: 800px;
+            margin: 40px auto;
+            background: white;
+            padding: 40px;
+            border-radius: 24px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+        }
+        .progress-container {
+            width: 100%;
+            height: 10px;
+            background: #e2e8f0;
+            border-radius: 5px;
+            margin-bottom: 40px;
+            overflow: hidden;
+        }
+        .progress-bar {
+            height: 100%;
+            background: var(--primary-color);
+            width: 0%;
+            transition: width 0.3s ease;
+        }
+        .question-box {
+            display: none;
+            animation: fadeIn 0.5s;
+        }
+        .question-box.active {
+            display: block;
+        }
+        .question-text {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--secondary-color);
+            margin-bottom: 40px;
+            text-align: center;
+        }
+        .mbti-options {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+        .mbti-opt-btn {
+            padding: 20px;
+            border: 2px solid #e2e8f0;
+            border-radius: 16px;
+            background: white;
+            cursor: pointer;
+            font-size: 1.1rem;
+            font-weight: 600;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        .mbti-opt-btn:hover {
+            border-color: var(--primary-color);
+            background: #f8fafc;
+        }
+        .mbti-opt-btn.selected {
+            background: var(--primary-color);
+            color: white;
+            border-color: var(--primary-color);
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .result-container {
+            display: none;
+        }
+        .analysis-chart {
+            margin: 30px 0;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+        .chart-row {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        .chart-label {
+            width: 40px;
+            font-weight: 800;
+            font-size: 1.2rem;
+            color: var(--primary-color);
+        }
+        .chart-bar-bg {
+            flex: 1;
+            height: 20px;
+            background: #e2e8f0;
+            border-radius: 10px;
+            position: relative;
+        }
+        .chart-bar-fill {
+            height: 100%;
+            background: var(--primary-color);
+            border-radius: 10px;
+            transition: width 1s ease-out;
+        }
+        .chart-percent {
+            width: 50px;
+            font-weight: 600;
+            text-align: right;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <h1>정밀 MBTI 성격분석</h1>
+            <p>24개의 정밀 문항을 통해 당신의 잠재된 성향을 분석합니다.</p>
+            <nav>
+                <a href="index.html">의약품 검색</a>
+                <a href="psychology.html">심리테스트</a>
+                <a href="mbti.html" class="active">MBTI 테스트</a>
+            </nav>
+        </div>
+    </header>
+
+    <main class="container">
+        <!-- Intro Section -->
+        <div id="intro-section" class="test-container" style="text-align: center;">
+            <i class="fas fa-brain" style="font-size: 4rem; color: var(--primary-color); margin-bottom: 20px;"></i>
+            <h2 style="margin-bottom: 20px;">당신은 어떤 사람인가요?</h2>
+            <p style="color: var(--text-muted); margin-bottom: 40px; line-height: 1.8;">
+                본 테스트는 약 5분 정도 소요됩니다.<br>
+                가능한 '중립' 보다는 솔직한 답변을 선택할 때 더 정확한 결과가 나옵니다.
+            </p>
+            <button class="search-container" style="display:inline-block; border:none; background:var(--primary-color); color:white; padding:15px 40px; font-size:1.2rem; cursor:pointer; border-radius:50px;" onclick="startMbtiTest()">
+                테스트 시작하기
+            </button>
+        </div>
+
+        <!-- Test Section -->
+        <div id="test-section" class="test-container" style="display: none;">
+            <div class="progress-container">
+                <div id="progress-bar" class="progress-bar"></div>
+            </div>
+            <div id="question-container">
+                <!-- Questions will be injected here -->
+            </div>
+        </div>
+
+        <!-- Result Section -->
+        <div id="result-section" class="test-container result-container">
+            <!-- Results will be injected here -->
+        </div>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2026 MediInfo. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script src="mbti.js"></script>
+</body>
+</html>
