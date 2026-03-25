@@ -203,18 +203,42 @@ window.showResult = function() {
     let resultText = "결과를 계산할 수 없습니다.";
     for (const [range, text] of Object.entries(currentTest.results)) {
         const [min, max] = range.split('-').map(Number);
-        if (totalScore >= min && totalScore <= max) {
+        if (totalScore >= min && (max ? totalScore <= max : totalScore === min)) {
             resultText = text;
             break;
         }
     }
+
+    const [title, ...descParts] = resultText.split(':');
+    const description = descParts.join(':').trim();
+
     modalContent.innerHTML = `
-        <div class="detail-header" style="text-align:center;"><h2>테스트 결과</h2></div>
-        <div style="padding: 40px 20px; text-align:center;">
-            <h3 style="color:#3498db; margin-bottom: 20px;">총점: ${totalScore}점</h3>
-            <p style="font-size: 18px; line-height: 1.6;">${resultText}</p>
+        <div class="detail-header" style="text-align:center; border-bottom: none; padding-bottom: 0;">
+            <span style="font-size: 1.1rem; color: #004e92; font-weight: 700;">테스트 분석 결과</span>
+            <h1 style="font-size: 2.2rem; margin: 15px 0; color: #000428;">${title}</h1>
         </div>
-        <div style="text-align:center; margin-top:20px;"><button class="detail-btn" onclick="closeTest()">닫기</button></div>
+        
+        <div style="background: #f0f7ff; padding: 30px; border-radius: 20px; margin: 20px 0; border: 1px solid #d0e3ff;">
+            <div style="text-align:center; margin-bottom: 20px;">
+                <span style="background: #004e92; color: white; padding: 5px 15px; border-radius: 20px; font-size: 0.9rem;">
+                    Score: ${totalScore}
+                </span>
+            </div>
+            <p style="font-size: 1.15rem; line-height: 1.8; color: #2c3e50; text-align: center; word-break: keep-all;">
+                ${description || title}
+            </p>
+        </div>
+
+        <div style="background: #fffbe6; padding: 20px; border-radius: 15px; border: 1px solid #ffe58f; margin-bottom: 30px;">
+            <p style="font-size: 0.95rem; color: #856404; text-align: center;">
+                <i class="fas fa-lightbulb" style="margin-right: 8px;"></i>
+                심리테스트 결과는 참고용으로만 활용해 주세요.
+            </p>
+        </div>
+
+        <div style="text-align:center;">
+            <button class="detail-btn" style="width: 100%; padding: 15px;" onclick="closeTest()">다른 테스트 더 보기</button>
+        </div>
     `;
 }
 
