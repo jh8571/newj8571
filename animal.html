@@ -16,14 +16,25 @@
             box-shadow: 0 10px 30px rgba(0,0,0,0.05);
             text-align: center;
         }
-        #webcam-container {
-            margin: 20px auto;
+        .upload-area {
+            border: 2px dashed #e2e8f0;
+            padding: 40px;
             border-radius: 20px;
-            overflow: hidden;
-            width: 200px;
-            height: 200px;
-            border: 4px solid var(--primary-color);
+            margin-bottom: 30px;
+            cursor: pointer;
+            transition: all 0.3s;
+            position: relative;
+        }
+        .upload-area:hover {
+            border-color: var(--primary-color);
             background: #f8fafc;
+        }
+        #image-preview {
+            max-width: 100%;
+            max-height: 400px;
+            border-radius: 15px;
+            display: none;
+            margin: 0 auto 20px;
         }
         #label-container {
             margin-top: 30px;
@@ -50,7 +61,7 @@
             height: 100%;
             background: var(--primary-color);
             width: 0%;
-            transition: width 0.3s;
+            transition: width 0.5s;
         }
         .label-text {
             width: 80px;
@@ -62,21 +73,28 @@
             font-weight: 600;
             text-align: right;
         }
-        .start-btn {
+        .file-input {
+            display: none;
+        }
+        .upload-btn {
             background: var(--primary-color);
             color: white;
             border: none;
             padding: 15px 40px;
-            font-size: 1.2rem;
+            font-size: 1.1rem;
             font-weight: 700;
             border-radius: 50px;
             cursor: pointer;
             transition: all 0.3s;
-            margin-bottom: 30px;
         }
-        .start-btn:hover {
+        .upload-btn:hover {
             background: var(--secondary-color);
-            transform: scale(1.05);
+        }
+        #loading-text {
+            display: none;
+            margin-top: 20px;
+            color: var(--primary-color);
+            font-weight: 600;
         }
     </style>
 </head>
@@ -84,7 +102,7 @@
     <header>
         <div class="container">
             <h1>동물 상 분류 AI</h1>
-            <p>카메라를 비추어 당신이 어떤 동물을 닮았는지 확인해 보세요.</p>
+            <p>사진을 업로드하여 당신이 어떤 동물을 닮았는지 확인해 보세요.</p>
             <nav>
                 <a href="index.html">의약품 검색</a>
                 <a href="psychology.html">심리테스트</a>
@@ -97,16 +115,24 @@
 
     <main class="container">
         <div class="ai-container">
-            <i class="fas fa-camera-retro" style="font-size: 3rem; color: var(--primary-color); margin-bottom: 20px;"></i>
-            <h2>나의 동물 상 찾기</h2>
+            <i class="fas fa-file-upload" style="font-size: 3rem; color: var(--primary-color); margin-bottom: 20px;"></i>
+            <h2>동물 상 분석하기</h2>
             <p style="color: var(--text-muted); margin-bottom: 30px;">
-                'Start' 버튼을 누르고 카메라 허용을 해주세요.<br>
-                실시간으로 개, 고양이, 너구리 중 어떤 상인지 분석합니다.
+                사진을 선택하거나 이곳에 드래그하여 놓아주세요.<br>
+                AI가 개, 고양이, 너구리 중 가장 닮은 유형을 분석합니다.
             </p>
             
-            <button type="button" class="start-btn" onclick="init()">AI 분석 시작</button>
+            <div class="upload-area" onclick="document.getElementById('file-input').click()">
+                <img id="image-preview" src="" alt="Preview">
+                <div id="upload-placeholder">
+                    <i class="fas fa-images" style="font-size: 2rem; color: #cbd5e1; margin-bottom: 10px;"></i>
+                    <p>클릭하여 사진 업로드</p>
+                </div>
+            </div>
             
-            <div id="webcam-container"></div>
+            <input type="file" id="file-input" class="file-input" accept="image/*" onchange="handleFileUpload(this)">
+            
+            <div id="loading-text"><i class="fas fa-spinner fa-spin"></i> 분석 중...</div>
             <div id="label-container"></div>
         </div>
 
@@ -116,7 +142,7 @@
             <script>
                 var disqus_config = function () {
                     this.page.url = window.location.href;  
-                    this.page.identifier = 'mediinfo-animal'; 
+                    this.page.identifier = 'mediinfo-animal-v2'; 
                 };
                 (function() { 
                     var d = document, s = d.createElement('script');
@@ -138,48 +164,60 @@
     <script src="https://cdn.jsdelivr.net/npm/@teachablemachine/image@latest/dist/teachablemachine-image.min.js"></script>
     <script type="text/javascript">
         const URL = "https://teachablemachine.withgoogle.com/models/31Ab0XZ7s/";
-        let model, webcam, labelContainer, maxPredictions;
+        let model, labelContainer, maxPredictions;
 
-        async function init() {
-            const startBtn = document.querySelector('.start-btn');
-            startBtn.style.display = 'none';
-
+        // Load the model once
+        async function loadModel() {
             const modelURL = URL + "model.json";
             const metadataURL = URL + "metadata.json";
-
             model = await tmImage.load(modelURL, metadataURL);
             maxPredictions = model.getTotalClasses();
+        }
 
-            const flip = true;
-            webcam = new tmImage.Webcam(200, 200, flip);
-            await webcam.setup();
-            await webcam.play();
-            window.requestAnimationFrame(loop);
+        loadModel();
 
-            document.getElementById("webcam-container").appendChild(webcam.canvas);
-            labelContainer = document.getElementById("label-container");
-            for (let i = 0; i < maxPredictions; i++) {
-                const div = document.createElement("div");
-                div.className = "prediction-bar";
-                labelContainer.appendChild(div);
+        async function handleFileUpload(input) {
+            if (input.files && input.files[0]) {
+                const reader = new FileReader();
+                const preview = document.getElementById('image-preview');
+                const placeholder = document.getElementById('upload-placeholder');
+                const loadingText = document.getElementById('loading-text');
+                
+                reader.onload = async function(e) {
+                    preview.src = e.target.result;
+                    preview.style.display = 'block';
+                    placeholder.style.display = 'none';
+                    
+                    loadingText.style.display = 'block';
+                    document.getElementById('label-container').innerHTML = '';
+                    
+                    // Wait for image to load
+                    preview.onload = async function() {
+                        await predict(preview);
+                        loadingText.style.display = 'none';
+                    };
+                };
+                reader.readAsDataURL(input.files[0]);
             }
         }
 
-        async function loop() {
-            webcam.update();
-            await predict();
-            window.requestAnimationFrame(loop);
-        }
-
-        async function predict() {
-            const prediction = await model.predict(webcam.canvas);
+        async function predict(imageElement) {
+            if (!model) await loadModel();
+            
+            const prediction = await model.predict(imageElement);
+            labelContainer = document.getElementById("label-container");
+            labelContainer.innerHTML = '';
+            
             for (let i = 0; i < maxPredictions; i++) {
                 const prob = (prediction[i].probability * 100).toFixed(0);
-                labelContainer.childNodes[i].innerHTML = `
+                const div = document.createElement("div");
+                div.className = "prediction-bar";
+                div.innerHTML = `
                     <span class="label-text">${prediction[i].className}</span>
                     <div class="bar-bg"><div class="bar-fill" style="width: ${prob}%"></div></div>
                     <span class="percent-text">${prob}%</span>
                 `;
+                labelContainer.appendChild(div);
             }
         }
     </script>
