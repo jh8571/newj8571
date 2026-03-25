@@ -11,11 +11,18 @@ const questionContainer = document.getElementById('question-container');
 // Load Data
 fetch('mbti_data.json')
     .then(r => r.json())
-    .then(data => { mbtiData = data; });
+    .then(data => { mbtiData = data; })
+    .catch(err => console.error("MBTI Data Load Error:", err));
 
 window.startMbtiTest = function() {
+    if (!mbtiData) {
+        alert("데이터를 불러오는 중입니다. 잠시 후 다시 시도해 주세요.");
+        return;
+    }
     introSection.style.display = 'none';
     testSection.style.display = 'block';
+    currentQuestionIndex = 0;
+    userAnswers = [];
     renderQuestion();
 };
 
@@ -26,7 +33,7 @@ function renderQuestion() {
 
     questionContainer.innerHTML = `
         <div class="question-box active">
-            <div class="question-text">${q.q}</div>
+            <div class="question-text">${q.id}. ${q.q}</div>
             <div class="mbti-options">
                 <button class="mbti-opt-btn" onclick="answerQuestion(2)">매우 그렇다</button>
                 <button class="mbti-opt-btn" onclick="answerQuestion(1)">그렇다</button>
@@ -60,19 +67,13 @@ function showAnalysis() {
     resultSection.style.display = 'block';
 
     let scores = { "EI": 0, "SN": 0, "TF": 0, "JP": 0 };
-    let counts = { "EI": 0, "SN": 0, "TF": 0, "JP": 0 };
-
     userAnswers.forEach(ans => {
-        // weight * score (-2 to 2)
         scores[ans.type] += (ans.weight * ans.score);
-        counts[ans.type]++;
     });
 
-    // Calculate Percentages (Max score per type is 6 * 2 = 12 if 6 questions)
-    // Scale to 0-100%
     const getPercent = (type) => {
         const raw = scores[type];
-        const max = 6 * 2; // 각 타입별 질문 6개 * 가중치 최대 2
+        const max = 6 * 2; // 가중치 1 * 점수 2 * 문항 6개 기준
         let p = ((raw + max) / (max * 2)) * 100;
         return Math.min(Math.max(Math.round(p), 0), 100);
     };
@@ -98,62 +99,26 @@ function showAnalysis() {
         </div>
 
         <div class="analysis-chart">
-            <div class="chart-row">
-                <span class="chart-label">I</span>
-                <div class="chart-bar-bg"><div class="chart-bar-fill" style="width: ${pEI}%"></div></div>
-                <span class="chart-label">E</span>
-                <span class="chart-percent">${pEI}%</span>
-            </div>
-            <div class="chart-row">
-                <span class="chart-label">S</span>
-                <div class="chart-bar-bg"><div class="chart-bar-fill" style="width: ${pSN}%"></div></div>
-                <span class="chart-label">N</span>
-                <span class="chart-percent">${pSN}%</span>
-            </div>
-            <div class="chart-row">
-                <span class="chart-label">F</span>
-                <div class="chart-bar-bg"><div class="chart-bar-fill" style="width: ${pTF}%"></div></div>
-                <span class="chart-label">T</span>
-                <span class="chart-percent">${pTF}%</span>
-            </div>
-            <div class="chart-row">
-                <span class="chart-label">P</span>
-                <div class="chart-bar-bg"><div class="chart-bar-fill" style="width: ${pJP}%"></div></div>
-                <span class="chart-label">J</span>
-                <span class="chart-percent">${pJP}%</span>
-            </div>
+            <div class="chart-row"><span class="chart-label">I</span><div class="chart-bar-bg"><div class="chart-bar-fill" style="width: ${pEI}%"></div></div><span class="chart-label">E</span><span class="chart-percent">${pEI}%</span></div>
+            <div class="chart-row"><span class="chart-label">S</span><div class="chart-bar-bg"><div class="chart-bar-fill" style="width: ${pSN}%"></div></div><span class="chart-label">N</span><span class="chart-percent">${pSN}%</span></div>
+            <div class="chart-row"><span class="chart-label">F</span><div class="chart-bar-bg"><div class="chart-bar-fill" style="width: ${pTF}%"></div></div><span class="chart-label">T</span><span class="chart-percent">${pTF}%</span></div>
+            <div class="chart-row"><span class="chart-label">P</span><div class="chart-bar-bg"><div class="chart-bar-fill" style="width: ${pJP}%"></div></div><span class="chart-label">J</span><span class="chart-percent">${pJP}%</span></div>
         </div>
 
         <div style="background: #f8fafc; padding: 30px; border-radius: 20px; margin-top: 40px;">
             <h4 style="margin-bottom:15px;"><i class="fas fa-quote-left"></i> 성격 특징</h4>
             <p style="line-height:1.8; color:var(--text-main);">${info.desc}</p>
-            <div style="display:flex; flex-wrap:wrap; gap:10px; margin-top:20px;">
-                ${info.traits.map(t => `<span style="background:white; padding:5px 15px; border-radius:20px; border:1px solid #ddd; font-size:0.9rem;">#${t}</span>`).join('')}
-            </div>
         </div>
 
         <div style="margin-top:40px;">
-            <h4 style="margin-bottom:20px;"><i class="fas fa-briefcase"></i> 추천 직무 및 커리어</h4>
-            <div style="display:grid; grid-template-columns: 1fr 1fr; gap:15px;">
-                ${info.careers.map(c => `<div style="background:#f1f5f9; padding:15px; border-radius:12px; text-align:center; font-weight:600;">${c}</div>`).join('')}
+            <h4 style="margin-bottom:20px;"><i class="fas fa-briefcase"></i> 추천 직무</h4>
+            <div style="display:grid; grid-template-columns: 1fr 1fr; gap:10px;">
+                ${info.careers.map(c => `<div style="background:#f1f5f9; padding:10px; border-radius:8px; text-align:center;">${c}</div>`).join('')}
             </div>
         </div>
 
-        <div style="margin-top:40px; display:grid; grid-template-columns: 1fr 1fr; gap:20px;">
-            <div class="highlight-box" style="border-left-color: #2ecc71;">
-                <label style="color:#27ae60;">환상의 궁합</label>
-                <p style="font-size:1.5rem; font-weight:800; margin-top:10px;">${info.good.join(', ')}</p>
-            </div>
-            <div class="highlight-box" style="border-left-color: #e74c3c;">
-                <label style="color:#c0392b;">주의가 필요한 궁합</label>
-                <p style="font-size:1.5rem; font-weight:800; margin-top:10px;">${info.bad.join(', ')}</p>
-            </div>
-        </div>
-
-        <div style="text-align:center; margin-top:60px;">
-            <button class="search-container" style="display:inline-block; border:none; background:var(--secondary-color); color:white; padding:15px 40px; font-size:1.1rem; cursor:pointer; border-radius:50px;" onclick="location.reload()">
-                다시 테스트하기
-            </button>
+        <div style="text-align:center; margin-top:40px;">
+            <button class="detail-btn" onclick="location.reload()">다시 하기</button>
         </div>
     `;
 }
