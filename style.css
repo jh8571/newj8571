@@ -347,3 +347,71 @@ footer {
 .footer-links a:hover {
     color: var(--primary-color);
 }
+
+/* Dark Mode Styles */
+[data-theme='dark'] {
+    --bg-color: #0f172a;
+    --card-bg: #1e293b;
+    --text-main: #f1f5f9;
+    --text-muted: #94a3b8;
+    --border-color: #334155;
+}
+
+[data-theme='dark'] header {
+    background: linear-gradient(135deg, #020617 0%, #1e3a8a 100%);
+}
+
+[data-theme='dark'] .article-card, 
+[data-theme='dark'] .test-container, 
+[data-theme='dark'] .ai-container, 
+[data-theme='dark'] .drug-card, 
+[data-theme='dark'] .modal-content {
+    background-color: var(--card-bg);
+    border-color: var(--border-color);
+    color: var(--text-main);
+}
+
+[data-theme='dark'] .search-container {
+    background-color: #334155;
+}
+
+[data-theme='dark'] .search-container input {
+    background-color: transparent;
+    color: white;
+}
+
+[data-theme='dark'] .cat-btn {
+    background-color: #334155 !important;
+    color: #cbd5e1 !important;
+    border-color: #475569 !important;
+}
+
+[data-theme='dark'] footer {
+    background-color: #020617;
+    border-color: #1e293b;
+}
+
+.theme-toggle {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    z-index: 2000;
+    background: rgba(255,255,255,0.2);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255,255,255,0.3);
+    color: white;
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.2rem;
+    transition: all 0.3s;
+}
+
+.theme-toggle:hover {
+    transform: scale(1.1);
+    background: rgba(255,255,255,0.3);
+}
