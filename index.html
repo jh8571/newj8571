@@ -3,37 +3,46 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>의약품 정보 센터</title>
+    <title>MediInfo - 프리미엄 의약품 정보 센터</title>
     <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
     <header>
         <div class="container">
-            <h1>의약품 정보 센터</h1>
-            <nav style="display:inline-block; margin-left: 20px;">
-                <a href="index.html" style="color:white; text-decoration:none; margin-right: 15px;">의약품 검색</a>
-                <a href="psychology.html" style="color:white; text-decoration:none;">심리테스트</a>
+            <h1>MediInfo</h1>
+            <p>신뢰할 수 있는 정밀 의약품 정보를 검색하세요.</p>
+            <nav>
+                <a href="index.html" class="active">의약품 검색</a>
+                <a href="psychology.html">심리테스트</a>
             </nav>
-            <div class="search-box">
-                <input type="text" id="search-input" placeholder="의약품명, 성분명, 제조사 검색...">
-            </div>
         </div>
     </header>
 
-    <nav>
-        <div class="container">
-            <div class="category-tabs">
-                <button class="cat-btn active" data-category="전체">전체</button>
-                <button class="cat-btn" data-category="전문의약품">전문의약품</button>
-                <button class="cat-btn" data-category="일반의약품">일반의약품</button>
-                <button class="cat-btn" data-category="건강기능식품">건강기능식품</button>
-            </div>
+    <div class="container">
+        <div class="search-container">
+            <input type="text" id="search-input" placeholder="약품명, 성분명, 제조사 등으로 검색...">
+            <button id="search-btn"><i class="fas fa-search"></i> 검색</button>
         </div>
-    </nav>
+    </div>
 
     <main class="container">
-        <div id="drug-list" class="drug-grid">
-            <!-- Drug cards will be injected here -->
+        <div id="welcome-message" class="no-results">
+            <i class="fas fa-pills"></i>
+            <h3>검색어를 입력해 주세요</h3>
+            <p>국내 유통되는 모든 의약품 정보를 성분, 효능, 보관법까지 상세하게 제공합니다.</p>
+        </div>
+
+        <div id="results-section" style="display:none;">
+            <div class="category-tabs" style="display:flex; justify-content:center; gap:10px; margin-bottom:30px;">
+                <button class="cat-btn active" data-category="전체" style="padding:8px 16px; border-radius:20px; border:1px solid #ddd; background:white; cursor:pointer;">전체</button>
+                <button class="cat-btn" data-category="전문의약품" style="padding:8px 16px; border-radius:20px; border:1px solid #ddd; background:white; cursor:pointer;">전문의약품</button>
+                <button class="cat-btn" data-category="일반의약품" style="padding:8px 16px; border-radius:20px; border:1px solid #ddd; background:white; cursor:pointer;">일반의약품</button>
+                <button class="cat-btn" data-category="건강기능식품" style="padding:8px 16px; border-radius:20px; border:1px solid #ddd; background:white; cursor:pointer;">건강기능식품</button>
+            </div>
+            <div id="drug-list" class="drug-grid">
+                <!-- Results -->
+            </div>
         </div>
     </main>
 
@@ -42,14 +51,15 @@
         <div class="modal-content">
             <span class="close">&times;</span>
             <div id="modal-body">
-                <!-- Detailed info will be injected here -->
+                <!-- Details -->
             </div>
         </div>
     </div>
 
     <footer>
         <div class="container">
-            <p>&copy; 2026 의약품 정보 센터. 모든 데이터는 참고용이며, 전문의와 상담하십시오.</p>
+            <p>&copy; 2026 MediInfo. All rights reserved.</p>
+            <p style="font-size: 0.8rem; margin-top: 10px;">본 서비스의 정보는 참고용이며, 정확한 투약은 반드시 전문의 또는 약사와 상의하시기 바랍니다.</p>
         </div>
     </footer>
 
