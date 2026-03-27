@@ -5,7 +5,9 @@
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9103697866666926" crossorigin="anonymous"></script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MediInfo - 프리미엄 의약품 정보 센터</title>
+    <title>MediInfo - 프리미엄 의약품 정보 & 건강 솔루션 센터</title>
+    <meta name="description" content="MediInfo는 정확한 의약품 정보 검색, MBTI 심리 테스트, AI 동물상 분석 등 신뢰할 수 있는 건강 및 심리 정보를 제공하는 프리미엄 플랫폼입니다.">
+    <meta name="keywords" content="의약품 검색, 약 정보, 심리테스트, MBTI, 동물상 AI, 건강 가이드, MediInfo">
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
@@ -13,7 +15,7 @@
     <header>
         <div class="container">
             <h1>MediInfo</h1>
-            <p>신뢰할 수 있는 정밀 의약품 정보를 검색하세요.</p>
+            <p>신뢰할 수 있는 정밀 의약품 정보와 당신을 위한 건강 맞춤 솔루션을 검색하세요.</p>
             <nav>
                 <a href="index.html" class="active">의약품 검색</a>
                 <a href="psychology.html">심리테스트</a>
@@ -25,14 +27,12 @@
         </div>
     </header>
 
-    <div class="container">
+    <main class="container">
         <div class="search-container">
             <input type="text" id="search-input" placeholder="약품명, 성분명, 제조사 등으로 검색...">
             <button id="search-btn"><i class="fas fa-search"></i> 검색</button>
         </div>
-    </div>
 
-    <main class="container">
         <div id="welcome-message" class="no-results">
             <i class="fas fa-pills"></i>
             <h3>검색어를 입력해 주세요</h3>
@@ -50,6 +50,60 @@
                 <!-- Results -->
             </div>
         </div>
+
+        <!-- New Featured Sections for AdSense Value -->
+        <section class="home-info-section" style="margin-top: 60px; display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px;">
+            <div class="info-card" style="background: white; padding: 30px; border-radius: 20px; box-shadow: 0 4px 15px rgba(0,0,0,0.05);">
+                <h3 style="color: var(--primary-color); margin-bottom: 15px;"><i class="fas fa-shield-alt"></i> 신뢰할 수 있는 데이터</h3>
+                <p>MediInfo는 검증된 의약품 데이터를 바탕으로 정확한 정보를 제공합니다. 복용 중인 약의 성분과 주의사항을 한눈에 확인하세요.</p>
+            </div>
+            <div class="info-card" style="background: white; padding: 30px; border-radius: 20px; box-shadow: 0 4px 15px rgba(0,0,0,0.05);">
+                <h3 style="color: var(--primary-color); margin-bottom: 15px;"><i class="fas fa-brain"></i> 심리 및 성격 분석</h3>
+                <p>단순한 정보 검색을 넘어, MBTI 및 다양한 심리 테스트를 통해 자신을 더 깊이 이해할 수 있는 도구를 제공합니다.</p>
+            </div>
+            <div class="info-card" style="background: white; padding: 30px; border-radius: 20px; box-shadow: 0 4px 15px rgba(0,0,0,0.05);">
+                <h3 style="color: var(--primary-color); margin-bottom: 15px;"><i class="fas fa-heartbeat"></i> 올바른 건강 가이드</h3>
+                <p>현직 전문가들의 조언을 담은 건강 가이드를 통해 일상 속에서 실천할 수 있는 유용한 건강 팁을 정기적으로 업데이트합니다.</p>
+            </div>
+        </section>
+
+        <section class="about-mediinfo" style="margin-top: 80px; background: #f8fafc; padding: 60px 40px; border-radius: 30px;">
+            <h2 style="text-align: center; margin-bottom: 30px;">왜 MediInfo 인가요?</h2>
+            <div style="max-width: 800px; margin: 0 auto; line-height: 1.8; color: #4a5568;">
+                <p>우리는 정보 과잉의 시대에 살고 있습니다. 하지만 정작 나에게 꼭 필요한 의약품 정보를 찾는 것은 쉽지 않습니다. MediInfo는 사용자가 복잡한 약학 용어를 이해하지 못하더라도, 자신의 증상이나 약 이름을 통해 필요한 핵심 정보를 즉시 얻을 수 있도록 설계되었습니다.</p>
+                <p style="margin-top: 20px;">의약품 정보뿐만 아니라, 현대인의 고질적인 문제인 '스트레스'와 '심리적 건강'을 위해 AI 기술을 접목한 분석 도구와 가벼운 마인드 게임을 함께 제공하여 신체와 정신의 조화로운 건강을 지향합니다.</p>
+            </div>
+        </section>
+
+        <section class="latest-blog" style="margin-top: 80px;">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px;">
+                <h2>최신 건강 가이드</h2>
+                <a href="blog.html" style="color: var(--primary-color); text-decoration: none; font-weight: 600;">전체 보기 <i class="fas fa-chevron-right"></i></a>
+            </div>
+            <div class="blog-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px;">
+                <div class="blog-item" style="background: white; border-radius: 15px; overflow: hidden; box-shadow: 0 4px 10px rgba(0,0,0,0.05);">
+                    <div style="padding: 20px;">
+                        <h4 style="margin-bottom: 10px;">올바른 영양제 복용법: 시간대별 가이드</h4>
+                        <p style="font-size: 0.9rem; color: #718096; margin-bottom: 15px;">영양제는 언제 먹느냐에 따라 그 효과가 천차만별이라는 사실을 알고 계셨나요?</p>
+                        <a href="blog.html" style="font-size: 0.85rem; color: var(--primary-color); font-weight: 700; text-decoration: none;">더 읽어보기</a>
+                    </div>
+                </div>
+                <div class="blog-item" style="background: white; border-radius: 15px; overflow: hidden; box-shadow: 0 4px 10px rgba(0,0,0,0.05);">
+                    <div style="padding: 20px;">
+                        <h4 style="margin-bottom: 10px;">환절기 비염과 감기약, 똑똑하게 선택하기</h4>
+                        <p style="font-size: 0.9rem; color: #718096; margin-bottom: 15px;">계절이 바뀌는 환절기에는 일교차가 커지면서 면역력이 떨어지고 알레르기성 비염 환자가...</p>
+                        <a href="blog.html" style="font-size: 0.85rem; color: var(--primary-color); font-weight: 700; text-decoration: none;">더 읽어보기</a>
+                    </div>
+                </div>
+                <div class="blog-item" style="background: white; border-radius: 15px; overflow: hidden; box-shadow: 0 4px 10px rgba(0,0,0,0.05);">
+                    <div style="padding: 20px;">
+                        <h4 style="margin-bottom: 10px;">현대인의 스트레스 관리: 심리 테스트의 역할</h4>
+                        <p style="font-size: 0.9rem; color: #718096; margin-bottom: 15px;">스트레스는 '만병의 근원'이라고 불릴 만큼 우리 건강에 큰 영향을 미칩니다.</p>
+                        <a href="blog.html" style="font-size: 0.85rem; color: var(--primary-color); font-weight: 700; text-decoration: none;">더 읽어보기</a>
+                    </div>
+                </div>
+            </div>
+        </section>
     </main>
 
     <!-- Partnership Inquiry Section -->
