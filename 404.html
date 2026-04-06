@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>404 - 페이지를 찾을 수 없습니다 | VitalBalance</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" media="print" onload="this.media='all'">
+    <noscript><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"></noscript>
+    <link rel="icon" href="favicon.svg" type="image/svg+xml">
+    <style>
+        .error-container {
+            text-align: center;
+            padding: 100px 20px;
+        }
+        .error-code {
+            font-size: 120px;
+            font-weight: 800;
+            color: var(--primary-color);
+            margin-bottom: 20px;
+            line-height: 1;
+        }
+        .error-message {
+            font-size: 24px;
+            margin-bottom: 30px;
+            color: #4a5568;
+        }
+        .back-home {
+            display: inline-block;
+            background: var(--primary-color);
+            color: white;
+            padding: 12px 30px;
+            border-radius: 30px;
+            text-decoration: none;
+            font-weight: 700;
+            transition: transform 0.2s;
+        }
+        .back-home:hover {
+            transform: translateY(-3px);
+        }
+        .helpful-links {
+            margin-top: 50px;
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+        .helpful-links a {
+            color: var(--secondary-color);
+            text-decoration: none;
+            font-weight: 600;
+        }
+        .helpful-links a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <h1>VitalBalance</h1>
+            <nav>
+                <a href="index.html">의약품 검색</a>
+                <a href="exercise.html">올바른 운동</a>
+                <a href="psychology.html">심리테스트</a>
+                <a href="mbti.html">MBTI 테스트</a>
+                <a href="games.html">게임</a>
+                <a href="animal.html">동물 AI</a>
+                <a href="blog.html">건강 가이드</a>
+            </nav>
+        </div>
+    </header>
+
+    <main class="container">
+        <div class="error-container">
+            <div class="error-code">404</div>
+            <h2 class="error-message">요청하신 페이지를 찾을 수 없습니다.</h2>
+            <p style="margin-bottom: 40px; color: #718096;">입력하신 주소가 정확한지 확인하시거나, 아래 버튼을 통해 메인 페이지로 이동해 보세요.</p>
+            <a href="index.html" class="back-home"><i class="fas fa-home"></i> 홈으로 돌아가기</a>
+            
+            <div class="helpful-links">
+                <a href="exercise.html">운동 가이드</a>
+                <a href="psychology.html">심리테스트</a>
+                <a href="blog.html">건강 블로그</a>
+                <a href="about.html">회사 소개</a>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2026 VitalBalance. All rights reserved.</p>
+            <div class="footer-links">
+                <a href="about.html">소개</a>
+                <a href="privacy.html">개인정보처리방침</a>
+                <a href="terms.html">이용약관</a>
+            </div>
+        </div>
+    </footer>
+    <script src="theme.js"></script>
+</body>
+</html>
