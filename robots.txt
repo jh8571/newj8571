@@ -1,0 +1,4 @@
+2User-agent: *
+Allow: /
+
+Sitemap: https://jh8571.github.io/newj8571/sitemap.xml
