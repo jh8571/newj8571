@@ -2,191 +2,131 @@
   "exercises": [
     {
       "id": "bench_press",
-      "name": "벤치 프레스 (Bench Press)",
+      "name": "플랫 벤치 프레스 (Bench Press)",
       "category": "가슴",
-      "target": "대흉근, 삼두근",
+      "target": "대흉근 전체, 전면 삼각근, 상완삼두근",
       "difficulty": "중급",
       "steps_images": [
-        {"url": "https://images.unsplash.com/photo-1534438327276-14e5300c3a48?auto=format&fit=crop&q=80&w=300", "desc": "준비: 벤치에 누워 바벨 정렬"},
-        {"url": "https://images.unsplash.com/photo-1581009146145-b5ef050c2e1e?auto=format&fit=crop&q=80&w=300", "desc": "진행: 가슴 중앙으로 천천히 하강"},
-        {"url": "https://images.unsplash.com/photo-1571019614242-c5c5dee9f50b?auto=format&fit=crop&q=80&w=300", "desc": "완료: 가슴 힘으로 강하게 밀기"}
+        {"url": "https://images.unsplash.com/photo-1534438327276-14e5300c3a48?auto=format&fit=crop&q=80&w=400", "desc": "준비: 견갑골을 후인하강하여 벤치에 밀착시키고 허리의 아치를 유지합니다."},
+        {"url": "https://images.unsplash.com/photo-1581009146145-b5ef050c2e1e?auto=format&fit=crop&q=80&w=400", "desc": "진행: 수직 동선을 유지하며 바벨을 대흉근 하단부(젖꼭지 라인)로 천천히 내립니다."},
+        {"url": "https://images.unsplash.com/photo-1571019614242-c5c5dee9f50b?auto=format&fit=crop&q=80&w=400", "desc": "완료: 겨드랑이를 조이는 느낌으로 강하게 밀어 올리되 팔꿈치를 완전히 펴지 않습니다."}
       ],
-      "steps": ["바벨을 어깨너비보다 넓게 잡습니다.", "바벨을 가슴 아래쪽으로 천천히 내립니다.", "호흡을 내뱉으며 바벨을 수직으로 밀어 올립니다."],
-      "posture_tips": "어깨를 고정하고 허리에 자연스러운 아치를 만드세요.",
+      "steps": [
+        "벤치에 누워 발바닥을 지면에 강하게 밀착시키고 5점 지지를 확보합니다.",
+        "바벨을 어깨너비보다 약간 넓게 잡고 가슴 정중앙 위로 위치시킵니다.",
+        "팔꿈치가 몸통과 45~60도 각도를 이루도록 유지하며 하강합니다.",
+        "수직 방향으로 강하게 밀어 올리며 가슴 근육을 수축시킵니다."
+      ],
+      "posture_tips": "바벨을 내릴 때 어깨가 위로 들리지 않도록 주의하고, 손목이 뒤로 꺾이지 않게 수직을 유지하세요.",
+      "breathing": "바를 내릴 때 숨을 깊게 들이마셔 복압을 유지하고, 밀어 올린 후 짧게 내뱉습니다.",
       "icon": "fa-dumbbell"
     },
     {
-      "id": "pushup",
-      "name": "표준 푸쉬업 (Push-up)",
-      "category": "가슴",
-      "target": "대흉근, 전면 삼각근",
-      "difficulty": "초급",
-      "steps_images": [
-        {"url": "https://images.unsplash.com/photo-1598971639058-fab3c32f850c?auto=format&fit=crop&q=80&w=300", "desc": "준비: 엎드려 전신 수평 유지"},
-        {"url": "https://images.unsplash.com/photo-1571019614242-c5c5dee9f50b?auto=format&fit=crop&q=80&w=300", "desc": "진행: 가슴이 지면에 닿기 전까지 하강"},
-        {"url": "https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?auto=format&fit=crop&q=80&w=300", "desc": "완료: 바닥을 밀어내며 상체 거상"}
-      ],
-      "steps": ["양손을 어깨너비로 벌리고 엎드립니다.", "몸을 일직선으로 유지하며 가슴을 내립니다.", "팔꿈치를 펴며 원위치로 돌아옵니다."],
-      "posture_tips": "엉덩이가 처지지 않도록 복부에 힘을 주어 코어를 잡으세요.",
-      "icon": "fa-mound"
-    },
-    {
-      "id": "pullup",
-      "name": "풀업 (Pull-up)",
-      "category": "등",
-      "target": "광배근, 이두근",
-      "difficulty": "고급",
-      "steps_images": [
-        {"url": "https://images.unsplash.com/photo-1526506118085-60ce8714f8c5?auto=format&fit=crop&q=80&w=300", "desc": "준비: 철봉을 넓게 잡고 매달리기"},
-        {"url": "https://images.unsplash.com/photo-1598971426139-49dd0de1bc44?auto=format&fit=crop&q=80&w=300", "desc": "진행: 가슴을 철봉 쪽으로 당겨올림"},
-        {"url": "https://images.unsplash.com/photo-1590477949916-75e117552377?auto=format&fit=crop&q=80&w=300", "desc": "완료: 광배근 긴장을 유지하며 하강"}
-      ],
-      "steps": ["철봉을 어깨너비보다 넓게 잡습니다.", "가슴을 위로 들어 올리는 느낌으로 당깁니다.", "천천히 버티면서 시작 자세로 내려옵니다."],
-      "posture_tips": "어깨를 아래로 누르고(데드행 방지) 날개뼈를 모아주세요.",
-      "icon": "fa-hand-back-fist"
-    },
-    {
       "id": "deadlift",
-      "name": "데드리프트 (Deadlift)",
+      "name": "컨벤셔널 데드리프트 (Deadlift)",
       "category": "등",
-      "target": "척추기립근, 대둔근, 햄스트링",
+      "target": "척추기립근, 광배근, 대둔근, 대퇴이두근",
       "difficulty": "고급",
       "steps_images": [
-        {"url": "https://images.unsplash.com/photo-1534438327276-14e5300c3a48?auto=format&fit=crop&q=80&w=300", "desc": "준비: 바벨을 정강이 앞에 두고 힙 힌지"},
-        {"url": "https://images.unsplash.com/photo-1517836357463-d25dfeac3438?auto=format&fit=crop&q=80&w=300", "desc": "진행: 지면을 밀며 수직으로 상승"},
-        {"url": "https://images.unsplash.com/photo-1599058917233-57c0bc00da26?auto=format&fit=crop&q=80&w=300", "desc": "완료: 골반을 완전히 펴며 정점 수축"}
+        {"url": "https://images.unsplash.com/photo-1534438327276-14e5300c3a48?auto=format&fit=crop&q=80&w=400", "desc": "준비: 정강이를 바에 밀착시키고 골반을 뒤로 빼 힙 힌지 자세를 만듭니다."},
+        {"url": "https://images.unsplash.com/photo-1517836357463-d25dfeac3438?auto=format&fit=crop&q=80&w=400", "desc": "진행: 발바닥으로 지면을 강하게 밀어내며 바벨이 정강이를 스치듯 수직 상승합니다."},
+        {"url": "https://images.unsplash.com/photo-1599058917233-57c0bc00da26?auto=format&fit=crop&q=80&w=400", "desc": "완료: 상체를 완전히 펴고 둔근과 광배근을 강하게 수축시켜 정렬합니다."}
       ],
-      "steps": ["발을 어깨너비로 벌리고 바벨을 잡습니다.", "등을 곧게 펴고 하체의 힘으로 들어 올립니다.", "바벨이 정강이를 스치듯 유지하며 직립합니다."],
-      "posture_tips": "허리가 굽지 않도록 주의하며 복압을 강하게 유지하세요.",
+      "steps": [
+        "발을 골반 너비로 벌리고 바벨이 발등 중앙에 오도록 섭니다.",
+        "허리가 굽지 않게 곧게 편 상태에서 바를 잡고 견갑골을 고정합니다.",
+        "하체의 힘을 먼저 사용하여 들어 올리고 바가 무릎을 지나면 골반을 앞으로 밉니다.",
+        "내려갈 때도 바가 몸에서 떨어지지 않게 힙 힌지를 유지하며 천천히 내립니다."
+      ],
+      "posture_tips": "등이 굽는 '고양이 등' 자세는 허리 부상의 지름길입니다. 항상 척추의 중립을 유지하세요.",
+      "breathing": "시작 전 숨을 들이마셔 복압을 강하게 채우고(발살바 호흡), 동작 완료 후 내뱉습니다.",
       "icon": "fa-weight-hanging"
     },
     {
-      "id": "shoulder_press",
-      "name": "숄더 프레스 (Shoulder Press)",
-      "category": "어깨",
-      "target": "전면/측면 삼각근",
-      "difficulty": "중급",
+      "id": "pullup",
+      "name": "와이드 그립 풀업 (Pull-up)",
+      "category": "등",
+      "target": "광배근 상부, 대원근, 이두근",
+      "difficulty": "고급",
       "steps_images": [
-        {"url": "https://images.unsplash.com/photo-1541534741688-6078c6bfb5c5?auto=format&fit=crop&q=80&w=300", "desc": "준비: 덤벨을 어깨 높이에 위치"},
-        {"url": "https://images.unsplash.com/photo-1581009146145-b5ef050c2e1e?auto=format&fit=crop&q=80&w=300", "desc": "진행: 머리 위로 수직으로 밀어 올림"},
-        {"url": "https://images.unsplash.com/photo-1594882645126-14020914d58d?auto=format&fit=crop&q=80&w=300", "desc": "완료: 어깨 저항을 느끼며 천천히 하강"}
+        {"url": "https://images.unsplash.com/photo-1526506118085-60ce8714f8c5?auto=format&fit=crop&q=80&w=400", "desc": "준비: 어깨너비보다 넓게 바를 잡고 숄더 패킹을 통해 광배근을 긴장시킵니다."},
+        {"url": "https://images.unsplash.com/photo-1598971426139-49dd0de1bc44?auto=format&fit=crop&q=80&w=400", "desc": "진행: 가슴을 바 쪽으로 당겨 올린다는 느낌으로 팔꿈치를 옆구리 쪽으로 찍어 누릅니다."},
+        {"url": "https://images.unsplash.com/photo-1590477949916-75e117552377?auto=format&fit=crop&q=80&w=400", "desc": "완료: 최대 수축 지점에서 잠시 멈춘 후 광배근의 저항을 느끼며 천천히 내려옵니다."}
       ],
-      "steps": ["덤벨이나 바벨을 어깨 높이에서 잡습니다.", "팔꿈치가 벌어지지 않게 주의하며 위로 밉니다.", "어깨의 긴장을 유지하며 천천히 내립니다."],
-      "posture_tips": "팔을 끝까지 펴기보다 어깨 근육의 수축에 집중하세요.",
-      "icon": "fa-arrows-up-to-line"
-    },
-    {
-      "id": "squat",
-      "name": "백 스쿼트 (Back Squat)",
-      "category": "하체",
-      "target": "대퇴사두근, 둔근",
-      "difficulty": "중급",
-      "steps_images": [
-        {"url": "https://images.unsplash.com/photo-1574680096145-d05b474e2158?auto=format&fit=crop&q=80&w=300", "desc": "준비: 바벨을 승모근 위에 얹고 정렬"},
-        {"url": "https://images.unsplash.com/photo-1566241440091-ec10de8db2e1?auto=format&fit=crop&q=80&w=300", "desc": "진행: 엉덩이를 뒤로 빼며 깊게 앉음"},
-        {"url": "https://images.unsplash.com/photo-1434608519344-49d77a699e1d?auto=format&fit=crop&q=80&w=300", "desc": "완료: 발바닥 전체로 지면 밀며 상승"}
+      "steps": [
+        "바를 잡고 매달린 상태에서 어깨를 귀에서 멀어지게 아래로 누릅니다.",
+        "시선은 대각선 위를 향하고 가슴을 활짝 폅니다.",
+        "팔꿈치가 뒤로 빠지지 않게 주의하며 몸을 끌어올립니다.",
+        "광배근이 완전히 이완될 때까지 통제하며 천천히 내려옵니다."
       ],
-      "steps": ["바벨을 어깨 위에 올리고 안정적으로 섭니다.", "무릎과 엉덩이를 굽혀 허벅지가 평행이 될 때까지 앉습니다.", "하체의 힘으로 강하게 밀어 올려 원위치합니다."],
-      "posture_tips": "무릎이 발끝 방향을 향하게 하고 상체를 곧게 세우세요.",
-      "icon": "fa-person-falling"
-    },
-    {
-      "id": "plank",
-      "name": "엘보우 플랭크 (Plank)",
-      "category": "복근",
-      "target": "복횡근, 코어 전신",
-      "difficulty": "초급",
-      "steps_images": [
-        {"url": "https://images.unsplash.com/photo-1566241142559-40e1bfc26ddc?auto=format&fit=crop&q=80&w=300", "desc": "준비: 전완부를 바닥에 대고 엎드림"},
-        {"url": "https://images.unsplash.com/photo-1548690312-e3b507d17a47?auto=format&fit=crop&q=80&w=300", "desc": "진행: 복부와 엉덩이를 강하게 수축"},
-        {"url": "https://images.unsplash.com/photo-1518611012118-29a1aa673466?auto=format&fit=crop&q=80&w=300", "desc": "완료: 일직선 상태를 유지하며 호흡"}
-      ],
-      "steps": ["팔꿈치를 바닥에 대고 몸을 띄웁니다.", "머리부터 발뒤꿈치까지 일직선을 만듭니다.", "정해진 시간 동안 자세를 유지하며 버팁니다."],
-      "posture_tips": "허리가 아래로 처지거나 엉덩이가 위로 솟지 않게 주의하세요.",
-      "icon": "fa-minus"
-    },
-    {
-      "id": "bicep_curl",
-      "name": "덤벨 컬 (Dumbbell Curl)",
-      "category": "팔",
-      "target": "상완이두근",
-      "difficulty": "초급",
-      "steps_images": [
-        {"url": "https://images.unsplash.com/photo-1581009146145-b5ef050c2e1e?auto=format&fit=crop&q=80&w=300", "desc": "준비: 덤벨을 잡고 팔을 아래로 뻗음"},
-        {"url": "https://images.unsplash.com/photo-1594882645126-14020914d58d?auto=format&fit=crop&q=80&w=300", "desc": "진행: 이두근의 힘으로 덤벨을 들어올림"},
-        {"url": "https://images.unsplash.com/photo-1517836357463-d25dfeac3438?auto=format&fit=crop&q=80&w=300", "desc": "완료: 저항을 느끼며 천천히 시작 위치로 하강"}
-      ],
-      "steps": ["덤벨을 양손에 쥐고 똑바로 섭니다.", "팔꿈치를 몸 옆에 고정하고 덤벨을 올립니다.", "이두근의 자극을 느끼며 천천히 내립니다."],
-      "posture_tips": "팔꿈치가 앞뒤로 흔들리지 않도록 옆구리에 밀착시키세요.",
+      "posture_tips": "단순히 턱을 거는 것이 목적이 아니라 가슴이 바에 닿는다는 느낌으로 광배근을 사용하세요.",
+      "breathing": "올라갈 때 내뱉고, 내려오면서 이완할 때 들이마십니다.",
       "icon": "fa-hand-back-fist"
     },
     {
-      "id": "dips",
-      "name": "벤치 딥스 (Bench Dips)",
-      "category": "팔",
-      "target": "상완삼두근",
-      "difficulty": "초급",
-      "steps_images": [
-        {"url": "https://images.unsplash.com/photo-1598971639058-fab3c32f850c?auto=format&fit=crop&q=80&w=300", "desc": "준비: 벤치를 뒤로 짚고 발을 뻗음"},
-        {"url": "https://images.unsplash.com/photo-1571019614242-c5c5dee9f50b?auto=format&fit=crop&q=80&w=300", "desc": "진행: 팔꿈치를 굽히며 수직 하강"},
-        {"url": "https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?auto=format&fit=crop&q=80&w=300", "desc": "완료: 삼두의 힘으로 강하게 밀어올림"}
-      ],
-      "steps": ["벤치 끝에 양손을 대고 앉습니다.", "엉덩이를 앞으로 빼고 팔의 힘으로 버팁니다.", "팔꿈치가 90도가 될 때까지 내렸다가 올라옵니다."],
-      "posture_tips": "어깨가 위로 솟지 않도록 주의하며 상체를 벤치에 가깝게 유지하세요.",
-      "icon": "fa-chair"
-    },
-    {
-      "id": "lateral_raise",
-      "name": "레터럴 레이즈 (Lateral Raise)",
-      "category": "어깨",
-      "target": "측면 삼각근",
+      "id": "squat",
+      "name": "하이바 백 스쿼트 (Squat)",
+      "category": "하체",
+      "target": "대퇴사두근, 대둔근, 햄스트링, 코어",
       "difficulty": "중급",
       "steps_images": [
-        {"url": "https://images.unsplash.com/photo-1541534741688-6078c6bfb5c5?auto=format&fit=crop&q=80&w=300", "desc": "준비: 덤벨을 쥐고 차렷 자세"},
-        {"url": "https://images.unsplash.com/photo-1581009146145-b5ef050c2e1e?auto=format&fit=crop&q=80&w=300", "desc": "진행: 양팔을 옆으로 멀리 던지듯 올림"},
-        {"url": "https://images.unsplash.com/photo-1594882645126-14020914d58d?auto=format&fit=crop&q=80&w=300", "desc": "완료: 어깨 높이까지 올린 후 천천히 하강"}
+        {"url": "https://images.unsplash.com/photo-1574680096145-d05b474e2158?auto=format&fit=crop&q=80&w=400", "desc": "준비: 바를 승모근 상단에 얹고 가슴을 펴 척추를 정렬합니다."},
+        {"url": "https://images.unsplash.com/photo-1566241440091-ec10de8db2e1?auto=format&fit=crop&q=80&w=400", "desc": "진행: 무릎과 골반을 동시에 굽히며 수직으로 하강합니다. 무릎은 발끝 방향을 향합니다."},
+        {"url": "https://images.unsplash.com/photo-1434608519344-49d77a699e1d?auto=format&fit=crop&q=80&w=400", "desc": "완료: 발바닥 전체로 지면을 강하게 밀어내며 수직으로 상승하여 원위치합니다."}
       ],
-      "steps": ["덤벨을 양손에 쥐고 가볍게 섭니다.", "팔을 살짝 굽힌 상태로 어깨 높이까지 올립니다.", "저항을 느끼며 천천히 내립니다."],
-      "posture_tips": "승모근이 과하게 개입되지 않도록 어깨를 아래로 고정하세요.",
-      "icon": "fa-arrows-left-right"
+      "steps": [
+        "발을 어깨너비로 벌리고 발끝을 15~30도 정도 바깥으로 벌립니다.",
+        "복압을 채워 코어를 단단히 고정하고 엉덩이를 뒤로 빼며 앉습니다.",
+        "허벅지가 지면과 평행 이하로 내려가는 지점(풀 스쿼트)까지 깊게 앉습니다.",
+        "상체가 앞으로 숙여지지 않도록 주의하며 하체의 힘으로 올라옵니다."
+      ],
+      "posture_tips": "무릎이 안쪽으로 모이는 현상(Valgus)은 인대 손상을 유발하므로 계속 바깥으로 밀어주세요.",
+      "breathing": "내려가기 전 들이마셔 복압 유지, 올라온 후 내뱉습니다.",
+      "icon": "fa-person-falling"
     },
     {
-      "id": "burpee",
-      "name": "버피 테스트 (Burpee)",
-      "category": "유산소",
-      "target": "전신, 심폐지구력",
-      "difficulty": "고급",
+      "id": "military_press",
+      "name": "밀리터리 프레스 (Military Press)",
+      "category": "어깨",
+      "target": "전면 삼각근, 측면 삼각근, 상완삼두근",
+      "difficulty": "중급",
       "steps_images": [
-        {"url": "https://images.unsplash.com/photo-1434608519344-49d77a699e1d?auto=format&fit=crop&q=80&w=300", "desc": "준비: 스쿼트 자세로 바닥 짚기"},
-        {"url": "https://images.unsplash.com/photo-1599058917233-57c0bc00da26?auto=format&fit=crop&q=80&w=300", "desc": "진행: 다리를 뒤로 뻗어 푸쉬업"},
-        {"url": "https://images.unsplash.com/photo-1534438327276-14e5300c3a48?auto=format&fit=crop&q=80&w=300", "desc": "완료: 가볍게 점프하며 만세"}
+        {"url": "https://images.unsplash.com/photo-1541534741688-6078c6bfb5c5?auto=format&fit=crop&q=80&w=400", "desc": "준비: 바를 쇄골 높이에 위치시키고 전완을 수직으로 세웁니다."},
+        {"url": "https://images.unsplash.com/photo-1581009146145-b5ef050c2e1e?auto=format&fit=crop&q=80&w=400", "desc": "진행: 바가 얼굴을 스치듯 머리 위로 수직으로 밀어 올립니다."},
+        {"url": "https://images.unsplash.com/photo-1594882645126-14020914d58d?auto=format&fit=crop&q=80&w=400", "desc": "완료: 팔을 완전히 펴서 정점에서 어깨 근육을 수축시키고 천천히 제자리로 돌아옵니다."}
       ],
-      "steps": ["똑바로 선 자세에서 상체를 숙여 바닥을 짚습니다.", "다리를 뒤로 뻗어 엎드린 후 다시 발을 당깁니다.", "일어서면서 가볍게 점프합니다."],
-      "posture_tips": "허리에 무리가 가지 않도록 복부 긴장을 유지하며 점프하세요.",
-      "icon": "fa-person-running"
+      "steps": [
+        "똑바로 서서 발을 어깨너비로 벌리고 엉덩이와 복부에 힘을 줍니다.",
+        "바벨을 잡은 손목이 뒤로 꺾이지 않게 주의하며 수직으로 올립니다.",
+        "바벨이 머리 위로 지날 때 머리를 살짝 앞으로 넣어 무게 중심을 맞춥니다.",
+        "어깨 저항을 느끼며 바벨을 다시 쇄골 높이까지 천천히 내립니다."
+      ],
+      "posture_tips": "허리가 과하게 꺾이지 않도록 둔근(엉덩이)과 복근에 강한 힘을 유지하는 것이 핵심입니다.",
+      "breathing": "밀어 올릴 때 내뱉고, 내릴 때 들이마십니다.",
+      "icon": "fa-arrows-up-to-line"
     }
   ],
   "full_charts": [
-    { "id": "e1_001", "name": "전신 근력 가이드 01", "image": "e1/001.png", "category": "전신", "desc": "10가지 핵심 전신 근력 동작" },
-    { "id": "e1_002", "name": "하체 집중 가이드 02", "image": "e1/002.png", "category": "하체", "desc": "대퇴사두근 및 둔근 강화 동작" },
-    { "id": "e1_003", "name": "상체 밸런스 가이드 03", "image": "e1/003.png", "category": "상체", "desc": "어깨와 가슴 라인 정렬 동작" },
-    { "id": "e1_004", "name": "코어 안정성 가이드 04", "image": "e1/004.png", "category": "복근", "desc": "복횡근 및 척추기립근 강화" },
-    { "id": "e1_005", "name": "유연성 스트레칭 05", "image": "e1/005.png", "category": "스트레칭", "desc": "전신 근육 이완 가이드" },
-    { "id": "e1_006", "name": "고강도 인터벌 06", "image": "e1/006.png", "category": "유산소", "desc": "체지방 연소 극대화 동작" },
-    { "id": "e1_007", "name": "홈트레이닝 기초 07", "image": "e1/007.png", "category": "전신", "desc": "초보자를 위한 10가지 기본 동작" },
-    { "id": "e1_008", "name": "힙업 매뉴얼 08", "image": "e1/008.png", "category": "하체", "desc": "탄력 있는 힙 라인을 위한 루틴" },
-    { "id": "e1_009", "name": "어깨 재활 가이드 09", "image": "e1/009.png", "category": "어깨", "desc": "어깨 관절 가동 범위 확대" },
-    { "id": "e1_010", "name": "등 근육 디테일 10", "image": "e1/010.png", "category": "등", "desc": "광배근 및 승모근 하부 공략" },
-    { "id": "e1_011", "name": "복부 선명도 가이드 11", "image": "e1/011.png", "category": "복근", "desc": "복직근 상하부 집중 타격" },
-    { "id": "e1_012", "name": "팔 근육 완성 12", "image": "e1/012.png", "category": "팔", "desc": "이두와 삼두의 완벽한 조화" },
-    { "id": "e1_013", "name": "전신 협응성 13", "image": "e1/013.png", "category": "전신", "desc": "복합 다관절 운동 모음" },
-    { "id": "e1_014", "name": "순발력 강화 14", "image": "e1/014.png", "category": "전신", "desc": "플라이오메트릭 기초 동작" },
-    { "id": "e1_015", "name": "자세 교정 루틴 15", "image": "e1/015.png", "category": "스트레칭", "desc": "거북목 및 골반 교정 동작" },
-    { "id": "e1_016", "name": "심폐지구력 향상 16", "image": "e1/016.png", "category": "유산소", "desc": "지속 가능한 유산소 트레이닝" },
-    { "id": "e1_017", "name": "가슴 근육 입체감 17", "image": "e1/017.png", "category": "가슴", "desc": "대흉근 각도별 자극법" },
-    { "id": "e1_018", "name": "하체 분리도 18", "image": "e1/018.png", "category": "하체", "desc": "허벅지 안팎의 세밀한 발달" },
-    { "id": "e1_019", "name": "등 넓이 확장 19", "image": "e1/019.png", "category": "등", "desc": "역삼각형 체형을 위한 필수 동작" },
-    { "id": "e1_020", "name": "코어 파워 20", "image": "e1/020.png", "category": "복근", "desc": "흔들리지 않는 몸통의 힘" },
+    { "id": "e1_001", "name": "전신 근력 가이드 01", "image": "e1/001.png", "category": "전신", "desc": "해부학적 관점의 10가지 핵심 전신 근력 동작" },
+    { "id": "e1_002", "name": "하체 집중 가이드 02", "image": "e1/002.png", "category": "하체", "desc": "대퇴사두근 및 둔근의 분리도를 높이는 동작" },
+    { "id": "e1_003", "name": "상체 밸런스 가이드 03", "image": "e1/003.png", "category": "상체", "desc": "어깨 충돌 방지를 위한 견갑골 가동 범위 확장 동작" },
+    { "id": "e1_004", "name": "코어 안정성 가이드 04", "image": "e1/004.png", "category": "복근", "desc": "심부 코어 근육인 복횡근 강화를 위한 정밀 자세" },
+    { "id": "e1_005", "name": "유연성 스트레칭 05", "image": "e1/005.png", "category": "스트레칭", "desc": "근막 이완 및 관절 가동성 확보를 위한 가이드" },
+    { "id": "e1_006", "name": "고강도 인터벌 06", "image": "e1/006.png", "category": "유산소", "desc": "최대 산소 섭취량 향상 및 체지방 연소 루틴" },
+    { "id": "e1_007", "name": "홈트레이닝 기초 07", "image": "e1/007.png", "category": "전신", "desc": "정확한 자세 정립을 위한 기초 운동학 동작" },
+    { "id": "e1_008", "name": "힙업 매뉴얼 08", "image": "e1/008.png", "category": "하체", "desc": "중둔근과 대둔근의 상호작용을 이용한 힙라인 형성" },
+    { "id": "e1_009", "name": "어깨 재활 가이드 09", "image": "e1/009.png", "category": "어깨", "desc": "회전근개 안정성 및 견관절 정렬을 위한 교정 동작" },
+    { "id": "e1_010", "name": "등 근육 디테일 10", "image": "e1/010.png", "category": "등", "desc": "승모근 중하부와 능형근의 선명도를 높이는 가이드" },
+    { "id": "e1_011", "name": "복부 선명도 가이드 11", "image": "e1/011.png", "category": "복근", "desc": "복직근과 외복사근의 세밀한 수축을 위한 동작" },
+    { "id": "e1_012", "name": "팔 근육 완성 12", "image": "e1/012.png", "category": "팔", "desc": "이두와 삼두의 역학적 부하를 이용한 볼륨업 동작" },
+    { "id": "e1_013", "name": "전신 협응성 13", "image": "e1/013.png", "category": "전신", "desc": "다관절 운동을 통한 신체 협응 능력 극대화" },
+    { "id": "e1_014", "name": "순발력 강화 14", "image": "e1/014.png", "category": "전신", "desc": "플라이오메트릭을 활용한 신경계 활성화 동작" },
+    { "id": "e1_015", "name": "자세 교정 루틴 15", "image": "e1/015.png", "category": "스트레칭", "desc": "불균형한 체형을 바로잡는 전문 교정 운동 가이드" },
+    { "id": "e1_016", "name": "심폐지구력 향상 16", "image": "e1/016.png", "category": "유산소", "desc": "심박수 구간 조절을 통한 지구력 강화 트레이닝" },
+    { "id": "e1_017", "name": "가슴 근육 입체감 17", "image": "e1/017.png", "category": "가슴", "desc": "상부, 중부, 하부 대흉근의 고립 및 발달 가이드" },
+    { "id": "e1_018", "name": "하체 분리도 18", "image": "e1/018.png", "category": "하체", "desc": "대퇴이두와 반건양근 등 후면부의 세밀한 발달" },
+    { "id": "e1_019", "name": "등 넓이 확장 19", "image": "e1/019.png", "category": "등", "desc": "광배근 하부 부착지점까지 자극을 전달하는 동작" },
+    { "id": "e1_020", "name": "코어 파워 20", "image": "e1/020.png", "category": "복근", "desc": "안정적인 척추 지지를 위한 코어 파워 강화 동작" },
     { "id": "e1_021", "name": "종합 가이드 21", "image": "e1/021.png", "category": "전신", "desc": "전문가를 위한 고난도 복합 동작" },
     { "id": "e1_022", "name": "종합 가이드 22", "image": "e1/022.png", "category": "전신", "desc": "전문가를 위한 고난도 복합 동작" },
     { "id": "e1_023", "name": "종합 가이드 23", "image": "e1/023.png", "category": "전신", "desc": "전문가를 위한 고난도 복합 동작" },
@@ -218,9 +158,9 @@
   ],
   "courses": {
     "ectomorph": {
-      "title": "외배엽 전용 벌크업 코스",
+      "title": "외배엽 전용 근비대 벌크업 코스",
       "description": "대근육 위주의 고강도 훈련으로 근매스를 극대화합니다.",
-      "exerciseIds": ["bench_press", "deadlift", "squat", "shoulder_press"],
+      "exerciseIds": ["bench_press", "deadlift", "squat", "military_press"],
       "meals": {
         "breakfast": "오트밀, 우유, 달걀 3개",
         "lunch": "흰쌀밥, 소고기 200g, 야채",
@@ -232,7 +172,7 @@
     "mesomorph": {
       "title": "중배엽 바디쉐이핑 코스",
       "description": "근육의 선명도와 밸런스를 잡는 균형 잡힌 루틴입니다.",
-      "exerciseIds": ["bench_press", "pullup", "squat", "plank"],
+      "exerciseIds": ["bench_press", "pullup", "squat", "military_press"],
       "meals": {
         "breakfast": "잡곡밥, 생선구이, 나물",
         "lunch": "현미밥, 닭가슴살 200g, 샐러드",
@@ -244,7 +184,7 @@
     "endomorph": {
       "title": "내배엽 체지방 연소 코스",
       "description": "고립 운동과 코어 운동으로 체지방을 효과적으로 태웁니다.",
-      "exerciseIds": ["pushup", "pullup", "squat", "plank"],
+      "exerciseIds": ["pullup", "squat", "military_press"],
       "meals": {
         "breakfast": "ABC 주스, 달걀 흰자 5개",
         "lunch": "닭가슴살 샐러드, 단호박",
