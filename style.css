@@ -406,6 +406,20 @@ main {
     letter-spacing: 1px;
 }
 
+.sprite-box {
+    background-repeat: no-repeat;
+    background-color: white;
+    box-shadow: inset 0 0 10px rgba(0,0,0,0.05);
+}
+
+.steps-gallery img {
+    transition: transform 0.3s ease;
+}
+
+.steps-gallery img:hover {
+    transform: scale(1.05);
+}
+
 footer {
     background: white;
     padding: 40px 0;
