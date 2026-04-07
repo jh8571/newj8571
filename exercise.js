@@ -48,36 +48,30 @@ document.addEventListener('DOMContentLoaded', () => {
 
     window.filterExercises = function(category) {
         currentCategory = category;
-        
-        // Update button UI
         document.querySelectorAll('.cat-btn').forEach(btn => {
             btn.classList.remove('active');
             btn.style.background = 'white';
             btn.style.color = 'inherit';
-            if (btn.innerText === category || (category === '전문차트' && btn.innerText === '전문 차트')) {
+            if (btn.innerText === category) {
                 btn.classList.add('active');
                 btn.style.background = 'var(--primary-color)';
                 btn.style.color = 'white';
             }
         });
-
         renderExerciseList();
     };
 
     function renderRecommendation(key) {
         const course = exerciseData.courses[key];
         document.getElementById('course-title').innerText = course.title;
-        document.getElementById('course-desc').innerText = course.description || "당신의 체형에 최적화된 운동 루틴입니다.";
+        document.getElementById('course-desc').innerText = course.description || "당신의 체형에 최적화된 전문 트레이닝 차트입니다.";
         
-        // Render Meals
         document.getElementById('breakfast-text').innerText = course.meals.breakfast;
         document.getElementById('lunch-text').innerText = course.meals.lunch;
         document.getElementById('dinner-text').innerText = course.meals.dinner;
         document.getElementById('nutrition-tip').innerText = course.meals.nutrition_tip;
 
         document.getElementById('recommendation-section').style.display = 'block';
-        
-        // Initial render
         renderExerciseList();
 
         window.scrollTo({
@@ -90,25 +84,6 @@ document.addEventListener('DOMContentLoaded', () => {
         const exerciseList = document.getElementById('exercise-steps-grid');
         exerciseList.innerHTML = '';
 
-        if (currentCategory === '전문차트') {
-            exerciseData.full_charts.forEach(chart => {
-                const card = document.createElement('div');
-                card.className = 'exercise-step-card';
-                card.innerHTML = `
-                    <div class="full-chart-box" style="margin-bottom: 20px;">
-                        <img src="${chart.image}" alt="${chart.name}" style="width:100%; border-radius:12px; border: 1px solid #eee;">
-                    </div>
-                    <div style="display:flex; justify-content:space-between; align-items:center;">
-                        <span style="font-size:0.8rem; color:var(--accent-color); font-weight:700;">${chart.category} | 전문 가이드</span>
-                    </div>
-                    <h4 style="font-size:1.3rem; margin:10px 0; color:var(--primary-color);">${chart.name}</h4>
-                    <p style="color: #64748b; font-size: 0.95rem;">${chart.desc}</p>
-                `;
-                exerciseList.appendChild(card);
-            });
-            return;
-        }
-
         const filtered = exerciseData.exercises.filter(ex => 
             currentCategory === '전체' || ex.category === currentCategory
         );
@@ -116,36 +91,25 @@ document.addEventListener('DOMContentLoaded', () => {
         filtered.forEach(ex => {
             const card = document.createElement('div');
             card.className = 'exercise-step-card';
-            
-            let imagesHTML = '';
-            if (ex.steps_images) {
-                imagesHTML = `
-                    <div class="steps-gallery" style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-bottom: 20px;">
-                        ${ex.steps_images.map(img => `
-                            <div class="step-img-box">
-                                <img src="${img.url}" alt="${img.desc}" 
-                                    style="width:100%; height:120px; object-fit:cover; border-radius:8px;"
-                                    onerror="this.src='https://via.placeholder.com/300x300?text=Image+Error'">
-                                <p style="font-size:0.7rem; color:#64748b; margin-top:5px; text-align:center; line-height:1.2;">${img.desc}</p>
-                            </div>
-                        `).join('')}
-                    </div>
-                `;
-            }
+            card.style.cursor = 'zoom-in';
+            card.onclick = () => window.open(ex.main_image, '_blank'); // 클릭 시 이미지 원본 보기
 
             card.innerHTML = `
-                ${imagesHTML}
-                <div style="display:flex; justify-content:space-between; align-items:center; margin:15px 0;">
-                    <span style="font-size:0.8rem; color:var(--accent-color); font-weight:700;">${ex.category} | ${ex.difficulty}</span>
-                    <span style="font-size:0.8rem; background:#f1f5f9; padding:2px 8px; border-radius:4px;">${ex.target}</span>
+                <div class="main-chart-box" style="margin-bottom: 20px; background: #f8fafc; border-radius: 12px; overflow: hidden; border: 1px solid #eee;">
+                    <img src="${ex.main_image}" alt="${ex.name}" 
+                        style="width:100%; height:auto; display:block;"
+                        onerror="this.src='https://via.placeholder.com/600x800?text=Chart+Loading...'">
                 </div>
-                <h4 style="font-size:1.3rem; margin-bottom:15px; color:var(--primary-color);">${ex.name}</h4>
-                <ul class="step-list">
-                    ${ex.steps.map(s => `<li>${s}</li>`).join('')}
-                </ul>
-                <div style="margin-top:20px; padding:15px; background:#fff9db; border-radius:12px; font-size:0.9rem; color:#856404;">
-                    <strong><i class="fas fa-lightbulb"></i> 자세 팁:</strong> ${ex.posture_tips}
+                <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:15px;">
+                    <span style="font-size:0.8rem; color:var(--accent-color); font-weight:800; border:1px solid var(--accent-color); padding:2px 8px; border-radius:4px;">전문가용 차트</span>
+                    <span style="font-size:0.8rem; background:#f1f5f9; padding:2px 8px; border-radius:4px;">${ex.category} | ${ex.difficulty}</span>
                 </div>
+                <h4 style="font-size:1.4rem; margin-bottom:10px; color:var(--primary-color);">${ex.name}</h4>
+                <p style="color: #475569; font-size: 0.95rem; line-height:1.6; margin-bottom:15px;">${ex.desc}</p>
+                <div style="padding:15px; background:#fff9db; border-radius:12px; font-size:0.9rem; color:#856404; line-height:1.5;">
+                    <strong><i class="fas fa-lightbulb"></i> 트레이닝 팁:</strong> ${ex.posture_tips}
+                </div>
+                <p style="margin-top:10px; font-size:0.8rem; color:#94a3b8; text-align:center;">* 이미지를 클릭하면 크게 볼 수 있습니다.</p>
             `;
             exerciseList.appendChild(card);
         });
