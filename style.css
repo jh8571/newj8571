@@ -415,12 +415,13 @@ footer {
     color: var(--text-muted);
 }
 
-/* Empty State */
-.no-results {
-    text-align: center;
-    padding: 100px 0;
-    color: var(--text-muted);
+@keyframes scan {
+    0% { top: 0; opacity: 0; }
+    50% { opacity: 1; }
+    100% { top: 200px; opacity: 0; }
 }
+
+/* Existing styles... */
 
 .no-results i {
     font-size: 4rem;
