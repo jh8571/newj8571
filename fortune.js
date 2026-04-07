@@ -2,7 +2,7 @@ document.addEventListener('DOMContentLoaded', () => {
     let fortuneData = null;
     const container = document.getElementById('fortune-container');
 
-    // 고화질 메이저 아르카나 이미지 (확인된 안정적 소스)
+    // 고화질 메이저 아르카나 이미지
     const tarotImages = [
         "https://www.sacred-texts.com/tarot/pkt/img/ar00.jpg",
         "https://www.sacred-texts.com/tarot/pkt/img/ar01.jpg",
@@ -44,12 +44,15 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
 
-        if (type === 'tarot') renderTarot();
+        if (type === 'tarot') window.renderTarot();
         else if (type === 'saju') renderSaju();
         else if (type === 'face') renderFace();
     };
 
-    function renderTarot() {
+    let selectedCardsCount = 0;
+
+    window.renderTarot = function() {
+        selectedCardsCount = 0; // 초기화
         container.innerHTML = `
             <h2 style="color:var(--primary-color); margin-bottom:20px;">당신의 운명을 선택하세요</h2>
             <p style="color:var(--text-muted); margin-bottom:40px;">깊게 숨을 들이마시고, 가장 끌리는 카드 3장을 클릭하세요. (과거/현재/미래)</p>
@@ -63,9 +66,8 @@ document.addEventListener('DOMContentLoaded', () => {
             </div>
             <div id="tarot-result-display"></div>
         `;
-    }
+    };
 
-    let selectedCardsCount = 0;
     window.flipTarot = function(index) {
         const cardElement = document.getElementById(`card-${index}`);
         if (cardElement.classList.contains('flipped') || selectedCardsCount >= 3) return;
@@ -75,7 +77,6 @@ document.addEventListener('DOMContentLoaded', () => {
         const cardData = fortuneData.tarot.cards[randomIndex];
         const frontFace = document.getElementById(`front-${index}`);
         
-        // 실제 작동하는 이미지 주소 사용
         frontFace.innerHTML = `<img src="${tarotImages[randomIndex]}" alt="${cardData.name}" style="width:100%; height:100%; object-fit:cover;">`;
         
         cardElement.classList.add('flipped');
@@ -96,7 +97,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     미래 카드에 따르면, 조만간 뜻밖의 소식이 전해질 것이며 이를 통해 금전적인 안정을 찾게 될 것입니다. 
                     자신의 직관을 믿고 추진력을 발휘해 보세요.
                 </p>
-                <button class="calc-btn" style="width:100%; margin-top:30px;" onclick="renderTarot(); selectedCardsCount=0;">새로운 운세 보기</button>
+                <button class="calc-btn" style="width:100%; margin-top:30px;" onclick="window.renderTarot()">새로운 운세 보기</button>
             </div>
         `;
         window.scrollTo({ top: resultDisplay.offsetTop - 100, behavior: 'smooth' });
@@ -159,8 +160,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 <div id="drop-zone" style="border:3px dashed #cbd5e1; padding:80px 20px; border-radius:32px; background:#f8fafc; cursor:pointer; transition:0.3s;" 
                      onclick="document.getElementById('face-upload').click()"
                      ondragover="handleDragOver(event)"
-                     onforce-dragover="this.style.borderColor='var(--accent-color)'; this.style.background='#f0f9ff';"
-                     onpointer-dragover="this.style.borderColor='var(--accent-color)'; this.style.background='#f0f9ff';"
                      ondragleave="handleDragLeave(event)"
                      ondrop="handleDrop(event)">
                     <i class="fas fa-camera-retro" style="font-size:4.5rem; color:#94a3b8; margin-bottom:25px;"></i>
@@ -183,24 +182,27 @@ document.addEventListener('DOMContentLoaded', () => {
         `;
     }
 
-    // Drag and Drop Handlers
     window.handleDragOver = function(e) {
         e.preventDefault();
         const zone = document.getElementById('drop-zone');
-        zone.style.borderColor = 'var(--accent-color)';
-        zone.style.background = '#f0f9ff';
+        if (zone) {
+            zone.style.borderColor = 'var(--accent-color)';
+            zone.style.background = '#f0f9ff';
+        }
     };
     window.handleDragLeave = function(e) {
         e.preventDefault();
         const zone = document.getElementById('drop-zone');
-        zone.style.borderColor = '#cbd5e1';
-        zone.style.background = '#f8fafc';
+        if (zone) {
+            zone.style.borderColor = '#cbd5e1';
+            zone.style.background = '#f8fafc';
+        }
     };
     window.handleDrop = function(e) {
         e.preventDefault();
-        handleDragLeave(e);
+        window.handleDragLeave(e);
         const file = e.dataTransfer.files[0];
-        if (file && file.type.startsWith('image/')) previewAndAnalyze(file);
+        if (file && file.type.startsWith('image/')) window.previewAndAnalyze(file);
     };
 
     window.previewAndAnalyze = function(file) {
@@ -210,7 +212,6 @@ document.addEventListener('DOMContentLoaded', () => {
             document.getElementById('drop-zone').style.display = 'none';
             document.getElementById('preview-container').style.display = 'block';
             document.getElementById('face-preview').src = e.target.result;
-            
             startFaceAnalysis();
         };
         reader.readAsDataURL(file);
