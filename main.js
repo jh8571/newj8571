@@ -32,6 +32,11 @@ document.addEventListener('DOMContentLoaded', () => {
         if (e.key === 'Enter') performSearch();
     });
 
+    window.quickSearch = function(query) {
+        searchInput.value = query;
+        performSearch();
+    };
+
     function performSearch() {
         searchQuery = searchInput.value.trim().toLowerCase();
         if (!searchQuery) {
@@ -74,10 +79,10 @@ document.addEventListener('DOMContentLoaded', () => {
         
         if (filteredDrugs.length === 0) {
             drugListElement.innerHTML = `
-                <div class="no-results" style="grid-column: 1/-1;">
-                    <i class="fas fa-search-minus"></i>
-                    <h3>검색 결과가 없습니다</h3>
-                    <p>다른 검색어나 카테고리를 시도해 보세요.</p>
+                <div class="no-results" style="grid-column: 1/-1; padding: 40px; background: #f8fafc; border-radius: 15px;">
+                    <i class="fas fa-search-minus" style="font-size: 3rem; color: #cbd5e1; margin-bottom: 20px; display: block;"></i>
+                    <h3 style="color: #1e293b;">검색 결과가 없습니다</h3>
+                    <p style="color: #64748b;">다른 검색어나 카테고리를 시도해 보세요.</p>
                 </div>`;
             return;
         }
@@ -86,12 +91,13 @@ document.addEventListener('DOMContentLoaded', () => {
             const card = document.createElement('div');
             card.className = 'drug-card';
             card.innerHTML = `
-                <div class="card-category">${drug.category}</div>
+                <div class="card-category ${drug.category === '전문의약품' ? 'pro' : 'general'}">${drug.category}</div>
                 <h3 class="card-name">${drug.name}</h3>
                 <p class="card-manufacturer">${drug.manufacturer}</p>
-                <div style="font-size: 0.85rem; color: #64748b; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;">
+                <div class="card-efficacy">
                     ${drug.efficacy}
                 </div>
+                <button class="detail-btn">상세정보 보기</button>
             `;
             card.onclick = () => showDetail(drug.id);
             drugListElement.appendChild(card);
@@ -104,7 +110,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         modalContent.innerHTML = `
             <div class="detail-header">
-                <span class="detail-category">${drug.category}</span>
+                <span class="detail-category ${drug.category === '전문의약품' ? 'pro' : 'general'}">${drug.category}</span>
                 <h2 style="margin-top:15px; font-size: 1.8rem; color: #000428;">${drug.name}</h2>
                 <p style="color: #64748b; font-weight: 600;">${drug.manufacturer}</p>
             </div>
@@ -129,7 +135,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     <label><i class="fas fa-box-open"></i> 보관 방법</label>
                     <p>${drug.storage}</p>
                 </div>
-                <div class="detail-item full-width" style="border-top: 1px solid #eee; pt: 20px; mt: 10px;">
+                <div class="detail-item full-width" style="border-top: 1px solid #eee; padding-top: 20px; margin-top: 10px;">
                     <label><i class="fas fa-info-circle"></i> 상세 설명</label>
                     <p style="color: #475569; font-size: 0.95rem; line-height: 1.7;">${drug.description}</p>
                 </div>

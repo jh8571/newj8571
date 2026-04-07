@@ -8,6 +8,8 @@
     --text-muted: #64748b;
     --border-color: #e2e8f0;
     --success-color: #10b981;
+    --pro-color: #2563eb;
+    --gen-color: #16a34a;
 }
 
 * {
@@ -33,7 +35,7 @@ body {
 header {
     background: linear-gradient(135deg, var(--secondary-color) 0%, var(--primary-color) 100%);
     color: white;
-    padding: 80px 0;
+    padding: 60px 0;
     text-align: center;
     box-shadow: 0 4px 20px rgba(0,0,0,0.1);
 }
@@ -52,61 +54,26 @@ header p {
 }
 
 nav {
-    margin-bottom: 30px;
+    margin-bottom: 10px;
     display: flex;
     justify-content: center;
-    gap: 15px;
+    gap: 10px;
     flex-wrap: wrap;
 }
 
 nav a {
-    color: rgba(255,255,255,0.8);
+    color: rgba(255,255,255,0.7);
     text-decoration: none;
-    font-weight: 500;
-    padding: 8px 16px;
-    border-radius: 20px;
+    font-weight: 600;
+    padding: 10px 20px;
+    border-radius: 30px;
     transition: all 0.3s;
     font-size: 0.95rem;
 }
 
 nav a:hover, nav a.active {
-    background: rgba(255,255,255,0.2);
+    background: rgba(255,255,255,0.15);
     color: white;
-}
-
-/* Search Box */
-.search-container {
-    max-width: 700px;
-    margin: -40px auto 0;
-    background: white;
-    padding: 10px;
-    border-radius: 50px;
-    display: flex;
-    box-shadow: 0 10px 25px rgba(0,0,0,0.1);
-}
-
-.search-container input {
-    flex: 1;
-    border: none;
-    padding: 15px 30px;
-    font-size: 1.1rem;
-    outline: none;
-    border-radius: 50px;
-}
-
-.search-container button {
-    background: var(--primary-color);
-    color: white;
-    border: none;
-    padding: 0 30px;
-    border-radius: 50px;
-    font-weight: 600;
-    cursor: pointer;
-    transition: background 0.3s;
-}
-
-.search-container button:hover {
-    background: var(--secondary-color);
 }
 
 /* Main Content */
@@ -115,65 +82,168 @@ main {
     min-height: 400px;
 }
 
-.section-title {
-    text-align: center;
-    margin-bottom: 40px;
-    font-size: 1.5rem;
-    color: var(--text-muted);
-}
-
-/* Drug Cards */
+/* Drug Search Cards */
 .drug-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
     gap: 25px;
+    margin-top: 30px;
 }
 
 .drug-card {
-    background: var(--card-bg);
-    border: 1px solid var(--border-color);
-    border-radius: 16px;
-    padding: 24px;
-    transition: transform 0.3s, box-shadow 0.3s;
+    background: white;
+    padding: 25px;
+    border-radius: 20px;
+    box-shadow: 0 10px 20px rgba(0,0,0,0.03);
+    border: 1px solid #f1f5f9;
+    transition: all 0.3s ease;
     cursor: pointer;
-    position: relative;
-    overflow: hidden;
+    display: flex;
+    flex-direction: column;
 }
 
 .drug-card:hover {
-    transform: translateY(-5px);
+    transform: translateY(-8px);
     box-shadow: 0 15px 30px rgba(0,0,0,0.08);
-}
-
-.drug-card::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 4px;
-    height: 100%;
-    background: var(--accent-color);
+    border-color: var(--accent-color);
 }
 
 .card-category {
     font-size: 0.75rem;
     font-weight: 700;
+    padding: 4px 12px;
+    border-radius: 50px;
+    width: fit-content;
+    margin-bottom: 15px;
     text-transform: uppercase;
-    color: var(--accent-color);
-    margin-bottom: 12px;
 }
 
+.card-category.pro { background: #eff6ff; color: var(--pro-color); }
+.card-category.general { background: #f0fdf4; color: var(--gen-color); }
+
 .card-name {
-    font-size: 1.25rem;
-    font-weight: 700;
+    font-size: 1.3rem;
     margin-bottom: 8px;
     color: var(--primary-color);
+    font-weight: 800;
 }
 
 .card-manufacturer {
     font-size: 0.9rem;
     color: var(--text-muted);
-    margin-bottom: 16px;
+    margin-bottom: 15px;
+}
+
+.card-efficacy {
+    font-size: 0.9rem;
+    color: #475569;
+    line-height: 1.6;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    margin-bottom: 20px;
+    flex-grow: 1;
+}
+
+.detail-btn {
+    width: 100%;
+    padding: 12px;
+    background: #f8fafc;
+    color: var(--primary-color);
+    border: 1px solid #e2e8f0;
+    border-radius: 12px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.drug-card:hover .detail-btn {
+    background: var(--primary-color);
+    color: white;
+    border-color: var(--primary-color);
+}
+
+/* Modal Styling */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0,0,0,0.6);
+    backdrop-filter: blur(8px);
+}
+
+.modal-content {
+    background-color: white;
+    margin: 3% auto;
+    padding: 40px;
+    width: 90%;
+    max-width: 850px;
+    border-radius: 32px;
+    position: relative;
+    max-height: 90vh;
+    overflow-y: auto;
+    box-shadow: 0 30px 60px rgba(0,0,0,0.25);
+}
+
+.close {
+    position: absolute;
+    right: 30px;
+    top: 25px;
+    font-size: 28px;
+    cursor: pointer;
+    color: var(--text-muted);
+}
+
+.detail-header {
+    border-bottom: 2px solid #f1f5f9;
+    padding-bottom: 25px;
+    margin-bottom: 30px;
+}
+
+.detail-category {
+    font-size: 0.85rem;
+    font-weight: 700;
+    padding: 6px 16px;
+    border-radius: 50px;
+}
+
+.detail-category.pro { background: #eff6ff; color: var(--pro-color); }
+.detail-category.general { background: #f0fdf4; color: var(--gen-color); }
+
+.detail-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 30px;
+}
+
+.detail-item label {
+    display: block;
+    font-size: 0.85rem;
+    color: #94a3b8;
+    margin-bottom: 8px;
+    font-weight: 700;
+}
+
+.detail-item p {
+    font-size: 1.05rem;
+    color: var(--text-main);
+    line-height: 1.6;
+}
+
+.full-width {
+    grid-column: 1 / -1;
+}
+
+.highlight-box {
+    background: #f8fafc;
+    padding: 25px;
+    border-radius: 18px;
+    border-left: 5px solid var(--accent-color);
 }
 
 /* Exercise Module Styles */
@@ -334,90 +404,6 @@ main {
     margin-bottom: 15px;
     text-transform: uppercase;
     letter-spacing: 1px;
-}
-
-/* Modal Styling */
-.modal {
-    display: none;
-    position: fixed;
-    z-index: 1000;
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0,0,0,0.6);
-    backdrop-filter: blur(5px);
-}
-
-.modal-content {
-    background-color: white;
-    margin: 5% auto;
-    padding: 40px;
-    width: 90%;
-    max-width: 800px;
-    border-radius: 24px;
-    position: relative;
-    max-height: 85vh;
-    overflow-y: auto;
-    box-shadow: 0 25px 50px rgba(0,0,0,0.2);
-}
-
-.close {
-    position: absolute;
-    right: 30px;
-    top: 25px;
-    font-size: 28px;
-    cursor: pointer;
-    color: var(--text-muted);
-}
-
-.detail-header {
-    border-bottom: 2px solid var(--bg-color);
-    padding-bottom: 25px;
-    margin-bottom: 30px;
-}
-
-.detail-category {
-    background: var(--bg-color);
-    padding: 4px 12px;
-    border-radius: 6px;
-    font-size: 0.85rem;
-    color: var(--accent-color);
-    font-weight: 600;
-}
-
-.detail-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 30px;
-}
-
-.detail-item {
-    margin-bottom: 15px;
-}
-
-.detail-item label {
-    display: block;
-    font-weight: 700;
-    font-size: 0.9rem;
-    color: var(--text-muted);
-    margin-bottom: 8px;
-}
-
-.detail-item p {
-    font-size: 1rem;
-    color: var(--text-main);
-}
-
-.full-width {
-    grid-column: span 2;
-}
-
-.highlight-box {
-    background: #f1f5f9;
-    padding: 20px;
-    border-radius: 12px;
-    border-left: 4px solid var(--accent-color);
 }
 
 footer {

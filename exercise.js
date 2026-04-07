@@ -1,97 +1,98 @@
-let exerciseData = null;
+document.addEventListener('DOMContentLoaded', () => {
+    let exerciseData = null;
 
-async function loadExerciseData() {
-    try {
-        const response = await fetch('exercise_data.json');
-        exerciseData = await response.json();
-    } catch (error) {
-        console.error('Failed to load exercise data:', error);
+    // Load data
+    fetch('exercise_data.json')
+        .then(r => r.json())
+        .then(data => { exerciseData = data; })
+        .catch(e => console.error("Exercise data load error:", e));
+
+    window.calculateBMI = function() {
+        const height = parseFloat(document.getElementById('height').value) / 100;
+        const weight = parseFloat(document.getElementById('weight').value);
+
+        if (!height || !weight || height <= 0 || weight <= 0) {
+            alert('정확한 신장과 체중을 입력해 주세요.');
+            return;
+        }
+
+        const bmi = (weight / (height * height)).toFixed(1);
+        document.getElementById('bmi-score').innerText = bmi;
+        
+        let category = '';
+        let courseKey = '';
+        if (bmi < 18.5) {
+            category = '저체중 (Underweight)';
+            courseKey = 'ectomorph';
+        } else if (bmi < 23) {
+            category = '정상 (Normal)';
+            courseKey = 'mesomorph';
+        } else if (bmi < 25) {
+            category = '과체중 (Overweight)';
+            courseKey = 'endomorph';
+        } else {
+            category = '비만 (Obesity)';
+            courseKey = 'endomorph';
+        }
+
+        document.getElementById('bmi-category').innerText = category;
+        document.getElementById('result-card').style.display = 'block';
+        
+        if (exerciseData && exerciseData.courses[courseKey]) {
+            renderRecommendation(courseKey);
+        }
+    };
+
+    function renderRecommendation(key) {
+        const course = exerciseData.courses[key];
+        document.getElementById('course-title').innerText = course.title;
+        document.getElementById('course-desc').innerText = course.description;
+        document.getElementById('nutrition-tip').innerText = course.nutrition_tip;
+
+        // Render Exercises
+        const exerciseList = document.getElementById('exercise-steps-grid');
+        exerciseList.innerHTML = '';
+        course.exerciseIds.forEach(id => {
+            const ex = exerciseData.exercises.find(e => e.id === id);
+            if (ex) {
+                const card = document.createElement('div');
+                card.className = 'exercise-step-card';
+                card.innerHTML = `
+                    <div class="step-img-placeholder"><i class="fas ${ex.icon}"></i></div>
+                    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:15px;">
+                        <span style="font-size:0.8rem; color:var(--accent-color); font-weight:700;">${ex.category} | ${ex.difficulty}</span>
+                        <span style="font-size:0.8rem; background:#f1f5f9; padding:2px 8px; border-radius:4px;">${ex.target}</span>
+                    </div>
+                    <h4 style="font-size:1.3rem; margin-bottom:15px; color:var(--primary-color);">${ex.name}</h4>
+                    <ul class="step-list">
+                        ${ex.steps.map(s => `<li>${s}</li>`).join('')}
+                    </ul>
+                    <div style="margin-top:20px; padding:15px; background:#fff9db; border-radius:12px; font-size:0.9rem; color:#856404;">
+                        <strong><i class="fas fa-lightbulb"></i> 자세 팁:</strong> ${ex.posture_tips}
+                    </div>
+                `;
+                exerciseList.appendChild(card);
+            }
+        });
+
+        // Render Meals
+        document.getElementById('breakfast-text').innerText = course.meals.breakfast;
+        document.getElementById('lunch-text').innerText = course.meals.lunch;
+        document.getElementById('dinner-text').innerText = course.meals.dinner;
+        
+        const snackCard = document.getElementById('snack-card');
+        const snackText = document.getElementById('snack-text');
+        if (course.meals.snack) {
+            snackCard.style.display = 'block';
+            snackText.innerText = course.meals.snack;
+        } else {
+            snackCard.style.display = 'none';
+        }
+
+        document.getElementById('recommendation-section').style.display = 'block';
+        window.scrollTo({
+            top: document.getElementById('recommendation-section').offsetTop - 50,
+            behavior: 'smooth'
+        });
     }
-}
-
-function calculateBMI() {
-    const height = parseFloat(document.getElementById('height').value) / 100;
-    const weight = parseFloat(document.getElementById('weight').value);
-
-    if (!height || !weight) {
-        alert('키와 몸무게를 올바르게 입력해주세요.');
-        return;
-    }
-
-    const bmi = (weight / (height * height)).toFixed(1);
-    let category = '';
-    let courseKey = '';
-
-    if (bmi < 18.5) {
-        category = '저체중';
-        courseKey = 'underweight';
-    } else if (bmi < 25) {
-        category = '정상';
-        courseKey = 'normal';
-    } else {
-        category = '과체중/비만';
-        courseKey = 'overweight';
-    }
-
-    displayResult(bmi, category, courseKey);
-}
-
-function displayResult(bmi, category, courseKey) {
-    const resultCard = document.getElementById('result-card');
-    const bmiScore = document.getElementById('bmi-score');
-    const bmiCategory = document.getElementById('bmi-category');
-    
-    bmiScore.textContent = bmi;
-    bmiCategory.textContent = category;
-    resultCard.style.display = 'block';
-
-    renderCourse(courseKey);
-}
-
-function renderCourse(courseKey) {
-    const course = exerciseData.courses[courseKey];
-    const recommendationSection = document.getElementById('recommendation-section');
-    
-    // Render Header
-    document.getElementById('course-title').textContent = course.title;
-    document.getElementById('course-desc').textContent = course.description;
-
-    // Render Exercises
-    const stepsGrid = document.getElementById('exercise-steps-grid');
-    stepsGrid.innerHTML = '';
-
-    course.exerciseIds.forEach(id => {
-        const ex = exerciseData.exercises.find(e => e.id === id);
-        const card = document.createElement('div');
-        card.className = 'exercise-step-card';
-        card.innerHTML = `
-            <div class="step-img-placeholder">
-                <i class="fas ${ex.icon}"></i>
-            </div>
-            <h3>${ex.name}</h3>
-            <p style="color: var(--accent-color); font-weight: 700; margin-bottom: 15px;">${ex.category}</p>
-            <ul class="step-list">
-                ${ex.steps.map(step => `<li>${step}</li>`).join('')}
-            </ul>
-            <div style="margin-top: 20px; padding: 15px; background: #f8fafc; border-radius: 12px; font-size: 0.9rem; color: var(--text-muted);">
-                <strong><i class="fas fa-lightbulb"></i> Tip:</strong> ${ex.tips}
-            </div>
-        `;
-        stepsGrid.appendChild(card);
-    });
-
-    // Render Diet
-    document.getElementById('breakfast-text').textContent = course.meals.breakfast;
-    document.getElementById('lunch-text').textContent = course.meals.lunch;
-    document.getElementById('dinner-text').textContent = course.meals.dinner;
-
-    recommendationSection.style.display = 'block';
-    
-    // Smooth scroll to results
-    recommendationSection.scrollIntoView({ behavior: 'smooth' });
-}
-
-// Initialize
-window.addEventListener('DOMContentLoaded', () => {
-    loadExerciseData();
 });
