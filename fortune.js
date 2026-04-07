@@ -2,7 +2,6 @@ document.addEventListener('DOMContentLoaded', () => {
     let fortuneData = null;
     const container = document.getElementById('fortune-container');
 
-    // 고화질 메이저 아르카나 이미지
     const tarotImages = [
         "https://www.sacred-texts.com/tarot/pkt/img/ar00.jpg",
         "https://www.sacred-texts.com/tarot/pkt/img/ar01.jpg",
@@ -50,7 +49,7 @@ document.addEventListener('DOMContentLoaded', () => {
     };
 
     let selectedCardsCount = 0;
-    let selectedCardsData = []; // 뽑은 카드 데이터 저장용
+    let selectedCardsData = [];
 
     window.renderTarot = function() {
         selectedCardsCount = 0;
@@ -77,7 +76,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const randomIndex = Math.floor(Math.random() * fortuneData.tarot.cards.length);
         const cardData = fortuneData.tarot.cards[randomIndex];
         
-        selectedCardsData.push(cardData); // 데이터 저장
+        selectedCardsData.push(cardData);
         selectedCardsCount++;
 
         const frontFace = document.getElementById(`front-${index}`);
@@ -94,6 +93,16 @@ document.addEventListener('DOMContentLoaded', () => {
         const resultDisplay = document.getElementById('tarot-result-display');
         const labels = ["과거 (기원과 배경)", "현재 (상황과 조언)", "미래 (흐름과 결과)"];
         
+        // 종합 운세 한마디 데이터베이스 (랜덤 조합용)
+        const summaries = [
+            "귀하의 카드는 현재 '강력한 행동력'이 필요한 시점임을 말해줍니다. 과거의 교훈을 바탕으로 현재의 기회를 잡는다면 놀라운 미래가 펼쳐질 것입니다.",
+            "지금은 잠시 멈춰 서서 내면을 돌봐야 할 때입니다. 조급함보다는 여유로운 마음가짐이 귀하의 미래를 더 밝게 비춰줄 것입니다.",
+            "금전운과 명예운이 동시에 상승하는 흐름입니다. 주변의 조언에 귀를 기울이고 적극적으로 소통한다면 기대 이상의 결실을 맺을 것입니다.",
+            "변화의 바람이 불어오고 있습니다. 익숙한 것을 떠나 새로운 도전을 시작하기에 아주 좋은 운세입니다. 귀하의 직관을 믿으세요.",
+            "인간관계에서의 조화가 핵심인 운세입니다. 타인에 대한 배려가 결국 귀하에게 큰 행운으로 돌아오는 선순환의 고리가 형성되어 있습니다."
+        ];
+        const randomSummary = summaries[Math.floor(Math.random() * summaries.length)];
+
         let resultHTML = `
             <div class="fortune-result-box" style="margin-top:50px;">
                 <h3 style="color:var(--primary-color); margin-bottom:30px; text-align:center;"><i class="fas fa-scroll"></i> 3카드 스프레드 심층 해석</h3>
@@ -114,7 +123,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 </div>
                 <div style="margin-top:40px; padding:25px; background:var(--primary-color); color:white; border-radius:20px; text-align:center;">
                     <h4 style="margin-bottom:10px;"><i class="fas fa-lightbulb"></i> 종합 운세 한마디</h4>
-                    <p style="font-size:1.1rem; opacity:0.9;">선택하신 카드들은 현재 귀하의 삶에 '중요한 전환점'이 찾아왔음을 보여줍니다. 과거의 경험을 자양분 삼아 현재의 기회를 잡는다면 밝은 미래가 기다리고 있습니다.</p>
+                    <p style="font-size:1.1rem; opacity:0.9;">${randomSummary}</p>
                 </div>
                 <button class="calc-btn" style="width:100%; margin-top:30px;" onclick="window.renderTarot()">새로운 운세 보기</button>
             </div>
@@ -267,7 +276,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     ${fortuneData.physiognomy.pro_text}
                 </p>
                 <p style="font-size:1.1rem; line-height:2.0; color:#334155;">
-                    종합적으로 볼 때, 귀하의 관상은 <strong>'재물이 샘솟고 명예가 뒤따르는 대길(대길)의 상'</strong>입니다. 
+                    종합적으로 볼 때, 귀하의 관상은 <strong>'재물이 샘솟고 명예가 뒤따르는 대길(大吉)의 상'</strong>입니다. 
                     특히 눈매에서 뿜어져 나오는 강한 안광은 목표를 향한 집념과 성공운을 동시에 상징합니다. 
                     현재 진행 중인 프로젝트나 계획이 있다면 주저하지 말고 추진하십시오. 
                     관상학적 기운이 귀하의 결단을 강력하게 뒷받침하고 있습니다.
