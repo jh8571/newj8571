@@ -2,116 +2,98 @@ document.addEventListener('DOMContentLoaded', () => {
     let exerciseData = null;
     let currentCategory = '전체';
 
-    // Load data
+    // 부위별 백업 로컬 이미지 매칭 (e1 폴더 활용)
+    const backupImages = {
+        "가슴": "e1/017.png",
+        "등": "e1/019.png",
+        "어깨": "e1/009.png",
+        "하체": "e1/002.png",
+        "복근": "e1/011.png",
+        "팔": "e1/012.png",
+        "전신": "e1/001.png",
+        "스트레칭": "e1/015.png",
+        "유산소": "e1/006.png"
+    };
+
     fetch('exercise_data.json')
         .then(r => r.json())
-        .then(data => { 
-            exerciseData = data; 
-        })
+        .then(data => { exerciseData = data; })
         .catch(e => console.error("Exercise data load error:", e));
 
     window.calculateBMI = function() {
-        const height = parseFloat(document.getElementById('height').value) / 100;
-        const weight = parseFloat(document.getElementById('weight').value);
-
-        if (!height || !weight || height <= 0 || weight <= 0) {
-            alert('정확한 신장과 체중을 입력해 주세요.');
-            return;
-        }
-
-        const bmi = (weight / (height * height)).toFixed(1);
+        const h = parseFloat(document.getElementById('height').value) / 100;
+        const w = parseFloat(document.getElementById('weight').value);
+        if (!h || !w) return alert('신장과 체중을 입력하세요.');
+        const bmi = (w / (h * h)).toFixed(1);
         document.getElementById('bmi-score').innerText = bmi;
-        
-        let category = '';
-        let courseKey = '';
-        if (bmi < 18.5) {
-            category = '저체중 (Underweight)';
-            courseKey = 'ectomorph';
-        } else if (bmi < 23) {
-            category = '정상 (Normal)';
-            courseKey = 'mesomorph';
-        } else if (bmi < 25) {
-            category = '과체중 (Overweight)';
-            courseKey = 'endomorph';
-        } else {
-            category = '비만 (Obesity)';
-            courseKey = 'endomorph';
-        }
-
-        document.getElementById('bmi-category').innerText = category;
+        let cat = '', key = '';
+        if (bmi < 18.5) { cat = '저체중'; key = 'ectomorph'; }
+        else if (bmi < 23) { cat = '정상'; key = 'mesomorph'; }
+        else if (bmi < 25) { cat = '과체중'; key = 'endomorph'; }
+        else { cat = '비만'; key = 'endomorph'; }
+        document.getElementById('bmi-category').innerText = cat;
         document.getElementById('result-card').style.display = 'block';
-        
-        if (exerciseData) {
-            renderRecommendation(courseKey);
-        }
+        if (exerciseData) renderRecommendation(key);
     };
 
     window.filterExercises = function(category) {
         currentCategory = category;
         document.querySelectorAll('.cat-btn').forEach(btn => {
-            btn.classList.remove('active');
-            btn.style.background = 'white';
-            btn.style.color = 'inherit';
-            if (btn.innerText === category) {
-                btn.classList.add('active');
-                btn.style.background = 'var(--primary-color)';
-                btn.style.color = 'white';
-            }
+            btn.classList.toggle('active', btn.innerText === category);
+            btn.style.background = btn.innerText === category ? 'var(--primary-color)' : 'white';
+            btn.style.color = btn.innerText === category ? 'white' : 'inherit';
         });
         renderExerciseList();
     };
 
     function renderRecommendation(key) {
-        const course = exerciseData.courses[key];
-        document.getElementById('course-title').innerText = course.title;
-        document.getElementById('course-desc').innerText = course.description || "당신의 체형에 최적화된 전문 트레이닝 차트입니다.";
-        
-        document.getElementById('breakfast-text').innerText = course.meals.breakfast;
-        document.getElementById('lunch-text').innerText = course.meals.lunch;
-        document.getElementById('dinner-text').innerText = course.meals.dinner;
-        document.getElementById('nutrition-tip').innerText = course.meals.nutrition_tip;
-
+        const c = exerciseData.courses[key];
+        document.getElementById('course-title').innerText = c.title;
+        document.getElementById('breakfast-text').innerText = c.meals.breakfast;
+        document.getElementById('lunch-text').innerText = c.meals.lunch;
+        document.getElementById('dinner-text').innerText = c.meals.dinner;
+        document.getElementById('nutrition-tip').innerText = c.meals.nutrition_tip;
         document.getElementById('recommendation-section').style.display = 'block';
         renderExerciseList();
-
-        window.scrollTo({
-            top: document.getElementById('recommendation-section').offsetTop - 50,
-            behavior: 'smooth'
-        });
+        window.scrollTo({ top: document.getElementById('recommendation-section').offsetTop - 50, behavior: 'smooth' });
     }
 
     function renderExerciseList() {
-        const exerciseList = document.getElementById('exercise-steps-grid');
-        exerciseList.innerHTML = '';
-
-        const filtered = exerciseData.exercises.filter(ex => 
-            currentCategory === '전체' || ex.category === currentCategory
-        );
+        const list = document.getElementById('exercise-steps-grid');
+        list.innerHTML = '';
+        const filtered = exerciseData.exercises.filter(ex => currentCategory === '전체' || ex.category === currentCategory);
 
         filtered.forEach(ex => {
             const card = document.createElement('div');
             card.className = 'exercise-step-card';
-            card.style.cursor = 'zoom-in';
-            card.onclick = () => window.open(ex.main_image, '_blank'); // 클릭 시 이미지 원본 보기
+            
+            let imagesHTML = `<div class="steps-gallery" style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-bottom: 20px;">`;
+            ex.steps_images.forEach(img => {
+                imagesHTML += `
+                    <div class="step-img-box">
+                        <img src="${img.url}" alt="${img.desc}" 
+                            style="width:100%; height:120px; object-fit:cover; border-radius:8px;"
+                            onerror="this.onerror=null; this.src='${backupImages[ex.category] || backupImages['전신']}'; this.style.objectFit='contain';">
+                        <p style="font-size:0.65rem; color:#64748b; margin-top:5px; text-align:center;">${img.desc.split(':')[0]}</p>
+                    </div>`;
+            });
+            imagesHTML += `</div>`;
 
             card.innerHTML = `
-                <div class="main-chart-box" style="margin-bottom: 20px; background: #f8fafc; border-radius: 12px; overflow: hidden; border: 1px solid #eee;">
-                    <img src="${ex.main_image}" alt="${ex.name}" 
-                        style="width:100%; height:auto; display:block;"
-                        onerror="this.src='https://via.placeholder.com/600x800?text=Chart+Loading...'">
+                ${imagesHTML}
+                <div style="display:flex; justify-content:space-between; align-items:center; margin:15px 0;">
+                    <span style="font-size:0.8rem; color:var(--accent-color); font-weight:700;">${ex.category} | ${ex.difficulty}</span>
+                    <span style="font-size:0.8rem; background:#f1f5f9; padding:2px 8px; border-radius:4px;">${ex.target}</span>
                 </div>
-                <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:15px;">
-                    <span style="font-size:0.8rem; color:var(--accent-color); font-weight:800; border:1px solid var(--accent-color); padding:2px 8px; border-radius:4px;">전문가용 차트</span>
-                    <span style="font-size:0.8rem; background:#f1f5f9; padding:2px 8px; border-radius:4px;">${ex.category} | ${ex.difficulty}</span>
+                <h4 style="font-size:1.3rem; margin-bottom:12px; color:var(--primary-color);">${ex.name}</h4>
+                <ul class="step-list" style="margin-bottom:15px;">
+                    ${ex.steps.map(s => `<li style="font-size:0.9rem; color:#475569; margin-bottom:5px;">${s}</li>`).join('')}
+                </ul>
+                <div style="padding:15px; background:#fff9db; border-radius:12px; font-size:0.85rem; color:#856404;">
+                    <strong><i class="fas fa-lightbulb"></i> 자세 팁:</strong> ${ex.posture_tips}
                 </div>
-                <h4 style="font-size:1.4rem; margin-bottom:10px; color:var(--primary-color);">${ex.name}</h4>
-                <p style="color: #475569; font-size: 0.95rem; line-height:1.6; margin-bottom:15px;">${ex.desc}</p>
-                <div style="padding:15px; background:#fff9db; border-radius:12px; font-size:0.9rem; color:#856404; line-height:1.5;">
-                    <strong><i class="fas fa-lightbulb"></i> 트레이닝 팁:</strong> ${ex.posture_tips}
-                </div>
-                <p style="margin-top:10px; font-size:0.8rem; color:#94a3b8; text-align:center;">* 이미지를 클릭하면 크게 볼 수 있습니다.</p>
             `;
-            exerciseList.appendChild(card);
+            list.appendChild(card);
         });
     }
 });

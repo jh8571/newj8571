@@ -1,148 +1,143 @@
 {
   "exercises": [
     {
-      "id": "chart_01",
-      "name": "전신 근력 강화 매뉴얼 01",
-      "category": "전신",
-      "target": "전신 협응성, 기초 근력",
-      "difficulty": "초급",
-      "main_image": "e1/001.png",
-      "desc": "10가지 전신 근력 동작이 포함된 통합 가이드입니다.",
-      "posture_tips": "차트에 표시된 번호 순서대로 진행하며, 각 동작당 15회 3세트를 권장합니다.",
-      "icon": "fa-pro-chart"
-    },
-    {
-      "id": "chart_02",
-      "name": "하체 하드코어 트레이닝 02",
-      "category": "하체",
-      "target": "대퇴사두근, 둔근",
+      "id": "bench_press",
+      "name": "플랫 벤치 프레스 (Bench Press)",
+      "category": "가슴",
+      "target": "대흉근, 삼두근",
       "difficulty": "중급",
-      "main_image": "e1/002.png",
-      "desc": "하체의 힘과 볼륨을 키우기 위한 10가지 정밀 동작 모음입니다.",
-      "posture_tips": "무릎 관절에 무리가 가지 않도록 힙 힌지 자세를 항상 유지하세요.",
-      "icon": "fa-pro-chart"
+      "steps_images": [
+        {"url": "https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?auto=format&fit=crop&q=80&w=300", "desc": "준비: 바 정렬 및 호흡"},
+        {"url": "https://images.unsplash.com/photo-1534438327276-14e5300c3a48?auto=format&fit=crop&q=80&w=300", "desc": "진행: 가슴 하단으로 하강"},
+        {"url": "https://images.unsplash.com/photo-1598971639058-fab3c32f850c?auto=format&fit=crop&q=80&w=300", "desc": "완료: 수직으로 강하게 밀기"}
+      ],
+      "steps": ["벤치에 누워 견갑을 고정하고 바를 잡습니다.", "가슴 정중앙 위로 바를 천천히 내립니다.", "호흡을 내뱉으며 수직으로 밀어 올립니다."],
+      "posture_tips": "손목이 꺾이지 않게 주의하며 수직 동선을 유지하세요.",
+      "icon": "fa-dumbbell"
     },
     {
-      "id": "chart_03",
-      "name": "상체 밸런스 및 교정 03",
-      "category": "상체",
-      "target": "어깨, 가슴, 팔",
-      "difficulty": "중급",
-      "main_image": "e1/003.png",
-      "desc": "상체의 균형을 잡고 올바른 라인을 만드는 전문 동작입니다.",
-      "posture_tips": "거울을 보며 좌우 비대칭이 생기지 않도록 주의 깊게 관찰하며 수행하세요.",
-      "icon": "fa-pro-chart"
-    },
-    {
-      "id": "chart_04",
-      "name": "코어 및 복근 선명도 04",
-      "category": "복근",
-      "target": "복직근, 외복사근, 코어",
+      "id": "pushup",
+      "name": "표준 푸쉬업 (Push-up)",
+      "category": "가슴",
+      "target": "대흉근, 전면 삼각근",
       "difficulty": "초급",
-      "main_image": "e1/004.png",
-      "desc": "탄탄한 복부와 강한 허리 힘을 기르는 10단계 가이드입니다.",
-      "posture_tips": "허리가 바닥에서 뜨지 않도록 복압을 계속 유지하는 것이 핵심입니다.",
-      "icon": "fa-pro-chart"
+      "steps_images": [
+        {"url": "https://images.unsplash.com/photo-1571019614242-c5c5dee9f50b?auto=format&fit=crop&q=80&w=300", "desc": "준비: 하이 플랭크 자세"},
+        {"url": "https://images.unsplash.com/photo-1598971639058-fab3c32f850c?auto=format&fit=crop&q=80&w=300", "desc": "진행: 가슴을 지면 가까이 하강"},
+        {"url": "https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?auto=format&fit=crop&q=80&w=300", "desc": "완료: 바닥을 밀며 상체 거상"}
+      ],
+      "steps": ["양손을 어깨너비로 벌리고 엎드립니다.", "전신을 일직선으로 유지하며 가슴을 내립니다.", "겨드랑이에 힘을 주며 바닥을 밀어 올립니다."],
+      "posture_tips": "허리가 처지지 않도록 복부에 힘을 주어 코어를 고정하세요.",
+      "icon": "fa-mound"
     },
     {
-      "id": "chart_05",
-      "name": "유연성 극대화 스트레칭 05",
-      "category": "스트레칭",
-      "target": "전신 유연성, 관절 가동 범위",
-      "difficulty": "초급",
-      "main_image": "e1/005.png",
-      "desc": "운동 전후 부상 방지를 위한 필수 스트레칭 차트입니다.",
-      "posture_tips": "반동을 주지 말고 지긋이 15~20초간 정지하며 근육을 이완시키세요.",
-      "icon": "fa-pro-chart"
-    },
-    {
-      "id": "chart_06",
-      "name": "체지방 연소 서킷 가이드 06",
-      "category": "유산소",
-      "target": "심폐지구력, 칼로리 소모",
-      "difficulty": "고급",
-      "main_image": "e1/006.png",
-      "desc": "짧은 시간 내에 최대의 체지방을 태우는 고강도 동작 모음입니다.",
-      "posture_tips": "동작 사이의 휴식 시간을 30초 이내로 제한하여 심박수를 유지하세요.",
-      "icon": "fa-pro-chart"
-    },
-    {
-      "id": "chart_07",
-      "name": "홈트레이닝 베이직 07",
-      "category": "전신",
-      "target": "기초 체력 향상",
-      "difficulty": "초급",
-      "main_image": "e1/007.png",
-      "desc": "집에서 도구 없이 할 수 있는 가장 효과적인 10가지 운동입니다.",
-      "posture_tips": "정확한 자세가 속도보다 중요합니다. 천천히 근육의 움직임을 느끼세요.",
-      "icon": "fa-pro-chart"
-    },
-    {
-      "id": "chart_08",
-      "name": "애플힙 완성 매뉴얼 08",
-      "category": "하체",
-      "target": "대둔근, 중둔근",
-      "difficulty": "중급",
-      "main_image": "e1/008.png",
-      "desc": "탄력 있고 입체적인 힙 라인을 위한 집중 트레이닝 차트입니다.",
-      "posture_tips": "발뒤꿈치에 무게 중심을 두고 엉덩이를 강하게 수축시키는 것에 집중하세요.",
-      "icon": "fa-pro-chart"
-    },
-    {
-      "id": "chart_09",
-      "name": "어깨 관절 안정성 강화 09",
-      "category": "어깨",
-      "target": "회전근개, 삼각근",
-      "difficulty": "중급",
-      "main_image": "e1/009.png",
-      "desc": "넓고 건강한 어깨를 위한 부상 방지 및 근력 강화 가이드입니다.",
-      "posture_tips": "어깨가 귀와 가까워지지 않도록 하강시킨 상태에서 동작을 수행하세요.",
-      "icon": "fa-pro-chart"
-    },
-    {
-      "id": "chart_10",
-      "name": "V-Taper 등 근육 완성 10",
+      "id": "pullup",
+      "name": "풀업 (Pull-up)",
       "category": "등",
-      "target": "광배근, 승모근",
+      "target": "광배근, 이두근",
+      "difficulty": "고급",
+      "steps_images": [
+        {"url": "https://images.unsplash.com/photo-1598971426139-49dd0de1bc44?auto=format&fit=crop&q=80&w=300", "desc": "준비: 철봉에 매달리기"},
+        {"url": "https://images.unsplash.com/photo-1526506118085-60ce8714f8c5?auto=format&fit=crop&q=80&w=300", "desc": "진행: 가슴을 바 쪽으로 당김"},
+        {"url": "https://images.unsplash.com/photo-1590477949916-75e117552377?auto=format&fit=crop&q=80&w=300", "desc": "완료: 광배근 긴장하며 하강"}
+      ],
+      "steps": ["바를 넓게 잡고 어깨를 아래로 누릅니다.", "가슴을 위로 들어 올리는 느낌으로 당깁니다.", "버티면서 시작 자세로 천천히 내려옵니다."],
+      "posture_tips": "반동을 쓰지 말고 광배근의 힘에 집중하여 당기세요.",
+      "icon": "fa-hand-back-fist"
+    },
+    {
+      "id": "deadlift",
+      "name": "데드리프트 (Deadlift)",
+      "category": "등",
+      "target": "척추기립근, 둔근",
+      "difficulty": "고급",
+      "steps_images": [
+        {"url": "https://images.unsplash.com/photo-1599058917233-57c0bc00da26?auto=format&fit=crop&q=80&w=300", "desc": "준비: 바벨 정면 힙힌지"},
+        {"url": "https://images.unsplash.com/photo-1517836357463-d25dfeac3438?auto=format&fit=crop&q=80&w=300", "desc": "진행: 지면 밀며 수직 상승"},
+        {"url": "https://images.unsplash.com/photo-1534438327276-14e5300c3a48?auto=format&fit=crop&q=80&w=300", "desc": "완료: 상체 정렬 및 수축"}
+      ],
+      "steps": ["발을 어깨너비로 벌리고 바를 잡습니다.", "등을 곧게 펴고 하체의 힘으로 들어 올립니다.", "바가 정강이를 스치듯 유지하며 직립합니다."],
+      "posture_tips": "척추의 중립을 유지하는 것이 가장 중요한 안전 수칙입니다.",
+      "icon": "fa-weight-hanging"
+    },
+    {
+      "id": "shoulder_press",
+      "name": "숄더 프레스 (Shoulder Press)",
+      "category": "어깨",
+      "target": "전면 삼각근, 측면 삼각근",
       "difficulty": "중급",
-      "main_image": "e1/010.png",
-      "desc": "역삼각형 몸매를 결정짓는 등 근육의 선명도를 높이는 차트입니다.",
-      "posture_tips": "팔로 당기지 말고 팔꿈치를 뒤로 보낸다는 느낌으로 등을 수축하세요.",
-      "icon": "fa-pro-chart"
+      "steps_images": [
+        {"url": "https://images.unsplash.com/photo-1541534741688-6078c6bfb5c5?auto=format&fit=crop&q=80&w=300", "desc": "준비: 어깨 높이 덤벨 위치"},
+        {"url": "https://images.unsplash.com/photo-1581009146145-b5ef050c2e1e?auto=format&fit=crop&q=80&w=300", "desc": "진행: 머리 위로 수직 밀기"},
+        {"url": "https://images.unsplash.com/photo-1594882645126-14020914d58d?auto=format&fit=crop&q=80&w=300", "desc": "완료: 어깨 저항하며 하강"}
+      ],
+      "steps": ["어깨 높이에서 덤벨이나 바를 잡습니다.", "팔꿈치가 벌어지지 않게 주의하며 위로 밉니다.", "어깨의 긴장을 유지하며 천천히 내립니다."],
+      "posture_tips": "팔을 끝까지 펴기보다 어깨 근육의 수축에 집중하세요.",
+      "icon": "fa-arrows-up-to-line"
+    },
+    {
+      "id": "squat",
+      "name": "백 스쿼트 (Squat)",
+      "category": "하체",
+      "target": "대퇴사두근, 대둔근",
+      "difficulty": "중급",
+      "steps_images": [
+        {"url": "https://images.unsplash.com/photo-1574680096145-d05b474e2158?auto=format&fit=crop&q=80&w=300", "desc": "준비: 바를 얹고 똑바로 서기"},
+        {"url": "https://images.unsplash.com/photo-1566241440091-ec10de8db2e1?auto=format&fit=crop&q=80&w=300", "desc": "진행: 엉덩이 빼며 깊게 앉음"},
+        {"url": "https://images.unsplash.com/photo-1434608519344-49d77a699e1d?auto=format&fit=crop&q=80&w=300", "desc": "완료: 발바닥 전체 밀며 상승"}
+      ],
+      "steps": ["발을 어깨너비로 벌리고 발끝을 벌립니다.", "허벅지가 평행이 될 때까지 깊게 앉습니다.", "하체의 힘으로 강하게 밀어 올려 원위치합니다."],
+      "posture_tips": "무릎이 안쪽으로 모이지 않게 계속 바깥으로 밀어주세요.",
+      "icon": "fa-person-falling"
+    },
+    {
+      "id": "plank",
+      "name": "엘보우 플랭크 (Plank)",
+      "category": "복근",
+      "target": "코어 전신, 복횡근",
+      "difficulty": "초급",
+      "steps_images": [
+        {"url": "https://images.unsplash.com/photo-1566241142559-40e1bfc26ddc?auto=format&fit=crop&q=80&w=300", "desc": "준비: 전완부 지지 및 엎드림"},
+        {"url": "https://images.unsplash.com/photo-1548690312-e3b507d17a47?auto=format&fit=crop&q=80&w=300", "desc": "진행: 복부/엉덩이 강한 수축"},
+        {"url": "https://images.unsplash.com/photo-1518611012118-29a1aa673466?auto=format&fit=crop&q=80&w=300", "desc": "완료: 일직선 유지하며 버티기"}
+      ],
+      "steps": ["팔꿈치를 어깨 아래 두고 엎드립니다.", "머리부터 발목까지 일직선을 만듭니다.", "정해진 시간 동안 자세를 유지하며 버팁니다."],
+      "posture_tips": "호흡을 참지 말고 일정하게 유지하는 것이 중요합니다.",
+      "icon": "fa-minus"
     }
   ],
   "courses": {
     "ectomorph": {
       "title": "외배엽 벌크업",
-      "exerciseIds": ["chart_01", "chart_03", "chart_10"],
+      "exerciseIds": ["bench_press", "deadlift", "squat"],
       "meals": {
-        "breakfast": "고열량 시리얼, 계란 3개",
-        "lunch": "흰쌀밥, 소고기 200g",
-        "snack": "바나나, 프로틴",
-        "dinner": "파스타, 닭가슴살",
-        "nutrition_tip": "충분한 탄수화물이 필수입니다."
+        "breakfast": "오트밀, 우유, 달걀 3개",
+        "lunch": "흰쌀밥, 소고기 200g, 야채",
+        "snack": "바나나, 프로틴 쉐이크",
+        "dinner": "파스타, 닭가슴살, 아보카도",
+        "nutrition_tip": "평소보다 500kcal 더 섭취하세요."
       }
     },
     "mesomorph": {
       "title": "중배엽 바디쉐이핑",
-      "exerciseIds": ["chart_02", "chart_09", "chart_10"],
+      "exerciseIds": ["bench_press", "pullup", "squat"],
       "meals": {
-        "breakfast": "잡곡밥, 생선구이",
-        "lunch": "현미밥, 닭가슴살 200g",
-        "snack": "그릭 요거트",
-        "dinner": "목살, 쌈채소",
-        "nutrition_tip": "단백질 위주의 식단을 유지하세요."
+        "breakfast": "잡곡밥, 생선구이, 나물",
+        "lunch": "현미밥, 닭가슴살 200g, 샐러드",
+        "snack": "그릭 요거트, 견과류",
+        "dinner": "돼지 목살, 쌈채소, 된장찌개",
+        "nutrition_tip": "탄단지 비율을 4:4:2로 유지하세요."
       }
     },
     "endomorph": {
       "title": "내배엽 체지방 연소",
-      "exerciseIds": ["chart_06", "chart_04", "chart_08"],
+      "exerciseIds": ["pushup", "pullup", "squat"],
       "meals": {
         "breakfast": "ABC 주스, 달걀 흰자 5개",
-        "lunch": "샐러드, 단호박",
-        "snack": "방울토마토",
-        "dinner": "두부 스테이크",
-        "nutrition_tip": "저녁 7시 이후 금식을 추천합니다."
+        "lunch": "닭가슴살 샐러드, 단호박",
+        "snack": "방울토마토, 블랙커피",
+        "dinner": "두부 스테이크, 브로콜리",
+        "nutrition_tip": "저녁 7시 이후 금식을 지켜주세요."
       }
     }
   }
