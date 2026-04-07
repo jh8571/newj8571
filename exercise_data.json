@@ -6,7 +6,8 @@
       "category": "하체/엉덩이",
       "target": "허벅지 안쪽, 대둔근",
       "difficulty": "중급",
-      "image": "https://images.unsplash.com/photo-1566241440091-ec10de8db2e1?auto=format&fit=crop&q=80&w=600",
+      "video": "https://www.youtube.com/embed/nz5qZIDQS_M",
+      "image": "https://images.unsplash.com/photo-1574680096145-d05b474e2158?auto=format&fit=crop&q=80&w=600",
       "steps": [
         "발을 어깨너비보다 넓게 벌리고 발끝을 45도 바깥으로 향하게 합니다.",
         "허리를 곧게 펴고 복부에 힘을 주며 천천히 무릎을 굽힙니다.",
@@ -20,12 +21,13 @@
       "id": "pushup",
       "name": "클래식 푸쉬업 (Standard Push-up)",
       "category": "상체/가슴",
-      "target": "대흉근, 삼두근, 전면 삼각근",
+      "target": "대흉근, 삼두근",
       "difficulty": "중급",
+      "video": "https://www.youtube.com/embed/FtcKhNzopIc",
       "image": "https://images.unsplash.com/photo-1598971639058-fab3c32f850c?auto=format&fit=crop&q=80&w=600",
       "steps": [
         "양손을 어깨너비보다 약간 넓게 바닥에 짚습니다.",
-        "머리부터 발뒤꿈치까지 몸을 일직선으로 유지하며 복부에 힘을 집니다.",
+        "머리부터 발뒤꿈치까지 몸을 일직선으로 유지하며 복부에 힘을 줍니다.",
         "가슴이 바닥에 닿기 직전까지 천천히 몸을 내립니다.",
         "가슴 근육의 힘을 사용하여 바닥을 밀어 올리며 원위치합니다."
       ],
@@ -36,8 +38,9 @@
       "id": "plank",
       "name": "엘보우 플랭크 (Elbow Plank)",
       "category": "코어",
-      "target": "복횡근, 다열근, 코어 전신",
+      "target": "코어 전신",
       "difficulty": "초급",
+      "video": "https://www.youtube.com/embed/v7S_m9beZ_U",
       "image": "https://images.unsplash.com/photo-1566241142559-40e1bfc26ddc?auto=format&fit=crop&q=80&w=600",
       "steps": [
         "팔꿈치를 어깨 아래 위치시키고 전완부를 바닥에 댑니다.",
@@ -54,6 +57,7 @@
       "category": "하체",
       "target": "대퇴사두근, 둔근",
       "difficulty": "초급",
+      "video": "https://www.youtube.com/embed/oGyZ52_fw_Y",
       "image": "https://images.unsplash.com/photo-1536922645635-7674e677c47a?auto=format&fit=crop&q=80&w=600",
       "steps": [
         "똑바로 서서 한 발을 앞으로 크게 내딛습니다.",
@@ -63,45 +67,13 @@
       ],
       "posture_tips": "앞쪽 무릎이 발가락 끝보다 앞으로 나가지 않도록 주의하여 무릎 부상을 방지하세요.",
       "icon": "fa-person-walking"
-    },
-    {
-      "id": "mountain_climber",
-      "name": "마운틴 클라이머 (Mountain Climber)",
-      "category": "전신/유산소",
-      "target": "복근, 어깨, 유산소",
-      "difficulty": "중급",
-      "image": "https://images.unsplash.com/photo-1599058917233-57c0bc00da26?auto=format&fit=crop&q=80&w=600",
-      "steps": [
-        "하이 플랭크 자세에서 양손으로 바닥을 견고하게 지지합니다.",
-        "달리기를 하듯 한쪽 무릎을 가슴 쪽으로 빠르게 당겨옵니다.",
-        "양발을 리드미컬하게 교차하며 반복합니다.",
-        "상체는 고정하고 하체만 역동적으로 움직입니다."
-      ],
-      "posture_tips": "엉덩이가 너무 높게 들리지 않도록 주의하며 빠른 속도를 유지하는 것이 체지방 연소에 효과적입니다.",
-      "icon": "fa-person-running"
-    },
-    {
-      "id": "bird_dog",
-      "name": "버드 독 (Bird Dog)",
-      "category": "코어/밸런스",
-      "target": "척추 기립근, 대둔근",
-      "difficulty": "초급",
-      "image": "https://images.unsplash.com/photo-1599447292180-45fd84092ef4?auto=format&fit=crop&q=80&w=600",
-      "steps": [
-        "네발기기 자세에서 손은 어깨 아래, 무릎은 골반 아래 둡니다.",
-        "교차하는 오른쪽 팔과 왼쪽 다리를 동시에 앞뒤로 길게 뻗습니다.",
-        "몸이 흔들리지 않게 코어를 잡고 3~5초간 유지합니다.",
-        "반대쪽도 동일하게 반복하며 동작을 조절합니다."
-      ],
-      "posture_tips": "팔과 다리를 높이 드는 것보다 몸통과 수평이 되게 멀리 뻗는다는 느낌에 집중하세요.",
-      "icon": "fa-dog"
     }
   ],
   "courses": {
     "ectomorph": {
       "title": "외배엽 전용 근비대 벌크업 프로그램",
       "description": "빠른 대사를 가진 마른 체형을 위해 대근육 위주의 저반복 고중량 운동과 고열량 식단을 제안합니다.",
-      "exerciseIds": ["squat", "pushup", "lunge", "bird_dog"],
+      "exerciseIds": ["squat", "pushup", "lunge", "plank"],
       "meals": {
         "breakfast": "오트밀 100g, 우유 300ml, 블루베리, 삶은 계란 3개",
         "lunch": "흰쌀밥 300g, 소고기 홍두깨살 200g, 구운 아스파라거스",
@@ -113,7 +85,7 @@
     "mesomorph": {
       "title": "중배엽 전용 린매스업 바디쉐이핑",
       "description": "근육 발달이 유리한 체형의 장점을 살려 선명도를 높이고 밸런스를 최적화하는 프로그램입니다.",
-      "exerciseIds": ["squat", "pushup", "plank", "mountain_climber"],
+      "exerciseIds": ["squat", "pushup", "plank", "lunge"],
       "meals": {
         "breakfast": "잡곡밥 200g, 고등어 구이 1토막, 나물 반찬 3종",
         "lunch": "현미밥 200g, 닭가슴살 200g, 구운 야채 믹스",
@@ -125,7 +97,7 @@
     "endomorph": {
       "title": "내배엽 전용 강력 체지방 연소 서킷",
       "description": "대사가 느린 비만 체형을 위해 휴식 시간을 최소화한 고강도 서킷 트레이닝과 저탄수화물 식단을 제공합니다.",
-      "exerciseIds": ["mountain_climber", "lunge", "pushup", "plank"],
+      "exerciseIds": ["squat", "pushup", "plank", "lunge"],
       "meals": {
         "breakfast": "ABC 주스(사과,비트,당근), 삶은 계란 흰자 5개",
         "lunch": "닭가슴살 샐러드(드레싱 제외), 찐 단호박 100g",

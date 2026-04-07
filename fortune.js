@@ -3,28 +3,9 @@ document.addEventListener('DOMContentLoaded', () => {
     const container = document.getElementById('fortune-container');
 
     const tarotImages = [
-        "https://www.sacred-texts.com/tarot/pkt/img/ar00.jpg",
-        "https://www.sacred-texts.com/tarot/pkt/img/ar01.jpg",
-        "https://www.sacred-texts.com/tarot/pkt/img/ar02.jpg",
-        "https://www.sacred-texts.com/tarot/pkt/img/ar03.jpg",
-        "https://www.sacred-texts.com/tarot/pkt/img/ar04.jpg",
-        "https://www.sacred-texts.com/tarot/pkt/img/ar05.jpg",
-        "https://www.sacred-texts.com/tarot/pkt/img/ar06.jpg",
-        "https://www.sacred-texts.com/tarot/pkt/img/ar07.jpg",
-        "https://www.sacred-texts.com/tarot/pkt/img/ar08.jpg",
-        "https://www.sacred-texts.com/tarot/pkt/img/ar09.jpg",
-        "https://www.sacred-texts.com/tarot/pkt/img/ar10.jpg",
-        "https://www.sacred-texts.com/tarot/pkt/img/ar11.jpg",
-        "https://www.sacred-texts.com/tarot/pkt/img/ar12.jpg",
-        "https://www.sacred-texts.com/tarot/pkt/img/ar13.jpg",
-        "https://www.sacred-texts.com/tarot/pkt/img/ar14.jpg",
-        "https://www.sacred-texts.com/tarot/pkt/img/ar15.jpg",
-        "https://www.sacred-texts.com/tarot/pkt/img/ar16.jpg",
-        "https://www.sacred-texts.com/tarot/pkt/img/ar17.jpg",
-        "https://www.sacred-texts.com/tarot/pkt/img/ar18.jpg",
-        "https://www.sacred-texts.com/tarot/pkt/img/ar19.jpg",
-        "https://www.sacred-texts.com/tarot/pkt/img/ar20.jpg",
-        "https://www.sacred-texts.com/tarot/pkt/img/ar21.jpg"
+        "https://www.sacred-texts.com/tarot/pkt/img/ar00.jpg", "https://www.sacred-texts.com/tarot/pkt/img/ar01.jpg",
+        "https://www.sacred-texts.com/tarot/pkt/img/ar02.jpg", "https://www.sacred-texts.com/tarot/pkt/img/ar03.jpg",
+        "https://www.sacred-texts.com/tarot/pkt/img/ar04.jpg", "https://www.sacred-texts.com/tarot/pkt/img/ar05.jpg"
     ];
 
     fetch('fortune_data.json')
@@ -45,19 +26,18 @@ document.addEventListener('DOMContentLoaded', () => {
 
         if (type === 'tarot') window.renderTarot();
         else if (type === 'saju') renderSaju();
-        else if (type === 'face') renderFace();
+        else if (type === 'face') window.renderFace();
     };
 
     let selectedCardsCount = 0;
     let selectedCardsData = [];
 
     window.renderTarot = function() {
-        selectedCardsCount = 0;
-        selectedCardsData = [];
+        selectedCardsCount = 0; selectedCardsData = [];
         container.innerHTML = `
             <h2 style="color:var(--primary-color); margin-bottom:20px;">당신의 운명을 선택하세요</h2>
-            <p style="color:var(--text-muted); margin-bottom:40px;">깊게 숨을 들이마시고, 가장 끌리는 카드 3장을 차례대로 클릭하세요.</p>
-            <div class="tarot-grid" id="tarot-cards-container">
+            <p style="color:var(--text-muted); margin-bottom:40px;">깊게 숨을 들이마시고, 가장 끌리는 카드 3장을 클릭하세요.</p>
+            <div class="tarot-grid">
                 ${Array(12).fill(0).map((_, i) => `
                     <div class="tarot-card-container" id="card-${i}" onclick="flipTarot(${i})">
                         <div class="card-face card-back"><i class="fas fa-sun"></i></div>
@@ -72,63 +52,22 @@ document.addEventListener('DOMContentLoaded', () => {
     window.flipTarot = function(index) {
         const cardElement = document.getElementById(`card-${index}`);
         if (cardElement.classList.contains('flipped') || selectedCardsCount >= 3) return;
-
+        selectedCardsCount++;
         const randomIndex = Math.floor(Math.random() * fortuneData.tarot.cards.length);
         const cardData = fortuneData.tarot.cards[randomIndex];
-        
         selectedCardsData.push(cardData);
-        selectedCardsCount++;
-
-        const frontFace = document.getElementById(`front-${index}`);
-        frontFace.innerHTML = `<img src="${tarotImages[randomIndex]}" alt="${cardData.name}" style="width:100%; height:100%; object-fit:cover;">`;
-        
+        document.getElementById(`front-${index}`).innerHTML = `<img src="${tarotImages[randomIndex] || tarotImages[0]}" style="width:100%; height:100%; object-fit:cover;">`;
         cardElement.classList.add('flipped');
-
-        if (selectedCardsCount === 3) {
-            setTimeout(showTarotTotalResult, 800);
-        }
+        if (selectedCardsCount === 3) setTimeout(showTarotTotalResult, 800);
     };
 
     function showTarotTotalResult() {
         const resultDisplay = document.getElementById('tarot-result-display');
-        const labels = ["과거 (기원과 배경)", "현재 (상황과 조언)", "미래 (흐름과 결과)"];
-        
-        // 종합 운세 한마디 데이터베이스 (랜덤 조합용)
-        const summaries = [
-            "귀하의 카드는 현재 '강력한 행동력'이 필요한 시점임을 말해줍니다. 과거의 교훈을 바탕으로 현재의 기회를 잡는다면 놀라운 미래가 펼쳐질 것입니다.",
-            "지금은 잠시 멈춰 서서 내면을 돌봐야 할 때입니다. 조급함보다는 여유로운 마음가짐이 귀하의 미래를 더 밝게 비춰줄 것입니다.",
-            "금전운과 명예운이 동시에 상승하는 흐름입니다. 주변의 조언에 귀를 기울이고 적극적으로 소통한다면 기대 이상의 결실을 맺을 것입니다.",
-            "변화의 바람이 불어오고 있습니다. 익숙한 것을 떠나 새로운 도전을 시작하기에 아주 좋은 운세입니다. 귀하의 직관을 믿으세요.",
-            "인간관계에서의 조화가 핵심인 운세입니다. 타인에 대한 배려가 결국 귀하에게 큰 행운으로 돌아오는 선순환의 고리가 형성되어 있습니다."
-        ];
-        const randomSummary = summaries[Math.floor(Math.random() * summaries.length)];
-
-        let resultHTML = `
-            <div class="fortune-result-box" style="margin-top:50px;">
-                <h3 style="color:var(--primary-color); margin-bottom:30px; text-align:center;"><i class="fas fa-scroll"></i> 3카드 스프레드 심층 해석</h3>
-                <div style="display:grid; gap:25px;">
-        `;
-
+        let resultHTML = `<div class="fortune-result-box" style="margin-top:50px;"><h3 style="text-align:center; margin-bottom:30px;">3카드 스프레드 심층 해석</h3><div style="display:grid; gap:20px;">`;
         selectedCardsData.forEach((card, i) => {
-            resultHTML += `
-                <div style="padding:20px; background:white; border-radius:15px; border:1px solid #e2e8f0;">
-                    <span style="display:inline-block; padding:4px 12px; background:var(--accent-color); color:white; border-radius:50px; font-size:0.85rem; font-weight:700; margin-bottom:10px;">${labels[i]}</span>
-                    <h4 style="font-size:1.2rem; color:var(--primary-color); margin-bottom:10px;">${card.name}</h4>
-                    <p style="line-height:1.7; color:#475569;">${card.meaning}</p>
-                </div>
-            `;
+            resultHTML += `<div style="padding:15px; background:white; border-radius:12px; border:1px solid #eee;"><span style="font-weight:700; color:var(--accent-color);">${["과거","현재","미래"][i]}</span><h4>${card.name}</h4><p>${card.meaning}</p></div>`;
         });
-
-        resultHTML += `
-                </div>
-                <div style="margin-top:40px; padding:25px; background:var(--primary-color); color:white; border-radius:20px; text-align:center;">
-                    <h4 style="margin-bottom:10px;"><i class="fas fa-lightbulb"></i> 종합 운세 한마디</h4>
-                    <p style="font-size:1.1rem; opacity:0.9;">${randomSummary}</p>
-                </div>
-                <button class="calc-btn" style="width:100%; margin-top:30px;" onclick="window.renderTarot()">새로운 운세 보기</button>
-            </div>
-        `;
-
+        resultHTML += `</div><button class="calc-btn" style="width:100%; margin-top:30px;" onclick="window.renderTarot()">새로운 운세 보기</button></div>`;
         resultDisplay.innerHTML = resultHTML;
         window.scrollTo({ top: resultDisplay.offsetTop - 50, behavior: 'smooth' });
     }
@@ -136,16 +75,10 @@ document.addEventListener('DOMContentLoaded', () => {
     function renderSaju() {
         container.innerHTML = `
             <h2 style="color:var(--primary-color); margin-bottom:20px;">심층 사주 분석</h2>
-            <p style="color:var(--text-muted); margin-bottom:40px;">태어난 시를 포함한 정밀 분석으로 당신의 대운을 확인하세요.</p>
             <div class="input-form">
                 <div class="input-item"><label>생년월일</label><input type="date" id="birth-date"></div>
                 <div class="input-group-row">
-                    <div class="input-item">
-                        <label>태어난 시간</label>
-                        <select id="birth-time">
-                            ${Array(24).fill(0).map((_, i) => `<option value="${i}">${i}시 (${i % 2 === 1 ? (i === 23 ? '자시' : ['축','인','묘','진','사','오','미','신','유','술','해'][Math.floor(i/2)]) : ''})</option>`).join('')}
-                        </select>
-                    </div>
+                    <div class="input-item"><label>태어난 시간</label><select id="birth-time">${Array(24).fill(0).map((_, i) => `<option value="${i}">${i}시</option>`).join('')}</select></div>
                     <div class="input-item"><label>성별</label><select id="gender"><option value="male">남성</option><option value="female">여성</option></select></div>
                 </div>
                 <button class="calc-btn" style="width:100%; margin-top:20px;" onclick="analyzeSajuDeep()">분석 시작</button>
@@ -158,82 +91,37 @@ document.addEventListener('DOMContentLoaded', () => {
         const date = document.getElementById('birth-date').value;
         if (!date) { alert('날짜를 입력해 주세요.'); return; }
         const resultDiv = document.getElementById('saju-result-deep');
-        const elements = ["목(木)", "화(火)", "토(土)", "금(金)", "수(水)"];
-        const myElement = elements[new Date(date).getFullYear() % 5];
-
-        resultDiv.innerHTML = `
-            <div class="fortune-result-box">
-                <h3 style="color:var(--primary-color); margin-bottom:15px;"><i class="fas fa-yin-yang"></i> 운명적 지표: ${myElement}의 성질</h3>
-                <p style="margin-bottom:25px; line-height:1.8;">${fortuneData.saju.descriptions.elements[myElement]}</p>
-                <h4 style="color:var(--primary-color); margin-bottom:10px;">전문가 정밀 리포트</h4>
-                <p style="font-size:1.1rem; line-height:1.9; color:#475569;">${fortuneData.saju.descriptions.professional_analysis}</p>
-                <div style="margin-top:30px; display:grid; grid-template-columns:1fr 1fr; gap:15px;">
-                    <div style="background:#fff; padding:20px; border-radius:15px; border:1px solid #e2e8f0; text-align:center;">
-                        <span style="display:block; color:#94a3b8; font-size:0.85rem;">행운의 색</span>
-                        <strong>${myElement==='금(金)'?'은색':(myElement==='화(火)'?'빨강':'초록')}</strong>
-                    </div>
-                    <div style="background:#fff; padding:20px; border-radius:15px; border:1px solid #e2e8f0; text-align:center;">
-                        <span style="display:block; color:#94a3b8; font-size:0.85rem;">행운의 방위</span>
-                        <strong>남서쪽</strong>
-                    </div>
-                </div>
-            </div>
-        `;
+        resultDiv.innerHTML = `<div class="fortune-result-box"><h3>${fortuneData.saju.descriptions.professional_analysis}</h3></div>`;
         window.scrollTo({ top: resultDiv.offsetTop - 100, behavior: 'smooth' });
     };
 
-    function renderFace() {
+    window.renderFace = function() {
         container.innerHTML = `
             <h2 style="color:var(--primary-color); margin-bottom:20px;">AI 사진 관상 판독</h2>
-            <p style="color:var(--text-muted); margin-bottom:40px;">사진을 드래그하여 업로드하세요. 눈매와 안광을 정밀 분석합니다.</p>
             <div style="max-width:550px; margin:0 auto;">
-                <div id="drop-zone" style="border:3px dashed #cbd5e1; padding:80px 20px; border-radius:32px; background:#f8fafc; cursor:pointer; transition:0.3s;" 
+                <div id="drop-zone" style="border:3px dashed #cbd5e1; padding:60px 20px; border-radius:32px; background:#f8fafc; cursor:pointer;" 
                      onclick="document.getElementById('face-upload').click()"
-                     ondragover="handleDragOver(event)"
-                     ondragleave="handleDragLeave(event)"
-                     ondrop="handleDrop(event)">
-                    <i class="fas fa-camera-retro" style="font-size:4.5rem; color:#94a3b8; margin-bottom:25px;"></i>
-                    <p style="font-weight:700; color:#475569; font-size:1.1rem;">여기에 사진을 드래그하거나 클릭하세요</p>
-                    <p style="font-size:0.9rem; color:#94a3b8; margin-top:12px;">정면 사진일수록 분석 정확도가 높습니다.</p>
+                     ondragover="handleDragOver(event)" ondragleave="handleDragLeave(event)" ondrop="handleDrop(event)">
+                    <i class="fas fa-camera-retro" style="font-size:4rem; color:#94a3b8; margin-bottom:20px;"></i>
+                    <p style="font-weight:700;">사진을 드래그하거나 클릭하여 업로드</p>
                 </div>
                 <input type="file" id="face-upload" style="display:none;" onchange="previewAndAnalyze(this.files[0])">
-                <div id="preview-container" style="display:none; margin-top:30px; position:relative;">
-                    <img id="face-preview" src="" style="width:200px; height:200px; object-fit:cover; border-radius:50%; border:5px solid var(--accent-color); box-shadow:0 10px 20px rgba(0,0,0,0.1);">
-                    <div id="scanning-line" style="position:absolute; width:200px; height:2px; background:var(--accent-color); left:50%; transform:translateX(-50%); top:0; box-shadow:0 0 15px var(--accent-color); animation:scan 2s infinite;"></div>
+                <div id="preview-container" style="display:none; margin-top:30px; position:relative; text-align:center;">
+                    <img id="face-preview" src="" style="width:200px; height:200px; object-fit:cover; border-radius:50%; border:5px solid var(--accent-color);">
+                    <div id="scanning-line" style="position:absolute; width:200px; height:2px; background:var(--accent-color); left:50%; transform:translateX(-50%); top:0; animation:scan 2s infinite;"></div>
                 </div>
                 <div id="analysis-progress" style="display:none; margin-top:30px;">
-                    <p id="progress-text" style="font-weight:700; color:var(--primary-color);">AI 엔진 가동 중...</p>
-                    <div style="width:100%; height:12px; background:#e2e8f0; border-radius:6px; overflow:hidden; margin-top:10px;">
-                        <div id="progress-bar" style="width:0%; height:100%; background:var(--accent-color); transition:0.4s;"></div>
-                    </div>
+                    <p id="progress-text" style="font-weight:700;">AI 분석 중...</p>
+                    <div style="width:100%; height:10px; background:#e2e8f0; border-radius:5px; overflow:hidden;"><div id="progress-bar" style="width:0%; height:100%; background:var(--accent-color); transition:0.3s;"></div></div>
                 </div>
             </div>
             <div id="face-result-deep"></div>
         `;
-    }
+    };
 
-    window.handleDragOver = function(e) {
-        e.preventDefault();
-        const zone = document.getElementById('drop-zone');
-        if (zone) {
-            zone.style.borderColor = 'var(--accent-color)';
-            zone.style.background = '#f0f9ff';
-        }
-    };
-    window.handleDragLeave = function(e) {
-        e.preventDefault();
-        const zone = document.getElementById('drop-zone');
-        if (zone) {
-            zone.style.borderColor = '#cbd5e1';
-            zone.style.background = '#f8fafc';
-        }
-    };
-    window.handleDrop = function(e) {
-        e.preventDefault();
-        window.handleDragLeave(e);
-        const file = e.dataTransfer.files[0];
-        if (file && file.type.startsWith('image/')) window.previewAndAnalyze(file);
-    };
+    window.handleDragOver = function(e) { e.preventDefault(); const zone = document.getElementById('drop-zone'); if (zone) zone.style.borderColor = 'var(--accent-color)'; };
+    window.handleDragLeave = function(e) { e.preventDefault(); const zone = document.getElementById('drop-zone'); if (zone) zone.style.borderColor = '#cbd5e1'; };
+    window.handleDrop = function(e) { e.preventDefault(); window.handleDragLeave(e); const file = e.dataTransfer.files[0]; if (file && file.type.startsWith('image/')) window.previewAndAnalyze(file); };
 
     window.previewAndAnalyze = function(file) {
         if (!file) return;
@@ -248,40 +136,25 @@ document.addEventListener('DOMContentLoaded', () => {
     };
 
     function startFaceAnalysis() {
-        const progress = document.getElementById('analysis-progress');
         const bar = document.getElementById('progress-bar');
-        const text = document.getElementById('progress-text');
+        const progress = document.getElementById('analysis-progress');
         progress.style.display = 'block';
-
         let p = 0;
-        const interval = setInterval(() => {
-            p += 5;
-            bar.style.width = p + '%';
-            if (p === 20) text.innerText = "상안, 중안, 하안 비율 대조 중...";
-            if (p === 50) text.innerText = "이목구비 조화도 및 안광 수치 분석 중...";
-            if (p === 80) text.innerText = "사주 오행 데이터와 매칭 중...";
-            if (p >= 100) {
-                clearInterval(interval);
-                showFaceResult();
-            }
-        }, 150);
+        const itv = setInterval(() => {
+            p += 5; bar.style.width = p + '%';
+            if (p >= 100) { clearInterval(itv); showFaceResult(); }
+        }, 100);
     }
 
     function showFaceResult() {
         const resultDiv = document.getElementById('face-result-deep');
+        const report = fortuneData.physiognomy.reports[Math.floor(Math.random() * fortuneData.physiognomy.reports.length)];
         resultDiv.innerHTML = `
             <div class="fortune-result-box" style="margin-top:20px;">
-                <h3 style="color:var(--primary-color); margin-bottom:25px; text-align:center;"><i class="fas fa-microchip"></i> AI 관상 종합 감정서</h3>
-                <p style="font-size:1.15rem; line-height:2.0; color:#334155; margin-bottom:20px;">
-                    ${fortuneData.physiognomy.pro_text}
-                </p>
-                <p style="font-size:1.1rem; line-height:2.0; color:#334155;">
-                    종합적으로 볼 때, 귀하의 관상은 <strong>'재물이 샘솟고 명예가 뒤따르는 대길(大吉)의 상'</strong>입니다. 
-                    특히 눈매에서 뿜어져 나오는 강한 안광은 목표를 향한 집념과 성공운을 동시에 상징합니다. 
-                    현재 진행 중인 프로젝트나 계획이 있다면 주저하지 말고 추진하십시오. 
-                    관상학적 기운이 귀하의 결단을 강력하게 뒷받침하고 있습니다.
-                </p>
-                <button class="calc-btn" style="width:100%; margin-top:40px;" onclick="renderFace()">다른 사진으로 분석</button>
+                <h3 style="text-align:center; color:var(--primary-color); margin-bottom:20px;">AI 관상 정밀 판독서</h3>
+                <h4 style="color:var(--accent-color); margin-bottom:15px;">${report.title}</h4>
+                <p style="line-height:1.9; font-size:1.1rem; color:#334155; margin-bottom:20px;">${report.text}</p>
+                <button class="calc-btn" style="width:100%; margin-top:20px;" onclick="window.renderFace()">다른 사진으로 분석</button>
             </div>
         `;
         window.scrollTo({ top: resultDiv.offsetTop - 100, behavior: 'smooth' });
