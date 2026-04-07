@@ -58,8 +58,11 @@ document.addEventListener('DOMContentLoaded', () => {
                 const card = document.createElement('div');
                 card.className = 'exercise-step-card';
                 card.innerHTML = `
-                    <div class="step-img-placeholder">
-                        ${ex.image ? `<img src="${ex.image}" alt="${ex.name}" style="width:100%; height:100%; object-fit:cover; border-radius:16px;">` : `<i class="fas ${ex.icon}"></i>`}
+                    <div class="step-img-placeholder" id="img-container-${ex.id}">
+                        ${ex.image ? `<img src="${ex.image}" alt="${ex.name}" 
+                            style="width:100%; height:100%; object-fit:cover; border-radius:16px;"
+                            onerror="this.parentElement.innerHTML='<i class=\'fas ${ex.icon}\'></i>'">` : 
+                            `<i class="fas ${ex.icon}"></i>`}
                     </div>
                     <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:15px;">
                         <span style="font-size:0.8rem; color:var(--accent-color); font-weight:700;">${ex.category} | ${ex.difficulty}</span>
