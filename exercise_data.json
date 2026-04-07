@@ -6,12 +6,15 @@
       "category": "하체/엉덩이",
       "target": "허벅지 안쪽, 대둔근",
       "difficulty": "중급",
-      "video": "https://www.youtube.com/embed/nz5qZIDQS_M",
-      "image": "https://images.unsplash.com/photo-1574680096145-d05b474e2158?auto=format&fit=crop&q=80&w=600",
+      "steps_images": [
+        {"url": "https://images.unsplash.com/photo-1574680096145-d05b474e2158?auto=format&fit=crop&q=80&w=300", "desc": "준비: 발을 넓게 벌리고 허리 정렬"},
+        {"url": "https://images.unsplash.com/photo-1566241440091-ec10de8db2e1?auto=format&fit=crop&q=80&w=300", "desc": "진행: 무릎을 바깥으로 밀며 하강"},
+        {"url": "https://images.unsplash.com/photo-1434608519344-49d77a699e1d?auto=format&fit=crop&q=80&w=300", "desc": "완료: 둔근 수축하며 수직 상승"}
+      ],
       "steps": [
         "발을 어깨너비보다 넓게 벌리고 발끝을 45도 바깥으로 향하게 합니다.",
-        "허리를 곧게 펴고 복부에 힘을 주며 천천히 무릎을 굽힙니다.",
-        "허벅지가 바닥과 평행이 될 때까지 내려갔다가 내전근의 힘으로 올라옵니다."
+        "허벅지가 바닥과 평행이 될 때까지 천천히 무릎을 굽힙니다.",
+        "내전근과 엉덩이의 힘을 사용하여 원위치로 돌아옵니다."
       ],
       "posture_tips": "무릎이 안쪽으로 모이지 않게 계속 바깥쪽으로 밀어주는 느낌을 유지하세요.",
       "icon": "fa-person-falling"
@@ -22,14 +25,17 @@
       "category": "상체/가슴",
       "target": "대흉근, 삼두근",
       "difficulty": "중급",
-      "video": "https://www.youtube.com/embed/FtcKhNzopIc",
-      "image": "https://images.unsplash.com/photo-1598971639058-fab3c32f850c?auto=format&fit=crop&q=80&w=600",
+      "steps_images": [
+        {"url": "https://images.unsplash.com/photo-1598971639058-fab3c32f850c?auto=format&fit=crop&q=80&w=300", "desc": "준비: 플랭크 자세로 전신 고정"},
+        {"url": "https://images.unsplash.com/photo-1571019614242-c5c5dee9f50b?auto=format&fit=crop&q=80&w=300", "desc": "진행: 가슴을 지면 가까이 하강"},
+        {"url": "https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?auto=format&fit=crop&q=80&w=300", "desc": "완료: 겨드랑이에 힘주며 밀어내기"}
+      ],
       "steps": [
         "양손을 어깨너비보다 약간 넓게 짚고 몸을 일직선으로 만듭니다.",
         "가슴이 바닥에 닿기 전까지 천천히 몸을 내립니다.",
         "팔꿈치를 펴면서 바닥을 강하게 밀어 올려 원위치합니다."
       ],
-      "posture_tips": "어깨가 위로 으쓱하지 않게 주의하며 견갑골을 안정화시키세요.",
+      "posture_tips": "허리가 아래로 처지거나 엉덩이가 위로 솟지 않도록 코어 긴장을 유지하세요.",
       "icon": "fa-mound"
     },
     {
@@ -38,12 +44,15 @@
       "category": "코어",
       "target": "복근 전신",
       "difficulty": "초급",
-      "video": "https://www.youtube.com/embed/v7S_m9beZ_U",
-      "image": "https://images.unsplash.com/photo-1566241142559-40e1bfc26ddc?auto=format&fit=crop&q=80&w=600",
+      "steps_images": [
+        {"url": "https://images.unsplash.com/photo-1566241142559-40e1bfc26ddc?auto=format&fit=crop&q=80&w=300", "desc": "준비: 팔꿈치를 어깨 아래 수직 배치"},
+        {"url": "https://images.unsplash.com/photo-1548690312-e3b507d17a47?auto=format&fit=crop&q=80&w=300", "desc": "진행: 복부와 엉덩이 강하게 수축"},
+        {"url": "https://images.unsplash.com/photo-1518611012118-29a1aa673466?auto=format&fit=crop&q=80&w=300", "desc": "완료: 호흡을 유지하며 정해진 시간 버티기"}
+      ],
       "steps": [
         "팔꿈치를 바닥에 대고 몸을 띄워 머리부터 발목까지 일직선을 유지합니다.",
-        "복부와 엉덩이에 강한 힘을 주어 허리가 처지지 않게 합니다.",
-        "시선은 손 사이 바닥을 바라보며 정해진 시간을 버팁니다."
+        "복부에 강한 힘을 주어 허리가 처지지 않게 합니다.",
+        "시선은 손 사이 바닥을 바라보며 버팁니다."
       ],
       "posture_tips": "엉덩이가 너무 높게 들리거나 아래로 꺾이지 않도록 주의하세요.",
       "icon": "fa-minus"
@@ -54,14 +63,17 @@
       "category": "하체",
       "target": "허벅지, 엉덩이",
       "difficulty": "초급",
-      "video": "https://www.youtube.com/embed/oGyZ52_fw_Y",
-      "image": "https://images.unsplash.com/photo-1536922645635-7674e677c47a?auto=format&fit=crop&q=80&w=600",
+      "steps_images": [
+        {"url": "https://images.unsplash.com/photo-1536922645635-7674e677c47a?auto=format&fit=crop&q=80&w=300", "desc": "준비: 상체를 세우고 시선 정면"},
+        {"url": "https://images.unsplash.com/photo-1594882645126-14020914d58d?auto=format&fit=crop&q=80&w=300", "desc": "진행: 수직으로 앉으며 무릎 90도"},
+        {"url": "https://images.unsplash.com/photo-1517836357463-d25dfeac3438?auto=format&fit=crop&q=80&w=300", "desc": "완료: 앞발 힘으로 지면 밀며 복귀"}
+      ],
       "steps": [
         "한 발을 앞으로 내딛고 무릎이 90도가 되도록 몸을 내립니다.",
         "상체를 곧게 세우고 무게 중심을 중앙에 둡니다.",
         "앞꿈치와 뒷꿈치의 힘을 고르게 사용하여 제자리로 돌아옵니다."
       ],
-      "posture_tips": "무릎이 바닥에 쾅 닿지 않도록 천천히 조절하며 움직이세요.",
+      "posture_tips": "앞쪽 무릎이 발가락 끝보다 앞으로 나가지 않도록 주의하세요.",
       "icon": "fa-person-walking"
     }
   ],

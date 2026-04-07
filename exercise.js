@@ -57,19 +57,23 @@ document.addEventListener('DOMContentLoaded', () => {
             if (ex) {
                 const card = document.createElement('div');
                 card.className = 'exercise-step-card';
+                
+                let imagesHTML = '';
+                if (ex.steps_images) {
+                    imagesHTML = `
+                        <div class="steps-gallery" style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-bottom: 20px;">
+                            ${ex.steps_images.map(img => `
+                                <div class="step-img-box">
+                                    <img src="${img.url}" alt="${img.desc}" style="width:100%; height:120px; object-fit:cover; border-radius:8px;">
+                                    <p style="font-size:0.7rem; color:#64748b; margin-top:5px; text-align:center; line-height:1.2;">${img.desc}</p>
+                                </div>
+                            `).join('')}
+                        </div>
+                    `;
+                }
+
                 card.innerHTML = `
-                    <div class="step-img-placeholder" id="img-container-${ex.id}" style="height:220px; background:#000; overflow:hidden;">
-                        ${ex.video ? `<iframe width="100%" height="100%" src="${ex.video}?rel=0&modestbranding=1" 
-                            title="${ex.name} 가이드 영상"
-                            frameborder="0" 
-                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
-                            allowfullscreen 
-                            style="width:100%; height:100%; border-radius:16px;"></iframe>` : 
-                          (ex.image ? `<img src="${ex.image}" alt="${ex.name}" 
-                            style="width:100%; height:100%; object-fit:cover; border-radius:16px;"
-                            onerror="this.parentElement.innerHTML='<i class=\'fas ${ex.icon}\'></i>'">` : 
-                            `<i class="fas ${ex.icon}"></i>`)}
-                    </div>
+                    ${imagesHTML}
                     <div style="display:flex; justify-content:space-between; align-items:center; margin:15px 0;">
                         <span style="font-size:0.8rem; color:var(--accent-color); font-weight:700;">${ex.category} | ${ex.difficulty}</span>
                         <span style="font-size:0.8rem; background:#f1f5f9; padding:2px 8px; border-radius:4px;">${ex.target}</span>
