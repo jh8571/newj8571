@@ -114,8 +114,19 @@
                 <h2 id="course-title" style="font-size: 2.2rem; color: var(--primary-color); margin-bottom: 15px;">추천 코스 제목</h2>
                 <p id="course-desc" style="max-width: 800px; margin: 0 auto; color: var(--text-muted); line-height: 1.8; font-size: 1.1rem;">코스 설명이 들어갑니다.</p>
             </div>
+
+            <!-- Category Filter Added -->
+            <div class="category-filter" style="display: flex; justify-content: center; gap: 10px; margin-top: 40px; flex-wrap: wrap;">
+                <button class="cat-btn active" onclick="filterExercises('전체')" style="padding: 10px 20px; border-radius: 20px; border: 1px solid #ddd; background: white; cursor: pointer;">전체</button>
+                <button class="cat-btn" onclick="filterExercises('가슴')" style="padding: 10px 20px; border-radius: 20px; border: 1px solid #ddd; background: white; cursor: pointer;">가슴</button>
+                <button class="cat-btn" onclick="filterExercises('등')" style="padding: 10px 20px; border-radius: 20px; border: 1px solid #ddd; background: white; cursor: pointer;">등</button>
+                <button class="cat-btn" onclick="filterExercises('어깨')" style="padding: 10px 20px; border-radius: 20px; border: 1px solid #ddd; background: white; cursor: pointer;">어깨</button>
+                <button class="cat-btn" onclick="filterExercises('하체')" style="padding: 10px 20px; border-radius: 20px; border: 1px solid #ddd; background: white; cursor: pointer;">하체</button>
+                <button class="cat-btn" onclick="filterExercises('복근')" style="padding: 10px 20px; border-radius: 20px; border: 1px solid #ddd; background: white; cursor: pointer;">복근</button>
+                <button class="cat-btn" onclick="filterExercises('팔')" style="padding: 10px 20px; border-radius: 20px; border: 1px solid #ddd; background: white; cursor: pointer;">팔</button>
+            </div>
             
-            <div style="margin-top: 60px;">
+            <div style="margin-top: 40px;">
                 <h3 style="margin-bottom: 30px; font-size: 1.6rem; display: flex; align-items: center; gap: 10px;">
                     <i class="fas fa-dumbbell" style="color: var(--accent-color);"></i> 맞춤형 운동 루틴
                 </h3>

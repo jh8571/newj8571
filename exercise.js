@@ -1,10 +1,13 @@
 document.addEventListener('DOMContentLoaded', () => {
     let exerciseData = null;
+    let currentCategory = '전체';
 
     // Load data
     fetch('exercise_data.json')
         .then(r => r.json())
-        .then(data => { exerciseData = data; })
+        .then(data => { 
+            exerciseData = data; 
+        })
         .catch(e => console.error("Exercise data load error:", e));
 
     window.calculateBMI = function() {
@@ -38,76 +41,94 @@ document.addEventListener('DOMContentLoaded', () => {
         document.getElementById('bmi-category').innerText = category;
         document.getElementById('result-card').style.display = 'block';
         
-        if (exerciseData && exerciseData.courses[courseKey]) {
+        if (exerciseData) {
             renderRecommendation(courseKey);
         }
+    };
+
+    window.filterExercises = function(category) {
+        currentCategory = category;
+        
+        // Update button UI
+        document.querySelectorAll('.cat-btn').forEach(btn => {
+            btn.classList.remove('active');
+            btn.style.background = 'white';
+            btn.style.color = 'inherit';
+            if (btn.innerText === category) {
+                btn.classList.add('active');
+                btn.style.background = 'var(--primary-color)';
+                btn.style.color = 'white';
+            }
+        });
+
+        renderExerciseList();
     };
 
     function renderRecommendation(key) {
         const course = exerciseData.courses[key];
         document.getElementById('course-title').innerText = course.title;
-        document.getElementById('course-desc').innerText = course.description;
-        document.getElementById('nutrition-tip').innerText = course.nutrition_tip;
-
-        // Render Exercises
-        const exerciseList = document.getElementById('exercise-steps-grid');
-        exerciseList.innerHTML = '';
-        course.exerciseIds.forEach(id => {
-            const ex = exerciseData.exercises.find(e => e.id === id);
-            if (ex) {
-                const card = document.createElement('div');
-                card.className = 'exercise-step-card';
-                
-                let imagesHTML = '';
-                if (ex.steps_images) {
-                    imagesHTML = `
-                        <div class="steps-gallery" style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-bottom: 20px;">
-                            ${ex.steps_images.map(img => `
-                                <div class="step-img-box">
-                                    <img src="${img.url}" alt="${img.desc}" style="width:100%; height:120px; object-fit:cover; border-radius:8px;">
-                                    <p style="font-size:0.7rem; color:#64748b; margin-top:5px; text-align:center; line-height:1.2;">${img.desc}</p>
-                                </div>
-                            `).join('')}
-                        </div>
-                    `;
-                }
-
-                card.innerHTML = `
-                    ${imagesHTML}
-                    <div style="display:flex; justify-content:space-between; align-items:center; margin:15px 0;">
-                        <span style="font-size:0.8rem; color:var(--accent-color); font-weight:700;">${ex.category} | ${ex.difficulty}</span>
-                        <span style="font-size:0.8rem; background:#f1f5f9; padding:2px 8px; border-radius:4px;">${ex.target}</span>
-                    </div>
-                    <h4 style="font-size:1.3rem; margin-bottom:15px; color:var(--primary-color);">${ex.name}</h4>
-                    <ul class="step-list">
-                        ${ex.steps.map(s => `<li>${s}</li>`).join('')}
-                    </ul>
-                    <div style="margin-top:20px; padding:15px; background:#fff9db; border-radius:12px; font-size:0.9rem; color:#856404;">
-                        <strong><i class="fas fa-lightbulb"></i> 자세 팁:</strong> ${ex.posture_tips}
-                    </div>
-                `;
-                exerciseList.appendChild(card);
-            }
-        });
-
+        document.getElementById('course-desc').innerText = course.description || "당신의 체형에 최적화된 운동 루틴입니다.";
+        
         // Render Meals
         document.getElementById('breakfast-text').innerText = course.meals.breakfast;
         document.getElementById('lunch-text').innerText = course.meals.lunch;
         document.getElementById('dinner-text').innerText = course.meals.dinner;
-        
-        const snackCard = document.getElementById('snack-card');
-        const snackText = document.getElementById('snack-text');
-        if (course.meals.snack) {
-            snackCard.style.display = 'block';
-            snackText.innerText = course.meals.snack;
-        } else {
-            snackCard.style.display = 'none';
-        }
+        document.getElementById('nutrition-tip').innerText = course.meals.nutrition_tip;
 
         document.getElementById('recommendation-section').style.display = 'block';
+        
+        // Initial render of all exercises
+        renderExerciseList();
+
         window.scrollTo({
             top: document.getElementById('recommendation-section').offsetTop - 50,
             behavior: 'smooth'
+        });
+    }
+
+    function renderExerciseList() {
+        const exerciseList = document.getElementById('exercise-steps-grid');
+        exerciseList.innerHTML = '';
+
+        const filtered = exerciseData.exercises.filter(ex => 
+            currentCategory === '전체' || ex.category === currentCategory
+        );
+
+        filtered.forEach(ex => {
+            const card = document.createElement('div');
+            card.className = 'exercise-step-card';
+            
+            let imagesHTML = '';
+            if (ex.steps_images) {
+                imagesHTML = `
+                    <div class="steps-gallery" style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-bottom: 20px;">
+                        ${ex.steps_images.map(img => `
+                            <div class="step-img-box">
+                                <img src="${img.url}" alt="${img.desc}" 
+                                    style="width:100%; height:120px; object-fit:cover; border-radius:8px;"
+                                    onerror="this.src='https://via.placeholder.com/300x300?text=Image+Error'">
+                                <p style="font-size:0.7rem; color:#64748b; margin-top:5px; text-align:center; line-height:1.2;">${img.desc}</p>
+                            </div>
+                        `).join('')}
+                    </div>
+                `;
+            }
+
+            card.innerHTML = `
+                ${imagesHTML}
+                <div style="display:flex; justify-content:space-between; align-items:center; margin:15px 0;">
+                    <span style="font-size:0.8rem; color:var(--accent-color); font-weight:700;">${ex.category} | ${ex.difficulty}</span>
+                    <span style="font-size:0.8rem; background:#f1f5f9; padding:2px 8px; border-radius:4px;">${ex.target}</span>
+                </div>
+                <h4 style="font-size:1.3rem; margin-bottom:15px; color:var(--primary-color);">${ex.name}</h4>
+                <ul class="step-list">
+                    ${ex.steps.map(s => `<li>${s}</li>`).join('')}
+                </ul>
+                <div style="margin-top:20px; padding:15px; background:#fff9db; border-radius:12px; font-size:0.9rem; color:#856404;">
+                    <strong><i class="fas fa-lightbulb"></i> 자세 팁:</strong> ${ex.posture_tips}
+                </div>
+            `;
+            exerciseList.appendChild(card);
         });
     }
 });
