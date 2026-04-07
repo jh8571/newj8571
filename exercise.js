@@ -54,7 +54,7 @@ document.addEventListener('DOMContentLoaded', () => {
             btn.classList.remove('active');
             btn.style.background = 'white';
             btn.style.color = 'inherit';
-            if (btn.innerText === category) {
+            if (btn.innerText === category || (category === '전문차트' && btn.innerText === '전문 차트')) {
                 btn.classList.add('active');
                 btn.style.background = 'var(--primary-color)';
                 btn.style.color = 'white';
@@ -77,7 +77,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         document.getElementById('recommendation-section').style.display = 'block';
         
-        // Initial render of all exercises
+        // Initial render
         renderExerciseList();
 
         window.scrollTo({
@@ -89,6 +89,25 @@ document.addEventListener('DOMContentLoaded', () => {
     function renderExerciseList() {
         const exerciseList = document.getElementById('exercise-steps-grid');
         exerciseList.innerHTML = '';
+
+        if (currentCategory === '전문차트') {
+            exerciseData.full_charts.forEach(chart => {
+                const card = document.createElement('div');
+                card.className = 'exercise-step-card';
+                card.innerHTML = `
+                    <div class="full-chart-box" style="margin-bottom: 20px;">
+                        <img src="${chart.image}" alt="${chart.name}" style="width:100%; border-radius:12px; border: 1px solid #eee;">
+                    </div>
+                    <div style="display:flex; justify-content:space-between; align-items:center;">
+                        <span style="font-size:0.8rem; color:var(--accent-color); font-weight:700;">${chart.category} | 전문 가이드</span>
+                    </div>
+                    <h4 style="font-size:1.3rem; margin:10px 0; color:var(--primary-color);">${chart.name}</h4>
+                    <p style="color: #64748b; font-size: 0.95rem;">${chart.desc}</p>
+                `;
+                exerciseList.appendChild(card);
+            });
+            return;
+        }
 
         const filtered = exerciseData.exercises.filter(ex => 
             currentCategory === '전체' || ex.category === currentCategory
