@@ -44,34 +44,25 @@ document.addEventListener('DOMContentLoaded', () => {
             return;
         }
         
+        // Improve search query: remove '약' suffix if it exists to match base terms like '혈압', '당뇨'
+        let refinedQuery = searchQuery;
+        if (searchQuery.length > 1 && searchQuery.endsWith('약')) {
+            refinedQuery = searchQuery.slice(0, -1);
+        }
+        
         if (welcomeMessage) welcomeMessage.style.display = 'none';
         if (resultsSection) resultsSection.style.display = 'block';
-        renderDrugs();
+        
+        renderDrugs(refinedQuery);
     }
 
-    // Category Filtering
-    categoryButtons.forEach(button => {
-        button.addEventListener('click', () => {
-            categoryButtons.forEach(btn => {
-                btn.classList.remove('active');
-                btn.style.background = 'white';
-                btn.style.color = 'inherit';
-            });
-            button.classList.add('active');
-            button.style.background = '#004e92';
-            button.style.color = 'white';
-            currentCategory = button.getAttribute('data-category');
-            renderDrugs();
-        });
-    });
-
-    function renderDrugs() {
+    function renderDrugs(query = searchQuery) {
         const filteredDrugs = drugData.filter(drug => {
             const matchesCategory = currentCategory === '전체' || drug.category === currentCategory;
-            const matchesSearch = drug.name.toLowerCase().includes(searchQuery) || 
-                                drug.manufacturer.toLowerCase().includes(searchQuery) ||
-                                drug.ingredients.toLowerCase().includes(searchQuery) ||
-                                drug.efficacy.toLowerCase().includes(searchQuery);
+            const matchesSearch = drug.name.toLowerCase().includes(query) || 
+                                drug.manufacturer.toLowerCase().includes(query) ||
+                                drug.ingredients.toLowerCase().includes(query) ||
+                                drug.efficacy.toLowerCase().includes(query);
             return matchesCategory && matchesSearch;
         });
 

@@ -6,6 +6,7 @@
       "category": "하체/엉덩이",
       "target": "허벅지 안쪽, 대둔근",
       "difficulty": "중급",
+      "image": "https://images.unsplash.com/photo-1566241440091-ec10de8db2e1?auto=format&fit=crop&q=80&w=400",
       "steps": [
         "발을 어깨너비보다 넓게 벌리고 발끝을 45도 바깥으로 향하게 합니다.",
         "허리를 곧게 펴고 천천히 무릎을 굽히며 내려갑니다.",
@@ -20,6 +21,7 @@
       "category": "상체/삼두",
       "target": "삼두근, 가슴 안쪽",
       "difficulty": "고급",
+      "image": "https://images.unsplash.com/photo-1571019614242-c5c5dee9f50b?auto=format&fit=crop&q=80&w=400",
       "steps": [
         "양손의 검지와 엄지를 맞대어 다이아몬드 모양을 만듭니다.",
         "가슴 바로 아래에 손을 위치시키고 푸쉬업 자세를 취합니다.",
@@ -34,6 +36,7 @@
       "category": "코어/복근",
       "target": "외복사근, 코어 안정성",
       "difficulty": "중급",
+      "image": "https://images.unsplash.com/photo-1548690312-e3b507d17a47?auto=format&fit=crop&q=80&w=400",
       "steps": [
         "옆으로 누워 한쪽 팔꿈치로 바닥을 지탱합니다.",
         "골반을 들어 올려 머리부터 발끝까지 일직선이 되게 합니다.",
@@ -48,6 +51,7 @@
       "category": "하체/밸런스",
       "target": "대퇴사두근, 둔근",
       "difficulty": "초급",
+      "image": "https://images.unsplash.com/photo-1594882645126-14020914d58d?auto=format&fit=crop&q=80&w=400",
       "steps": [
         "똑바로 선 자세에서 한쪽 발을 뒤로 크게 내딛습니다.",
         "뒷무릎이 바닥에 닿기 직전까지 수직으로 내려갑니다.",
@@ -62,6 +66,7 @@
       "category": "전신/유산소",
       "target": "복근, 어깨, 심폐지구력",
       "difficulty": "중급",
+      "image": "https://images.unsplash.com/photo-1434608519344-49d77a699e1d?auto=format&fit=crop&q=80&w=400",
       "steps": [
         "플랭크 자세에서 양손으로 바닥을 견고하게 지지합니다.",
         "달리기를 하듯 한쪽 무릎을 가슴 쪽으로 빠르게 당겨옵니다.",
@@ -76,6 +81,7 @@
       "category": "코어/척추기립근",
       "target": "척추 기립근, 둔근",
       "difficulty": "초급",
+      "image": "https://images.unsplash.com/photo-1518611012118-29a1aa673466?auto=format&fit=crop&q=80&w=400",
       "steps": [
         "네발기기 자세에서 손은 어깨 아래, 무릎은 골반 아래 둡니다.",
         "교차하는 팔과 다리를 동시에 앞뒤로 길게 뻗습니다.",
@@ -83,13 +89,73 @@
       ],
       "posture_tips": "팔과 다리를 높이 드는 것보다 멀리 뻗는다는 느낌으로 허리의 수평을 유지하세요.",
       "icon": "fa-dog"
+    },
+    {
+      "id": "bridge",
+      "name": "글루트 브릿지 (Glute Bridge)",
+      "category": "하체/엉덩이",
+      "target": "둔근, 햄스트링",
+      "difficulty": "초급",
+      "image": "https://images.unsplash.com/photo-1567598508481-65985588e295?auto=format&fit=crop&q=80&w=400",
+      "steps": [
+        "바닥에 등을 대고 누워 무릎을 굽히고 발을 지면에 둡니다.",
+        "엉덩이에 힘을 주며 골반을 위로 들어 올립니다.",
+        "정점에서 1~2초간 멈춘 후 천천히 내려옵니다."
+      ],
+      "posture_tips": "허리가 과하게 꺾이지 않도록 복부에 긴장을 유지하세요.",
+      "icon": "fa-archway"
+    },
+    {
+      "id": "plank_updown",
+      "name": "플랭크 투 푸쉬업 (Plank to Push-up)",
+      "category": "전신/코어",
+      "target": "삼두근, 코어, 가슴",
+      "difficulty": "고급",
+      "image": "https://images.unsplash.com/photo-1517836357463-d25dfeac3438?auto=format&fit=crop&q=80&w=400",
+      "steps": [
+        "엘보우 플랭크 자세에서 시작합니다.",
+        "한쪽 손씩 바닥을 짚으며 하이 플랭크 자세로 올라옵니다.",
+        "다시 한쪽 팔꿈치씩 바닥에 대며 돌아옵니다."
+      ],
+      "posture_tips": "몸이 좌우로 흔들리지 않도록 골반을 고정하는 것이 중요합니다.",
+      "icon": "fa-arrows-up-down"
+    },
+    {
+      "id": "jumping_jack",
+      "name": "팔 벌려 뛰기 (Jumping Jack)",
+      "category": "전신/유산소",
+      "target": "전신, 심폐지구력",
+      "difficulty": "초급",
+      "image": "https://images.unsplash.com/photo-1534438327276-14e5300c3a48?auto=format&fit=crop&q=80&w=400",
+      "steps": [
+        "차렷 자세에서 가볍게 점프하며 양발을 벌리고 양손을 머리 위로 올립니다.",
+        "다시 점프하며 원래 자세로 돌아옵니다.",
+        "박자에 맞춰 일정한 속도로 반복합니다."
+      ],
+      "posture_tips": "발바닥 전체가 아닌 앞꿈치로 가볍게 착지하여 무릎 충격을 줄이세요.",
+      "icon": "fa-person-walking-arrow-loop-left"
+    },
+    {
+      "id": "side_lunge",
+      "name": "사이드 런지 (Side Lunge)",
+      "category": "하체/엉덩이",
+      "target": "허벅지 안쪽, 대둔근",
+      "difficulty": "중급",
+      "image": "https://images.unsplash.com/photo-1591940742878-13aba4b7a35e?auto=format&fit=crop&q=80&w=400",
+      "steps": [
+        "발을 어깨너비로 벌리고 섭니다.",
+        "한쪽 발을 크게 옆으로 내딛으며 무릎을 굽힙니다.",
+        "반대쪽 다리는 곧게 펴고 체중을 굽힌 다리 쪽으로 이동시킵니다."
+      ],
+      "posture_tips": "가슴을 펴고 시선은 정면을 유지하며 엉덩이를 뒤로 충분히 빼세요.",
+      "icon": "fa-person-walking-arrow-right"
     }
   ],
   "courses": {
     "ectomorph": {
       "title": "마른 체형(외배엽)을 위한 벌크업 솔루션",
       "description": "빠른 대사를 보완하기 위해 고강도 근력 운동과 고열량, 고단백 식단을 결합한 근비대 집중 코스입니다.",
-      "exerciseIds": ["squat", "pushup", "bird_dog"],
+      "exerciseIds": ["squat", "pushup", "bird_dog", "bridge", "plank_updown"],
       "meals": {
         "breakfast": "오트밀 1컵, 우유, 블루베리, 삶은 달걀 2개",
         "lunch": "흰쌀밥 1.5공기, 소고기 볶음 200g, 구운 채소",
@@ -101,7 +167,7 @@
     "mesomorph": {
       "title": "표준 체형(중배엽)을 위한 바디 쉐이핑",
       "description": "근육 발달이 용이한 체형의 장점을 살려 데피니션과 밸런스를 최적화하는 코스입니다.",
-      "exerciseIds": ["squat", "plank_side", "mountain_climber"],
+      "exerciseIds": ["squat", "plank_side", "mountain_climber", "side_lunge", "pushup"],
       "meals": {
         "breakfast": "통밀 식빵 2조각, 스크램블 에그, 사과 1개",
         "lunch": "현미밥 1공기, 생선구이(고등어/연어), 나물 반찬",
@@ -113,7 +179,7 @@
     "endomorph": {
       "title": "비만 체형(내배엽)을 위한 강력 체지방 연소",
       "description": "느린 대사를 가속화하기 위해 전신 유산소 근력 운동과 저탄수화물 중심의 식단을 제공합니다.",
-      "exerciseIds": ["mountain_climber", "lunge_back", "plank_side"],
+      "exerciseIds": ["mountain_climber", "lunge_back", "plank_side", "jumping_jack", "plank_updown"],
       "meals": {
         "breakfast": "해독 주스(케일, 사과), 삶은 달걀 흰자 3개",
         "lunch": "닭가슴살 샐러드, 고구마 1개(중), 오리엔탈 드레싱",
