@@ -50,12 +50,14 @@ document.addEventListener('DOMContentLoaded', () => {
     };
 
     let selectedCardsCount = 0;
+    let selectedCardsData = []; // 뽑은 카드 데이터 저장용
 
     window.renderTarot = function() {
-        selectedCardsCount = 0; // 초기화
+        selectedCardsCount = 0;
+        selectedCardsData = [];
         container.innerHTML = `
             <h2 style="color:var(--primary-color); margin-bottom:20px;">당신의 운명을 선택하세요</h2>
-            <p style="color:var(--text-muted); margin-bottom:40px;">깊게 숨을 들이마시고, 가장 끌리는 카드 3장을 클릭하세요. (과거/현재/미래)</p>
+            <p style="color:var(--text-muted); margin-bottom:40px;">깊게 숨을 들이마시고, 가장 끌리는 카드 3장을 차례대로 클릭하세요.</p>
             <div class="tarot-grid" id="tarot-cards-container">
                 ${Array(12).fill(0).map((_, i) => `
                     <div class="tarot-card-container" id="card-${i}" onclick="flipTarot(${i})">
@@ -72,35 +74,54 @@ document.addEventListener('DOMContentLoaded', () => {
         const cardElement = document.getElementById(`card-${index}`);
         if (cardElement.classList.contains('flipped') || selectedCardsCount >= 3) return;
 
-        selectedCardsCount++;
         const randomIndex = Math.floor(Math.random() * fortuneData.tarot.cards.length);
         const cardData = fortuneData.tarot.cards[randomIndex];
-        const frontFace = document.getElementById(`front-${index}`);
         
+        selectedCardsData.push(cardData); // 데이터 저장
+        selectedCardsCount++;
+
+        const frontFace = document.getElementById(`front-${index}`);
         frontFace.innerHTML = `<img src="${tarotImages[randomIndex]}" alt="${cardData.name}" style="width:100%; height:100%; object-fit:cover;">`;
         
         cardElement.classList.add('flipped');
 
         if (selectedCardsCount === 3) {
-            setTimeout(showTarotTotalResult, 1000);
+            setTimeout(showTarotTotalResult, 800);
         }
     };
 
     function showTarotTotalResult() {
         const resultDisplay = document.getElementById('tarot-result-display');
-        resultDisplay.innerHTML = `
-            <div class="fortune-result-box">
-                <h3 style="color:var(--primary-color); margin-bottom:20px;"><i class="fas fa-scroll"></i> 통합 타로 해석 리포트</h3>
-                <p style="font-size:1.15rem; line-height:1.9; color:#334155;">
-                    귀하가 선택한 세 장의 흐름은 <strong>'변화와 적응, 그리고 결실'</strong>로 요약됩니다. 
-                    과거의 어려움이 현재의 기회로 전환되는 강력한 에너지가 포착되었습니다. 
-                    미래 카드에 따르면, 조만간 뜻밖의 소식이 전해질 것이며 이를 통해 금전적인 안정을 찾게 될 것입니다. 
-                    자신의 직관을 믿고 추진력을 발휘해 보세요.
-                </p>
+        const labels = ["과거 (기원과 배경)", "현재 (상황과 조언)", "미래 (흐름과 결과)"];
+        
+        let resultHTML = `
+            <div class="fortune-result-box" style="margin-top:50px;">
+                <h3 style="color:var(--primary-color); margin-bottom:30px; text-align:center;"><i class="fas fa-scroll"></i> 3카드 스프레드 심층 해석</h3>
+                <div style="display:grid; gap:25px;">
+        `;
+
+        selectedCardsData.forEach((card, i) => {
+            resultHTML += `
+                <div style="padding:20px; background:white; border-radius:15px; border:1px solid #e2e8f0;">
+                    <span style="display:inline-block; padding:4px 12px; background:var(--accent-color); color:white; border-radius:50px; font-size:0.85rem; font-weight:700; margin-bottom:10px;">${labels[i]}</span>
+                    <h4 style="font-size:1.2rem; color:var(--primary-color); margin-bottom:10px;">${card.name}</h4>
+                    <p style="line-height:1.7; color:#475569;">${card.meaning}</p>
+                </div>
+            `;
+        });
+
+        resultHTML += `
+                </div>
+                <div style="margin-top:40px; padding:25px; background:var(--primary-color); color:white; border-radius:20px; text-align:center;">
+                    <h4 style="margin-bottom:10px;"><i class="fas fa-lightbulb"></i> 종합 운세 한마디</h4>
+                    <p style="font-size:1.1rem; opacity:0.9;">선택하신 카드들은 현재 귀하의 삶에 '중요한 전환점'이 찾아왔음을 보여줍니다. 과거의 경험을 자양분 삼아 현재의 기회를 잡는다면 밝은 미래가 기다리고 있습니다.</p>
+                </div>
                 <button class="calc-btn" style="width:100%; margin-top:30px;" onclick="window.renderTarot()">새로운 운세 보기</button>
             </div>
         `;
-        window.scrollTo({ top: resultDisplay.offsetTop - 100, behavior: 'smooth' });
+
+        resultDisplay.innerHTML = resultHTML;
+        window.scrollTo({ top: resultDisplay.offsetTop - 50, behavior: 'smooth' });
     }
 
     function renderSaju() {
@@ -246,7 +267,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     ${fortuneData.physiognomy.pro_text}
                 </p>
                 <p style="font-size:1.1rem; line-height:2.0; color:#334155;">
-                    종합적으로 볼 때, 귀하의 관상은 <strong>'재물이 샘솟고 명예가 뒤따르는 대길(大吉)의 상'</strong>입니다. 
+                    종합적으로 볼 때, 귀하의 관상은 <strong>'재물이 샘솟고 명예가 뒤따르는 대길(대길)의 상'</strong>입니다. 
                     특히 눈매에서 뿜어져 나오는 강한 안광은 목표를 향한 집념과 성공운을 동시에 상징합니다. 
                     현재 진행 중인 프로젝트나 계획이 있다면 주저하지 말고 추진하십시오. 
                     관상학적 기운이 귀하의 결단을 강력하게 뒷받침하고 있습니다.
