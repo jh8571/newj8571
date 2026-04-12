@@ -32,9 +32,6 @@
     <meta property="og:image" content="https://jh8571.github.io/newj8571/favicon.svg">
     <meta property="og:site_name" content="VitalBalance">
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="VitalBalance - 마인드 & 바디 전인적 솔루션 센터">
-    <meta name="twitter:description" content="VitalBalance는 정확한 의약품 정보 검색, 올바른 운동 가이드, 심리 테스트 등 신체와 정신의 조화로운 건강을 위한 전인적 솔루션을 제공합니다.">
-    <meta name="twitter:image" content="https://jh8571.github.io/newj8571/favicon.svg">
     <script type="application/ld+json">
     {
       "@context": "https://schema.org",
@@ -42,7 +39,6 @@
       "name": "VitalBalance",
       "url": "https://jh8571.github.io/newj8571/",
       "description": "전인적 건강 관리를 위한 의약품 검색, 맞춤형 운동 가이드, 심리 분석 솔루션 플랫폼",
-      "alternateName": "바이탈밸런스",
       "about": [
         {"@type": "Drug", "name": "의약품 정보"},
         {"@type": "ExercisePlan", "name": "맞춤형 운동"},
@@ -80,146 +76,106 @@
             </div>
             <p style="line-height: 1.8; color: #475569; font-weight: 400; font-size: 1.05rem;">
                 VitalBalance는 <strong>신체와 정신의 완벽한 조화</strong>를 위해 설계된 프리미엄 웰니스 플랫폼입니다. 
-                100여 종의 핵심 의약품 정밀 데이터베이스, BMI 기반의 체계적인 맞춤형 운동 및 식단 솔루션, 
-                그리고 전문 심리 분석 도구를 통해 당신의 삶에 품격 있는 건강을 더해드립니다.
+                전문적인 의약품 정밀 데이터베이스와 BMI 기반 맞춤형 운동 루틴, 그리고 정밀 심리 분석 도구를 통합하여 
+                단순한 정보 제공을 넘어 당신의 삶의 질을 실질적으로 높여드립니다.
             </p>
         </section>
 
         <div class="search-section" style="text-align: center; margin-bottom: 50px;">
-            <h2 style="font-size: 2rem; margin-bottom: 10px; color: #0f172a;">무엇을 찾으시나요?</h2>
-            <p style="color: #64748b; margin-bottom: 30px;">정확하고 전문적인 의약품 정보를 지금 바로 검색하세요.</p>
-            <div class="search-container" style="max-width: 700px; margin: 0 auto; position: relative; box-shadow: 0 15px 35px rgba(0,0,0,0.1); border-radius: 50px; overflow: hidden;">
-                <input type="text" id="search-input" placeholder="약품명, 증상, 성분 등으로 검색..." style="width: 100%; padding: 20px 30px; border: none; font-size: 1.1rem; outline: none;">
-                <button id="search-btn" style="position: absolute; right: 5px; top: 5px; bottom: 5px; padding: 0 35px; border-radius: 40px; background: var(--primary-color); color: white; border: none; font-weight: 700; cursor: pointer; transition: 0.3s;">검색</button>
+            <h2 style="font-size: 2.2rem; margin-bottom: 15px; color: #0f172a; font-weight: 800;">전문 의약품 정밀 검색</h2>
+            <p style="color: #64748b; margin-bottom: 35px; font-size: 1.1rem;">식약처 기반 데이터를 통해 정확한 약 성분과 주의사항을 확인하세요.</p>
+            <div class="search-container" style="max-width: 750px; margin: 0 auto; position: relative; box-shadow: 0 15px 45px rgba(0,0,0,0.08); border-radius: 50px; overflow: hidden; border: 1px solid #e2e8f0;">
+                <input type="text" id="search-input" placeholder="약품명, 증상(기침, 두통), 성분 등으로 검색..." style="width: 100%; padding: 22px 35px; border: none; font-size: 1.1rem; outline: none;">
+                <button id="search-btn" style="position: absolute; right: 8px; top: 8px; bottom: 8px; padding: 0 35px; border-radius: 40px; background: var(--primary-color); color: white; border: none; font-weight: 700; cursor: pointer; transition: 0.3s; font-size: 1rem;">검색</button>
             </div>
-            <div class="quick-tags" style="margin-top: 20px; display: flex; justify-content: center; gap: 10px; flex-wrap: wrap;">
-                <span style="font-size: 0.9rem; color: #94a3b8; align-self: center;">인기 검색어:</span>
-                <button onclick="quickSearch('혈압')" style="background: #f8fafc; border: 1px solid #e2e8f0; padding: 5px 15px; border-radius: 20px; font-size: 0.85rem; cursor: pointer; color: #475569;">#혈압약</button>
-                <button onclick="quickSearch('당뇨')" style="background: #f8fafc; border: 1px solid #e2e8f0; padding: 5px 15px; border-radius: 20px; font-size: 0.85rem; cursor: pointer; color: #475569;">#당뇨약</button>
-                <button onclick="quickSearch('관절')" style="background: #f8fafc; border: 1px solid #e2e8f0; padding: 5px 15px; border-radius: 20px; font-size: 0.85rem; cursor: pointer; color: #475569;">#관절염</button>
-                <button onclick="quickSearch('진통')" style="background: #f8fafc; border: 1px solid #e2e8f0; padding: 5px 15px; border-radius: 20px; font-size: 0.85rem; cursor: pointer; color: #475569;">#진통제</button>
-            </div>
-        </div>
-
-        <div id="welcome-message" class="no-results" style="padding: 60px 0;">
-            <div style="font-size: 4rem; color: #cbd5e1; margin-bottom: 20px;"><i class="fas fa-pills"></i></div>
-            <h3 style="color: #1e293b; margin-bottom: 10px;">신뢰할 수 있는 의약품 백과사전</h3>
-            <p style="color: #64748b;">국내 다빈도 처방 의약품 100종의 성분, 효능, 주의사항을 상세히 수록하였습니다.</p>
-        </div>
-
-        <div id="results-section" style="display:none;">
-            <div class="category-tabs" style="display:flex; justify-content:center; gap:10px; margin-bottom:30px;">
-                <button class="cat-btn active" data-category="전체" style="padding:8px 16px; border-radius:20px; border:1px solid #ddd; background:white; cursor:pointer;">전체</button>
-                <button class="cat-btn" data-category="전문의약품" style="padding:8px 16px; border-radius:20px; border:1px solid #ddd; background:white; cursor:pointer;">전문의약품</button>
-                <button class="cat-btn" data-category="일반의약품" style="padding:8px 16px; border-radius:20px; border:1px solid #ddd; background:white; cursor:pointer;">일반의약품</button>
-                <button class="cat-btn" data-category="건강기능식품" style="padding:8px 16px; border-radius:20px; border:1px solid #ddd; background:white; cursor:pointer;">건강기능식품</button>
-            </div>
-            <div id="drug-list" class="drug-grid">
-                <!-- Results -->
+            <div class="quick-tags" style="margin-top: 25px; display: flex; justify-content: center; gap: 12px; flex-wrap: wrap;">
+                <span style="font-size: 0.95rem; color: #94a3b8; align-self: center;">인기 키워드:</span>
+                <button onclick="quickSearch('혈압')" style="background: white; border: 1px solid #e2e8f0; padding: 6px 18px; border-radius: 20px; font-size: 0.85rem; cursor: pointer; color: #475569; transition: 0.2s;">#혈압약</button>
+                <button onclick="quickSearch('당뇨')" style="background: white; border: 1px solid #e2e8f0; padding: 6px 18px; border-radius: 20px; font-size: 0.85rem; cursor: pointer; color: #475569; transition: 0.2s;">#당뇨약</button>
+                <button onclick="quickSearch('비염')" style="background: white; border: 1px solid #e2e8f0; padding: 6px 18px; border-radius: 20px; font-size: 0.85rem; cursor: pointer; color: #475569; transition: 0.2s;">#알레르기</button>
+                <button onclick="quickSearch('진통')" style="background: white; border: 1px solid #e2e8f0; padding: 6px 18px; border-radius: 20px; font-size: 0.85rem; cursor: pointer; color: #475569; transition: 0.2s;">#해열진통제</button>
             </div>
         </div>
 
-        <!-- New Featured Sections for AdSense Value -->
-        <section class="home-info-section" style="margin-top: 60px; display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px;">
-            <div class="info-card" style="background: white; padding: 30px; border-radius: 20px; box-shadow: 0 4px 15px rgba(0,0,0,0.05);">
-                <h3 style="color: var(--accent-color); margin-bottom: 15px;"><i class="fas fa-dumbbell"></i> 맞춤형 운동 가이드</h3>
-                <p>BMI 분석을 통해 당신의 체형에 꼭 맞는 운동 코스와 식단을 추천해 드립니다. 단계별 자세 가이드로 안전하게 운동하세요.</p>
-            </div>
-            <div class="info-card" style="background: white; padding: 30px; border-radius: 20px; box-shadow: 0 4px 15px rgba(0,0,0,0.05);">
-                <h3 style="color: var(--accent-color); margin-bottom: 15px;"><i class="fas fa-brain"></i> 심리 및 성격 분석</h3>
-                <p>정밀 MBTI 테스트와 다양한 심리 검사를 통해 당신의 내면을 이해하고 마음의 평화를 얻는 방법을 제시합니다.</p>
-            </div>
-            <div class="info-card" style="background: white; padding: 30px; border-radius: 20px; box-shadow: 0 4px 15px rgba(0,0,0,0.05);">
-                <h3 style="color: var(--accent-color); margin-bottom: 15px;"><i class="fas fa-heartbeat"></i> 올바른 의약품 정보</h3>
-                <p>검증된 의약품 데이터를 기반으로 성분, 효능, 주의사항 등 꼭 알아야 할 정보를 투명하고 정확하게 제공합니다.</p>
-            </div>
-        </section>
+        <div id="drug-results" class="drug-list">
+            <!-- Results will be injected here -->
+        </div>
 
-        <section class="about-mediinfo" style="margin-top: 80px; background: #f1f5f9; padding: 60px 40px; border-radius: 30px;">
-            <h2 style="text-align: center; margin-bottom: 30px;">왜 VitalBalance 인가요?</h2>
-            <div style="max-width: 800px; margin: 0 auto; line-height: 1.8; color: #4a5568;">
-                <p>진정한 건강은 몸과 마음이 조화를 이룰 때 비로소 완성됩니다. VitalBalance는 단순히 질병 정보를 찾는 곳을 넘어, 일상 속에서 실천할 수 있는 운동, 식단, 그리고 마인드 케어까지 아우르는 <strong>토탈 웰니스 플랫폼</strong>을 지향합니다.</p>
-                <p style="margin-top: 20px;">우리는 최신 데이터와 직관적인 AI 분석 도구를 결합하여, 사용자가 자신의 상태를 정확히 인지하고 더 건강한 삶을 위한 선택을 내릴 수 있도록 돕습니다.</p>
+        <!-- Expert Content Section for AdSense/SEO -->
+        <section class="expert-features" style="margin-top: 100px; padding-top: 60px; border-top: 1px solid #f1f5f9;">
+            <div style="text-align: center; margin-bottom: 60px;">
+                <h2 style="font-size: 2.5rem; color: #0f172a; margin-bottom: 20px; font-weight: 800;">VitalBalance 웰니스 에코시스템</h2>
+                <p style="max-width: 850px; margin: 0 auto; color: #64748b; line-height: 2; font-size: 1.15rem;">
+                    우리는 신체적인 건강뿐만 아니라 정신적인 균형까지 아우르는 '전인적 건강(Holistic Health)'을 지향합니다. 
+                    검증된 데이터와 과학적 분석 도구를 통해 당신의 일상을 더 활력 있게 디자인하세요.
+                </p>
             </div>
-        </section>
 
-        <section class="latest-blog" style="margin-top: 80px;">
-            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px;">
-                <h2>최신 건강 가이드</h2>
-                <a href="blog.html" style="color: var(--primary-color); text-decoration: none; font-weight: 600;">전체 보기 <i class="fas fa-chevron-right"></i></a>
-            </div>
-            <div class="blog-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px;">
-                <div class="blog-item" style="background: white; border-radius: 15px; overflow: hidden; box-shadow: 0 4px 10px rgba(0,0,0,0.05);">
-                    <div style="padding: 20px;">
-                        <h4 style="margin-bottom: 10px;">올바른 영양제 복용법: 시간대별 가이드</h4>
-                        <p style="font-size: 0.9rem; color: #718096; margin-bottom: 15px;">영양제는 언제 먹느냐에 따라 그 효과가 천차만별이라는 사실을 알고 계셨나요?</p>
-                        <a href="blog.html" style="font-size: 0.85rem; color: var(--primary-color); font-weight: 700; text-decoration: none;">더 읽어보기</a>
-                    </div>
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 40px; margin-bottom: 80px;">
+                <div style="background: white; padding: 45px; border-radius: 30px; box-shadow: 0 10px 30px rgba(0,0,0,0.03); border: 1px solid #f1f5f9; transition: transform 0.3s ease;">
+                    <div style="font-size: 3rem; color: var(--primary-color); margin-bottom: 25px;"><i class="fas fa-pills"></i></div>
+                    <h3 style="font-size: 1.5rem; margin-bottom: 15px;">안전한 의약품 가이드</h3>
+                    <p style="color: #475569; line-height: 1.8; margin-bottom: 25px;">
+                        단순한 약 이름 검색을 넘어 성분 간 상호작용, 올바른 복용 시간, 그리고 반드시 지켜야 할 주의사항을 전문가의 시각에서 정리해 드립니다.
+                    </p>
+                    <a href="blog.html" style="color: var(--primary-color); font-weight: 700; text-decoration: none;">전문 가이드 보기 <i class="fas fa-arrow-right"></i></a>
                 </div>
-                <div class="blog-item" style="background: white; border-radius: 15px; overflow: hidden; box-shadow: 0 4px 10px rgba(0,0,0,0.05);">
-                    <div style="padding: 20px;">
-                        <h4 style="margin-bottom: 10px;">환절기 비염과 감기약, 똑똑하게 선택하기</h4>
-                        <p style="font-size: 0.9rem; color: #718096; margin-bottom: 15px;">계절이 바뀌는 환절기에는 일교차가 커지면서 면역력이 떨어지고 알레르기성 비염 환자가...</p>
-                        <a href="blog.html" style="font-size: 0.85rem; color: var(--primary-color); font-weight: 700; text-decoration: none;">더 읽어보기</a>
-                    </div>
+
+                <div style="background: white; padding: 45px; border-radius: 30px; box-shadow: 0 10px 30px rgba(0,0,0,0.03); border: 1px solid #f1f5f9;">
+                    <div style="font-size: 3rem; color: #ec4899; margin-bottom: 25px;"><i class="fas fa-dumbbell"></i></div>
+                    <h3 style="font-size: 1.5rem; margin-bottom: 15px;">과학적 운동 처방</h3>
+                    <p style="color: #475569; line-height: 1.8; margin-bottom: 25px;">
+                        당신의 신체 데이터(BMI)를 바탕으로 관절에 무리가 가지 않으면서도 기초대사량을 효과적으로 높일 수 있는 단계별 트레이닝 루틴을 제안합니다.
+                    </p>
+                    <a href="exercise.html" style="color: #ec4899; font-weight: 700; text-decoration: none;">내 코스 확인하기 <i class="fas fa-arrow-right"></i></a>
                 </div>
-                <div class="blog-item" style="background: white; border-radius: 15px; overflow: hidden; box-shadow: 0 4px 10px rgba(0,0,0,0.05);">
-                    <div style="padding: 20px;">
-                        <h4 style="margin-bottom: 10px;">현대인의 스트레스 관리: 심리 테스트의 역할</h4>
-                        <p style="font-size: 0.9rem; color: #718096; margin-bottom: 15px;">스트레스는 '만병의 근원'이라고 불릴 만큼 우리 건강에 큰 영향을 미칩니다.</p>
-                        <a href="blog.html" style="font-size: 0.85rem; color: var(--primary-color); font-weight: 700; text-decoration: none;">더 읽어보기</a>
+
+                <div style="background: white; padding: 45px; border-radius: 30px; box-shadow: 0 10px 30px rgba(0,0,0,0.03); border: 1px solid #f1f5f9;">
+                    <div style="font-size: 3rem; color: #8b5cf6; margin-bottom: 25px;"><i class="fas fa-user-shield"></i></div>
+                    <h3 style="font-size: 1.5rem; margin-bottom: 15px;">정밀 심리 분석</h3>
+                    <p style="color: #475569; line-height: 1.8; margin-bottom: 25px;">
+                        MBTI와 스트레스 자가 진단을 통해 현재의 심리적 상태를 객관적으로 파악하고, 내면의 안정을 되찾을 수 있는 정서적 솔루션을 제공합니다.
+                    </p>
+                    <a href="psychology.html" style="color: #8b5cf6; font-weight: 700; text-decoration: none;">무료 테스트 시작 <i class="fas fa-arrow-right"></i></a>
+                </div>
+            </div>
+
+            <!-- Enhanced Blog Section -->
+            <div style="background: #f8fafc; padding: 70px 40px; border-radius: 40px; margin-bottom: 60px;">
+                <div style="text-align: center; margin-bottom: 50px;">
+                    <h2 style="font-size: 2rem; margin-bottom: 15px;">최신 건강 인사이트</h2>
+                    <p style="color: #64748b;">VitalBalance 에디터가 전하는 전문적인 건강 관리 노하우</p>
+                </div>
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 30px;">
+                    <div style="background: white; padding: 35px; border-radius: 20px; box-shadow: 0 4px 15px rgba(0,0,0,0.02);">
+                        <span style="display: inline-block; padding: 5px 12px; background: #e0f2fe; color: #0369a1; border-radius: 10px; font-size: 0.8rem; font-weight: 700; margin-bottom: 15px;">의약학</span>
+                        <h4 style="font-size: 1.25rem; margin-bottom: 15px; line-height: 1.4;">올바른 영양제 복용법: 흡수율을 높이는 시간대별 가이드</h4>
+                        <p style="font-size: 0.95rem; color: #64748b; margin-bottom: 20px; line-height: 1.6;">비타민 B군은 아침 공복에, 오메가3는 식사 직후에! 성분별 최적의 복용 시간을 확인하세요.</p>
+                        <a href="blog.html" style="color: var(--primary-color); font-weight: 700; text-decoration: none; font-size: 0.9rem;">전체 내용 읽기</a>
+                    </div>
+                    <div style="background: white; padding: 35px; border-radius: 20px; box-shadow: 0 4px 15px rgba(0,0,0,0.02);">
+                        <span style="display: inline-block; padding: 5px 12px; background: #fef2f2; color: #991b1b; border-radius: 10px; font-size: 0.8rem; font-weight: 700; margin-bottom: 15px;">운동학</span>
+                        <h4 style="font-size: 1.25rem; margin-bottom: 15px; line-height: 1.4;">기초대사량 높이는 5가지 습관: 살 안 찌는 체질 만들기</h4>
+                        <p style="font-size: 0.95rem; color: #64748b; margin-bottom: 20px; line-height: 1.6;">근력 운동과 유산소의 황금 비율부터 충분한 수면의 중요성까지, 과학적인 다이어트 비결을 공개합니다.</p>
+                        <a href="blog.html" style="color: var(--primary-color); font-weight: 700; text-decoration: none; font-size: 0.9rem;">전체 내용 읽기</a>
+                    </div>
+                    <div style="background: white; padding: 35px; border-radius: 20px; box-shadow: 0 4px 15px rgba(0,0,0,0.02);">
+                        <span style="display: inline-block; padding: 5px 12px; background: #f5f3ff; color: #5b21b6; border-radius: 10px; font-size: 0.8rem; font-weight: 700; margin-bottom: 15px;">심리학</span>
+                        <h4 style="font-size: 1.25rem; margin-bottom: 15px; line-height: 1.4;">현대인의 스트레스 관리: 심리 테스트의 긍정적 역할</h4>
+                        <p style="font-size: 0.95rem; color: #64748b; margin-bottom: 20px; line-height: 1.6;">나를 객관적으로 바라보는 '자기 객관화'의 도구로 MBTI를 활용해 보세요. 마음 건강의 시작입니다.</p>
+                        <a href="blog.html" style="color: var(--primary-color); font-weight: 700; text-decoration: none; font-size: 0.9rem;">전체 내용 읽기</a>
                     </div>
                 </div>
             </div>
         </section>
     </main>
 
-    <!-- Partnership Inquiry Section -->
-    <section class="container" style="margin-top: 80px; border-top: 1px solid #eee; padding-top: 60px;">
-        <div style="max-width: 600px; margin: 0 auto; background: white; padding: 40px; border-radius: 20px; box-shadow: 0 4px 15px rgba(0,0,0,0.05);">
-            <h2 style="text-align: center; margin-bottom: 30px; color: var(--secondary-color);">제휴 문의</h2>
-            <form action="https://formspree.io/f/xaqpzkaj" method="POST">
-                <div style="margin-bottom: 20px;">
-                    <label style="display:block; margin-bottom:8px; font-weight:600;">성함 / 업체명</label>
-                    <input type="text" name="name" required style="width:100%; padding:12px; border:1px solid #ddd; border-radius:8px; outline:none;">
-                </div>
-                <div style="margin-bottom: 20px;">
-                    <label style="display:block; margin-bottom:8px; font-weight:600;">이메일 주소</label>
-                    <input type="email" name="_replyto" required style="width:100%; padding:12px; border:1px solid #ddd; border-radius:8px; outline:none;">
-                </div>
-                <div style="margin-bottom: 20px;">
-                    <label style="display:block; margin-bottom:8px; font-weight:600;">문의 내용</label>
-                    <textarea name="message" required style="width:100%; padding:12px; border:1px solid #ddd; border-radius:8px; height:120px; outline:none; resize:none;"></textarea>
-                </div>
-                <button type="submit" style="width:100%; background:var(--primary-color); color:white; border:none; padding:15px; border-radius:8px; font-weight:700; cursor:pointer; font-size:1.1rem;">문의 보내기</button>
-            </form>
-        </div>
-    </section>
-
-    <!-- Comments Section -->
-    <section class="container" style="margin-top: 80px; padding-bottom: 40px;">
-        <div id="disqus_thread" style="background: white; padding: 30px; border-radius: 20px; box-shadow: 0 4px 15px rgba(0,0,0,0.05);"></div>
-        <script>
-            var disqus_config = function () {
-                this.page.url = window.location.href;  
-                this.page.identifier = 'mediinfo-main'; 
-            };
-            (function() { 
-                var d = document, s = d.createElement('script');
-                s.src = 'https://jh8571.disqus.com/embed.js';
-                s.setAttribute('data-timestamp', +new Date());
-                (d.head || d.body).appendChild(s);
-            })();
-        </script>
-        <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
-    </section>
-
     <!-- Detail Modal -->
     <div id="drug-modal" class="modal">
         <div class="modal-content">
             <span class="close">&times;</span>
             <div id="modal-body">
-                <!-- Details -->
+                <!-- Details will be injected here -->
             </div>
         </div>
     </div>
