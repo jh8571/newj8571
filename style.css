@@ -579,3 +579,24 @@ footer {
     transform: scale(1.1);
     background: rgba(255,255,255,0.3);
 }
+
+/* AI Solution Select Buttons */
+.select-btn {
+    transition: all 0.2s ease;
+    border: 2px solid #e2e8f0 !important;
+    background: white !important;
+    color: #475569 !important;
+}
+
+.select-btn.active {
+    background: #004e92 !important;
+    color: white !important;
+    border-color: #004e92 !important;
+    box-shadow: 0 4px 12px rgba(0,78,146,0.2);
+}
+
+.select-btn:hover:not(.active) {
+    background: #f8fafc !important;
+    border-color: #cbd5e1 !important;
+}
+

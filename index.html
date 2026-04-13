@@ -30,6 +30,21 @@
     <meta property="og:description" content="나의 연령, 성별, 건강 고민을 입력하고 최적의 영양제 조합을 AI로 분석받으세요.">
     <meta property="og:image" content="https://jh8571.github.io/newj8571/favicon.svg">
     <meta property="og:site_name" content="VitalBalance">
+    <style>
+        .loader {
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid #004e92;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 20px;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    </style>
 </head>
 <body>
     <header>
@@ -52,111 +67,89 @@
     <main class="container">
         <!-- AI Solution Hero Section -->
         <section class="ai-hero" style="background: linear-gradient(135deg, #000428 0%, #004e92 100%); color: white; padding: 60px 40px; border-radius: 30px; margin-bottom: 50px; text-align: center; box-shadow: 0 20px 40px rgba(0,0,0,0.15);">
-            <div style="max-width: 800px; margin: 0 auto;">
+            <div style="max-width: 850px; margin: 0 auto;">
                 <h2 style="font-size: 2.5rem; margin-bottom: 20px; color: white; font-weight: 800;">지능형 1:1 맞춤 영양 설계</h2>
                 <p style="font-size: 1.15rem; line-height: 1.8; color: rgba(255,255,255,0.9); margin-bottom: 40px;">
-                    수많은 영양제 중 무엇을 먹어야 할지 고민되시나요? <br>
-                    성별, 연령, 생활 패턴을 분석하여 당신에게 꼭 필요한 '핵심 성분'을 추천해 드립니다.
+                    과학적인 데이터를 통해 당신에게 꼭 필요한 영양 조합을 찾아보세요. <br>
+                    성별, 연령, 고민을 분석하여 최적화된 프리미엄 리포트를 생성해 드립니다.
                 </p>
                 
-                <div class="ai-input-card" style="background: white; padding: 40px; border-radius: 24px; color: #1e293b; text-align: left; box-shadow: 0 15px 35px rgba(0,0,0,0.2);">
-                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 25px; margin-bottom: 30px;">
+                <div class="ai-input-card" style="background: white; padding: 45px; border-radius: 24px; color: #1e293b; text-align: left; box-shadow: 0 15px 35px rgba(0,0,0,0.2);">
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 30px; margin-bottom: 35px;">
                         <div class="input-field">
-                            <label style="display:block; margin-bottom:10px; font-weight:700; font-size: 0.95rem;">성별 선택</label>
-                            <div style="display: flex; gap: 10px;">
-                                <button class="select-btn active" onclick="setGender('male')" id="gender-male" style="flex:1; padding:12px; border:2px solid #e2e8f0; border-radius:12px; background:white; cursor:pointer; font-weight:600;">남성</button>
-                                <button class="select-btn" onclick="setGender('female')" id="gender-female" style="flex:1; padding:12px; border:2px solid #e2e8f0; border-radius:12px; background:white; cursor:pointer; font-weight:600;">여성</button>
+                            <label style="display:block; margin-bottom:12px; font-weight:700; font-size: 1rem; color: #0f172a;">성별 선택</label>
+                            <div style="display: flex; gap: 12px;">
+                                <button class="select-btn active" onclick="setGender('male')" id="gender-male" style="flex:1; padding:14px; border:2px solid #e2e8f0; border-radius:12px; background:white; cursor:pointer; font-weight:700;">남성</button>
+                                <button class="select-btn" onclick="setGender('female')" id="gender-female" style="flex:1; padding:14px; border:2px solid #e2e8f0; border-radius:12px; background:white; cursor:pointer; font-weight:700;">여성</button>
                             </div>
                         </div>
                         <div class="input-field">
-                            <label style="display:block; margin-bottom:10px; font-weight:700; font-size: 0.95rem;">연령대</label>
-                            <select id="age-range" style="width:100%; padding:13px; border:2px solid #e2e8f0; border-radius:12px; outline:none; font-size:1rem; font-weight:600;">
-                                <option value="teen">청소년 (10대)</option>
+                            <label style="display:block; margin-bottom:12px; font-weight:700; font-size: 1rem; color: #0f172a;">연령대</label>
+                            <select id="age-range" style="width:100%; padding:15px; border:2px solid #e2e8f0; border-radius:12px; outline:none; font-size:1rem; font-weight:600; cursor: pointer;">
+                                <option value="teen">청소년 (만 12-18세)</option>
                                 <option value="young" selected>청년 (20-30대)</option>
                                 <option value="middle">중년 (40-50대)</option>
                                 <option value="senior">노년 (60대 이상)</option>
                             </select>
                         </div>
                         <div class="input-field">
-                            <label style="display:block; margin-bottom:10px; font-weight:700; font-size: 0.95rem;">주요 건강 고민</label>
-                            <select id="health-concern" style="width:100%; padding:13px; border:2px solid #e2e8f0; border-radius:12px; outline:none; font-size:1rem; font-weight:600;">
-                                <option value="fatigue">만성 피로 및 기력 저하</option>
-                                <option value="eye">안구 건조 및 시력 보호</option>
-                                <option value="immune">면역력 강화 및 감기 예방</option>
-                                <option value="bone">뼈/관절 건강 및 골다공증</option>
-                                <option value="liver">간 건강 및 숙취 해소</option>
-                                <option value="brain">기억력 및 두뇌 활동</option>
+                            <label style="display:block; margin-bottom:12px; font-weight:700; font-size: 1rem; color: #0f172a;">집중 건강 고민</label>
+                            <select id="health-concern" style="width:100%; padding:15px; border:2px solid #e2e8f0; border-radius:12px; outline:none; font-size:1rem; font-weight:600; cursor: pointer;">
+                                <option value="fatigue">만성 피로 및 에너지 저하</option>
+                                <option value="eye">안구 건조 및 시력 감퇴</option>
+                                <option value="immune">면역력 강화 및 환절기 건강</option>
+                                <option value="bone">관절 통증 및 뼈 건강</option>
+                                <option value="liver">간 기능 개선 및 해독 작용</option>
+                                <option value="brain">기억력 감퇴 및 두뇌 활력</option>
                             </select>
                         </div>
                     </div>
-                    <button onclick="analyzeNutrition()" style="width:100%; padding:18px; background: #004e92; color:white; border:none; border-radius:15px; font-size:1.2rem; font-weight:800; cursor:pointer; transition:0.3s; box-shadow: 0 4px 15px rgba(0,78,146,0.3);">AI 맞춤 분석 시작하기</button>
+                    <button onclick="analyzeNutrition()" style="width:100%; padding:20px; background: #004e92; color:white; border:none; border-radius:15px; font-size:1.25rem; font-weight:800; cursor:pointer; transition:0.3s; box-shadow: 0 8px 20px rgba(0,78,146,0.25);">프리미엄 AI 분석 리포트 생성</button>
                 </div>
             </div>
         </section>
 
         <!-- Result Display Area -->
-        <div id="ai-result-section" style="display: none; margin-bottom: 60px;">
-            <h3 style="font-size: 1.8rem; margin-bottom: 30px; text-align: center; color: #0f172a;">AI 분석 맞춤 리포트</h3>
+        <div id="ai-result-section" style="display: none; margin-bottom: 80px;">
             <div id="ai-result-content" class="result-grid">
-                <!-- Analysis cards injected here -->
+                <!-- Premium Analysis 리포트가 여기에 생성됨 -->
             </div>
         </div>
 
-        <!-- Search Section (Integrated) -->
-        <section class="integrated-search" style="margin-top: 80px; padding-top: 60px; border-top: 1px solid #e2e8f0;">
+        <!-- Integrated Search Section -->
+        <section class="integrated-search" style="margin-top: 100px; padding-top: 80px; border-top: 1px solid #e2e8f0;">
             <div style="text-align: center; margin-bottom: 50px;">
-                <h2 style="font-size: 2rem; color: #0f172a; margin-bottom: 15px; font-weight: 800;">성분 및 제품 정밀 검색</h2>
-                <p style="color: #64748b;">찾으시는 성분이나 약품의 상세 효능과 부작용을 확인하세요.</p>
+                <h2 style="font-size: 2.2rem; color: #0f172a; margin-bottom: 15px; font-weight: 800;">성분 및 제품 전문 데이터베이스</h2>
+                <p style="color: #64748b; font-size: 1.1rem;">추천받은 성분의 상세 효능, 부작용, 상호작용 정보를 즉시 검색하세요.</p>
             </div>
             
-            <div class="search-container" style="max-width: 750px; margin: 0 auto 50px auto; position: relative; box-shadow: 0 15px 45px rgba(0,0,0,0.08); border-radius: 50px; overflow: hidden; border: 1px solid #e2e8f0;">
-                <input type="text" id="search-input" placeholder="성분명(비타민C, 아연) 또는 약품명으로 검색..." style="width: 100%; padding: 22px 35px; border: none; font-size: 1.1rem; outline: none;">
-                <button id="search-btn" style="position: absolute; right: 8px; top: 8px; bottom: 8px; padding: 0 35px; border-radius: 40px; background: #004e92; color: white; border: none; font-weight: 700; cursor: pointer;">검색</button>
+            <div class="search-container" style="max-width: 750px; margin: 0 auto 60px auto; position: relative; box-shadow: 0 15px 45px rgba(0,0,0,0.08); border-radius: 50px; overflow: hidden; border: 1px solid #e2e8f0;">
+                <input type="text" id="search-input" placeholder="성분명(비타민C, 오메가3) 또는 약품명 입력..." style="width: 100%; padding: 22px 35px; border: none; font-size: 1.1rem; outline: none;">
+                <button id="search-btn" style="position: absolute; right: 8px; top: 8px; bottom: 8px; padding: 0 35px; border-radius: 40px; background: #004e92; color: white; border: none; font-weight: 700; cursor: pointer; transition: 0.3s;">검색</button>
             </div>
 
             <div id="drug-list" class="drug-list">
-                <!-- Search results injected here -->
+                <!-- 검색 결과가 여기에 동적으로 생성됨 -->
             </div>
         </section>
 
-        <!-- Information Content for SEO -->
-        <section class="nutrition-encyclopedia" style="margin-top: 100px; background: #f8fafc; padding: 60px 40px; border-radius: 40px; border: 1px solid #e2e8f0;">
-            <h2 style="text-align: center; color: #1e293b; margin-bottom: 50px; font-size: 2.2rem; font-weight: 800;">전문 영양 성분 백과사전</h2>
+        <!-- FAQ Section for SEO and AdSense Authority -->
+        <section class="wellness-faq" style="margin-top: 100px; padding: 60px 40px; background: white; border-radius: 40px; border: 1px solid #f1f5f9; box-shadow: 0 4px 20px rgba(0,0,0,0.02);">
+            <h2 style="text-align: center; color: #1e293b; margin-bottom: 50px; font-size: 2rem; font-weight: 800;">자주 묻는 영양 가이드 질문 (FAQ)</h2>
             
-            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px;">
-                <div style="background: white; padding: 35px; border-radius: 24px; box-shadow: 0 4px 15px rgba(0,0,0,0.03);">
-                    <h3 style="color: #004e92; border-bottom: 2px solid #f1f5f9; padding-bottom: 15px; margin-bottom: 20px;">에너지 활성 성분</h3>
-                    <p style="font-size: 1rem; line-height: 1.8; color: #475569;">
-                        <strong>비타민 B군:</strong> 에너지 대사에 필수적인 수용성 비타민입니다. <br>
-                        <strong>L-아르기닌:</strong> 혈행 개선을 도와 신체 활력을 높입니다. <br>
-                        <strong>타우린:</strong> 피로 회복과 심혈관 건강 증진에 도움을 줍니다.
-                    </p>
+            <div style="max-width: 800px; margin: 0 auto; display: flex; flex-direction: column; gap: 30px;">
+                <div>
+                    <h4 style="color: #004e92; font-size: 1.1rem; margin-bottom: 10px;"><i class="fas fa-question-circle"></i> 영양제는 식사 전후 언제 복용하는 것이 가장 좋나요?</h4>
+                    <p style="line-height: 1.8; color: #475569; font-size: 0.95rem;">대부분의 영양제는 음식물과 함께 섭취할 때 흡수율이 높아집니다. 특히 지용성 비타민(A, D, E, K)과 오메가3는 지방 성분이 있는 식사 직후에 드시는 것을 권장합니다. 반면, 유산균은 위산의 영향을 최소화하기 위해 아침 공복에 충분한 물과 함께 드시는 것이 유리합니다.</p>
                 </div>
-
-                <div style="background: white; padding: 35px; border-radius: 24px; box-shadow: 0 4px 15px rgba(0,0,0,0.03);">
-                    <h3 style="color: #ec4899; border-bottom: 2px solid #f1f5f9; padding-bottom: 15px; margin-bottom: 20px;">신체 보호 및 항산화</h3>
-                    <p style="font-size: 1rem; line-height: 1.8; color: #475569;">
-                        <strong>루테인 & 지아잔틴:</strong> 황반 색소 밀도를 유지하여 눈 노화를 방지합니다. <br>
-                        <strong>프로폴리스:</strong> 천연 항생제로 불리며 구강 내 살균 및 면역력을 높입니다. <br>
-                        <strong>코엔자임 Q10:</strong> 세포 노화를 억제하고 높은 혈압 감소에 도움을 줍니다.
-                    </p>
+                <div style="border-top: 1px solid #f1f5f9; padding-top: 30px;">
+                    <h4 style="color: #004e92; font-size: 1.1rem; margin-bottom: 10px;"><i class="fas fa-question-circle"></i> 여러 개의 영양제를 한 번에 먹어도 괜찮을까요?</h4>
+                    <p style="line-height: 1.8; color: #475569; font-size: 0.95rem;">성분 간의 상호작용을 고려해야 합니다. 예를 들어, 칼슘과 철분은 서로의 흡수를 방해하므로 2시간 이상의 간격을 두어야 합니다. 또한 종합비타민을 드신다면 중복되는 성분이 없는지 확인하여 과다 섭취를 피하는 것이 중요합니다. VitalBalance AI 리포트의 주의사항을 꼭 확인해 보세요.</p>
                 </div>
-
-                <div style="background: white; padding: 35px; border-radius: 24px; box-shadow: 0 4px 15px rgba(0,0,0,0.03);">
-                    <h3 style="color: #8b5cf6; border-bottom: 2px solid #f1f5f9; padding-bottom: 15px; margin-bottom: 20px;">신경 및 멘탈 헬스</h3>
-                    <p style="font-size: 1rem; line-height: 1.8; color: #475569;">
-                        <strong>마그네슘:</strong> 신경 긴장을 완화하고 근육 경련을 막아 숙면을 돕습니다. <br>
-                        <strong>테아닌:</strong> 긴장 완화 및 스트레스 해소에 도움을 줍니다. <br>
-                        <strong>오메가3 (DHA/EPA):</strong> 뇌 건강과 혈중 중성 지질 개선에 탁월합니다.
-                    </p>
+                <div style="border-top: 1px solid #f1f5f9; padding-top: 30px;">
+                    <h4 style="color: #004e92; font-size: 1.1rem; margin-bottom: 10px;"><i class="fas fa-question-circle"></i> 영양제 해외 직구 제품과 국내 제품의 차이는 무엇인가요?</h4>
+                    <p style="line-height: 1.8; color: #475569; font-size: 0.95rem;">국내 유통 제품은 식약처의 엄격한 기준에 따라 한국인의 영양 섭취 기준에 맞춰 성분 함량이 조정되어 있습니다. 해외 제품은 함량이 높을 수 있으나 국내에서 금지된 성분이 포함될 가능성이 있으므로 신뢰할 수 있는 플랫폼을 통해 검증된 정보를 확인하고 구매하시는 것이 안전합니다.</p>
                 </div>
-            </div>
-
-            <div style="margin-top: 40px; padding: 35px; background: white; border-radius: 30px; border: 1px solid #f1f5f9;">
-                <h3 style="margin-bottom: 20px; color: #1e293b; font-size: 1.6rem;">올바른 영양제 선택 및 복용 지침</h3>
-                <p style="line-height: 1.9; color: #475569; font-size: 1.1rem;">
-                    영양제는 식품이지만 성분 간의 상호작용이 매우 중요합니다. 예를 들어, 칼슘과 철분은 동시에 복용할 경우 서로의 흡수를 방해하므로 2시간 이상의 간격을 두는 것이 좋습니다. 또한 지용성 비타민(A, D, E, K)은 식사 도중이나 직후에 복용할 때 흡수율이 비약적으로 상승합니다. VitalBalance AI 솔루션은 이러한 복잡한 메커니즘을 분석하여 사용자에게 가장 최적화된 복용 시나리오를 제안합니다.
-                </p>
             </div>
         </section>
     </main>
@@ -182,7 +175,6 @@
         </div>
     </footer>
 
-    <!-- New AI Main Script -->
     <script src="main.js"></script>
     <script src="theme.js"></script>
 </body>
