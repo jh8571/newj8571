@@ -1,5 +1,6 @@
 document.addEventListener('DOMContentLoaded', () => {
     let drugData = [];
+    let nutrientData = [];
     let userGender = 'male';
 
     // Elements
@@ -13,14 +14,16 @@ document.addEventListener('DOMContentLoaded', () => {
     const closeModal = document.querySelector('.close');
 
     // 1. Data Loading
-    fetch('drugs.json')
-        .then(r => r.json())
-        .then(data => {
-            drugData = data;
-            console.log('Database synced:', drugData.length);
-        }).catch(e => console.error('Load error:', e));
+    Promise.all([
+        fetch('drugs.json').then(r => r.json()),
+        fetch('nutrients.json').then(r => r.json())
+    ]).then(([drugs, nutrients]) => {
+        drugData = drugs;
+        nutrientData = nutrients;
+        console.log('Database synced:', drugData.length + nutrientData.length);
+    }).catch(e => console.error('Load error:', e));
 
-    // 2. Gender Selection (Fixed for index.html)
+    // 2. Gender Selection
     window.setGender = function(gender) {
         userGender = gender;
         const maleBtn = document.getElementById('gender-male');
@@ -166,18 +169,45 @@ document.addEventListener('DOMContentLoaded', () => {
     function performSearch() {
         const q = searchInput.value.trim().toLowerCase();
         if (!q) return;
-        const filtered = drugData.filter(d => 
+
+        // Search both datasets
+        const filteredNutrients = nutrientData.filter(n => 
+            n.name.toLowerCase().includes(q) || 
+            n.efficacy.toLowerCase().includes(q) ||
+            n.category.toLowerCase().includes(q)
+        );
+
+        const filteredDrugs = drugData.filter(d => 
             d.name.toLowerCase().includes(q) || 
             d.ingredients.toLowerCase().includes(q) ||
             d.efficacy.toLowerCase().includes(q)
         );
-        renderSearchResults(filtered);
+
+        renderSearchResults(filteredNutrients, filteredDrugs);
     }
 
-    function renderSearchResults(results) {
+    function renderSearchResults(nutrients, drugs) {
         if (!drugListElement) return;
-        drugListElement.innerHTML = results.length ? '' : '<p style="grid-column:1/-1; text-align:center; padding:40px;">검색 결과가 없습니다.</p>';
-        results.forEach(d => {
+        const totalCount = nutrients.length + drugs.length;
+        drugListElement.innerHTML = totalCount ? '' : '<p style="grid-column:1/-1; text-align:center; padding:40px;">검색 결과가 없습니다.</p>';
+
+        // Render Nutrients First (Encyclopedia style)
+        nutrients.forEach(n => {
+            const card = document.createElement('div');
+            card.className = 'drug-card';
+            card.style.borderLeft = '6px solid var(--accent-color)';
+            card.innerHTML = `
+                <div class="card-category" style="background: var(--accent-color); color: white;">성분 백과</div>
+                <h3 class="card-name">${n.name}</h3>
+                <p style="font-size:0.85rem; color: var(--accent-color); font-weight: 700;">${n.category}</p>
+                <div class="card-efficacy" style="margin-top:10px; font-size:0.9rem; color:#475569;">${n.efficacy.substring(0,80)}...</div>
+            `;
+            card.onclick = () => showNutrientDetail(n.id);
+            drugListElement.appendChild(card);
+        });
+
+        // Render Drugs
+        drugs.forEach(d => {
             const card = document.createElement('div');
             card.className = 'drug-card';
             card.innerHTML = `
@@ -189,8 +219,49 @@ document.addEventListener('DOMContentLoaded', () => {
             card.onclick = () => showDetail(d.id);
             drugListElement.appendChild(card);
         });
+        
         drugListElement.scrollIntoView({ behavior: 'smooth' });
     }
+
+    window.showNutrientDetail = function(id) {
+        const n = nutrientData.find(x => x.id === id);
+        if (!n || !modal) return;
+        modalContent.innerHTML = `
+            <div class="report-header" style="text-align: left; padding: 0 0 30px; background: none; border-bottom: 2px solid var(--border-color);">
+                <div class="report-badge">Nutrient Encyclopedia</div>
+                <h2 style="font-size: 2.5rem; margin-top: 10px;">${n.name}</h2>
+                <p style="color: var(--accent-color); font-weight: 800; font-size: 1.1rem;">${n.category}</p>
+            </div>
+            <div style="margin-top: 30px; display: grid; gap: 25px;">
+                <div style="background: var(--bg-color); padding: 25px; border-radius: 20px;">
+                    <h4 style="color: var(--primary-color); margin-bottom: 10px;"><i class="fas fa-info-circle"></i> 성분 설명</h4>
+                    <p style="line-height: 1.8; color: var(--text-main);">${n.description}</p>
+                </div>
+                
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+                    <div style="background: #f0fdf4; padding: 20px; border-radius: 15px; border-left: 5px solid #22c55e;">
+                        <h5 style="color: #166534; margin-bottom: 8px;">주요 효능</h5>
+                        <p style="font-size: 0.9rem;">${n.efficacy}</p>
+                    </div>
+                    <div style="background: #fffbeb; padding: 20px; border-radius: 15px; border-left: 5px solid #f59e0b;">
+                        <h5 style="color: #92400e; margin-bottom: 8px;">일일 권장량</h5>
+                        <p style="font-size: 0.9rem;">${n.dri}</p>
+                    </div>
+                </div>
+
+                <div style="background: #f8fafc; padding: 25px; border-radius: 20px;">
+                    <h4 style="color: var(--primary-color); margin-bottom: 10px;"><i class="fas fa-utensils"></i> 풍부한 식품</h4>
+                    <p style="font-size: 0.95rem;">${n.food}</p>
+                </div>
+
+                <div style="background: #fef2f2; padding: 25px; border-radius: 20px; border: 1px solid #fee2e2;">
+                    <h4 style="color: #dc2626; margin-bottom: 10px;"><i class="fas fa-exclamation-triangle"></i> 주의사항</h4>
+                    <p style="font-size: 0.95rem; color: #991b1b;">${n.caution}</p>
+                </div>
+            </div>
+        `;
+        modal.style.display = 'block';
+    };
 
     window.showDetail = function(id) {
         const d = drugData.find(x => x.id === id);
