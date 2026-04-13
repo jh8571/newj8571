@@ -14,7 +14,7 @@
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9103697866666926" crossorigin="anonymous"></script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>VitalBalance | 프리미엄 건강 지능형 분석</title>
+    <title>VitalRest | 프리미엄 건강 지능형 분석</title>
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="icon" href="favicon.svg" type="image/svg+xml">
@@ -43,75 +43,65 @@
     </header>
 
     <main>
-        <!-- Premium AI Hero -->
         <section class="ai-hero">
             <div class="container">
-                <div style="text-align: center; margin-bottom: 60px;">
-                    <h2 style="font-size: 3rem; font-weight: 900; color: white; letter-spacing: -2px; margin-bottom: 20px;" data-ko="프리미엄 영양 AI" data-en="Premium Nutrient AI">프리미엄 영양 AI</h2>
-                    <p style="color: rgba(255,255,255,0.6); font-size: 1.2rem; max-width: 700px; margin: 0 auto; line-height: 1.8;" data-ko="임상 데이터와 인공지능 알고리즘을 결합하여 당신만의 최적화된 영양 설계를 제안합니다." data-en="Combining clinical data and AI algorithms to propose your optimized nutritional design.">
-                        임상 데이터와 인공지능 알고리즘을 결합하여 당신만의 최적화된 영양 설계를 제안합니다.
-                    </p>
-                </div>
+                <h2 style="font-size: 3rem; font-weight: 900; color: white; margin-bottom: 20px;" data-ko="프리미엄 영양 AI" data-en="Premium Nutrient AI">프리미엄 영양 AI</h2>
+                <p style="color: rgba(255,255,255,0.6);" data-ko="임상 데이터와 인공지능을 결합한 당신만의 최적화된 영양 설계" data-en="Optimized nutritional design combining clinical data and AI.">임상 데이터와 인공지능을 결합한 당신만의 최적화된 영양 설계</p>
+            </div>
+        </section>
 
-                <div class="ai-input-card">
-                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 40px; margin-bottom: 40px;">
-                        <div class="input-field">
-                            <label style="font-size: 0.8rem; text-transform: uppercase; letter-spacing: 1px; color: #94a3b8; margin-bottom: 15px; display: block; font-weight: 800;" data-ko="생물학적 성별" data-en="Biological Sex">생물학적 성별</label>
-                            <div style="display: flex; gap: 10px;">
-                                <button class="select-btn active" onclick="setGender('male')" id="gender-male" style="flex:1;" data-ko="남성" data-en="Male">남성</button>
-                                <button class="select-btn" onclick="setGender('female')" id="gender-female" style="flex:1;" data-ko="여성" data-en="Female">여성</button>
-                            </div>
-                        </div>
-                        <div class="input-field">
-                            <label style="font-size: 0.8rem; text-transform: uppercase; letter-spacing: 1px; color: #94a3b8; margin-bottom: 15px; display: block; font-weight: 800;" data-ko="연령대" data-en="Life Stage">연령대</label>
-                            <select id="age-range" class="select-btn" style="width: 100%; appearance: none; -webkit-appearance: none;">
-                                <option value="teen" data-ko="청소년 (10대)" data-en="Adolescence">청소년 (10대)</option>
-                                <option value="young" selected data-ko="청년 (20-30대)" data-en="Young Adult">청년 (20-30대)</option>
-                                <option value="middle" data-ko="중년 (40-50대)" data-en="Middle Age">중년 (40-50대)</option>
-                                <option value="senior" data-ko="노년 (60대+)" data-en="Senior">노년 (60대+)</option>
-                            </select>
-                        </div>
-                        <div class="input-field">
-                            <label style="font-size: 0.8rem; text-transform: uppercase; letter-spacing: 1px; color: #94a3b8; margin-bottom: 15px; display: block; font-weight: 800;" data-ko="핵심 건강 고민" data-en="Primary Concern">핵심 건강 고민</label>
-                            <select id="health-concern" class="select-btn" style="width: 100%; appearance: none; -webkit-appearance: none;">
-                                <option value="fatigue" data-ko="피로 및 기력저하" data-en="Fatigue & Energy">피로 및 기력저하</option>
-                                <option value="eye" data-ko="시력 및 안구 건강" data-en="Vision & Eye Health">시력 및 안구 건강</option>
-                                <option value="immune" data-ko="면역 체계 강화" data-en="Immune System">면역 체계 강화</option>
-                                <option value="bone" data-ko="뼈 및 관절 건강" data-en="Bone & Joint">뼈 및 관절 건강</option>
-                                <option value="liver" data-ko="간 건강 및 해독" data-en="Liver & Detox">간 건강 및 해독</option>
-                                <option value="brain" data-ko="인지 능력 강화" data-en="Cognitive Function">인지 능력 강화</option>
-                            </select>
+        <div class="container">
+            <div class="premium-card">
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 30px; margin-bottom: 40px;">
+                    <div class="input-field">
+                        <label data-ko="생물학적 성별" data-en="Biological Sex">생물학적 성별</label>
+                        <div style="display: flex; gap: 10px;">
+                            <button class="select-btn active" onclick="setGender('male')" id="gender-male" data-ko="남성" data-en="Male">남성</button>
+                            <button class="select-btn" onclick="setGender('female')" id="gender-female" data-ko="여성" data-en="Female">여성</button>
                         </div>
                     </div>
-                    <button onclick="analyzeNutrition()" style="width:100%; padding:22px; background: #0f172a; color:white; border:none; border-radius:16px; font-size:1.1rem; font-weight:900; cursor:pointer; letter-spacing: 1px; transition: 0.3s;" data-ko="프리미엄 분석 리포트 생성" data-en="Generate Premium Analysis">프리미엄 분석 리포트 생성</button>
+                    <div class="input-field">
+                        <label data-ko="연령대" data-en="Life Stage">연령대</label>
+                        <select id="age-range">
+                            <option value="teen" data-ko="청소년" data-en="Teen">청소년</option>
+                            <option value="young" selected data-ko="청년" data-en="Young Adult">청년</option>
+                            <option value="middle" data-ko="중년" data-en="Middle Age">중년</option>
+                            <option value="senior" data-ko="노년" data-en="Senior">노년</option>
+                        </select>
+                    </div>
+                    <div class="input-field">
+                        <label data-ko="핵심 건강 고민" data-en="Primary Concern">핵심 건강 고민</label>
+                        <select id="health-concern">
+                            <option value="fatigue" data-ko="피로" data-en="Fatigue">피로</option>
+                            <option value="eye" data-ko="시력" data-en="Vision">시력</option>
+                            <option value="immune" data-ko="면역" data-en="Immune">면역</option>
+                            <option value="bone" data-ko="뼈/관절" data-en="Bone/Joint">뼈/관절</option>
+                            <option value="liver" data-ko="간/해독" data-en="Liver">간/해독</option>
+                            <option value="brain" data-ko="인지능력" data-en="Cognitive">인지능력</option>
+                        </select>
+                    </div>
                 </div>
+                <button class="luxury-btn" onclick="analyzeNutrition()" data-ko="분석 리포트 생성" data-en="Generate Report">분석 리포트 생성</button>
             </div>
-        </section>
 
-        <!-- Result Area -->
-        <div id="ai-result-section" style="display: none; margin-top: 120px;">
-            <div class="container" id="ai-result-content"></div>
+            <!-- ID matches main.js -->
+            <div id="ai-result-section" style="display: none; margin-top: 80px;">
+                <div id="ai-result-content"></div>
+            </div>
+
+            <!-- Database Search -->
+            <section style="margin-top: 120px; padding-bottom: 80px;">
+                <h2 style="text-align:center; font-size:2rem; margin-bottom:40px;" data-ko="의학 데이터베이스 검색" data-en="Clinical Database Search">의학 데이터베이스 검색</h2>
+                <div style="max-width: 700px; margin: 0 auto; position: relative;">
+                    <input type="text" id="search-input" data-ko-ph="성분명을 입력하세요" data-en-ph="Enter Ingredient" placeholder="성분명을 입력하세요" style="width:100%; padding:20px; border-radius:50px; border:1px solid #ddd; outline:none;">
+                    <button id="search-btn" style="position:absolute; right:10px; top:10px; bottom:10px; padding:0 30px; background:#0f172a; color:white; border:none; border-radius:40px; font-weight:800; cursor:pointer;" data-ko="검색" data-en="Search">검색</button>
+                </div>
+                <div id="drug-list" class="drug-list" style="margin-top:50px;"></div>
+            </section>
         </div>
-
-        <!-- Integrated Data Section -->
-        <section style="margin-top: 150px; padding-bottom: 100px;">
-            <div class="container">
-                <div style="text-align: center; margin-bottom: 60px;">
-                    <h2 style="font-size: 2.2rem; font-weight: 900; letter-spacing: -1px; margin-bottom: 15px;" data-ko="의학 데이터베이스 검색" data-en="Clinical Database Search">의학 데이터베이스 검색</h2>
-                    <p style="color: #64748b;" data-ko="성분명 또는 증상 키워드로 정밀 정보를 확인하세요." data-en="Search clinical information by ingredient or symptoms.">성분명 또는 증상 키워드로 정밀 정보를 확인하세요.</p>
-                </div>
-                
-                <div style="max-width: 800px; margin: 0 auto; position: relative; margin-bottom: 80px;">
-                    <input type="text" id="search-input" data-ko-ph="성분명을 입력하세요 (예: 아연, 오메가3)" data-en-ph="Enter Ingredient (e.g. Zinc, Omega3)" placeholder="성분명을 입력하세요 (예: 아연, 오메가3)" style="width: 100%; padding: 25px 35px; border: 1px solid #e5e7eb; border-radius: 50px; font-size: 1.1rem; outline: none;">
-                    <button id="search-btn" style="position: absolute; right: 10px; top: 10px; bottom: 10px; padding: 0 35px; background: #0f172a; color: white; border: none; border-radius: 40px; font-weight: 800; cursor: pointer;" data-ko="검색" data-en="Search">검색</button>
-                </div>
-
-                <div id="drug-list" class="drug-list"></div>
-            </div>
-        </section>
     </main>
 
-    <!-- Modal -->
+    <!-- Modal for main.js -->
     <div id="drug-modal" class="modal">
         <div class="modal-content">
             <span class="close">&times;</span>
@@ -121,8 +111,8 @@
 
     <footer>
         <div class="container">
-            <p>&copy; 2026 VitalBalance Premium Edition.</p>
-            <div class="footer-links" style="margin-top: 25px;">
+            <p>&copy; 2026 VitalRest Premium Edition.</p>
+            <div class="footer-links">
                 <a href="about.html" data-ko="소개" data-en="About">소개</a>
                 <a href="privacy.html" data-ko="개인정보방침" data-en="Privacy">개인정보방침</a>
                 <a href="terms.html" data-ko="이용약관" data-en="Terms">이용약관</a>

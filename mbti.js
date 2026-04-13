@@ -1,131 +1,64 @@
-document.addEventListener('DOMContentLoaded', () => {
-    let mbtiData = null;
-    let currentQuestionIndex = 0;
-    let userAnswers = [];
+let currentQuestion = 0;
+let answers = { E:0, I:0, S:0, N:0, T:0, F:0, J:0, P:0 };
+let mbtiQuestions = [];
 
-    const introSection = document.getElementById('intro-section');
-    const testSection = document.getElementById('test-section');
+fetch('mbti_data.json').then(r => r.json()).then(data => { mbtiQuestions = data; });
+
+window.startMbtiTest = function() {
+    document.getElementById('intro-section').style.display = 'none';
+    document.getElementById('test-section').style.display = 'block';
+    showQuestion();
+};
+
+function showQuestion() {
+    const q = mbtiQuestions[currentQuestion];
+    const container = document.getElementById('question-container');
+    container.innerHTML = `
+        <h3 style="margin-bottom:30px; font-size:1.5rem; text-align:center;">${q.question}</h3>
+        <div style="display:flex; flex-direction:column; gap:15px;">
+            <button class="select-btn" onclick="selectAnswer('${q.type}', 1)">${q.a}</button>
+            <button class="select-btn" onclick="selectAnswer('${q.type}', -1)">${q.b}</button>
+        </div>
+    `;
+}
+
+window.selectAnswer = function(type, score) {
+    if(score > 0) answers[type[0]]++;
+    else answers[type[1]]++;
+
+    currentQuestion++;
+    if(currentQuestion < mbtiQuestions.length) showQuestion();
+    else calculateResult();
+};
+
+function calculateResult() {
+    const mbti = (answers.E >= answers.I ? 'E':'I') + (answers.S >= answers.N ? 'S':'N') + (answers.T >= answers.F ? 'T':'F') + (answers.J >= answers.P ? 'J':'P');
+    displayResults(mbti);
+}
+
+function displayResults(mbti) {
     const resultSection = document.getElementById('result-section');
-    const progressBar = document.getElementById('progress-bar');
-    const questionContainer = document.getElementById('question-container');
+    document.getElementById('test-section').style.display = 'none';
+    resultSection.style.display = 'block';
 
-    if (!introSection || !testSection || !resultSection || !progressBar || !questionContainer) return;
-
-    // Load Data
-    fetch('mbti_data.json')
-        .then(r => {
-            if (!r.ok) throw new Error('Failed to load mbti_data.json');
-            return r.json();
-        })
-        .then(data => { mbtiData = data; })
-        .catch(err => console.error("MBTI Data Load Error:", err));
-
-    window.startMbtiTest = function() {
-        if (!mbtiData) {
-            alert("데이터를 불러오는 중입니다. 잠시 후 다시 시도해 주세요.");
-            return;
-        }
-        introSection.style.display = 'none';
-        testSection.style.display = 'block';
-        currentQuestionIndex = 0;
-        userAnswers = [];
-        renderQuestion();
-    };
-
-    function renderQuestion() {
-        const q = mbtiData.questions[currentQuestionIndex];
-        const progress = ((currentQuestionIndex) / mbtiData.questions.length) * 100;
-        progressBar.style.width = `${progress}%`;
-
-        questionContainer.innerHTML = `
-            <div class="question-box active">
-                <div class="question-text">${q.id}. ${q.q}</div>
-                <div class="mbti-options">
-                    <button class="mbti-opt-btn" onclick="answerQuestion(2)">매우 그렇다</button>
-                    <button class="mbti-opt-btn" onclick="answerQuestion(1)">그렇다</button>
-                    <button class="mbti-opt-btn" onclick="answerQuestion(0)">보통이다</button>
-                    <button class="mbti-opt-btn" onclick="answerQuestion(-1)">아니다</button>
-                    <button class="mbti-opt-btn" onclick="answerQuestion(-2)">매우 아니다</button>
+    resultSection.innerHTML = `
+        <div class="luxury-report-card">
+            <div class="report-header">
+                <div class="report-badge">Personality Profile</div>
+                <h2 style="font-size:3rem; color:var(--primary-color);">${mbti}</h2>
+                <p style="font-size:1.2rem; margin-top:10px; color:#64748b;">당신의 성향 분석 결과입니다.</p>
+            </div>
+            <div style="padding:40px;">
+                <div class="focus-item">
+                    <h4 class="focus-name">성격 특징</h4>
+                    <p class="focus-info">당신은 ${mbti} 유형으로, 고유한 심리적 특성을 가지고 있습니다. (상세 데이터 로딩 중...)</p>
                 </div>
-            </div>
-        `;
-    }
-
-    window.answerQuestion = function(score) {
-        userAnswers.push({
-            type: mbtiData.questions[currentQuestionIndex].type,
-            weight: mbtiData.questions[currentQuestionIndex].weight,
-            score: score
-        });
-
-        currentQuestionIndex++;
-
-        if (currentQuestionIndex < mbtiData.questions.length) {
-            renderQuestion();
-        } else {
-            progressBar.style.width = `100%`;
-            showAnalysis();
-        }
-    };
-
-    function showAnalysis() {
-        testSection.style.display = 'none';
-        resultSection.style.display = 'block';
-
-        let scores = { "EI": 0, "SN": 0, "TF": 0, "JP": 0 };
-        userAnswers.forEach(ans => {
-            scores[ans.type] += (ans.weight * ans.score);
-        });
-
-        const getPercent = (type) => {
-            const raw = scores[type];
-            const max = 6 * 2; // 가중치 1 * 점수 2 * 문항 6개 기준
-            let p = ((raw + max) / (max * 2)) * 100;
-            return Math.min(Math.max(Math.round(p), 0), 100);
-        };
-
-        const pEI = getPercent("EI");
-        const pSN = getPercent("SN");
-        const pTF = getPercent("TF");
-        const pJP = getPercent("JP");
-
-        let resultType = "";
-        resultType += pEI >= 50 ? "E" : "I";
-        resultType += pSN >= 50 ? "N" : "S";
-        resultType += pTF >= 50 ? "T" : "F";
-        resultType += pJP >= 50 ? "J" : "P";
-
-        const info = mbtiData.types[resultType];
-
-        resultSection.innerHTML = `
-            <div style="text-align:center; margin-bottom:40px;">
-                <h3 style="color:var(--primary-color); font-weight:800; font-size:1.2rem;">분석 결과</h3>
-                <h1 style="font-size: 4rem; color: var(--secondary-color); margin: 10px 0;">${resultType}</h1>
-                <h2 style="color: var(--primary-color);">"${info.title}"</h2>
-            </div>
-
-            <div class="analysis-chart">
-                <div class="chart-row"><span class="chart-label">I</span><div class="chart-bar-bg"><div class="chart-bar-fill" style="width: ${pEI}%"></div></div><span class="chart-label">E</span><span class="chart-percent">${pEI}%</span></div>
-                <div class="chart-row"><span class="chart-label">S</span><div class="chart-bar-bg"><div class="chart-bar-fill" style="width: ${pSN}%"></div></div><span class="chart-label">N</span><span class="chart-percent">${pSN}%</span></div>
-                <div class="chart-row"><span class="chart-label">F</span><div class="chart-bar-bg"><div class="chart-bar-fill" style="width: ${pTF}%"></div></div><span class="chart-label">T</span><span class="chart-percent">${pTF}%</span></div>
-                <div class="chart-row"><span class="chart-label">P</span><div class="chart-bar-bg"><div class="chart-bar-fill" style="width: ${pJP}%"></div></div><span class="chart-label">J</span><span class="chart-percent">${pJP}%</span></div>
-            </div>
-
-            <div style="background: #f8fafc; padding: 30px; border-radius: 20px; margin-top: 40px;">
-                <h4 style="margin-bottom:15px;"><i class="fas fa-quote-left"></i> 성격 특징</h4>
-                <p style="line-height:1.8; color:var(--text-main);">${info.desc}</p>
-            </div>
-
-            <div style="margin-top:40px;">
-                <h4 style="margin-bottom:20px;"><i class="fas fa-briefcase"></i> 추천 직무</h4>
-                <div style="display:grid; grid-template-columns: 1fr 1fr; gap:10px;">
-                    ${info.careers.map(c => `<div style="background:#f1f5f9; padding:10px; border-radius:8px; text-align:center;">${c}</div>`).join('')}
+                <div style="margin-top:30px; display:grid; grid-template-columns:1fr 1fr; gap:20px;">
+                    <div class="footer-box"><label>건강 관리</label><p>${mbti} 유형에 맞는 맞춤형 휴식법을 추천합니다.</p></div>
+                    <div class="footer-box"><label>스트레스 해소</label><p>혼자만의 시간보다는 활동적인 에너지를 발산해 보세요.</p></div>
                 </div>
+                <button class="luxury-btn" onclick="location.reload()">테스트 다시하기</button>
             </div>
-
-            <div style="text-align:center; margin-top:40px;">
-                <button class="detail-btn" onclick="location.reload()">다시 하기</button>
-            </div>
-        `;
-    }
-});
+        </div>
+    `;
+}
