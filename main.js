@@ -161,6 +161,16 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // 4. Search Functionality
+    const KOREAN_TO_ENGLISH = {
+        "비타민c": "vitamin c", "비타민 c": "vitamin c", "오메가3": "omega-3", "오메가-3": "omega-3",
+        "루테인": "lutein", "마그네슘": "magnesium", "비타민d": "vitamin d", "비타민 d": "vitamin d",
+        "아연": "zinc", "포스파티딜세린": "phosphatidylserine", "밀크씨슬": "milk thistle", "실리마린": "silymarin",
+        "유산균": "probiotic", "글루타치온": "glutathione", "코엔자임q10": "coenzyme q10", "msm": "msm",
+        "비타민b12": "vitamin b12", "감마리놀렌산": "gamma linolenic acid", "테아닌": "theanine",
+        "히알루론산": "hyaluronic acid", "콜라겐": "collagen", "칼슘": "calcium", "비타민b6": "vitamin b6",
+        "망간": "manganese", "아스피린": "aspirin", "타이레놀": "tylenol", "애드빌": "advil", "이부프로펜": "ibuprofen"
+    };
+
     if (searchBtn) {
         searchBtn.addEventListener('click', performSearch);
         searchInput.addEventListener('keypress', (e) => { if (e.key === 'Enter') performSearch(); });
@@ -173,11 +183,11 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     };
 
-    function performSearch() {
+    async function performSearch() {
         const q = searchInput.value.trim().toLowerCase();
         if (!q) return;
 
-        // Search both datasets
+        // 1. Local Search (immediate results)
         const filteredNutrients = nutrientData.filter(n => 
             n.name.toLowerCase().includes(q) || 
             n.efficacy.toLowerCase().includes(q) ||
@@ -191,7 +201,154 @@ document.addEventListener('DOMContentLoaded', () => {
         );
 
         renderSearchResults(filteredNutrients, filteredDrugs);
+
+        // 2. FDA Global Search (Async)
+        const translated = KOREAN_TO_ENGLISH[q] || q;
+        const isEnglish = /[a-zA-Z]/.test(translated);
+
+        if (isEnglish) {
+            const loadingMsg = document.createElement('div');
+            loadingMsg.id = 'fda-loading-status';
+            loadingMsg.style.cssText = 'grid-column:1/-1; text-align:center; padding:20px;';
+            loadingMsg.innerHTML = `
+                <div class="premium-loader" style="width:30px; height:30px; margin:0 auto;"></div>
+                <p style="margin-top:10px; font-size:0.9rem; color:var(--primary-color); font-weight:700;">FDA 글로벌 데이터베이스 검색 중...</p>
+            `;
+            drugListElement.appendChild(loadingMsg);
+
+            try {
+                const fdaResults = await searchFDA(translated);
+                if (loadingMsg.parentNode) drugListElement.removeChild(loadingMsg);
+                
+                if (fdaResults.length > 0) {
+                    if (filteredNutrients.length === 0 && filteredDrugs.length === 0) {
+                        drugListElement.innerHTML = '';
+                    }
+                    renderFDAResults(fdaResults);
+                } else if (filteredNutrients.length === 0 && filteredDrugs.length === 0) {
+                    drugListElement.innerHTML = '<p style="grid-column:1/-1; text-align:center; padding:40px;">검색 결과가 없습니다. (글로벌 데이터 포함)</p>';
+                }
+            } catch (e) {
+                if (loadingMsg.parentNode) drugListElement.removeChild(loadingMsg);
+                console.error('FDA Search error:', e);
+            }
+        }
     }
+
+    async function searchFDA(query) {
+        const results = [];
+        const enforcementUrl = `https://api.fda.gov/food/enforcement.json?search=product_description:"${query}"&limit=5`;
+        const labelUrl = `https://api.fda.gov/drug/label.json?search=openfda.brand_name:"${query}"&limit=5`;
+
+        try {
+            const [enforcementRes, labelRes] = await Promise.allSettled([
+                fetch(enforcementUrl).then(r => r.ok ? r.json() : null),
+                fetch(labelUrl).then(r => r.ok ? r.json() : null)
+            ]);
+
+            if (enforcementRes.status === 'fulfilled' && enforcementRes.value && enforcementRes.value.results) {
+                enforcementRes.value.results.forEach(item => results.push({ ...item, fdaType: 'enforcement' }));
+            }
+            if (labelRes.status === 'fulfilled' && labelRes.value && labelRes.value.results) {
+                labelRes.value.results.forEach(item => results.push({ ...item, fdaType: 'label' }));
+            }
+        } catch (e) {
+            console.warn('FDA fetch failed', e);
+        }
+        return results;
+    }
+
+    function renderFDAResults(results) {
+        if (!drugListElement) return;
+        
+        results.forEach(item => {
+            const card = document.createElement('div');
+            card.className = 'drug-card';
+            
+            if (item.fdaType === 'enforcement') {
+                card.style.borderLeft = '6px solid #ef4444';
+                card.innerHTML = `
+                    <div class="card-category" style="background: #ef4444; color: white;">FDA Safety Recall</div>
+                    <h3 class="card-name">${item.recalling_firm}</h3>
+                    <p style="font-size:0.85rem; color:#ef4444; font-weight:700;">Recalled Product</p>
+                    <div class="card-efficacy" style="margin-top:10px; font-size:0.8rem; color:#475569;">${item.product_description.substring(0,100)}...</div>
+                `;
+                card.onclick = () => showFDAEnforcementDetail(item);
+            } else {
+                card.style.borderLeft = '6px solid #3b82f6';
+                const brandName = (item.openfda && item.openfda.brand_name) ? item.openfda.brand_name[0] : 'Global Drug Data';
+                card.innerHTML = `
+                    <div class="card-category" style="background: #3b82f6; color: white;">FDA Global Label</div>
+                    <h3 class="card-name">${brandName}</h3>
+                    <p style="font-size:0.85rem; color:#3b82f6; font-weight:700;">International Standard</p>
+                    <div class="card-efficacy" style="margin-top:10px; font-size:0.8rem; color:#475569;">${(item.indications_and_usage ? item.indications_and_usage[0] : 'View details').substring(0,100)}...</div>
+                `;
+                card.onclick = () => showFDADrugDetail(item);
+            }
+            drugListElement.appendChild(card);
+        });
+    }
+
+    window.showFDAEnforcementDetail = function(item) {
+        if (!modal) return;
+        modalContent.innerHTML = `
+            <div class="report-header" style="text-align: left; padding: 0 0 30px; background: none; border-bottom: 2px solid #fee2e2;">
+                <div class="report-badge" style="background:#ef4444; color:white;">FDA Enforcement (Recall)</div>
+                <h2 style="font-size: 2rem; margin-top: 10px; color:#b91c1c;">${item.recalling_firm}</h2>
+                <p style="color: #ef4444; font-weight: 800; font-size: 1.1rem;">Recall Status: ${item.status}</p>
+            </div>
+            <div style="margin-top: 30px; display: grid; gap: 20px;">
+                <div style="background: #fef2f2; padding: 25px; border-radius: 20px; border: 1px solid #fee2e2;">
+                    <h4 style="color: #dc2626; margin-bottom: 10px;"><i class="fas fa-exclamation-triangle"></i> Reason for Recall</h4>
+                    <p style="line-height: 1.6; color: #991b1b;">${item.reason_for_recall}</p>
+                </div>
+                <div style="background: #f8fafc; padding: 20px; border-radius: 15px;">
+                    <h5 style="color: #475569; margin-bottom: 8px;">Product Description</h5>
+                    <p style="font-size: 0.9rem; line-height: 1.5;">${item.product_description}</p>
+                </div>
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
+                    <div style="background: #f1f5f9; padding: 15px; border-radius: 12px;">
+                        <h6 style="font-size: 0.75rem; color: #64748b; margin-bottom: 5px;">Recall Class</h6>
+                        <p style="font-weight: 700;">${item.classification}</p>
+                    </div>
+                    <div style="background: #f1f5f9; padding: 15px; border-radius: 12px;">
+                        <h6 style="font-size: 0.75rem; color: #64748b; margin-bottom: 5px;">Initiation Date</h6>
+                        <p style="font-weight: 700;">${item.recall_initiation_date}</p>
+                    </div>
+                </div>
+            </div>
+        `;
+        modal.style.display = 'block';
+    };
+
+    window.showFDADrugDetail = function(item) {
+        if (!modal) return;
+        const brandName = (item.openfda && item.openfda.brand_name) ? item.openfda.brand_name[0] : 'Global Drug Data';
+        const manufacturer = (item.openfda && item.openfda.manufacturer_name) ? item.openfda.manufacturer_name[0] : 'Unknown';
+        
+        modalContent.innerHTML = `
+            <div class="report-header" style="text-align: left; padding: 0 0 30px; background: none; border-bottom: 2px solid #dbeafe;">
+                <div class="report-badge" style="background:#3b82f6; color:white;">FDA Drug Label</div>
+                <h2 style="font-size: 2.2rem; margin-top: 10px; color:#1e40af;">${brandName}</h2>
+                <p style="color: #3b82f6; font-weight: 800;">${manufacturer}</p>
+            </div>
+            <div style="margin-top: 30px; display: grid; gap: 20px;">
+                <div style="background: #eff6ff; padding: 25px; border-radius: 20px;">
+                    <h4 style="color: #1e40af; margin-bottom: 10px;">Indications & Usage</h4>
+                    <p style="line-height: 1.6;">${item.indications_and_usage ? item.indications_and_usage[0] : 'No information available'}</p>
+                </div>
+                <div style="background: #f8fafc; padding: 25px; border-radius: 20px;">
+                    <h4 style="color: #1e40af; margin-bottom: 10px;">Dosage & Administration</h4>
+                    <p style="line-height: 1.6;">${item.dosage_and_administration ? item.dosage_and_administration[0] : 'No information available'}</p>
+                </div>
+                <div style="background: #fffbeb; padding: 25px; border-radius: 20px; border: 1px solid #fef3c7;">
+                    <h4 style="color: #92400e; margin-bottom: 10px;"><i class="fas fa-exclamation-circle"></i> Warnings</h4>
+                    <p style="line-height: 1.6; color: #92400e;">${item.warnings ? item.warnings[0] : 'No information available'}</p>
+                </div>
+            </div>
+        `;
+        modal.style.display = 'block';
+    };
 
     function renderSearchResults(nutrients, drugs) {
         if (!drugListElement) return;
