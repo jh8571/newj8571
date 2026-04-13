@@ -11,256 +11,200 @@ document.addEventListener('DOMContentLoaded', () => {
     const modalContent = document.getElementById('modal-body');
     const closeModal = document.querySelector('.close');
 
-    // Data Loading
-    fetch('drugs.json')
-        .then(response => response.json())
-        .then(data => {
-            drugData = data;
-        })
-        .catch(error => console.error('Error loading data:', error));
+    fetch('drugs.json').then(r => r.json()).then(data => { drugData = data; });
 
-    // Gender Selection with Visual Feedback
     window.setGender = function(gender) {
         userGender = gender;
-        const maleBtn = document.getElementById('gender-male');
-        const femaleBtn = document.getElementById('gender-female');
-        
-        if (gender === 'male') {
-            maleBtn.classList.add('active');
-            femaleBtn.classList.remove('active');
-        } else {
-            femaleBtn.classList.add('active');
-            maleBtn.classList.remove('active');
-        }
+        document.getElementById('gender-male').classList.toggle('active', gender === 'male');
+        document.getElementById('gender-female').classList.toggle('active', gender === 'female');
     };
 
-    // AI Analysis Logic - Enhanced for Premium Content
     window.analyzeNutrition = function() {
         const age = document.getElementById('age-range').value;
         const concern = document.getElementById('health-concern').value;
         
         aiResultSection.style.display = 'block';
         aiResultContent.innerHTML = `
-            <div style="grid-column: 1/-1; text-align: center; padding: 60px;">
-                <div class="loader" style="border: 4px solid #f3f3f3; border-top: 4px solid #004e92; border-radius: 50%; width: 40px; height: 40px; animation: spin 1s linear infinite; margin: 0 auto 20px;"></div>
-                <p style="font-weight: 600; color: #475569;">당신의 신체 데이터를 바탕으로 최적의 영양 밸런스를 계산 중입니다...</p>
+            <div style="grid-column: 1/-1; text-align: center; padding: 100px 0;">
+                <div class="premium-loader"></div>
+                <p style="margin-top:20px; font-family: 'serif'; font-style: italic; color: #64748b; letter-spacing: 1px;">Clinical Data Synchronizing...</p>
             </div>
         `;
 
         setTimeout(() => {
-            const recommendations = getDetailedRecommendations(userGender, age, concern);
-            displayAIResults(recommendations);
+            const report = generateHyperPersonalizedReport(userGender, age, concern);
+            displayPremiumReport(report);
             aiResultSection.scrollIntoView({ behavior: 'smooth' });
-        }, 1200);
+        }, 1500);
     };
 
-    function getDetailedRecommendations(gender, age, concern) {
-        const database = {
-            fatigue: {
-                title: "에너지 부스팅 및 만성피로 회복",
-                mainNutrients: [
-                    { name: "고함량 비타민 B군", reason: "에너지 대사 효율을 극대화하여 무기력증을 개선합니다." },
-                    { name: "L-아르기닌", reason: "혈행 개선을 통해 근육과 장기에 산소 공급을 원활히 합니다." },
-                    { name: "마그네슘", reason: "근육 긴장을 완화하고 신경계를 안정시켜 에너지 소모를 줄입니다." }
-                ],
-                lifestyle: "주 3회 30분 이상의 유산소 운동과 정해진 시간에 기상하는 습관이 필수적입니다.",
-                diet: "시금치, 아몬드, 돼지고기(안심) 등 티아민과 마그네슘이 풍부한 식단을 권장합니다.",
-                caution: "신장 기능이 저하된 경우 고용량 마그네슘 섭취 전 전문의와 상담하십시오."
+    function generateHyperPersonalizedReport(gender, age, concern) {
+        // 고민별 기본 베이스
+        const baseData = {
+            fatigue: { name: "에너지 대사 및 활력", icon: "fa-bolt" },
+            eye: { name: "시각 기능 및 안구 보호", icon: "fa-eye" },
+            immune: { name: "면역 방어 체계", icon: "fa-shield-virus" },
+            bone: { name: "골격계 및 관절 구조", icon: "fa-bone" },
+            liver: { name: "간 대사 및 해독 가동", icon: "fa-flask-vial" },
+            brain: { name: "인지 기제 및 뇌 혈류", icon: "fa-brain" }
+        };
+
+        // 성별/연령별 차별화된 추천 성분 맵
+        const nutrientMap = {
+            male: {
+                teen: { fatigue: ["비타민 B군", "아연"], eye: ["루테인", "비타민 A"], immune: ["비타민 C", "유산균"], bone: ["칼슘", "비타민 D"], liver: ["밀크씨슬"], brain: ["DHA", "테아닌"] },
+                young: { fatigue: ["L-아르기닌", "비타민 B12"], eye: ["오메가3", "루테인"], immune: ["비타민 D", "홍삼"], bone: ["MSM", "마그네슘"], liver: ["실리마린", "비타민 B군"], brain: ["포스파티딜세린", "오메가3"] },
+                middle: { fatigue: ["코엔자임 Q10", "옥타코사놀"], eye: ["지아잔틴", "아스타잔틴"], immune: ["베타글루칸", "아연"], bone: ["칼슘", "비타민 K2"], liver: ["글루타치온", "헛개"], brain: ["은행잎 추출물", "비타민 E"] },
+                senior: { fatigue: ["포스파티딜콜린", "BCAA"], eye: ["비타민 A", "루테인"], immune: ["프로폴리스", "셀레늄"], bone: ["N-아세틸글루코사민", "칼슘"], liver: ["우르소데옥시콜산", "밀크씨슬"], brain: ["은행잎", "오메가3"] }
             },
-            eye: {
-                title: "디지털 피로 해소 및 시력 보호",
-                mainNutrients: [
-                    { name: "루테인 & 지아잔틴", reason: "황반 색소 밀도를 유지하여 블루라이트로부터 눈을 보호합니다." },
-                    { name: "오메가3 (EPA/DHA)", reason: "눈물 층의 수분 유지를 도와 안구 건조증을 근본적으로 개선합니다." },
-                    { name: "비타민 A", reason: "어두운 곳에서의 시각 적응을 돕고 점막 건강을 유지합니다." }
-                ],
-                lifestyle: "20분 화면 작업 후 20초간 6미터 먼 곳을 바라보는 '20-20-20' 규칙을 실천하세요.",
-                diet: "당근, 블루베리, 연어와 같이 비타민A와 오메가3가 풍부한 식품을 섭취하세요.",
-                caution: "흡연자의 경우 루테인 고용량 장기 복용 시 주의가 필요합니다."
-            },
-            immune: {
-                title: "면역 체계 강화 및 항바이러스 솔루션",
-                mainNutrients: [
-                    { name: "비타민 D3", reason: "면역 세포의 활성화를 돕는 '면역 스위치' 역할을 수행합니다." },
-                    { name: "아연", reason: "정상적인 세포 분열과 면역 기능에 필수적인 미네랄입니다." },
-                    { name: "프로폴리스", reason: "천연 플라보노이드 성분이 유해 세균으로부터 신체를 방어합니다." }
-                ],
-                lifestyle: "하루 15분 햇볕 쬐기와 충분한 수면(7시간 이상)은 비타민D 합성과 면역력에 결정적입니다.",
-                diet: "버섯, 굴, 브로콜리 등 아연과 비타민이 풍부한 식단이 좋습니다.",
-                caution: "알레르기 체질인 경우 프로폴리스 섭취 전 소량 테스트를 권장합니다."
-            },
-            bone: {
-                title: "골밀도 강화 및 관절 유연성 케어",
-                mainNutrients: [
-                    { name: "칼슘 & 비타민 K2", reason: "비타민 K2는 칼슘이 혈관이 아닌 뼈로 정확히 흡수되도록 돕습니다." },
-                    { name: "MSM (식이유황)", reason: "관절 연골의 염증을 완화하고 통증 감소에 도움을 줍니다." },
-                    { name: "비타민 D", reason: "장내 칼슘 흡수율을 높여 골다공증 예방에 기여합니다." }
-                ],
-                lifestyle: "뼈에 가벼운 체중 부하를 주는 걷기나 근력 운동을 병행하는 것이 효과적입니다.",
-                diet: "멸치, 우유, 두부, 청경채 등 칼슘 함량이 높은 음식을 자주 섭취하세요.",
-                caution: "칼슘제는 철분제와 함께 복용 시 흡수율이 떨어지므로 시간을 두어야 합니다."
-            },
-            liver: {
-                title: "간 해독 기능 및 피로 물질 제거",
-                mainNutrients: [
-                    { name: "밀크씨슬 (실리마린)", reason: "간 세포의 파괴를 막고 재생을 돕는 강력한 항산화제입니다." },
-                    { name: "글루타치온", reason: "체내 독소 제거와 간의 해독 대사 과정에 필수적인 성분입니다." },
-                    { name: "헛개나무 추출물", reason: "알코올 분해 효소 활성을 도와 숙면과 간 기능 회복을 지원합니다." }
-                ],
-                lifestyle: "과도한 당분 섭취를 줄이고 규칙적인 식사를 통해 비알코올성 지방간을 예방하세요.",
-                diet: "부추, 마늘, 비트와 같이 간 해독을 돕는 식재료를 적극 활용하세요.",
-                caution: "담도 폐쇄증이 있는 경우 실리마린 섭취를 피해야 합니다."
-            },
-            brain: {
-                title: "두뇌 활력 및 인지 기능 강화",
-                mainNutrients: [
-                    { name: "포스파티딜세린", reason: "뇌 세포막의 구성 성분으로 기억력 감퇴를 예방하고 집중력을 높입니다." },
-                    { name: "은행잎 추출물", reason: "뇌 혈류를 개선하여 산소와 영양분이 뇌 세포에 잘 전달되게 합니다." },
-                    { name: "DHA", reason: "뇌 신경 조직의 주요 성분으로 정보 전달 능력을 원활하게 합니다." }
-                ],
-                lifestyle: "독서나 퀴즈 풀이 등 지속적인 두뇌 자극 활동과 유산소 운동을 병행하세요.",
-                diet: "등푸른 생선, 견과류, 계란 노른자(레시틴) 등이 두뇌 건강에 좋습니다.",
-                caution: "혈액 응고 저해제 복용 시 은행잎 추출물 섭취 전 의사와 상의하세요."
+            female: {
+                teen: { fatigue: ["철분", "비타민 B군"], eye: ["루테인"], immune: ["유산균", "비타민 C"], bone: ["칼슘", "망간"], liver: ["비타민 B6"], brain: ["DHA", "철분"] },
+                young: { fatigue: ["철분", "마그네슘"], eye: ["오메가3", "히알루론산"], immune: ["여성 유산균", "비타민 D"], bone: ["엽산", "칼슘"], liver: ["밀크씨슬", "이노시톨"], brain: ["오메가3", "엽산"] },
+                middle: { fatigue: ["감마리놀렌산", "이소플라본"], eye: ["지아잔틴", "오메가3"], immune: ["콜라겐", "비타민 C"], bone: ["칼슘", "대두이소플라본"], liver: ["실리마린", "글루타치온"], brain: ["포스파티딜세린", "비타민 B12"] },
+                senior: { fatigue: ["로열젤리", "코엔자임 Q10"], eye: ["루테인", "비타민 E"], immune: ["프로폴리스", "유산균"], bone: ["비타민 D", "칼슘", "K2"], liver: ["우르소데옥시콜산", "글루타치온"], brain: ["은행잎", "DHA"] }
             }
         };
 
-        return database[concern] || database.fatigue;
+        const recommendedNames = nutrientMap[gender][age][concern];
+        const detailedNutrients = recommendedNames.map(name => getNutrientDetails(name, age, gender));
+
+        return {
+            category: baseData[concern].name,
+            icon: baseData[concern].icon,
+            title: `${gender === 'male' ? '남성' : '여성'} ${getAgeText(age)} 맞춤형 ${baseData[concern].name} 솔루션`,
+            description: getPersonalizedDesc(gender, age, concern),
+            nutrients: detailedNutrients,
+            lifestyle: getLifestyleTip(age, concern),
+            caution: getCaution(age, concern)
+        };
     }
 
-    function displayAIResults(rec) {
+    function getNutrientDetails(name, age, gender) {
+        const data = {
+            "비타민 B군": "탄수화물, 단백질, 지방 대사에 관여하여 체내 에너지를 생성합니다. 특히 수용성으로 매일 보충이 필요합니다.",
+            "L-아르기닌": "산화질소를 생성하여 혈관을 확장시키고 혈행을 개선합니다. 활력 증진에 직접적인 도움을 줍니다.",
+            "마그네슘": "300가지 이상의 효소 작용에 관여하며, 신경 안정과 근육 이완을 도와 '천연의 진정제'로 불립니다.",
+            "루테인": "눈 망막의 중심 시력을 담당하는 황반 밀도를 유지합니다. 체내 합성이 안 되어 반드시 섭취해야 합니다.",
+            "오메가3": "혈중 중성지질 개선 및 혈행 원활에 도움을 주며, 건조한 눈 개선에 탁월한 효과가 입증되었습니다.",
+            "비타민 D": "칼슘과 인이 흡수되고 이용되는데 필요하며, 뼈의 형성과 유지 및 골다공증 발생 위험 감소에 도움을 줍니다.",
+            "실리마린": "엉겅퀴 추출물로 간 세포의 파괴를 방지하고 단백질 합성을 촉진하여 간의 재생을 돕습니다.",
+            "철분": "체내 산소 운반과 혈액 생성에 필수적입니다. 여성과 성장기 청소년에게 특히 권장되는 성분입니다.",
+            "포스파티딜세린": "뇌 세포막의 구성 성분으로 인지 기능 개선과 기억력 향상에 도움을 주는 기능성 성분입니다.",
+            "칼슘": "뼈와 치아 형성에 필요하며 신경과 근육 기능 유지에 필수적인 무기질입니다.",
+            "비타민 K2": "칼슘이 혈관 벽에 쌓이지 않고 뼈로 직접 들어가게 가이드하는 '교통 정리' 역할을 합니다.",
+            "MSM": "관절 및 연골 건강에 도움을 줄 수 있는 식이유황 성분으로 염증 완화 효과가 있습니다."
+        };
+        return { name, info: data[name] || "검증된 기능성 성분으로 신체 밸런스 유지에 도움을 줍니다." };
+    }
+
+    function getAgeText(age) {
+        const map = { teen: "청소년", young: "청년", middle: "중년", senior: "노년" };
+        return map[age];
+    }
+
+    function getPersonalizedDesc(gender, age, concern) {
+        if (age === 'senior') return "신체 기능이 자연스럽게 저하되는 시기입니다. 단순 고함량보다는 흡수율과 세포 보호에 집중한 설계가 필요합니다.";
+        if (age === 'teen') return "성장기에는 에너지 소모량이 매우 큽니다. 학습 집중력과 신체 발달을 동시에 고려한 균형 잡힌 영양 공급이 핵심입니다.";
+        if (gender === 'female' && age === 'young') return "생체 주기와 활동량을 고려한 철분 및 마그네슘 보충이 중요합니다. 미용보다는 근본적인 활력에 집중하세요.";
+        return "현대인의 불규칙한 생활 습관으로 인해 깨진 신체 밸런스를 복구하고 핵심 기능을 강화하는 데 초점을 맞췄습니다.";
+    }
+
+    function getLifestyleTip(age, concern) {
+        if (concern === 'eye') return "PC 사용 50분마다 10분간 창밖 멀리 보기와 온찜질을 병행하세요.";
+        if (age === 'senior') return "과격한 운동보다는 하루 40분 정도의 가벼운 산책이 영양소 흡수를 돕습니다.";
+        return "카페인 의존도를 낮추고 하루 2L 이상의 수분 섭취를 유지하는 것이 추천 성분의 효과를 극대화합니다.";
+    }
+
+    function getCaution(age, concern) {
+        if (age === 'senior') return "복용 중인 만성 질환 약물(혈압, 당뇨 등)이 있다면 반드시 의사와 상호작용을 확인하세요.";
+        return "한꺼번에 많은 양을 먹기보다 매일 정해진 시간에 규칙적으로 섭취하는 것이 중요합니다.";
+    }
+
+    function displayPremiumReport(report) {
         aiResultContent.innerHTML = `
-            <div class="premium-report" style="grid-column: 1/-1; background: white; border-radius: 30px; box-shadow: 0 20px 50px rgba(0,0,0,0.08); overflow: hidden; border: 1px solid #e2e8f0;">
-                <div style="background: #004e92; color: white; padding: 40px; text-align: center;">
-                    <span style="background: rgba(255,255,255,0.2); padding: 5px 15px; border-radius: 50px; font-size: 0.85rem; font-weight: 700; text-transform: uppercase; letter-spacing: 1px;">Personalized Analysis Report</span>
-                    <h2 style="font-size: 2rem; margin-top: 15px; color: white;">${rec.title}</h2>
+            <div class="luxury-report-card">
+                <div class="report-header">
+                    <div class="report-badge"><i class="fas ${report.icon}"></i> ${report.category}</div>
+                    <h2>${report.title}</h2>
+                    <p class="report-subtitle">${report.description}</p>
                 </div>
                 
-                <div style="padding: 40px;">
-                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 25px; margin-bottom: 40px;">
-                        ${rec.mainNutrients.map(n => `
-                            <div style="background: #f8fafc; padding: 25px; border-radius: 20px; border: 1px solid #f1f5f9; transition: 0.3s hover;">
-                                <div style="color: #004e92; font-size: 1.25rem; font-weight: 800; margin-bottom: 12px; display: flex; align-items: center; gap: 10px;">
-                                    <i class="fas fa-check-circle"></i> ${n.name}
-                                </div>
-                                <p style="font-size: 0.95rem; color: #475569; line-height: 1.6;">${n.reason}</p>
-                                <button onclick="quickSearch('${n.name.split(' ')[0]}')" style="margin-top: 15px; background: none; border: none; color: #004e92; font-weight: 700; font-size: 0.85rem; cursor: pointer; text-decoration: underline;">성분 정보 자세히 보기</button>
-                            </div>
-                        `).join('')}
-                    </div>
-
-                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 30px; border-top: 1px solid #f1f5f9; padding-top: 40px;">
-                        <div>
-                            <h4 style="color: #0f172a; margin-bottom: 15px; display: flex; align-items: center; gap: 10px;"><i class="fas fa-lightbulb" style="color: #f59e0b;"></i> 생활 습관 가이드</h4>
-                            <p style="font-size: 1rem; color: #475569; line-height: 1.8;">${rec.lifestyle}</p>
+                <div class="nutrient-focus-grid">
+                    ${report.nutrients.map(n => `
+                        <div class="focus-item">
+                            <h4 class="focus-name">${n.name}</h4>
+                            <p class="focus-info">${n.info}</p>
+                            <button onclick="quickSearch('${n.name.split(' ')[0]}')" class="focus-search-btn">Clinical Data →</button>
                         </div>
-                        <div>
-                            <h4 style="color: #0f172a; margin-bottom: 15px; display: flex; align-items: center; gap: 10px;"><i class="fas fa-utensils" style="color: #10b981;"></i> 추천 식단</h4>
-                            <p style="font-size: 1rem; color: #475569; line-height: 1.8;">${rec.diet}</p>
-                        </div>
-                    </div>
+                    `).join('')}
+                </div>
 
-                    <div style="margin-top: 40px; background: #fff7ed; padding: 25px; border-radius: 20px; border: 1px solid #ffedd5;">
-                        <h4 style="color: #9a3412; margin-bottom: 10px; font-size: 1rem;"><i class="fas fa-exclamation-triangle"></i> 복용 시 주의사항</h4>
-                        <p style="font-size: 0.95rem; color: #9a3412; line-height: 1.7;">${rec.caution}</p>
+                <div class="report-footer-grid">
+                    <div class="footer-box">
+                        <label>Expert Advice</label>
+                        <p>${report.lifestyle}</p>
                     </div>
+                    <div class="footer-box caution">
+                        <label>Caution</label>
+                        <p>${report.caution}</p>
+                    </div>
+                </div>
 
-                    <div style="margin-top: 40px; padding-top: 30px; border-top: 1px dashed #e2e8f0; text-align: center;">
-                        <p style="font-size: 0.85rem; color: #94a3b8; line-height: 1.6;">
-                            <strong>의학적 면책 조항:</strong> 본 AI 분석 결과는 정보 제공만을 목적으로 하며, 전문적인 의학적 진단이나 치료를 대신할 수 없습니다. 
-                            새로운 영양제 섭취를 시작하기 전 반드시 의사나 약사와 상담하십시오.
-                        </p>
-                    </div>
+                <div class="medical-disclaimer">
+                    The analysis is based on health generalities and clinical literature. Consult a medical professional before starting any regimen.
                 </div>
             </div>
         `;
     }
 
-    // Integrated Search Logic
+    // Search & Modal logic remain optimized
     if (searchBtn) {
-        searchBtn.addEventListener('click', performSearch);
-        searchInput.addEventListener('keypress', (e) => {
-            if (e.key === 'Enter') performSearch();
-        });
+        searchBtn.addEventListener('click', () => performSearch());
+        searchInput.addEventListener('keypress', (e) => { if (e.key === 'Enter') performSearch(); });
     }
 
-    window.quickSearch = function(query) {
-        if (searchInput) {
-            searchInput.value = query;
-            performSearch();
-        }
-    };
+    window.quickSearch = function(q) { searchInput.value = q; performSearch(); };
 
     function performSearch() {
-        const query = searchInput.value.trim().toLowerCase();
-        if (!query) return;
-
-        const filtered = drugData.filter(d => 
-            d.name.toLowerCase().includes(query) || 
-            d.ingredients.toLowerCase().includes(query) ||
-            d.efficacy.toLowerCase().includes(query)
-        );
-
+        const q = searchInput.value.trim().toLowerCase();
+        if (!q) return;
+        const filtered = drugData.filter(d => d.name.toLowerCase().includes(q) || d.ingredients.toLowerCase().includes(q));
         renderResults(filtered);
     }
 
     function renderResults(results) {
-        drugListElement.innerHTML = '';
-        if (results.length === 0) {
-            drugListElement.innerHTML = '<p style="grid-column: 1/-1; text-align: center; padding: 40px; color: #64748b;">검색 결과가 없습니다. 다른 성분명을 입력해 보세요.</p>';
-            return;
-        }
-
-        results.forEach(drug => {
+        drugListElement.innerHTML = results.length ? '' : '<p class="no-data">검색 결과가 없습니다.</p>';
+        results.forEach(d => {
             const card = document.createElement('div');
             card.className = 'drug-card';
-            card.style.cursor = 'pointer';
             card.innerHTML = `
-                <div class="card-category ${drug.category === '전문의약품' ? 'pro' : 'general'}">${drug.category}</div>
-                <h3 class="card-name">${drug.name}</h3>
-                <p class="card-manufacturer">${drug.manufacturer}</p>
-                <div class="card-efficacy">${drug.efficacy.substring(0, 60)}${drug.efficacy.length > 60 ? '...' : ''}</div>
-                <button class="detail-btn" style="margin-top: 15px; width: 100%; padding: 10px; background: #f1f5f9; border: none; border-radius: 8px; font-weight: 600; color: #475569;">상세 보기</button>
+                <div class="card-category ${d.category === '전문의약품' ? 'pro' : 'general'}">${d.category}</div>
+                <h3 class="card-name">${d.name}</h3>
+                <div class="card-efficacy">${d.efficacy.substring(0, 50)}...</div>
             `;
-            card.onclick = () => showDetail(drug.id);
+            card.onclick = () => showDetail(d.id);
             drugListElement.appendChild(card);
         });
         drugListElement.scrollIntoView({ behavior: 'smooth' });
     }
 
     window.showDetail = function(id) {
-        const drug = drugData.find(d => d.id === id);
-        if (!drug) return;
-
+        const d = drugData.find(x => x.id === id);
+        if (!d) return;
         modalContent.innerHTML = `
             <div class="detail-header">
-                <span class="detail-category ${drug.category === '전문의약품' ? 'pro' : 'general'}">${drug.category}</span>
-                <h2 style="margin-top:15px; font-size: 1.8rem; color: #000428;">${drug.name}</h2>
-                <p style="color: #64748b; font-weight: 600;">${drug.manufacturer}</p>
+                <h2>${d.name}</h2>
+                <p>${d.manufacturer}</p>
             </div>
-            <div class="detail-grid" style="margin-top: 30px; display: grid; gap: 20px;">
-                <div><strong><i class="fas fa-flask"></i> 주요 성분:</strong> ${drug.ingredients}</div>
-                <div><strong><i class="fas fa-check-circle"></i> 주요 효능:</strong> ${drug.efficacy}</div>
-                <div><strong><i class="fas fa-directions"></i> 복용법:</strong> ${drug.usage}</div>
-                <div style="background: #f8fafc; padding: 20px; border-radius: 12px; font-size: 0.95rem; line-height: 1.6;">
-                    <strong>상세 설명:</strong> ${drug.description}
-                </div>
+            <div class="detail-body">
+                <p><strong>주요 성분:</strong> ${d.ingredients}</p>
+                <p><strong>효능 효과:</strong> ${d.efficacy}</p>
+                <div class="detail-desc">${d.description}</div>
             </div>
         `;
         modal.style.display = 'block';
-        document.body.style.overflow = 'hidden';
     };
 
-    if (closeModal) {
-        closeModal.onclick = () => {
-            modal.style.display = 'none';
-            document.body.style.overflow = 'auto';
-        };
-    }
-
-    window.onclick = (event) => {
-        if (event.target == modal) {
-            modal.style.display = 'none';
-            document.body.style.overflow = 'auto';
-        }
-    };
+    if (closeModal) closeModal.onclick = () => { modal.style.display = 'none'; };
+    window.onclick = (e) => { if (e.target == modal) modal.style.display = 'none'; };
 });
