@@ -73,10 +73,16 @@ document.addEventListener('DOMContentLoaded', () => {
         };
 
         const resNames = nutrientMap[gender][age][concern];
-        const detailedNutrients = resNames.map(n => ({
-            name: n,
-            ...getNutrientDetail(n)
-        }));
+        const detailedNutrients = resNames.map(n => {
+            // nutrientData에서 실제 데이터 찾기 (부분 일치 포함)
+            const realData = nutrientData.find(rd => rd.name.includes(n)) || getNutrientDetail(n);
+            return {
+                name: realData.name || n,
+                info: realData.efficacy || realData.info,
+                dri: realData.dri,
+                composition: realData.category || realData.composition
+            };
+        });
 
         return {
             title: `${gender==='male'?'남성':'여성'} 맞춤형 정밀 분석 리포트`,
