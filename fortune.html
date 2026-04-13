@@ -13,8 +13,8 @@
 
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>프리미엄 운세 & 타로 - VitalBalance | 마인드 & 바디 전인적 솔루션</title>
-    <meta name="description" content="타로, 사주, 관상을 통해 당신의 미래와 현재를 전문적으로 분석해 드립니다. VitalBalance의 고품격 운세 서비스를 경험하세요.">
+    <title>프리미엄 운세 & 타로 - VitalRest | 건강한 쉼표</title>
+    <meta name="description" content="타로, 사주, 관상을 통해 당신의 미래와 현재를 전문적으로 분석해 드립니다. VitalRest의 고품격 운세 서비스를 경험하세요.">
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" media="print" onload="this.media='all'">
     <noscript><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"></noscript>
@@ -148,20 +148,26 @@
         }
     </style>
 </head>
-<body>
+<body data-lang="ko">
+    <!-- Floating Controls -->
+    <div class="controls-bar">
+        <button id="lang-toggle" class="control-btn" title="Change Language">EN</button>
+        <button id="theme-toggle" class="control-btn" title="Toggle Dark Mode"><i class="fas fa-moon"></i></button>
+    </div>
+
     <header>
         <div class="container">
-            <h1>VitalBalance</h1>
+            <h1><a href="index.html" data-ko="VitalRest : 건강한 쉼표" data-en="VitalRest : Healthy Comma">VitalRest : 건강한 쉼표</a></h1>
             <p>신체와 정신의 완벽한 조화, 당신을 위한 맞춤형 건강 솔루션</p>
             <nav>
-                <a href="index.html">의약품 검색</a>
-                <a href="exercise.html">올바른 운동</a>
-                <a href="psychology.html">심리테스트</a>
-                <a href="mbti.html">MBTI 테스트</a>
-                <a href="fortune.html" class="active">운세/타로</a>
-                <a href="games.html">게임</a>
-                <a href="animal.html">동물 AI</a>
-                <a href="blog.html">건강 가이드</a>
+                <a href="index.html" data-ko="AI 솔루션" data-en="AI Solution">AI 솔루션</a>
+                <a href="exercise.html" data-ko="올바른 운동" data-en="Exercise">올바른 운동</a>
+                <a href="psychology.html" data-ko="심리테스트" data-en="Psychology">심리테스트</a>
+                <a href="mbti.html" data-ko="MBTI 테스트" data-en="MBTI">MBTI 테스트</a>
+                <a href="fortune.html" class="active" data-ko="운세/타로" data-en="Fortune">운세/타로</a>
+                <a href="games.html" data-ko="게임" data-en="Games">게임</a>
+                <a href="animal.html" data-ko="동물 AI" data-en="Animal AI">동물 AI</a>
+                <a href="blog.html" data-ko="건강 가이드" data-en="Health Guide">건강 가이드</a>
             </nav>
         </div>
     </header>
@@ -175,7 +181,7 @@
                 <h2 style="font-size: 1.3rem; color: #6b21a8; margin: 0;">미래 예측 및 성찰 센터</h2>
             </div>
             <p style="line-height: 1.8; color: #6b21a8; font-weight: 400; font-size: 1.05rem;">
-                VitalBalance의 운세 서비스는 단순한 재미를 넘어 당신의 현재 상황을 통찰하고 
+                VitalRest의 운세 서비스는 단순한 재미를 넘어 당신의 현재 상황을 통찰하고 
                 더 나은 선택을 위한 <strong>영감과 힐링</strong>을 제공합니다. 메이저 아르카나 22종 타로와 심층 사주 분석을 경험해 보세요.
             </p>
         </section>
@@ -193,11 +199,11 @@
 
     <footer>
         <div class="container">
-            <p>&copy; 2026 VitalBalance. All rights reserved.</p>
+            <p>&copy; 2026 VitalRest. All rights reserved.</p>
             <div class="footer-links">
-                <a href="about.html">소개</a>
-                <a href="privacy.html">개인정보처리방침</a>
-                <a href="terms.html">이용약관</a>
+                <a href="about.html" data-ko="소개" data-en="About">소개</a>
+                <a href="privacy.html" data-ko="개인정보방침" data-en="Privacy">개인정보방침</a>
+                <a href="terms.html" data-ko="이용약관" data-en="Terms">이용약관</a>
             </div>
         </div>
     </footer>

@@ -1,97 +1,63 @@
-document.addEventListener('DOMContentLoaded', () => {
-    let exerciseData = null;
-    let currentCategory = '전체';
+window.calculateBMI = function() {
+    const height = document.getElementById('height').value;
+    const weight = document.getElementById('weight').value;
+    const resultArea = document.getElementById('exercise-result-area');
 
-    fetch('exercise_data.json')
-        .then(r => r.json())
-        .then(data => { exerciseData = data; })
-        .catch(e => console.error("Exercise data load error:", e));
-
-    window.calculateBMI = function() {
-        const h = parseFloat(document.getElementById('height').value) / 100;
-        const w = parseFloat(document.getElementById('weight').value);
-        if (!h || !w) return alert('정확한 신장과 체중을 입력하세요.');
-        const bmi = (w / (h * h)).toFixed(1);
-        document.getElementById('bmi-score').innerText = bmi;
-        let cat = '', key = '';
-        if (bmi < 18.5) { cat = '저체중'; key = 'ectomorph'; }
-        else if (bmi < 23) { cat = '정상'; key = 'mesomorph'; }
-        else if (bmi < 25) { cat = '과체중'; key = 'endomorph'; }
-        else { cat = '비만'; key = 'endomorph'; }
-        document.getElementById('bmi-category').innerText = cat;
-        document.getElementById('result-card').style.display = 'block';
-        if (exerciseData) renderRecommendation(key);
-    };
-
-    window.filterExercises = function(category) {
-        currentCategory = category;
-        document.querySelectorAll('.cat-btn').forEach(btn => {
-            btn.classList.toggle('active', btn.innerText === category);
-            btn.style.background = btn.innerText === category ? 'var(--primary-color)' : 'white';
-            btn.style.color = btn.innerText === category ? 'white' : 'inherit';
-        });
-        renderExerciseList();
-    };
-
-    function renderRecommendation(key) {
-        const c = exerciseData.courses[key];
-        document.getElementById('course-title').innerText = c.title;
-        document.getElementById('breakfast-text').innerText = c.meals.breakfast;
-        document.getElementById('lunch-text').innerText = c.meals.lunch;
-        document.getElementById('dinner-text').innerText = c.meals.dinner;
-        document.getElementById('nutrition-tip').innerText = c.meals.nutrition_tip;
-        document.getElementById('recommendation-section').style.display = 'block';
-        renderExerciseList();
-        window.scrollTo({ top: document.getElementById('recommendation-section').offsetTop - 50, behavior: 'smooth' });
+    if (!height || !weight) {
+        alert('신장과 체중을 모두 입력해 주세요.');
+        return;
     }
 
-    function renderExerciseList() {
-        const list = document.getElementById('exercise-steps-grid');
-        list.innerHTML = '';
-        const filtered = exerciseData.exercises.filter(ex => currentCategory === '전체' || ex.category === currentCategory);
+    const bmi = (weight / ((height / 100) * (height / 100))).toFixed(1);
+    let category = '';
+    let color = '';
 
-        filtered.forEach(ex => {
-            const card = document.createElement('div');
-            card.className = 'exercise-step-card';
-            
-            // Sprite 계산 (3열 x 4행 기준)
-            const cols = 3;
-            const row = Math.floor(ex.cell_index / cols);
-            const col = ex.cell_index % cols;
-            
-            // 퍼센트 위치 계산 (0% ~ 100%)
-            const posX = (col / (cols - 1)) * 100;
-            const posY = (row / 3) * 100;
+    if (bmi < 18.5) { category = '저체중'; color = '#38bdf8'; }
+    else if (bmi < 23) { category = '정상'; color = '#10b981'; }
+    else if (bmi < 25) { category = '과체중'; color = '#f59e0b'; }
+    else { category = '비만'; color = '#ef4444'; }
 
-            const spriteHTML = `
-                <div class="sprite-box" style="
-                    width: 100%; 
-                    height: 200px; 
-                    background-image: url('e1/${ex.chart_id}.png');
-                    background-size: 300% 400%;
-                    background-position: ${posX}% ${posY}%;
-                    border-radius: 12px;
-                    border: 1px solid #eee;
-                    margin-bottom: 20px;
-                    background-color: #fff;
-                "></div>
-            `;
-
-            card.innerHTML = `
-                ${spriteHTML}
-                <div style="display:flex; justify-content:space-between; align-items:center; margin:15px 0;">
-                    <span style="font-size:0.8rem; color:var(--accent-color); font-weight:700;">${ex.category} | ${ex.difficulty}</span>
-                    <span style="font-size:0.8rem; background:#f1f5f9; padding:2px 8px; border-radius:4px;">${ex.target}</span>
+    resultArea.innerHTML = `
+        <div class="luxury-report-card">
+            <div class="report-header">
+                <div class="report-badge" style="background: ${color}22; color: ${color};">Analysis Result</div>
+                <h2 style="font-size: 2.5rem; margin-bottom: 10px;">BMI: ${bmi}</h2>
+                <p style="font-size: 1.2rem; font-weight: 700; color: ${color};">${category} 상태입니다.</p>
+            </div>
+            <div style="padding: 40px;">
+                <h3 style="margin-bottom: 25px; border-left: 4px solid var(--primary-color); padding-left: 15px;">추천 운동 가이드</h3>
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px;">
+                    <div class="focus-item">
+                        <h4 class="focus-name">유산소 운동</h4>
+                        <p class="focus-info">${getExerciseTip(category, 'cardio')}</p>
+                    </div>
+                    <div class="focus-item">
+                        <h4 class="focus-name">근력 운동</h4>
+                        <p class="focus-info">${getExerciseTip(category, 'strength')}</p>
+                    </div>
                 </div>
-                <h4 style="font-size:1.3rem; margin-bottom:12px; color:var(--primary-color);">${ex.name}</h4>
-                <ul class="step-list" style="margin-bottom:15px; padding-left: 20px;">
-                    ${ex.steps.map(s => `<li style="font-size:0.9rem; color:#475569; margin-bottom:5px;">${s}</li>`).join('')}
-                </ul>
-                <div style="padding:15px; background:#fff9db; border-radius:12px; font-size:0.85rem; color:#856404;">
-                    <strong><i class="fas fa-lightbulb"></i> 자세 팁:</strong> ${ex.posture_tips}
+                <div style="margin-top: 30px; padding: 25px; background: #f8fafc; border-radius: 20px; border: 1px solid #f1f5f9;">
+                    <h4 style="margin-bottom: 10px;"><i class="fas fa-utensils"></i> 식단 조언</h4>
+                    <p style="font-size: 0.95rem; color: #475569;">${getDietTip(category)}</p>
                 </div>
-            `;
-            list.appendChild(card);
-        });
+            </div>
+        </div>
+    `;
+    resultArea.scrollIntoView({ behavior: 'smooth' });
+};
+
+function getExerciseTip(cat, type) {
+    if (cat === '비만' || cat === '과체중') {
+        return type === 'cardio' ? '관절에 무리가 없는 수영이나 빠른 걷기를 매일 40분 이상 권장합니다.' : '기초 대사량을 높이기 위해 큰 근육 위주의 스쿼트나 런지를 병행하세요.';
     }
-});
+    if (cat === '저체중') {
+        return type === 'cardio' ? '가벼운 산책 위주로 하되 무리한 유산소는 피하세요.' : '근육량 증대를 위해 고단백 식단과 함께 고강도 웨이트 트레이닝이 필요합니다.';
+    }
+    return type === 'cardio' ? '현재의 신체 밸런스를 유지하기 위해 주 3회 인터벌 러닝을 추천합니다.' : '전신 근력 발달을 위한 데드리프트나 플랭크를 추천합니다.';
+}
+
+function getDietTip(cat) {
+    if (cat === '비만') return '정제 탄수화물을 줄이고 식이섬유가 풍부한 채소 중심의 식단을 구성하세요.';
+    if (cat === '저체중') return '끼니를 거르지 말고 복합 탄수화물과 양질의 지방을 충분히 섭취하세요.';
+    return '단백질 위주의 균형 잡힌 식단을 유지하며 수분 섭취를 늘리세요.';
+}

@@ -15,24 +15,24 @@
     font-family: 'Pretendard', -apple-system, system-ui, sans-serif;
 }
 
-body { background-color: var(--bg-color); color: var(--text-main); line-height: 1.7; }
+body { background-color: var(--bg-color); color: var(--text-main); line-height: 1.7; transition: background-color 0.3s, color 0.3s; }
 
 .container { max-width: 1200px; margin: 0 auto; padding: 0 24px; }
 
 /* Header - Modern Minimalist */
 header {
-    background: #ffffff;
+    background: var(--card-bg);
     padding: 40px 0;
     text-align: center;
     border-bottom: 1px solid var(--border-color);
     position: sticky; top: 0; z-index: 100;
 }
 
-header h1 {
+header h1 a {
     font-size: 2.2rem; font-weight: 900; letter-spacing: -1.5px;
     background: linear-gradient(135deg, #0f172a 0%, #334155 100%);
     -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-    margin-bottom: 10px;
+    text-decoration: none;
 }
 
 nav { display: flex; justify-content: center; gap: 8px; margin-top: 25px; flex-wrap: wrap; }
@@ -41,110 +41,6 @@ nav a {
     padding: 8px 18px; border-radius: 50px; transition: 0.3s;
 }
 nav a:hover, nav a.active { background: #f1f5f9; color: var(--primary-color); }
-
-/* Premium Hero Section */
-.ai-hero {
-    background: #0f172a; color: white; padding: 100px 0; border-radius: 0 0 60px 60px;
-    margin-bottom: -60px; position: relative; overflow: hidden;
-}
-
-.ai-hero::before {
-    content: ''; position: absolute; top: -50%; left: -50%; width: 200%; height: 200%;
-    background: radial-gradient(circle, rgba(56,189,248,0.05) 0%, transparent 70%);
-    pointer-events: none;
-}
-
-.ai-input-card {
-    background: #ffffff; padding: 50px; border-radius: 32px; color: #1e293b;
-    box-shadow: 0 40px 100px rgba(0,0,0,0.1); border: 1px solid rgba(255,255,255,0.8);
-    backdrop-filter: blur(20px); max-width: 1000px; margin: 0 auto;
-}
-
-/* Luxury Report Card */
-.luxury-report-card {
-    background: white; border-radius: 40px; box-shadow: 0 25px 80px rgba(0,0,0,0.05);
-    border: 1px solid #f1f5f9; overflow: hidden; animation: slideUp 0.8s cubic-bezier(0.16, 1, 0.3, 1);
-}
-
-.report-header {
-    background: #f8fafc; padding: 60px 40px; text-align: center; border-bottom: 1px solid #f1f5f9;
-}
-
-.report-badge {
-    display: inline-block; padding: 6px 16px; background: #e0f2fe; color: #0369a1;
-    border-radius: 50px; font-size: 0.8rem; font-weight: 800; text-transform: uppercase;
-    letter-spacing: 1px; margin-bottom: 25px;
-}
-
-.nutrient-focus-grid {
-    display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: 30px; padding: 50px 40px;
-}
-
-.focus-item {
-    padding: 35px; border-radius: 24px; border: 1px solid #f1f5f9; transition: 0.4s;
-    background: #ffffff;
-}
-
-.focus-item:hover { border-color: var(--accent-color); transform: translateY(-5px); }
-
-.focus-name { font-size: 1.4rem; font-weight: 800; color: #0f172a; margin-bottom: 15px; }
-.focus-info { font-size: 0.95rem; color: #475569; line-height: 1.8; }
-
-.focus-search-btn {
-    margin-top: 25px; background: none; border: none; color: var(--accent-color);
-    font-weight: 700; cursor: pointer; text-transform: uppercase; font-size: 0.8rem;
-    letter-spacing: 1px;
-}
-
-.report-footer-grid {
-    display: grid; grid-template-columns: 1fr 1fr; border-top: 1px solid #f1f5f9;
-}
-
-.footer-box { padding: 40px; }
-.footer-box:first-child { border-right: 1px solid #f1f5f9; }
-.footer-box label { display: block; font-size: 0.75rem; font-weight: 800; color: #94a3b8; text-transform: uppercase; margin-bottom: 15px; }
-.footer-box.caution p { color: #991b1b; }
-
-.medical-disclaimer {
-    padding: 30px; font-size: 0.8rem; color: #94a3b8; text-align: center;
-    background: #f8fafc; border-top: 1px solid #f1f5f9;
-}
-
-/* Premium UI Elements */
-.select-btn {
-    padding: 15px; border: 1px solid #e2e8f0; border-radius: 12px;
-    background: white; font-weight: 700; cursor: pointer; transition: 0.3s;
-}
-
-.select-btn.active { background: #0f172a; color: white; border-color: #0f172a; }
-
-.premium-loader {
-    width: 50px; height: 50px; border: 2px solid #f3f3f3; border-top: 2px solid #0f172a;
-    border-radius: 50%; animation: spin 1s linear infinite; margin: 0 auto;
-}
-
-@keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
-@keyframes slideUp { from { opacity: 0; transform: translateY(40px); } to { opacity: 1; transform: translateY(0); } }
-
-/* Drug Search Enhancement */
-.drug-list { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 30px; margin-top: 50px; }
-.drug-card {
-    background: white; padding: 30px; border-radius: 24px; border: 1px solid #f1f5f9;
-    transition: 0.3s; cursor: pointer;
-}
-.drug-card:hover { transform: translateY(-10px); box-shadow: 0 30px 60px rgba(0,0,0,0.05); }
-
-.card-category { font-size: 0.7rem; font-weight: 800; padding: 4px 12px; border-radius: 50px; margin-bottom: 15px; display: inline-block; }
-.card-category.pro { background: #eff6ff; color: #2563eb; }
-.card-category.general { background: #f0fdf4; color: #16a34a; }
-
-/* Responsive */
-@media (max-width: 768px) {
-    .report-footer-grid { grid-template-columns: 1fr; }
-    .footer-box:first-child { border-right: none; border-bottom: 1px solid #f1f5f9; }
-    .ai-input-card { padding: 30px; }
-}
 
 /* Floating Controls */
 .controls-bar {
@@ -161,25 +57,67 @@ nav a:hover, nav a.active { background: #f1f5f9; color: var(--primary-color); }
     box-shadow: 0 4px 12px rgba(0,0,0,0.1);
 }
 
-.control-btn:hover { transform: scale(1.1); background: #ffffff; }
+/* Premium Hero & Cards */
+.ai-hero {
+    background: #0f172a; color: white; padding: 80px 0; border-radius: 0 0 60px 60px;
+    margin-bottom: 40px; text-align: center;
+}
 
-/* Dark Mode Overrides */
+.premium-card {
+    background: var(--card-bg); padding: 40px; border-radius: 32px;
+    box-shadow: 0 25px 70px rgba(0,0,0,0.05); border: 1px solid var(--border-color);
+    max-width: 900px; margin: 0 auto;
+}
+
+/* Exercise Page Specific Fix */
+.exercise-grid {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 25px; margin-top: 40px;
+}
+
+.input-field input, .input-field select {
+    width: 100%; padding: 15px; border: 1px solid var(--border-color);
+    border-radius: 12px; font-size: 1rem; background: var(--card-bg);
+    color: var(--text-main); outline: none; margin-top: 8px;
+}
+
+.luxury-btn {
+    width: 100%; padding: 18px; background: var(--primary-color);
+    color: white; border: none; border-radius: 16px; font-weight: 800;
+    cursor: pointer; transition: 0.3s; margin-top: 20px;
+}
+
+/* Luxury Report */
+.luxury-report-card {
+    background: var(--card-bg); border-radius: 40px; overflow: hidden;
+    border: 1px solid var(--border-color); margin-top: 60px;
+}
+
+.report-header { background: #f8fafc; padding: 40px; text-align: center; border-bottom: 1px solid #f1f5f9; }
+[data-theme='dark'] .report-header { background: #1e293b; border-bottom-color: #334155; }
+
+/* Dark Mode */
 [data-theme='dark'] {
-    --bg-color: #020617;
-    --card-bg: #0f172a;
-    --text-main: #f1f5f9;
-    --text-muted: #94a3b8;
+    --bg-color: #020617; --card-bg: #0f172a;
+    --text-main: #f1f5f9; --text-muted: #94a3b8;
     --border-color: #1e293b;
 }
 
-[data-theme='dark'] body { background-color: var(--bg-color); }
-[data-theme='dark'] header, [data-theme='dark'] .ai-input-card, [data-theme='dark'] .luxury-report-card, [data-theme='dark'] .focus-item, [data-theme='dark'] .drug-card {
-    background-color: var(--card-bg); border-color: var(--border-color); color: var(--text-main);
+[data-theme='dark'] header h1 a {
+    background: linear-gradient(135deg, #f1f5f9 0%, #94a3b8 100%);
+    -webkit-background-clip: text;
 }
 
-[data-theme='dark'] .report-header { background: #1e293b; border-bottom-color: #334155; }
-[data-theme='dark'] .footer-box, [data-theme='dark'] .medical-disclaimer { background: #0f172a; border-color: #1e293b; }
-[data-theme='dark'] .control-btn { background: rgba(15,23,42,0.8); color: white; border-color: #334155; }
-[data-theme='dark'] .select-btn { background: #1e293b; color: white; border-color: #334155; }
-[data-theme='dark'] input { background: #1e293b; color: white; border-color: #334155; }
+[data-theme='dark'] .control-btn { background: rgba(30,41,59,0.8); color: white; }
+[data-theme='dark'] nav a:hover, [data-theme='dark'] nav a.active { background: #1e293b; }
 
+/* Modal & Other UI */
+.modal { display: none; position: fixed; z-index: 3000; left: 0; top: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.7); backdrop-filter: blur(5px); }
+.modal-content { background: var(--card-bg); margin: 5% auto; padding: 40px; width: 90%; max-width: 700px; border-radius: 30px; position: relative; color: var(--text-main); }
+.close { position: absolute; right: 25px; top: 20px; font-size: 24px; cursor: pointer; }
+
+/* Loader */
+.premium-loader { width: 40px; height: 40px; border: 3px solid #f3f3f3; border-top: 3px solid var(--accent-color); border-radius: 50%; animation: spin 1s linear infinite; margin: 0 auto; }
+@keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+
+footer { padding: 60px 0; text-align: center; border-top: 1px solid var(--border-color); margin-top: 80px; }
