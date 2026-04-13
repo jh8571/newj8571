@@ -84,7 +84,8 @@ document.addEventListener('DOMContentLoaded', () => {
         resultHTML += `
                 </div>
                 <div style="padding: 40px; text-align: center;">
-                    <button class="luxury-btn" style="max-width: 300px; margin-top: 0;" onclick="window.renderTarot()">새로운 운세 보기</button>
+                    <button class="luxury-btn" style="max-width: 300px; margin-top: 0; margin-bottom: 20px;" onclick="window.renderTarot()">새로운 운세 보기</button>
+                    ${window.getShareUI('오늘의 타로 운세', 'VitalRest에서 뽑은 저의 타로 카드가 궁금하신가요?')}
                 </div>
             </div>`;
         
@@ -134,7 +135,8 @@ document.addEventListener('DOMContentLoaded', () => {
                 <p style="line-height: 1.8; font-size: 1.1rem; color: var(--text-main); text-align: left;">
                     ${fortuneData.saju.descriptions.professional_analysis}
                 </p>
-                <button class="luxury-btn" style="max-width: 300px; margin-top: 40px;" onclick="renderSaju()">다시 분석하기</button>
+                <button class="luxury-btn" style="max-width: 300px; margin-top: 40px; margin-bottom: 20px;" onclick="renderSaju()">다시 분석하기</button>
+                ${window.getShareUI('사주 정밀 분석 결과', '인생의 흐름을 읽는 VitalRest 사주 분석! 제 운명의 리포트를 확인해 보세요.')}
             </div>
         `;
         resultDiv.scrollIntoView({ behavior: 'smooth', block: 'start' });

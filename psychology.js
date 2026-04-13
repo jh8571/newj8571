@@ -101,6 +101,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     <p style="font-size: 1.1rem; line-height: 1.8; color: var(--text-main);">${resultText}</p>
                 </div>
                 <button class="luxury-btn" onclick="location.reload()" style="margin-top: 40px; max-width: 300px;">다른 테스트 하기</button>
+                ${window.getShareUI('심리 분석 결과', 'VitalRest에서 제 마음의 소리를 들어보았어요. 당신의 결과는 어떤가요?')}
             </div>
         `;
     }

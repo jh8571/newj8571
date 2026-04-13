@@ -45,4 +45,41 @@ document.addEventListener('DOMContentLoaded', () => {
             el.placeholder = lang === 'ko' ? el.getAttribute('data-ko-ph') : el.getAttribute('data-en-ph');
         });
     }
+
+    // 3. Global SNS Share Logic
+    window.getShareUI = function(title, text) {
+        return `
+            <div class="share-container" style="margin-top: 40px; padding: 30px; background: var(--card-bg); border-radius: 20px; border: 1px solid var(--border-color); text-align: center;">
+                <h4 style="color: var(--primary-color); margin-bottom: 20px; font-size: 1.1rem;"><i class="fas fa-share-nodes"></i> 결과 공유하기</h4>
+                <div style="display: flex; justify-content: center; gap: 15px;">
+                    <button onclick="shareResult('kakao', '${title}', '${text}')" style="background: #FEE500; color: #000000; border: none; width: 50px; height: 50px; border-radius: 50%; font-size: 1.5rem; cursor: pointer; transition: 0.3s;" title="카카오톡 공유"><i class="fas fa-comment"></i></button>
+                    <button onclick="shareResult('facebook', '${title}', '${text}')" style="background: #1877F2; color: white; border: none; width: 50px; height: 50px; border-radius: 50%; font-size: 1.5rem; cursor: pointer; transition: 0.3s;" title="페이스북 공유"><i class="fab fa-facebook-f"></i></button>
+                    <button onclick="shareResult('twitter', '${title}', '${text}')" style="background: #1DA1F2; color: white; border: none; width: 50px; height: 50px; border-radius: 50%; font-size: 1.5rem; cursor: pointer; transition: 0.3s;" title="X (트위터) 공유"><i class="fab fa-twitter"></i></button>
+                    <button onclick="shareResult('copy', '${title}', '${text}')" style="background: var(--text-muted); color: white; border: none; width: 50px; height: 50px; border-radius: 50%; font-size: 1.5rem; cursor: pointer; transition: 0.3s;" title="링크 복사"><i class="fas fa-link"></i></button>
+                </div>
+            </div>
+        `;
+    };
+
+    window.shareResult = function(platform, title, text) {
+        const url = window.location.href;
+        const fullTitle = `${title} | VitalRest`;
+        const fullText = `${text}\n지금 VitalRest에서 확인해 보세요!`;
+
+        if (platform === 'kakao') {
+            if (navigator.share) {
+                navigator.share({ title: fullTitle, text: fullText, url: url }).catch(console.error);
+            } else {
+                alert("모바일 기기에서 카카오톡 공유가 가능합니다. 데스크톱에서는 '링크 복사'를 이용해 주세요.");
+            }
+        } else if (platform === 'facebook') {
+            window.open(`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(url)}`, '_blank', 'width=600,height=400');
+        } else if (platform === 'twitter') {
+            window.open(`https://twitter.com/intent/tweet?text=${encodeURIComponent(fullTitle + '\n' + fullText)}&url=${encodeURIComponent(url)}`, '_blank', 'width=600,height=400');
+        } else if (platform === 'copy') {
+            navigator.clipboard.writeText(url).then(() => {
+                alert('결과 링크가 클립보드에 복사되었습니다! 친구들에게 공유해 보세요.');
+            });
+        }
+    };
 });

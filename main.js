@@ -147,7 +147,8 @@ document.addEventListener('DOMContentLoaded', () => {
                 </div>
                 <div style="padding: 30px; text-align: center; background: #f8fafc;">
                     <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 20px;" data-ko="* 위 분석 결과는 일반적인 건강 정보를 바탕으로 하며, 개인의 체질과 상태에 따라 다를 수 있습니다." data-en="* The analysis is based on general health data and may vary by individual.">* 위 분석 결과는 일반적인 건강 정보를 바탕으로 하며, 개인의 체질과 상태에 따라 다를 수 있습니다.</p>
-                    <button onclick="location.reload()" class="luxury-btn" style="max-width: 300px; margin-top: 0;" data-ko="분석 다시하기" data-en="Re-analyze">분석 다시하기</button>
+                    <button onclick="location.reload()" class="luxury-btn" style="max-width: 300px; margin-top: 0; margin-bottom: 20px;" data-ko="분석 다시하기" data-en="Re-analyze">분석 다시하기</button>
+                    ${window.getShareUI('AI 맞춤 영양 리포트', 'VitalRest에서 제게 딱 맞는 영양 성분 조합을 찾았어요!')}
                 </div>
             </div>
         `;

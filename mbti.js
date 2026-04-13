@@ -97,6 +97,7 @@ function showResult() {
             </div>
 
             <button class="luxury-btn" onclick="location.reload()" style="margin-top: 40px;">테스트 다시하기</button>
+            ${window.getShareUI(`나의 MBTI 건강 성향: ${mbti}`, `${resultData.title}인 제게 어울리는 웰니스 가이드를 확인했어요!`)}
         </div>
     `;
 }
