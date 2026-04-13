@@ -145,3 +145,41 @@ nav a:hover, nav a.active { background: #f1f5f9; color: var(--primary-color); }
     .footer-box:first-child { border-right: none; border-bottom: 1px solid #f1f5f9; }
     .ai-input-card { padding: 30px; }
 }
+
+/* Floating Controls */
+.controls-bar {
+    position: fixed; top: 20px; right: 20px; z-index: 2000;
+    display: flex; gap: 10px;
+}
+
+.control-btn {
+    background: rgba(255,255,255,0.8); backdrop-filter: blur(10px);
+    border: 1px solid var(--border-color); color: var(--primary-color);
+    width: 45px; height: 45px; border-radius: 50%; cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+    font-weight: 800; font-size: 0.85rem; transition: 0.3s;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+
+.control-btn:hover { transform: scale(1.1); background: #ffffff; }
+
+/* Dark Mode Overrides */
+[data-theme='dark'] {
+    --bg-color: #020617;
+    --card-bg: #0f172a;
+    --text-main: #f1f5f9;
+    --text-muted: #94a3b8;
+    --border-color: #1e293b;
+}
+
+[data-theme='dark'] body { background-color: var(--bg-color); }
+[data-theme='dark'] header, [data-theme='dark'] .ai-input-card, [data-theme='dark'] .luxury-report-card, [data-theme='dark'] .focus-item, [data-theme='dark'] .drug-card {
+    background-color: var(--card-bg); border-color: var(--border-color); color: var(--text-main);
+}
+
+[data-theme='dark'] .report-header { background: #1e293b; border-bottom-color: #334155; }
+[data-theme='dark'] .footer-box, [data-theme='dark'] .medical-disclaimer { background: #0f172a; border-color: #1e293b; }
+[data-theme='dark'] .control-btn { background: rgba(15,23,42,0.8); color: white; border-color: #334155; }
+[data-theme='dark'] .select-btn { background: #1e293b; color: white; border-color: #334155; }
+[data-theme='dark'] input { background: #1e293b; color: white; border-color: #334155; }
+
