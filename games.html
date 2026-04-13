@@ -7,181 +7,78 @@
       window.dataLayer = window.dataLayer || [];
       function gtag(){dataLayer.push(arguments);}
       gtag('js', new Date());
-
       gtag('config', 'G-P6CTZY2283');
     </script>
 
+    <meta name="google-adsense-account" content="ca-pub-9103697866666926">
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9103697866666926" crossorigin="anonymous"></script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>심플 웹 게임 센터 - VitalRest | 건강한 쉼표</title>
+    <title>VitalRest : 웰니스 게임 | 프리미엄 웰니스 라운지</title>
     <link rel="stylesheet" href="style.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" media="print" onload="this.media='all'">
-    <noscript><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"></noscript>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="icon" href="favicon.svg" type="image/svg+xml">
-
-    <style>
-        .game-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-            gap: 25px;
-            margin-top: 40px;
-        }
-        .game-card {
-            background: white;
-            padding: 30px;
-            border-radius: 24px;
-            text-align: center;
-            box-shadow: 0 10px 20px rgba(0,0,0,0.05);
-            transition: all 0.3s ease;
-            border: 1px solid #f1f5f9;
-        }
-        .game-card:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 15px 30px rgba(0,0,0,0.1);
-            border-color: var(--accent-color);
-        }
-        .game-icon {
-            font-size: 2.5rem;
-            color: var(--accent-color);
-            margin-bottom: 20px;
-        }
-        #game-canvas-container {
-            width: 100%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            background: #111;
-            border-radius: 12px;
-            padding: 20px;
-            overflow: hidden;
-        }
-        canvas {
-            border: 2px solid #333;
-            background: #000;
-        }
-        .sudoku-grid {
-            display: grid;
-            grid-template-columns: repeat(9, 1fr);
-            gap: 2px;
-            background: #334155;
-            padding: 2px;
-            border: 2px solid #334155;
-        }
-        .sudoku-cell {
-            width: 40px;
-            height: 40px;
-            background: white;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: 700;
-            font-size: 1.2rem;
-            cursor: pointer;
-        }
-        .sudoku-cell.fixed { background: #f1f5f9; color: #64748b; cursor: default; }
-        .sudoku-cell.selected { background: var(--accent-color); color: white; }
-    </style>
 </head>
 <body data-lang="ko">
-    <!-- Floating Controls -->
-    <div class="controls-bar">
-        <button id="lang-toggle" class="control-btn">EN</button>
-        <button id="theme-toggle" class="control-btn"><i class="fas fa-moon"></i></button>
-    </div>
-    <!-- Floating Controls -->
-    <div class="controls-bar">
-        <button id="lang-toggle" class="control-btn" title="Change Language">EN</button>
-        <button id="theme-toggle" class="control-btn" title="Toggle Dark Mode"><i class="fas fa-moon"></i></button>
-    </div>
-
     <header>
-        <div class="container">
-            <h1><a href="index.html" data-ko="VitalRest : 건강한 쉼표" data-en="VitalRest : Healthy Comma">VitalRest : 건강한 쉼표</a></h1>
-            <p>잠시 쉬어가는 시간, 가벼운 게임으로 스트레스를 해소하세요.</p>
-            <nav>
-                <a href="index.html" data-ko="AI 솔루션" data-en="AI Solution">AI 솔루션</a>
-                <a href="exercise.html" data-ko="올바른 운동" data-en="Exercise">올바른 운동</a>
-                <a href="psychology.html" data-ko="심리테스트" data-en="Psychology">심리테스트</a>
-                <a href="mbti.html" data-ko="MBTI 테스트" data-en="MBTI">MBTI 테스트</a>
-                <a href="fortune.html" data-ko="운세/타로" data-en="Fortune">운세/타로</a>
-                <a href="games.html" class="active" data-ko="게임" data-en="Games">게임</a>
-                <a href="animal.html" data-ko="동물 AI" data-en="Animal AI">동물 AI</a>
-                <a href="blog.html" data-ko="건강 가이드" data-en="Health Guide">건강 가이드</a>
-            </nav>
+        <div class="container header-flex">
+            <a href="index.html" class="logo" data-ko="VitalRest" data-en="VitalRest">VitalRest</a>
+            <div class="controls-bar">
+                <button id="lang-toggle" class="control-btn">EN</button>
+                <button id="theme-toggle" class="control-btn"><i class="fas fa-moon"></i></button>
+            </div>
         </div>
+        <nav>
+            <a href="index.html" data-ko="AI 맞춤영양" data-en="AI Nutrition">AI 맞춤영양</a>
+            <a href="exercise.html" data-ko="운동가이드" data-en="Exercise">운동가이드</a>
+            <a href="psychology.html" data-ko="심리분석" data-en="Psychology">심리분석</a>
+            <a href="mbti.html" data-ko="MBTI 테스트" data-en="MBTI Test">MBTI 테스트</a>
+            <a href="fortune.html" data-ko="오늘의운세" data-en="Daily Fortune">오늘의운세</a>
+            <a href="blog.html" data-ko="건강가이드" data-en="Health Blog">건강가이드</a>
+        </nav>
     </header>
 
     <main class="container">
-        <div class="game-grid" id="game-list">
-            <div class="game-card">
-                <div class="game-icon"><i class="fas fa-cubes"></i></div>
-                <h3>클래식 테트리스</h3>
-                <p>내려오는 블록을 쌓아 줄을 제거하세요.</p>
-                <button class="detail-btn" onclick="startGame('tetris')">게임 시작</button>
+        <section class="hero">
+            <h2 data-ko="잠시 쉬어가는 웰니스 게임" data-en="Wellness Mini Games">잠시 쉬어가는 웰니스 게임</h2>
+            <p data-ko="가벼운 게임으로 스트레스를 해소하고 두뇌 활력을 충전해 보세요." data-en="Relieve stress and recharge your brain vitality with simple games.">가벼운 게임으로 스트레스를 해소하고 두뇌 활력을 충전해 보세요.</p>
+        </section>
+
+        <div class="drug-list" id="game-list">
+            <div class="drug-card">
+                <div style="font-size: 2.5rem; color: var(--accent-color); margin-bottom: 20px;"><i class="fas fa-cubes"></i></div>
+                <h3 class="card-name">클래식 테트리스</h3>
+                <p style="font-size: 0.9rem; color: var(--text-muted); margin-bottom: 20px;">내려오는 블록을 쌓아 줄을 제거하세요.</p>
+                <button class="luxury-btn" style="margin-top: 0; padding: 12px 25px; font-size: 0.9rem;" onclick="startGame('tetris')">게임 시작</button>
             </div>
-            <div class="game-card">
-                <div class="game-icon"><i class="fas fa-th"></i></div>
-                <h3>정통 스도쿠</h3>
-                <p>숫자의 논리적 배치를 통해 두뇌를 회전시키세요.</p>
-                <button class="detail-btn" onclick="startGame('sudoku')">게임 시작</button>
+            <div class="drug-card">
+                <div style="font-size: 2.5rem; color: var(--accent-color); margin-bottom: 20px;"><i class="fas fa-th"></i></div>
+                <h3 class="card-name">정통 스도쿠</h3>
+                <p style="font-size: 0.9rem; color: var(--text-muted); margin-bottom: 20px;">숫자의 논리적 배치를 통해 두뇌를 회전시키세요.</p>
+                <button class="luxury-btn" style="margin-top: 0; padding: 12px 25px; font-size: 0.9rem;" onclick="startGame('sudoku')">게임 시작</button>
             </div>
-            <div class="game-card">
-                <div class="game-icon"><i class="fas fa-mouse-pointer"></i></div>
-                <h3>클릭커 마스터</h3>
-                <p>제한 시간 내에 최대한 많이 클릭하세요!</p>
-                <button class="detail-btn" onclick="startGame('clicker')">게임 시작</button>
+            <div class="drug-card">
+                <div style="font-size: 2.5rem; color: var(--accent-color); margin-bottom: 20px;"><i class="fas fa-staff-snake"></i></div>
+                <h3 class="card-name">스네이크</h3>
+                <p style="font-size: 0.9rem; color: var(--text-muted); margin-bottom: 20px;">먹이를 먹고 몸집을 키우는 고전 게임입니다.</p>
+                <button class="luxury-btn" style="margin-top: 0; padding: 12px 25px; font-size: 0.9rem;" onclick="startGame('snake')">게임 시작</button>
             </div>
-            <div class="game-card">
-                <div class="game-icon"><i class="fas fa-calculator"></i></div>
-                <h3>암산왕</h3>
-                <p>빠르게 계산 문제를 풀어보세요.</p>
-                <button class="detail-btn" onclick="startGame('math')">게임 시작</button>
-            </div>
-            <div class="game-card">
-                <div class="game-icon"><i class="fas fa-bolt"></i></div>
-                <h3>반응 속도</h3>
-                <p>화면이 바뀌는 순간 클릭하세요!</p>
-                <button class="detail-btn" onclick="startGame('reaction')">게임 시작</button>
-            </div>
-            <div class="game-card">
-                <div class="game-icon"><i class="fas fa-staff-snake"></i></div>
-                <h3>스네이크</h3>
-                <p>먹이를 먹고 몸집을 키우는 고전 게임입니다.</p>
-                <button class="detail-btn" onclick="startGame('snake')">게임 시작</button>
-            </div>
-            <div class="game-card">
-                <div class="game-icon"><i class="fas fa-brain"></i></div>
-                <h3>기억력 테스트</h3>
-                <p>뒤집힌 카드의 짝을 빠르게 맞추세요.</p>
-                <button class="detail-btn" onclick="startGame('memory')">게임 시작</button>
-            </div>
-            <div class="game-card">
-                <div class="game-icon"><i class="fas fa-palette"></i></div>
-                <h3>색상 차이 찾기</h3>
-                <p>미세하게 다른 색의 타일을 찾아내세요.</p>
-                <button class="detail-btn" onclick="startGame('color')">게임 시작</button>
-            </div>
-            <div class="game-card">
-                <div class="game-icon"><i class="fas fa-keyboard"></i></div>
-                <h3>타이핑 챌린지</h3>
-                <p>무작위 단어를 빠르고 정확하게 입력하세요.</p>
-                <button class="detail-btn" onclick="startGame('typing')">게임 시작</button>
-            </div>
-            <div class="game-card">
-                <div class="game-icon"><i class="fas fa-question"></i></div>
-                <h3>숫자 맞추기</h3>
-                <p>1부터 100 사이의 숫자를 추론하세요.</p>
-                <button class="detail-btn" onclick="startGame('number')">게임 시작</button>
+            <div class="drug-card">
+                <div style="font-size: 2.5rem; color: var(--accent-color); margin-bottom: 20px;"><i class="fas fa-brain"></i></div>
+                <h3 class="card-name">기억력 테스트</h3>
+                <p style="font-size: 0.9rem; color: var(--text-muted); margin-bottom: 20px;">뒤집힌 카드의 짝을 빠르게 맞추세요.</p>
+                <button class="luxury-btn" style="margin-top: 0; padding: 12px 25px; font-size: 0.9rem;" onclick="startGame('memory')">게임 시작</button>
             </div>
         </div>
     </main>
 
     <div id="game-modal" class="modal">
-        <div class="modal-content" style="max-width:600px;">
+        <div class="modal-content" style="max-width: 700px; padding: 40px;">
             <span class="close" onclick="closeGame()">&times;</span>
             <div id="game-ui">
-                <h2 id="game-title" style="margin-bottom:20px;">게임 제목</h2>
-                <div id="game-container">
+                <div class="report-badge">Wellness Game</div>
+                <h2 id="game-title" style="margin-bottom: 30px; font-size: 2rem;">게임 제목</h2>
+                <div id="game-container" style="background: var(--bg-color); border-radius: 20px; padding: 20px; min-height: 400px; display: flex; align-items: center; justify-content: center;">
                     <!-- Game specific content -->
                 </div>
             </div>
@@ -190,11 +87,11 @@
 
     <footer>
         <div class="container">
-            <p>&copy; 2026 VitalRest. All rights reserved.</p>
-            <div class="footer-links">
-                <a href="about.html" data-ko="소개" data-en="About">소개</a>
-                <a href="privacy.html" data-ko="개인정보방침" data-en="Privacy">개인정보방침</a>
-                <a href="terms.html" data-ko="이용약관" data-en="Terms">이용약관</a>
+            <p data-ko="&copy; 2026 VitalRest. 전인적 건강을 위한 고품격 가이드." data-en="&copy; 2026 VitalRest. Premium Guide for Holistic Health.">&copy; 2026 VitalRest. 전인적 건강을 위한 고품격 가이드.</p>
+            <div style="margin-top: 20px; display: flex; justify-content: center; gap: 20px; font-size: 0.8rem;">
+                <a href="privacy.html" style="color: var(--text-muted); text-decoration: none;">Privacy</a>
+                <a href="terms.html" style="color: var(--text-muted); text-decoration: none;">Terms</a>
+                <a href="about.html" style="color: var(--text-muted); text-decoration: none;">About</a>
             </div>
         </div>
     </footer>

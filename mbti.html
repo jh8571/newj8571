@@ -14,66 +14,67 @@
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9103697866666926" crossorigin="anonymous"></script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>정밀 MBTI 테스트 - VitalRest | 건강한 쉼표</title>
+    <title>정밀 MBTI 테스트 - VitalRest | 내면의 쉼표 찾기</title>
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="icon" href="favicon.svg" type="image/svg+xml">
 </head>
-<body>
-    <!-- Floating Controls -->
-    <div class="controls-bar">
-        <button id="lang-toggle" class="control-btn">EN</button>
-        <button id="theme-toggle" class="control-btn"><i class="fas fa-moon"></i></button>
-    </div>
-
+<body data-lang="ko">
     <header>
-        <div class="container">
-            <h1><a href="index.html" data-ko="VitalRest : 건강한 쉼표" data-en="VitalRest : Healthy Comma">VitalRest : 건강한 쉼표</a></h1>
-            <nav>
-                <a href="index.html" data-ko="AI 솔루션" data-en="AI Solution">AI 솔루션</a>
-                <a href="exercise.html" data-ko="올바른 운동" data-en="Exercise">올바른 운동</a>
-                <a href="psychology.html" data-ko="심리테스트" data-en="Psychology">심리테스트</a>
-                <a href="mbti.html" class="active" data-ko="MBTI 테스트" data-en="MBTI">MBTI 테스트</a>
-                <a href="fortune.html" data-ko="운세/타로" data-en="Fortune">운세/타로</a>
-                <a href="games.html" data-ko="게임" data-en="Games">게임</a>
-                <a href="animal.html" data-ko="동물 AI" data-en="Animal AI">동물 AI</a>
-                <a href="blog.html" data-ko="건강 가이드" data-en="Health Guide">건강 가이드</a>
-            </nav>
+        <div class="container header-flex">
+            <a href="index.html" class="logo">VitalRest</a>
+            <div class="controls-bar">
+                <button id="lang-toggle" class="control-btn">EN</button>
+                <button id="theme-toggle" class="control-btn"><i class="fas fa-moon"></i></button>
+            </div>
         </div>
+        <nav>
+            <a href="index.html" data-ko="AI 맞춤영양" data-en="AI Nutrition">AI 맞춤영양</a>
+            <a href="exercise.html" data-ko="운동가이드" data-en="Exercise">운동가이드</a>
+            <a href="psychology.html" data-ko="심리분석" data-en="Psychology">심리분석</a>
+            <a href="mbti.html" class="active" data-ko="MBTI 테스트" data-en="MBTI Test">MBTI 테스트</a>
+            <a href="fortune.html" data-ko="오늘의운세" data-en="Daily Fortune">오늘의운세</a>
+            <a href="blog.html" data-ko="건강가이드" data-en="Health Blog">건강가이드</a>
+        </nav>
     </header>
 
-    <main>
-        <section class="ai-hero">
-            <div class="container">
-                <h2 style="font-size: 2.5rem; color: white; margin-bottom: 20px;" data-ko="정밀 MBTI 분석" data-en="Advanced MBTI Test">정밀 MBTI 분석</h2>
-                <p style="color: rgba(255,255,255,0.7);" data-ko="24개의 정밀 문항을 통해 당신의 잠재된 성향과 건강 성향을 분석합니다." data-en="Analyzing your potential tendencies and health habits through 24 precise questions.">24개의 정밀 문항을 통해 당신의 잠재된 성향과 건강 성향을 분석합니다.</p>
-            </div>
+    <main class="container">
+        <section class="hero">
+            <h2 data-ko="정밀 MBTI 분석" data-en="Advanced MBTI Analysis">정밀 MBTI 분석</h2>
+            <p data-ko="당신의 심리적 성향과 건강 습관 사이의 연결고리를 분석합니다." data-en="Analyzing the link between your psychological tendencies and health habits.">당신의 심리적 성향과 건강 습관 사이의 연결고리를 분석합니다.</p>
         </section>
 
-        <div class="container">
-            <div id="intro-section" class="premium-card" style="text-align: center;">
+        <div style="max-width: 800px; margin: 0 auto; min-height: 500px;">
+            <!-- Start Section -->
+            <div id="intro-section" class="luxury-report" style="text-align: center;">
                 <i class="fas fa-brain" style="font-size: 4rem; color: var(--accent-color); margin-bottom: 30px;"></i>
-                <h2 data-ko="당신은 어떤 사람인가요?" data-en="Who are you?">당신은 어떤 사람인가요?</h2>
-                <p style="color: var(--text-muted); margin: 30px 0;" data-ko="가능한 '중립' 보다는 솔직한 답변을 선택할 때 더 정확한 결과가 나옵니다." data-en="Honest answers provide more accurate results than 'neutral' ones.">가능한 '중립' 보다는 솔직한 답변을 선택할 때 더 정확한 결과가 나옵니다.</p>
-                <button class="luxury-btn" onclick="startMbtiTest()" data-ko="테스트 시작하기" data-en="Start Test">테스트 시작하기</button>
+                <h3 style="font-size: 1.8rem; margin-bottom: 20px;" data-ko="나를 발견하는 시간" data-en="Discover Yourself">나를 발견하는 시간</h3>
+                <p style="color: var(--text-muted); margin-bottom: 40px;" data-ko="총 24개의 문항으로 구성되어 있으며 약 5분이 소요됩니다." data-en="Consists of 24 questions and takes about 5 minutes.">총 24개의 문항으로 구성되어 있으며 약 5분이 소요됩니다.</p>
+                <button class="luxury-btn" onclick="startMbtiTest()" data-ko="분석 시작하기" data-en="Start Analysis">분석 시작하기</button>
             </div>
 
-            <div id="test-section" class="premium-card" style="display: none;">
-                <div id="question-container"></div>
+            <!-- Quiz Section -->
+            <div id="quiz-section" style="display: none; margin-top: 40px;">
+                <div class="progress-container">
+                    <div id="progress-bar" class="progress-bar" style="width: 0%;"></div>
+                </div>
+                <div id="question-card" class="luxury-report" style="margin-top: 0; padding: 60px 40px; text-align: center;">
+                    <h4 id="question-text" style="font-size: 1.5rem; margin-bottom: 40px; line-height: 1.5;">질문 내용이 여기에 표시됩니다.</h4>
+                    <div style="display: flex; flex-direction: column; gap: 15px;">
+                        <button class="luxury-btn" id="opt-a" style="margin-top: 0; background: var(--bg-color); color: var(--text-main); border: 2px solid var(--border-color);">옵션 A</button>
+                        <button class="luxury-btn" id="opt-b" style="margin-top: 0; background: var(--bg-color); color: var(--text-main); border: 2px solid var(--border-color);">옵션 B</button>
+                    </div>
+                </div>
             </div>
 
-            <div id="result-section" class="premium-card" style="display: none;"></div>
+            <!-- Result Section -->
+            <div id="result-section" style="display: none;"></div>
         </div>
     </main>
 
     <footer>
         <div class="container">
-            <p>&copy; 2026 VitalRest Premium Edition.</p>
-            <div class="footer-links">
-                <a href="about.html" data-ko="소개" data-en="About">소개</a>
-                <a href="privacy.html" data-ko="개인정보방침" data-en="Privacy">개인정보방침</a>
-                <a href="terms.html" data-ko="이용약관" data-en="Terms">이용약관</a>
-            </div>
+            <p>&copy; 2026 VitalRest. Premium Wellness Experience.</p>
         </div>
     </footer>
 

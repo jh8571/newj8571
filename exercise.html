@@ -14,68 +14,62 @@
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9103697866666926" crossorigin="anonymous"></script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>올바른 운동 가이드 - VitalRest | 건강한 쉼표</title>
+    <title>VitalRest : 운동 가이드 | 프리미엄 웰니스 라운지</title>
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="icon" href="favicon.svg" type="image/svg+xml">
 </head>
-<body>
-    <!-- Floating Controls -->
-    <div class="controls-bar">
-        <button id="lang-toggle" class="control-btn">EN</button>
-        <button id="theme-toggle" class="control-btn"><i class="fas fa-moon"></i></button>
-    </div>
-
+<body data-lang="ko">
     <header>
-        <div class="container">
-            <h1><a href="index.html" data-ko="VitalRest : 건강한 쉼표" data-en="VitalRest : Healthy Comma">VitalRest : 건강한 쉼표</a></h1>
-            <nav>
-                <a href="index.html" data-ko="AI 솔루션" data-en="AI Solution">AI 솔루션</a>
-                <a href="exercise.html" class="active" data-ko="올바른 운동" data-en="Exercise">올바른 운동</a>
-                <a href="psychology.html" data-ko="심리테스트" data-en="Psychology">심리테스트</a>
-                <a href="mbti.html" data-ko="MBTI 테스트" data-en="MBTI">MBTI 테스트</a>
-                <a href="fortune.html" data-ko="운세/타로" data-en="Fortune">운세/타로</a>
-                <a href="games.html" data-ko="게임" data-en="Games">게임</a>
-                <a href="animal.html" data-ko="동물 AI" data-en="Animal AI">동물 AI</a>
-                <a href="blog.html" data-ko="건강 가이드" data-en="Health Guide">건강 가이드</a>
-            </nav>
+        <div class="container header-flex">
+            <a href="index.html" class="logo" data-ko="VitalRest" data-en="VitalRest">VitalRest</a>
+            <div class="controls-bar">
+                <button id="lang-toggle" class="control-btn">EN</button>
+                <button id="theme-toggle" class="control-btn"><i class="fas fa-moon"></i></button>
+            </div>
         </div>
+        <nav>
+            <a href="index.html" data-ko="AI 맞춤영양" data-en="AI Nutrition">AI 맞춤영양</a>
+            <a href="exercise.html" class="active" data-ko="운동가이드" data-en="Exercise">운동가이드</a>
+            <a href="psychology.html" data-ko="심리분석" data-en="Psychology">심리분석</a>
+            <a href="mbti.html" data-ko="MBTI 테스트" data-en="MBTI Test">MBTI 테스트</a>
+            <a href="fortune.html" data-ko="오늘의운세" data-en="Daily Fortune">오늘의운세</a>
+            <a href="blog.html" data-ko="건강가이드" data-en="Health Blog">건강가이드</a>
+        </nav>
     </header>
 
-    <main>
-        <section class="ai-hero">
-            <div class="container">
-                <h2 style="font-size: 2.5rem; color: white; margin-bottom: 20px;" data-ko="스마트 맞춤형 운동 처방" data-en="Smart Personalized Exercise">스마트 맞춤형 운동 처방</h2>
-                <p style="color: rgba(255,255,255,0.7);" data-ko="당신의 BMI를 기반으로 가장 효율적인 홈트레이닝 루틴을 설계해 드립니다." data-en="Designing the most efficient home training routine based on your BMI.">당신의 BMI를 기반으로 가장 효율적인 홈트레이닝 루틴을 설계해 드립니다.</p>
-            </div>
+    <main class="container">
+        <section class="hero">
+            <h2 data-ko="스마트 맞춤형 운동 처방" data-en="Smart Exercise Guide">스마트 맞춤형 운동 처방</h2>
+            <p data-ko="당신의 BMI와 신체 컨디션을 분석하여 가장 효율적인 루틴을 제안합니다." data-en="Analyzing your BMI and physical condition to suggest the most efficient routines.">당신의 BMI와 신체 컨디션을 분석하여 가장 효율적인 루틴을 제안합니다.</p>
         </section>
 
-        <div class="container">
-            <div class="premium-card">
-                <div class="exercise-grid">
+        <div style="max-width: 800px; margin: 0 auto;">
+            <div class="luxury-report" style="margin-top: 0; padding: 40px;">
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
                     <div class="input-field">
-                        <label data-ko="신장 (cm)" data-en="Height (cm)">신장 (cm)</label>
+                        <label style="font-weight: 800; font-size: 0.9rem; color: var(--text-muted);" data-ko="신장 (cm)" data-en="Height (cm)">신장 (cm)</label>
                         <input type="number" id="height" data-ko-ph="예: 175" data-en-ph="e.g. 175" placeholder="예: 175">
                     </div>
                     <div class="input-field">
-                        <label data-ko="체중 (kg)" data-en="Weight (kg)">체중 (kg)</label>
+                        <label style="font-weight: 800; font-size: 0.9rem; color: var(--text-muted);" data-ko="체중 (kg)" data-en="Weight (kg)">체중 (kg)</label>
                         <input type="number" id="weight" data-ko-ph="예: 70" data-en-ph="e.g. 70" placeholder="예: 70">
                     </div>
                 </div>
-                <button class="luxury-btn" onclick="calculateBMI()" data-ko="BMI 분석 및 운동 추천 받기" data-en="Analyze BMI & Get Recommendations">BMI 분석 및 운동 추천 받기</button>
+                <button class="luxury-btn" onclick="calculateBMI()" data-ko="분석 및 루틴 추천 받기" data-en="Analyze & Get Routine">분석 및 루틴 추천 받기</button>
             </div>
 
-            <div id="exercise-result-area" style="margin-top: 50px;"></div>
+            <div id="exercise-result-area" style="margin-top: 60px;"></div>
         </div>
     </main>
 
     <footer>
         <div class="container">
-            <p>&copy; 2026 VitalRest Premium Edition.</p>
-            <div class="footer-links">
-                <a href="about.html" data-ko="소개" data-en="About">소개</a>
-                <a href="privacy.html" data-ko="개인정보방침" data-en="Privacy">개인정보방침</a>
-                <a href="terms.html" data-ko="이용약관" data-en="Terms">이용약관</a>
+            <p data-ko="&copy; 2026 VitalRest. 전인적 건강을 위한 고품격 가이드." data-en="&copy; 2026 VitalRest. Premium Guide for Holistic Health.">&copy; 2026 VitalRest. 전인적 건강을 위한 고품격 가이드.</p>
+            <div style="margin-top: 20px; display: flex; justify-content: center; gap: 20px; font-size: 0.8rem;">
+                <a href="privacy.html" style="color: var(--text-muted); text-decoration: none;">Privacy</a>
+                <a href="terms.html" style="color: var(--text-muted); text-decoration: none;">Terms</a>
+                <a href="about.html" style="color: var(--text-muted); text-decoration: none;">About</a>
             </div>
         </div>
     </footer>

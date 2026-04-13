@@ -24,12 +24,14 @@ document.addEventListener('DOMContentLoaded', () => {
         testListElement.innerHTML = '';
         testData.forEach(test => {
             const card = document.createElement('div');
-            card.className = 'test-card';
+            card.className = 'drug-card';
             card.innerHTML = `
-                <div class="test-icon"><i class="fas fa-brain"></i></div>
+                <div style="background: var(--accent-color); color: white; width: 50px; height: 50px; border-radius: 15px; display: flex; align-items: center; justify-content: center; margin-bottom: 20px; font-size: 1.5rem;">
+                    <i class="fas fa-brain"></i>
+                </div>
                 <h3 class="card-name">${test.title}</h3>
-                <p style="font-size: 0.9rem; color: #64748b; margin-bottom: 20px; line-height: 1.5;">${test.description}</p>
-                <button class="detail-btn" onclick="startTest(${test.id})">테스트 시작</button>
+                <p style="font-size: 0.9rem; color: var(--text-muted); margin-bottom: 25px; line-height: 1.6;">${test.description}</p>
+                <button class="luxury-btn" style="margin-top: 0; padding: 12px 25px; font-size: 0.9rem;" onclick="startTest(${test.id})">분석 시작하기</button>
             `;
             testListElement.appendChild(card);
         });
@@ -48,20 +50,21 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function renderQuestion() {
         const q = currentTest.questions[currentQuestionIndex];
-        const progress = ((currentQuestionIndex + 1) / currentTest.questions.length) * 100;
+        const progress = ((currentQuestionIndex) / currentTest.questions.length) * 100;
 
         modalContent.innerHTML = `
-            <div class="test-header">
-                <div class="progress-bar-container" style="width:100%; height:8px; background:#f1f5f9; border-radius:4px; margin-bottom:20px;">
-                    <div class="progress-bar" style="width:${progress}%; height:100%; background:var(--accent-color); border-radius:4px; transition:0.3s;"></div>
+            <div class="report-header" style="padding: 40px 0; background: none; border: none; text-align: left;">
+                <div class="progress-container" style="margin-bottom: 30px;">
+                    <div class="progress-bar" style="width: ${progress}%;"></div>
                 </div>
-                <span style="font-size:0.9rem; color:var(--accent-color); font-weight:700;">Question ${currentQuestionIndex + 1} / ${currentTest.questions.length}</span>
-                <h2 style="margin-top:15px; font-size: 1.5rem; color: var(--primary-color);">${q.q}</h2>
+                <div class="report-badge">Question ${currentQuestionIndex + 1} / ${currentTest.questions.length}</div>
+                <h2 style="font-size: 1.8rem; line-height: 1.4; color: var(--primary-color);">${q.q}</h2>
             </div>
-            <div class="options-container" style="display:grid; gap:12px; margin-top:30px;">
+            <div style="display: grid; gap: 12px; margin-top: 10px;">
                 ${q.options.map((opt, idx) => `
-                    <button class="option-btn" onclick="selectOption(${opt.score})" style="padding:15px 25px; text-align:left; border:1px solid #e2e8f0; border-radius:12px; background:white; cursor:pointer; font-size:1rem; transition:0.2s;">
-                        ${opt.text}
+                    <button class="selectable-card" onclick="selectOption(${opt.score})" style="padding: 20px; text-align: left; display: flex; align-items: center; gap: 15px;">
+                        <span style="width: 30px; height: 30px; border-radius: 50%; border: 2px solid var(--border-color); display: flex; align-items: center; justify-content: center; font-weight: 900; font-size: 0.8rem;">${idx + 1}</span>
+                        <span style="font-size: 1rem; font-weight: 600;">${opt.text}</span>
                     </button>
                 `).join('')}
             </div>
@@ -90,13 +93,14 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
         modalContent.innerHTML = `
-            <div style="text-align:center; padding:20px;">
-                <div style="font-size:4rem; color:var(--accent-color); margin-bottom:20px;"><i class="fas fa-clipboard-check"></i></div>
-                <h2 style="font-size:2rem; color:var(--primary-color); margin-bottom:15px;">분석 결과</h2>
-                <div style="background:#f8fafc; padding:30px; border-radius:20px; border-left:5px solid var(--accent-color); margin-bottom:30px; text-align:left;">
-                    <p style="font-size:1.2rem; line-height:1.8; color:var(--text-main);">${resultText}</p>
+            <div style="text-align: center; padding: 20px 0;">
+                <div class="report-badge">Analysis Completed</div>
+                <h2 style="font-size: 2.5rem; font-weight: 900; color: var(--primary-color); margin-bottom: 20px;">심리 분석 리포트</h2>
+                <div class="luxury-report" style="text-align: left; padding: 40px; margin-top: 20px; background: var(--bg-color);">
+                    <h3 style="color: var(--accent-color); margin-bottom: 15px;"><i class="fas fa-quote-left"></i> 당신을 위한 조언</h3>
+                    <p style="font-size: 1.1rem; line-height: 1.8; color: var(--text-main);">${resultText}</p>
                 </div>
-                <button class="calc-btn" onclick="location.reload()">다른 테스트 하기</button>
+                <button class="luxury-btn" onclick="location.reload()" style="margin-top: 40px; max-width: 300px;">다른 테스트 하기</button>
             </div>
         `;
     }

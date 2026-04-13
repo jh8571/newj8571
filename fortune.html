@@ -7,208 +7,66 @@
       window.dataLayer = window.dataLayer || [];
       function gtag(){dataLayer.push(arguments);}
       gtag('js', new Date());
-
       gtag('config', 'G-P6CTZY2283');
     </script>
 
+    <meta name="google-adsense-account" content="ca-pub-9103697866666926">
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9103697866666926" crossorigin="anonymous"></script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>프리미엄 운세 & 타로 - VitalRest | 건강한 쉼표</title>
-    <meta name="description" content="타로, 사주, 관상을 통해 당신의 미래와 현재를 전문적으로 분석해 드립니다. VitalRest의 고품격 운세 서비스를 경험하세요.">
+    <title>VitalRest : 운세 & 타로 | 프리미엄 웰니스 라운지</title>
     <link rel="stylesheet" href="style.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" media="print" onload="this.media='all'">
-    <noscript><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"></noscript>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="icon" href="favicon.svg" type="image/svg+xml">
-
-    <style>
-        .fortune-tabs {
-            display: flex;
-            justify-content: center;
-            gap: 20px;
-            margin-bottom: 50px;
-            flex-wrap: wrap;
-        }
-        .fortune-tab-btn {
-            padding: 15px 35px;
-            border-radius: 50px;
-            border: 2px solid var(--border-color);
-            background: white;
-            font-size: 1.1rem;
-            font-weight: 700;
-            cursor: pointer;
-            transition: all 0.3s;
-            color: var(--text-muted);
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-        .fortune-tab-btn.active {
-            background: var(--primary-color);
-            color: white;
-            border-color: var(--primary-color);
-            box-shadow: 0 10px 20px rgba(15, 23, 42, 0.2);
-        }
-        .fortune-content-card {
-            background: white;
-            padding: 50px;
-            border-radius: 32px;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.05);
-            text-align: center;
-            min-height: 500px;
-        }
-        
-        /* Tarot Card Flip Animation */
-        .tarot-grid {
-            display: flex;
-            justify-content: center;
-            gap: 15px;
-            margin: 40px 0;
-            perspective: 1000px;
-            flex-wrap: wrap;
-        }
-        .tarot-card-container {
-            width: 140px;
-            height: 240px;
-            position: relative;
-            transform-style: preserve-3d;
-            transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
-            cursor: pointer;
-        }
-        .tarot-card-container.flipped {
-            transform: rotateY(180deg);
-        }
-        .card-face {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            backface-visibility: hidden;
-            border-radius: 12px;
-            border: 4px solid #f1f5f9;
-            overflow: hidden;
-        }
-        .card-front {
-            background: #fff;
-            transform: rotateY(180deg);
-            display: flex;
-            flex-direction: column;
-        }
-        .card-back {
-            background: linear-gradient(135deg, #1e3a8a 0%, #0f172a 100%);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: #38bdf8;
-            font-size: 2.5rem;
-        }
-        .card-front img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
-
-        /* Input Form Styles */
-        .input-form {
-            max-width: 500px;
-            margin: 0 auto;
-            display: grid;
-            gap: 20px;
-            text-align: left;
-        }
-        .input-group-row {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 15px;
-        }
-        .input-item label {
-            display: block;
-            margin-bottom: 8px;
-            font-weight: 600;
-            color: #475569;
-        }
-        .input-item input, .input-item select {
-            width: 100%;
-            padding: 12px 15px;
-            border: 1px solid #e2e8f0;
-            border-radius: 10px;
-            font-size: 1rem;
-        }
-
-        .fortune-result-box {
-            background: #f8fafc;
-            padding: 40px;
-            border-radius: 24px;
-            margin-top: 40px;
-            border-left: 8px solid var(--accent-color);
-            text-align: left;
-            animation: slideIn 0.5s ease-out;
-        }
-        @keyframes slideIn {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-    </style>
 </head>
 <body data-lang="ko">
-    <!-- Floating Controls -->
-    <div class="controls-bar">
-        <button id="lang-toggle" class="control-btn">EN</button>
-        <button id="theme-toggle" class="control-btn"><i class="fas fa-moon"></i></button>
-    </div>
-    <!-- Floating Controls -->
-    <div class="controls-bar">
-        <button id="lang-toggle" class="control-btn" title="Change Language">EN</button>
-        <button id="theme-toggle" class="control-btn" title="Toggle Dark Mode"><i class="fas fa-moon"></i></button>
-    </div>
-
     <header>
-        <div class="container">
-            <h1><a href="index.html" data-ko="VitalRest : 건강한 쉼표" data-en="VitalRest : Healthy Comma">VitalRest : 건강한 쉼표</a></h1>
-            <p>신체와 정신의 완벽한 조화, 당신을 위한 맞춤형 건강 솔루션</p>
-            <nav>
-                <a href="index.html" data-ko="AI 솔루션" data-en="AI Solution">AI 솔루션</a>
-                <a href="exercise.html" data-ko="올바른 운동" data-en="Exercise">올바른 운동</a>
-                <a href="psychology.html" data-ko="심리테스트" data-en="Psychology">심리테스트</a>
-                <a href="mbti.html" data-ko="MBTI 테스트" data-en="MBTI">MBTI 테스트</a>
-                <a href="fortune.html" class="active" data-ko="운세/타로" data-en="Fortune">운세/타로</a>
-                <a href="games.html" data-ko="게임" data-en="Games">게임</a>
-                <a href="animal.html" data-ko="동물 AI" data-en="Animal AI">동물 AI</a>
-                <a href="blog.html" data-ko="건강 가이드" data-en="Health Guide">건강 가이드</a>
-            </nav>
+        <div class="container header-flex">
+            <a href="index.html" class="logo" data-ko="VitalRest" data-en="VitalRest">VitalRest</a>
+            <div class="controls-bar">
+                <button id="lang-toggle" class="control-btn">EN</button>
+                <button id="theme-toggle" class="control-btn"><i class="fas fa-moon"></i></button>
+            </div>
         </div>
+        <nav>
+            <a href="index.html" data-ko="AI 맞춤영양" data-en="AI Nutrition">AI 맞춤영양</a>
+            <a href="exercise.html" data-ko="운동가이드" data-en="Exercise">운동가이드</a>
+            <a href="psychology.html" data-ko="심리분석" data-en="Psychology">심리분석</a>
+            <a href="mbti.html" data-ko="MBTI 테스트" data-en="MBTI Test">MBTI 테스트</a>
+            <a href="fortune.html" class="active" data-ko="오늘의운세" data-en="Daily Fortune">오늘의운세</a>
+            <a href="blog.html" data-ko="건강가이드" data-en="Health Blog">건강가이드</a>
+        </nav>
     </header>
 
     <main class="container">
-        <section class="ai-summary" style="background: linear-gradient(135deg, #faf5ff 0%, #f3e8ff 100%); padding: 30px; border-radius: 24px; margin-bottom: 40px; border: 1px solid #e9d5ff;">
-            <div style="display: flex; align-items: center; gap: 15px; margin-bottom: 15px;">
-                <div style="background: #a855f7; color: white; width: 40px; height: 40px; border-radius: 12px; display: flex; align-items: center; justify-content: center;">
-                    <i class="fas fa-star"></i>
-                </div>
-                <h2 style="font-size: 1.3rem; color: #6b21a8; margin: 0;">미래 예측 및 성찰 센터</h2>
-            </div>
-            <p style="line-height: 1.8; color: #6b21a8; font-weight: 400; font-size: 1.05rem;">
-                VitalRest의 운세 서비스는 단순한 재미를 넘어 당신의 현재 상황을 통찰하고 
-                더 나은 선택을 위한 <strong>영감과 힐링</strong>을 제공합니다. 메이저 아르카나 22종 타로와 심층 사주 분석을 경험해 보세요.
-            </p>
+        <section class="hero">
+            <h2 data-ko="미래를 향한 통찰과 영감" data-en="Insight and Inspiration">미래를 향한 통찰과 영감</h2>
+            <p data-ko="단순한 운세를 넘어 당신의 내면을 성찰하고 더 나은 선택을 위한 힐링을 제공합니다." data-en="Beyond simple fortune, we provide reflection on your inner self and healing for better choices.">단순한 운세를 넘어 당신의 내면을 성찰하고 더 나은 선택을 위한 힐링을 제공합니다.</p>
         </section>
 
-        <div class="fortune-tabs">
-            <button class="fortune-tab-btn active" onclick="switchFortune('tarot')"><i class="fas fa-hand-sparkles"></i> 프리미엄 타로</button>
-            <button class="fortune-tab-btn" onclick="switchFortune('saju')"><i class="fas fa-yin-yang"></i> 심층 사주 분석</button>
-            <button class="fortune-tab-btn" onclick="switchFortune('face')"><i class="fas fa-face-smile"></i> AI 사진 관상</button>
+        <div class="selection-grid" style="max-width: 800px; margin: 0 auto 50px;">
+            <div class="selectable-card active" id="tab-tarot" onclick="switchFortune('tarot')">
+                <i class="fas fa-hand-sparkles"></i>
+                <span data-ko="프리미엄 타로" data-en="Premium Tarot">프리미엄 타로</span>
+            </div>
+            <div class="selectable-card" id="tab-saju" onclick="switchFortune('saju')">
+                <i class="fas fa-yin-yang"></i>
+                <span data-ko="심층 사주 분석" data-en="Deep Saju">심층 사주 분석</span>
+            </div>
         </div>
 
-        <div id="fortune-container" class="fortune-content-card">
+        <div id="fortune-container" class="luxury-report" style="margin-top: 0; min-height: 500px;">
             <!-- Content will be injected by fortune.js -->
         </div>
     </main>
 
     <footer>
         <div class="container">
-            <p>&copy; 2026 VitalRest. All rights reserved.</p>
-            <div class="footer-links">
-                <a href="about.html" data-ko="소개" data-en="About">소개</a>
-                <a href="privacy.html" data-ko="개인정보방침" data-en="Privacy">개인정보방침</a>
-                <a href="terms.html" data-ko="이용약관" data-en="Terms">이용약관</a>
+            <p data-ko="&copy; 2026 VitalRest. 전인적 건강을 위한 고품격 가이드." data-en="&copy; 2026 VitalRest. Premium Guide for Holistic Health.">&copy; 2026 VitalRest. 전인적 건강을 위한 고품격 가이드.</p>
+            <div style="margin-top: 20px; display: flex; justify-content: center; gap: 20px; font-size: 0.8rem;">
+                <a href="privacy.html" style="color: var(--text-muted); text-decoration: none;">Privacy</a>
+                <a href="terms.html" style="color: var(--text-muted); text-decoration: none;">Terms</a>
+                <a href="about.html" style="color: var(--text-muted); text-decoration: none;">About</a>
             </div>
         </div>
     </footer>
