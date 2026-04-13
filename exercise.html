@@ -56,7 +56,26 @@
                         <input type="number" id="weight" data-ko-ph="예: 70" data-en-ph="e.g. 70" placeholder="예: 70">
                     </div>
                 </div>
-                <button class="luxury-btn" onclick="calculateBMI()" data-ko="분석 및 루틴 추천 받기" data-en="Analyze & Get Routine">분석 및 루틴 추천 받기</button>
+                <button class="luxury-btn" onclick="calculateBMI()" data-ko="BMI 기반 정밀 분석 시작" data-en="Start Precise BMI Analysis">BMI 기반 정밀 분석 시작</button>
+            </div>
+
+            <!-- Quick Program Section -->
+            <div style="margin-top: 60px;">
+                <h3 style="font-size: 1.8rem; font-weight: 900; text-align: center; margin-bottom: 30px;" data-ko="라이프스타일별 퀵 루틴" data-en="Routine by Lifestyle">라이프스타일별 퀵 루틴</h3>
+                <div class="selection-grid" style="grid-template-columns: 1fr 1fr 1fr;">
+                    <div class="selectable-card" onclick="showQuickRoutine('office_worker')">
+                        <i class="fas fa-briefcase"></i>
+                        <span style="font-size: 0.9rem;">직장인 통증 케어</span>
+                    </div>
+                    <div class="selectable-card" onclick="showQuickRoutine('fat_loss')">
+                        <i class="fas fa-fire"></i>
+                        <span style="font-size: 0.9rem;">체지방 연소</span>
+                    </div>
+                    <div class="selectable-card" onclick="showQuickRoutine('muscle_gain')">
+                        <i class="fas fa-dumbbell"></i>
+                        <span style="font-size: 0.9rem;">근력 강화</span>
+                    </div>
+                </div>
             </div>
 
             <div id="exercise-result-area" style="margin-top: 60px;"></div>
