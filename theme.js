@@ -48,14 +48,18 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // 3. Global SNS Share Logic
     window.getShareUI = function(title, text) {
+        // HTML 속성과 JS 문자열 내에서 안전하도록 따옴표 및 특수문자 이스케이프
+        const safeTitle = title.replace(/'/g, "\\'").replace(/"/g, "&quot;");
+        const safeText = text.replace(/'/g, "\\'").replace(/"/g, "&quot;");
+
         return `
             <div class="share-container" style="margin-top: 40px; padding: 30px; background: var(--card-bg); border-radius: 20px; border: 1px solid var(--border-color); text-align: center;">
                 <h4 style="color: var(--primary-color); margin-bottom: 20px; font-size: 1.1rem;"><i class="fas fa-share-nodes"></i> 결과 공유하기</h4>
                 <div style="display: flex; justify-content: center; gap: 15px;">
-                    <button onclick="shareResult('kakao', '${title}', '${text}')" style="background: #FEE500; color: #000000; border: none; width: 50px; height: 50px; border-radius: 50%; font-size: 1.5rem; cursor: pointer; transition: 0.3s;" title="카카오톡 공유"><i class="fas fa-comment"></i></button>
-                    <button onclick="shareResult('facebook', '${title}', '${text}')" style="background: #1877F2; color: white; border: none; width: 50px; height: 50px; border-radius: 50%; font-size: 1.5rem; cursor: pointer; transition: 0.3s;" title="페이스북 공유"><i class="fab fa-facebook-f"></i></button>
-                    <button onclick="shareResult('twitter', '${title}', '${text}')" style="background: #1DA1F2; color: white; border: none; width: 50px; height: 50px; border-radius: 50%; font-size: 1.5rem; cursor: pointer; transition: 0.3s;" title="X (트위터) 공유"><i class="fab fa-twitter"></i></button>
-                    <button onclick="shareResult('copy', '${title}', '${text}')" style="background: var(--text-muted); color: white; border: none; width: 50px; height: 50px; border-radius: 50%; font-size: 1.5rem; cursor: pointer; transition: 0.3s;" title="링크 복사"><i class="fas fa-link"></i></button>
+                    <button onclick="shareResult('kakao', '${safeTitle}', '${safeText}')" style="background: #FEE500; color: #000000; border: none; width: 50px; height: 50px; border-radius: 50%; font-size: 1.5rem; cursor: pointer; transition: 0.3s;" title="카카오톡 공유"><i class="fas fa-comment"></i></button>
+                    <button onclick="shareResult('facebook', '${safeTitle}', '${safeText}')" style="background: #1877F2; color: white; border: none; width: 50px; height: 50px; border-radius: 50%; font-size: 1.5rem; cursor: pointer; transition: 0.3s;" title="페이스북 공유"><i class="fab fa-facebook-f"></i></button>
+                    <button onclick="shareResult('twitter', '${safeTitle}', '${safeText}')" style="background: #1DA1F2; color: white; border: none; width: 50px; height: 50px; border-radius: 50%; font-size: 1.5rem; cursor: pointer; transition: 0.3s;" title="X (트위터) 공유"><i class="fab fa-twitter"></i></button>
+                    <button onclick="shareResult('copy', '${safeTitle}', '${safeText}')" style="background: var(--text-muted); color: white; border: none; width: 50px; height: 50px; border-radius: 50%; font-size: 1.5rem; cursor: pointer; transition: 0.3s;" title="링크 복사"><i class="fas fa-link"></i></button>
                 </div>
             </div>
         `;

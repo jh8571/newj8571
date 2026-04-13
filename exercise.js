@@ -12,6 +12,10 @@ async function initExercise() {
 initExercise();
 
 window.calculateBMI = function() {
+    if (!exerciseData) {
+        alert('운동 데이터를 불러오는 중입니다. 잠시 후 다시 시도해 주세요.');
+        return;
+    }
     const height = document.getElementById('height').value;
     const weight = document.getElementById('weight').value;
     const resultArea = document.getElementById('exercise-result-area');
@@ -61,22 +65,27 @@ function renderExerciseReport(bmi, guide, program, color) {
                     ${program.exerciseIds.map(id => {
                         const ex = exerciseData.exercises.find(e => e.id === id);
                         return `
-                            <div class="focus-item" style="background: white; border: 1px solid var(--border-color); padding: 25px; border-radius: 20px;">
-                                <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 15px;">
-                                    <div>
-                                        <span style="font-size: 0.75rem; background: var(--accent-color); color: white; padding: 4px 10px; border-radius: 50px; font-weight: 800; margin-bottom: 8px; display: inline-block;">${ex.category}</span>
-                                        <h5 style="font-size: 1.25rem; font-weight: 900; color: var(--primary-color);">${ex.name}</h5>
+                            <div class="exercise-focus-item">
+                                <div class="exercise-image-wrapper">
+                                    <img src="${ex.image}" alt="${ex.name}">
+                                </div>
+                                <div>
+                                    <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 15px;">
+                                        <div>
+                                            <span style="font-size: 0.75rem; background: var(--accent-color); color: white; padding: 4px 10px; border-radius: 50px; font-weight: 800; margin-bottom: 8px; display: inline-block;">${ex.category}</span>
+                                            <h5 style="font-size: 1.25rem; font-weight: 900; color: var(--primary-color);">${ex.name}</h5>
+                                        </div>
+                                        <span style="font-size: 0.8rem; color: var(--text-muted); font-weight: 600;">난이도: ${ex.difficulty}</span>
                                     </div>
-                                    <span style="font-size: 0.8rem; color: var(--text-muted); font-weight: 600;">난이도: ${ex.difficulty}</span>
-                                </div>
-                                <div style="margin-bottom: 15px;">
-                                    <p style="font-size: 0.9rem; font-weight: 700; color: var(--text-main); margin-bottom: 5px;">[수행 방법]</p>
-                                    <ul style="padding-left: 20px; font-size: 0.9rem; color: var(--text-muted); line-height: 1.6;">
-                                        ${ex.steps.map(step => `<li>${step}</li>`).join('')}
-                                    </ul>
-                                </div>
-                                <div style="background: #fffbeb; padding: 15px; border-radius: 12px; font-size: 0.85rem; color: #92400e; border: 1px solid #fef3c7;">
-                                    <strong><i class="fas fa-lightbulb"></i> 포스처 팁:</strong> ${ex.posture_tips}
+                                    <div style="margin-bottom: 15px;">
+                                        <p style="font-size: 0.9rem; font-weight: 700; color: var(--text-main); margin-bottom: 5px;">[수행 방법]</p>
+                                        <ul style="padding-left: 20px; font-size: 0.9rem; color: var(--text-muted); line-height: 1.6;">
+                                            ${ex.steps.map(step => `<li>${step}</li>`).join('')}
+                                        </ul>
+                                    </div>
+                                    <div style="background: #fffbeb; padding: 15px; border-radius: 12px; font-size: 0.85rem; color: #92400e; border: 1px solid #fef3c7;">
+                                        <strong><i class="fas fa-lightbulb"></i> 포스처 팁:</strong> ${ex.posture_tips}
+                                    </div>
                                 </div>
                             </div>
                         `;
@@ -94,7 +103,7 @@ function renderExerciseReport(bmi, guide, program, color) {
                     </div>
                 </div>
 
-                ${window.getShareUI('나의 맞춤형 운동 처방', `VitalRest에서 분석한 저의 운동 루틴은 '${program.title}'입니다. 함께 운동해요!`)}
+                ${window.getShareUI('나의 맞춤형 운동 처방', `VitalRest에서 분석한 저의 운동 루틴은 [${program.title}]입니다. 함께 운동해요!`)}
             </div>
         </div>
     `;
