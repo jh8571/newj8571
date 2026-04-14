@@ -5,8 +5,8 @@ backend:
   client_id: Ov23liyjh6J7iwnch7bq
   auth_type: pkce
 
-site_url: https://newj8571.pages.dev
-display_url: https://newj8571.pages.dev
+site_url: https://jh8571.github.io/newj8571
+display_url: https://jh8571.github.io/newj8571
 
 media_folder: "e1"
 public_folder: "e1"
@@ -18,6 +18,7 @@ collections:
       - name: "nutrients"
         label: "영양소 데이터"
         file: "nutrients.json"
+        format: json
         fields:
           - label: "영양소 목록"
             name: "nutrients"
@@ -35,6 +36,7 @@ collections:
       - name: "drugs"
         label: "의약품 데이터"
         file: "drugs.json"
+        format: json
         fields:
           - label: "의약품 목록"
             name: "drugs"
@@ -48,10 +50,13 @@ collections:
               - { label: "효능", name: "efficacy", widget: "text" }
               - { label: "용법/용량", name: "usage", widget: "text" }
               - { label: "보험코드", name: "insuranceCode", widget: "string", required: false }
+              - { label: "보관 방법", name: "storage", widget: "string", required: false }
+              - { label: "상세 설명", name: "description", widget: "text", required: false }
 
       - name: "exercises"
         label: "운동 가이드"
         file: "exercise_data.json"
+        format: json
         fields:
           - label: "운동 목록"
             name: "exercises"
@@ -65,10 +70,55 @@ collections:
               - { label: "운동 단계", name: "steps", widget: "list", field: { label: "단계", name: "step", widget: "string" } }
               - { label: "자세 팁", name: "posture_tips", widget: "string" }
               - { label: "이미지 경로", name: "image", widget: "image" }
+          - label: "운동 프로그램"
+            name: "programs"
+            widget: "list"
+            fields:
+              - { label: "ID", name: "id", widget: "string" }
+              - { label: "제목", name: "title", widget: "string" }
+              - { label: "설명", name: "desc", widget: "text" }
+              - label: "운동 ID 목록"
+                name: "exerciseIds"
+                widget: "list"
+                field: { label: "운동 ID", name: "exerciseId", widget: "string" }
+              - { label: "식단 팁", name: "diet_tip", widget: "text" }
+          - label: "BMI 가이드"
+            name: "bmi_guide"
+            widget: "object"
+            fields:
+              - name: "underweight"
+                label: "저체중"
+                widget: "object"
+                fields:
+                  - { label: "라벨", name: "label", widget: "string" }
+                  - { label: "설명", name: "desc", widget: "text" }
+                  - { label: "프로그램 ID", name: "programId", widget: "string" }
+              - name: "normal"
+                label: "정상"
+                widget: "object"
+                fields:
+                  - { label: "라벨", name: "label", widget: "string" }
+                  - { label: "설명", name: "desc", widget: "text" }
+                  - { label: "프로그램 ID", name: "programId", widget: "string" }
+              - name: "overweight"
+                label: "과체중"
+                widget: "object"
+                fields:
+                  - { label: "라벨", name: "label", widget: "string" }
+                  - { label: "설명", name: "desc", widget: "text" }
+                  - { label: "프로그램 ID", name: "programId", widget: "string" }
+              - name: "obesity"
+                label: "비만"
+                widget: "object"
+                fields:
+                  - { label: "라벨", name: "label", widget: "string" }
+                  - { label: "설명", name: "desc", widget: "text" }
+                  - { label: "프로그램 ID", name: "programId", widget: "string" }
 
       - name: "mbti"
         label: "MBTI 질문"
         file: "mbti_data.json"
+        format: json
         fields:
           - label: "질문 목록"
             name: "questions"

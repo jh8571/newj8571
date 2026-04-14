@@ -18,8 +18,8 @@ document.addEventListener('DOMContentLoaded', () => {
         fetch('drugs.json').then(r => r.json()),
         fetch('nutrients.json').then(r => r.json())
     ]).then(([drugs, nutrients]) => {
-        drugData = drugs;
-        nutrientData = nutrients;
+        drugData = drugs.drugs || drugs;
+        nutrientData = nutrients.nutrients || nutrients;
         console.log('Database synced:', drugData.length + nutrientData.length);
     }).catch(e => console.error('Load error:', e));
 
