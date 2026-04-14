@@ -4,9 +4,7 @@ backend:
   branch: main
   client_id: Ov23liyjh6J7iwnch7bq
 
-site_url: https://newj8571.pages.dev
-display_url: https://newj8571.pages.dev
-
+# 미디어 파일 설정
 media_folder: "e1"
 public_folder: "e1"
 
@@ -15,7 +13,7 @@ collections:
     label: "데이터 관리"
     files:
       - name: "nutrients"
-        label: "영양소 데이터 (nutrients.json)"
+        label: "영양소 데이터"
         file: "nutrients.json"
         fields:
           - label: "영양소 목록"
@@ -32,7 +30,7 @@ collections:
               - { label: "주의 사항", name: "caution", widget: "text" }
 
       - name: "drugs"
-        label: "의약품 데이터 (drugs.json)"
+        label: "의약품 데이터"
         file: "drugs.json"
         fields:
           - label: "의약품 목록"
@@ -49,7 +47,7 @@ collections:
               - { label: "보험코드", name: "insuranceCode", widget: "string", required: false }
 
       - name: "exercises"
-        label: "운동 가이드 (exercise_data.json)"
+        label: "운동 가이드"
         file: "exercise_data.json"
         fields:
           - label: "운동 목록"
@@ -66,7 +64,7 @@ collections:
               - { label: "이미지 경로", name: "image", widget: "image" }
 
       - name: "mbti"
-        label: "MBTI 질문 (mbti_data.json)"
+        label: "MBTI 질문"
         file: "mbti_data.json"
         fields:
           - label: "질문 목록"
