@@ -1,0 +1,101 @@
+backend:
+  name: github
+  repo: jh8571/newj8571
+  branch: main
+
+local_backend: true # 로컬 개발 시 테스트용
+
+media_folder: "e1"
+public_folder: "e1"
+
+collections:
+  - name: "data"
+    label: "데이터 관리"
+    files:
+      - name: "nutrients"
+        label: "영양소 데이터"
+        file: "nutrients.json"
+        fields:
+          - label: "영양소 목록"
+            name: "nutrients"
+            widget: "list"
+            fields:
+              - { label: "ID", name: "id", widget: "string" }
+              - { label: "이름", name: "name", widget: "string" }
+              - { label: "카테고리", name: "category", widget: "string" }
+              - { label: "효능", name: "efficacy", widget: "text" }
+              - { label: "상세 설명", name: "description", widget: "text" }
+              - { label: "권장 섭취량", name: "dri", widget: "string" }
+              - { label: "함유 식품", name: "food", widget: "string" }
+              - { label: "주의 사항", name: "caution", widget: "text" }
+
+      - name: "drugs"
+        label: "의약품 데이터"
+        file: "drugs.json"
+        fields:
+          - label: "의약품 목록"
+            name: "drugs"
+            widget: "list"
+            fields:
+              - { label: "ID", name: "id", widget: "number" }
+              - { label: "이름", name: "name", widget: "string" }
+              - { label: "제조사", name: "manufacturer", widget: "string" }
+              - { label: "분류", name: "category", widget: "string" }
+              - { label: "성분", name: "ingredients", widget: "text" }
+              - { label: "효능", name: "efficacy", widget: "text" }
+              - { label: "용법/용량", name: "usage", widget: "text" }
+              - { label: "보험코드", name: "insuranceCode", widget: "string", required: false }
+
+      - name: "exercises"
+        label: "운동 가이드"
+        file: "exercise_data.json"
+        fields:
+          - label: "운동 목록"
+            name: "exercises"
+            widget: "list"
+            fields:
+              - { label: "ID", name: "id", widget: "string" }
+              - { label: "이름", name: "name", widget: "string" }
+              - { label: "카테고리", name: "category", widget: "string" }
+              - { label: "타겟 부위", name: "target", widget: "string" }
+              - { label: "난이도", name: "difficulty", widget: "string" }
+              - { label: "운동 단계", name: "steps", widget: "list", field: { label: "단계", name: "step", widget: "string" } }
+              - { label: "자세 팁", name: "posture_tips", widget: "string" }
+              - { label: "이미지 경로", name: "image", widget: "image" }
+
+      - name: "mbti"
+        label: "MBTI 질문"
+        file: "mbti_data.json"
+        fields:
+          - label: "질문 목록"
+            name: "questions"
+            widget: "list"
+            fields:
+              - { label: "ID", name: "id", widget: "number" }
+              - { label: "질문 내용", name: "q", widget: "string" }
+              - { label: "유형(EI/SN/TF/PJ)", name: "type", widget: "string" }
+              - { label: "가중치", name: "weight", widget: "number" }
+
+  - name: "pages"
+    label: "페이지 관리"
+    files:
+      - name: "index"
+        label: "메인 페이지 (index.html)"
+        file: "index.html"
+        fields:
+          - { label: "내용 (HTML)", name: "body", widget: "code", default_language: "html" }
+      - name: "blog"
+        label: "건강 가이드 (blog.html)"
+        file: "blog.html"
+        fields:
+          - { label: "내용 (HTML)", name: "body", widget: "code", default_language: "html" }
+      - name: "about"
+        label: "소개 페이지 (about.html)"
+        file: "about.html"
+        fields:
+          - { label: "내용 (HTML)", name: "body", widget: "code", default_language: "html" }
+      - name: "privacy"
+        label: "개인정보처리방침 (privacy.html)"
+        file: "privacy.html"
+        fields:
+          - { label: "내용 (HTML)", name: "body", widget: "code", default_language: "html" }
