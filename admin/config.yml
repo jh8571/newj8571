@@ -16,7 +16,7 @@ collections:
     label: "데이터 관리"
     files:
       - name: "nutrients"
-        label: "영양소 데이터"
+        label: "영양소 데이터 (nutrients.json)"
         file: "nutrients.json"
         fields:
           - label: "영양소 목록"
@@ -33,7 +33,7 @@ collections:
               - { label: "주의 사항", name: "caution", widget: "text" }
 
       - name: "drugs"
-        label: "의약품 데이터"
+        label: "의약품 데이터 (drugs.json)"
         file: "drugs.json"
         fields:
           - label: "의약품 목록"
@@ -50,7 +50,7 @@ collections:
               - { label: "보험코드", name: "insuranceCode", widget: "string", required: false }
 
       - name: "exercises"
-        label: "운동 가이드"
+        label: "운동 가이드 (exercise_data.json)"
         file: "exercise_data.json"
         fields:
           - label: "운동 목록"
@@ -67,7 +67,7 @@ collections:
               - { label: "이미지 경로", name: "image", widget: "image" }
 
       - name: "mbti"
-        label: "MBTI 질문"
+        label: "MBTI 질문 (mbti_data.json)"
         file: "mbti_data.json"
         fields:
           - label: "질문 목록"
@@ -78,27 +78,3 @@ collections:
               - { label: "질문 내용", name: "q", widget: "string" }
               - { label: "유형(EI/SN/TF/PJ)", name: "type", widget: "string" }
               - { label: "가중치", name: "weight", widget: "number" }
-
-  - name: "pages"
-    label: "페이지 관리"
-    files:
-      - name: "index"
-        label: "메인 페이지 (index.html)"
-        file: "index.html"
-        fields:
-          - { label: "내용 (HTML)", name: "body", widget: "text" }
-      - name: "blog"
-        label: "건강 가이드 (blog.html)"
-        file: "blog.html"
-        fields:
-          - { label: "내용 (HTML)", name: "body", widget: "text" }
-      - name: "about"
-        label: "소개 페이지 (about.html)"
-        file: "about.html"
-        fields:
-          - { label: "내용 (HTML)", name: "body", widget: "text" }
-      - name: "privacy"
-        label: "개인정보처리방침 (privacy.html)"
-        file: "privacy.html"
-        fields:
-          - { label: "내용 (HTML)", name: "body", widget: "text" }
