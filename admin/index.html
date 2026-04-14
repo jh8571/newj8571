@@ -4,85 +4,9 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>VitalRest Admin Center</title>
-  <!-- Sveltia CMS: 프록시 없이 직접 GitHub 로그인이 가능한 도구 (버전 고정으로 안정성 확보) -->
-  <script src="https://unpkg.com/sveltia-cms@0.44.1/dist/sveltia-cms.js" type="module"></script>
-
-  <!-- 설정을 HTML 내부에 직접 매립 (config.yml 파일이 없어도 작동함) -->
-  <script type="text/yaml" id="cms-config">
-    backend:
-      name: github
-      repo: jh8571/newj8571
-      branch: main
-      client_id: Ov23liyjh6J7iwnch7bq
-      auth_type: pkce
-
-    site_url: https://newj8571.pages.dev
-    display_url: https://newj8571.pages.dev
-    media_folder: "e1"
-    public_folder: "e1"
-
-    collections:
-      - name: "data"
-        label: "데이터 관리"
-        files:
-          - name: "nutrients"
-            label: "영양소 데이터"
-            file: "nutrients.json"
-            fields:
-              - { label: "영양소 목록", name: "nutrients", widget: "list", fields: [
-                  { label: "ID", name: "id", widget: "string" },
-                  { label: "이름", name: "name", widget: "string" },
-                  { label: "카테고리", name: "category", widget: "string" },
-                  { label: "효능", name: "efficacy", widget: "text" },
-                  { label: "상세 설명", name: "description", widget: "text" },
-                  { label: "권장 섭취량", name: "dri", widget: "string" },
-                  { label: "함유 식품", name: "food", widget: "string" },
-                  { label: "주의 사항", name: "caution", widget: "text" }
-                ]}
-          - name: "drugs"
-            label: "의약품 데이터"
-            file: "drugs.json"
-            fields:
-              - { label: "의약품 목록", name: "drugs", widget: "list", fields: [
-                  { label: "ID", name: "id", widget: "number" },
-                  { label: "이름", name: "name", widget: "string" },
-                  { label: "제조사", name: "manufacturer", widget: "string" },
-                  { label: "분류", name: "category", widget: "string" },
-                  { label: "성분", name: "ingredients", widget: "text" },
-                  { label: "효능", name: "efficacy", widget: "text" },
-                  { label: "용법/용량", name: "usage", widget: "text" },
-                  { label: "보험코드", name: "insuranceCode", widget: "string", required: false }
-                ]}
-          - name: "exercises"
-            label: "운동 가이드"
-            file: "exercise_data.json"
-            fields:
-              - { label: "운동 목록", name: "exercises", widget: "list", fields: [
-                  { label: "ID", name: "id", widget: "string" },
-                  { label: "이름", name: "name", widget: "string" },
-                  { label: "카테고리", name: "category", widget: "string" },
-                  { label: "타겟 부위", name: "target", widget: "string" },
-                  { label: "난이도", name: "difficulty", widget: "string" },
-                  { label: "운동 단계", name: "steps", widget: "list", field: { label: "단계", name: "step", widget: "string" } },
-                  { label: "자세 팁", name: "posture_tips", widget: "string" },
-                  { label: "이미지 경로", name: "image", widget: "image" }
-                ]}
-          - name: "mbti"
-            label: "MBTI 질문"
-            file: "mbti_data.json"
-            fields:
-              - { label: "질문 목록", name: "questions", widget: "list", fields: [
-                  { label: "ID", name: "id", widget: "number" },
-                  { label: "질문 내용", name: "q", widget: "string" },
-                  { label: "유형(EI/SN/TF/PJ)", name: "type", widget: "string" },
-                  { label: "가중치", name: "weight", widget: "number" }
-                ]}
-  </script>
+  <script src="https://unpkg.com/sveltia-cms@latest/dist/sveltia-cms.js" type="module"></script>
 </head>
-<body style="margin: 0; background-color: #f0f2f5; display: flex; justify-content: center; align-items: center; height: 100vh; font-family: sans-serif;">
-  <div id="loading">
-    <p style="font-size: 1.1rem; color: #555;">관리 시스템을 안전하게 연결 중입니다...</p>
-    <p style="font-size: 0.8rem; color: #888; text-align: center;">(첫 로딩 시 최대 10초 소요)</p>
-  </div>
+<body>
+  <noscript>자바스크립트가 필요합니다.</noscript>
 </body>
 </html>
