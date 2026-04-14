@@ -3,10 +3,10 @@ backend:
   repo: jh8571/newj8571
   branch: main
   client_id: Ov23liyjh6J7iwnch7bq
-  auth_type: pkce # 프록시 없이 직접 로그인하는 방식 (2025 최신 기술)
+  auth_type: pkce
 
 site_url: https://newj8571.pages.dev
-local_backend: true
+display_url: https://newj8571.pages.dev
 
 media_folder: "e1"
 public_folder: "e1"
@@ -86,19 +86,19 @@ collections:
         label: "메인 페이지 (index.html)"
         file: "index.html"
         fields:
-          - { label: "내용 (HTML)", name: "body", widget: "code", default_language: "html" }
+          - { label: "내용 (HTML)", name: "body", widget: "text" }
       - name: "blog"
         label: "건강 가이드 (blog.html)"
         file: "blog.html"
         fields:
-          - { label: "내용 (HTML)", name: "body", widget: "code", default_language: "html" }
+          - { label: "내용 (HTML)", name: "body", widget: "text" }
       - name: "about"
         label: "소개 페이지 (about.html)"
         file: "about.html"
         fields:
-          - { label: "내용 (HTML)", name: "body", widget: "code", default_language: "html" }
+          - { label: "내용 (HTML)", name: "body", widget: "text" }
       - name: "privacy"
         label: "개인정보처리방침 (privacy.html)"
         file: "privacy.html"
         fields:
-          - { label: "내용 (HTML)", name: "body", widget: "code", default_language: "html" }
+          - { label: "내용 (HTML)", name: "body", widget: "text" }
