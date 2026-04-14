@@ -5,8 +5,8 @@ backend:
   client_id: Ov23liyjh6J7iwnch7bq
   auth_type: pkce
 
-site_url: https://jh8571.github.io/newj8571
-display_url: https://jh8571.github.io/newj8571
+site_url: https://newj8571.pages.dev
+display_url: https://newj8571.pages.dev
 
 media_folder: "e1"
 public_folder: "e1"
