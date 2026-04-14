@@ -3,9 +3,9 @@ backend:
   repo: jh8571/newj8571
   branch: main
   client_id: Ov23liyjh6J7iwnch7bq
-  base_url: https://decap-cms-oauth-gateway.vercel.app
+  auth_type: pkce # 프록시 없이 직접 로그인하는 방식 (2025 최신 기술)
 
-site_url: https://newj8571.pages.dev # 사이트 주소 추가
+site_url: https://newj8571.pages.dev
 local_backend: true
 
 media_folder: "e1"
