@@ -3,7 +3,6 @@ backend:
   repo: jh8571/newj8571
   branch: main
   client_id: Ov23liyjh6J7iwnch7bq
-  auth_type: pkce
 
 site_url: https://newj8571.pages.dev
 display_url: https://newj8571.pages.dev
