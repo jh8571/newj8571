@@ -2,6 +2,8 @@ backend:
   name: github
   repo: jh8571/newj8571
   branch: main
+  client_id: Ov23liyjh6J7iwnch7bq
+  base_url: https://static-cms-oauth-proxy.vercel.app
 
 local_backend: true # 로컬 개발 시 테스트용
 
