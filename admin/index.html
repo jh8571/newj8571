@@ -4,9 +4,83 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>VitalRest Admin</title>
-  <!-- Sveltia CMS: 프록시 서버 없이 GitHub 로그인이 가능한 최신 도구 -->
-  <script src="https://unpkg.com/sveltia-cms@0.43.0/dist/sveltia-cms.js" type="module"></script>
+  <!-- Sveltia CMS 로드 -->
+  <script src="https://unpkg.com/sveltia-cms@latest/dist/sveltia-cms.js" type="module"></script>
+
+  <!-- 설정을 HTML 안에 직접 삽입 (경로 오류 원천 차단) -->
+  <script type="text/yaml" id="cms-config">
+    backend:
+      name: github
+      repo: jh8571/newj8571
+      branch: main
+      client_id: Ov23liyjh6J7iwnch7bq
+      auth_type: pkce
+
+    site_url: https://newj8571.pages.dev
+    display_url: https://newj8571.pages.dev
+
+    media_folder: "e1"
+    public_folder: "e1"
+
+    collections:
+      - name: "data"
+        label: "데이터 관리"
+        files:
+          - name: "nutrients"
+            label: "영양소 데이터"
+            file: "nutrients.json"
+            fields:
+              - { label: "영양소 목록", name: "nutrients", widget: "list", fields: [
+                  { label: "ID", name: "id", widget: "string" },
+                  { label: "이름", name: "name", widget: "string" },
+                  { label: "카테고리", name: "category", widget: "string" },
+                  { label: "효능", name: "efficacy", widget: "text" },
+                  { label: "상세 설명", name: "description", widget: "text" },
+                  { label: "권장 섭취량", name: "dri", widget: "string" },
+                  { label: "함유 식품", name: "food", widget: "string" },
+                  { label: "주의 사항", name: "caution", widget: "text" }
+                ]}
+          - name: "drugs"
+            label: "의약품 데이터"
+            file: "drugs.json"
+            fields:
+              - { label: "의약품 목록", name: "drugs", widget: "list", fields: [
+                  { label: "ID", name: "id", widget: "number" },
+                  { label: "이름", name: "name", widget: "string" },
+                  { label: "제조사", name: "manufacturer", widget: "string" },
+                  { label: "분류", name: "category", widget: "string" },
+                  { label: "성분", name: "ingredients", widget: "text" },
+                  { label: "효능", name: "efficacy", widget: "text" },
+                  { label: "용법/용량", name: "usage", widget: "text" },
+                  { label: "보험코드", name: "insuranceCode", widget: "string", required: false }
+                ]}
+          - name: "exercises"
+            label: "운동 가이드"
+            file: "exercise_data.json"
+            fields:
+              - { label: "운동 목록", name: "exercises", widget: "list", fields: [
+                  { label: "ID", name: "id", widget: "string" },
+                  { label: "이름", name: "name", widget: "string" },
+                  { label: "카테고리", name: "category", widget: "string" },
+                  { label: "타겟 부위", name: "target", widget: "string" },
+                  { label: "난이도", name: "difficulty", widget: "string" },
+                  { label: "운동 단계", name: "steps", widget: "list", field: { label: "단계", name: "step", widget: "string" } },
+                  { label: "자세 팁", name: "posture_tips", widget: "string" },
+                  { label: "이미지 경로", name: "image", widget: "image" }
+                ]}
+          - name: "mbti"
+            label: "MBTI 질문"
+            file: "mbti_data.json"
+            fields:
+              - { label: "질문 목록", name: "questions", widget: "list", fields: [
+                  { label: "ID", name: "id", widget: "number" },
+                  { label: "질문 내용", name: "q", widget: "string" },
+                  { label: "유형(EI/SN/TF/PJ)", name: "type", widget: "string" },
+                  { label: "가중치", name: "weight", widget: "number" }
+                ]}
+  </script>
 </head>
-<body>
+<body style="margin: 0; background: #f0f2f5;">
+  <noscript>이 페이지를 실행하려면 자바스크립트가 필요합니다.</noscript>
 </body>
 </html>
