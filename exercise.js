@@ -114,7 +114,10 @@ function renderExerciseReport(bmi, guide, program, color, height, weight, age) {
                         return `
                             <div class="exercise-focus-item">
                                 <div class="exercise-image-wrapper">
-                                    <img src="${ex.image}" alt="${ex.name}" onerror="this.style.display='none'">
+                                    <img src="${ex.image}" alt="${ex.name}"
+                                     style="width:100%; height:100%; object-fit:cover; border-radius:12px;"
+                                     onerror="this.parentElement.innerHTML='<div style=\'width:100%;height:100%;display:flex;align-items:center;justify-content:center;flex-direction:column;background:#f1f5f9;border-radius:12px;\'><i class=\'fas fa-dumbbell\' style=\'font-size:2.5rem;color:#94a3b8;margin-bottom:8px;\'></i><span style=\'font-size:0.75rem;color:#94a3b8;\'>${ex.name}</span></div>'"
+                                >
                                 </div>
                                 <div style="flex:1;">
                                     <div style="display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:12px;">
