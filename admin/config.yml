@@ -2,6 +2,8 @@ backend:
   name: github
   repo: jh8571/newj8571
   branch: main
+  client_id: Ov23li7Tw8njYyPckMxG
+  base_url: https://sveltia-cms-auth.shokoku0701.workers.dev
 
 site_url: https://newj8571.pages.dev
 display_url: https://newj8571.pages.dev
