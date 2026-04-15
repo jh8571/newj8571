@@ -19,7 +19,7 @@ collections:
 
   # ① 사이트 설정
   - name: "settings"
-    label: "⚙️ 사이트 설정"
+    label: "사이트 설정"
     files:
       - name: "site_config"
         label: "내비게이션 & 기본 정보"
@@ -30,10 +30,10 @@ collections:
             label: "사이트 기본 정보"
             widget: "object"
             fields:
-              - { name: "title",        label: "사이트 제목",    widget: "string" }
-              - { name: "logo_text",    label: "로고 텍스트",    widget: "string" }
-              - { name: "tagline",      label: "슬로건 (한국어)", widget: "string" }
-              - { name: "description",  label: "사이트 설명",    widget: "text" }
+              - { name: "title",       label: "사이트 제목",    widget: "string" }
+              - { name: "logo_text",   label: "로고 텍스트",    widget: "string" }
+              - { name: "tagline",     label: "슬로건",         widget: "string" }
+              - { name: "description", label: "사이트 설명",    widget: "text" }
               - name: "accent_color"
                 label: "포인트 컬러"
                 widget: "select"
@@ -50,10 +50,10 @@ collections:
             label: "내비게이션 메뉴"
             widget: "list"
             fields:
-              - { name: "id",       label: "메뉴 ID",       widget: "string" }
+              - { name: "id",       label: "메뉴 ID",        widget: "string" }
               - { name: "label_ko", label: "메뉴명 (한국어)", widget: "string" }
-              - { name: "label_en", label: "메뉴명 (영어)",  widget: "string" }
-              - { name: "href",     label: "링크 (파일명)",  widget: "string" }
+              - { name: "label_en", label: "메뉴명 (영어)",   widget: "string" }
+              - { name: "href",     label: "링크 (파일명)",   widget: "string" }
               - name: "enabled"
                 label: "표시 여부"
                 widget: "boolean"
@@ -67,7 +67,7 @@ collections:
 
   # ② 운동 가이드
   - name: "exercise"
-    label: "💪 운동 가이드"
+    label: "운동 가이드"
     files:
       - name: "exercise_data"
         label: "운동 목록 & 프로그램"
@@ -78,10 +78,10 @@ collections:
             label: "운동 목록"
             widget: "list"
             fields:
-              - { name: "id",           label: "ID",         widget: "string" }
-              - { name: "name",         label: "운동명",      widget: "string" }
-              - { name: "category",     label: "카테고리",    widget: "string" }
-              - { name: "target",       label: "타겟 부위",   widget: "string" }
+              - { name: "id",           label: "ID",          widget: "string" }
+              - { name: "name",         label: "운동명",       widget: "string" }
+              - { name: "category",     label: "카테고리",     widget: "string" }
+              - { name: "target",       label: "타겟 부위",    widget: "string" }
               - name: "difficulty"
                 label: "난이도"
                 widget: "select"
@@ -90,17 +90,17 @@ collections:
                 label: "수행 단계"
                 widget: "list"
                 field: { label: "단계 설명", name: "step", widget: "string" }
-              - { name: "posture_tips", label: "자세 포인트", widget: "text" }
+              - { name: "posture_tips", label: "자세 포인트",  widget: "text" }
               - name: "image"
-                label: "이미지"
+                label: "이미지 URL"
                 widget: "string"
-                hint: "웹 이미지 URL (https://...) 또는 로컬 경로 (e1/파일명.png)"
+                hint: "Wikimedia Commons URL 또는 /e1/파일명.png"
           - name: "programs"
             label: "운동 프로그램"
             widget: "list"
             fields:
-              - { name: "id",    label: "프로그램 ID", widget: "string" }
-              - { name: "title", label: "프로그램명",   widget: "string" }
+              - { name: "id",    label: "프로그램 ID",  widget: "string" }
+              - { name: "title", label: "프로그램명",    widget: "string" }
               - { name: "desc",  label: "프로그램 설명", widget: "text" }
               - name: "exerciseIds"
                 label: "포함 운동 ID 목록"
@@ -142,7 +142,7 @@ collections:
 
   # ③ MBTI
   - name: "mbti"
-    label: "🧠 MBTI 테스트"
+    label: "MBTI 테스트"
     files:
       - name: "mbti_questions"
         label: "MBTI 질문 (60문항)"
@@ -153,8 +153,8 @@ collections:
             label: "질문 목록"
             widget: "list"
             fields:
-              - { name: "id",   label: "번호",   widget: "number" }
-              - { name: "q",    label: "질문 내용", widget: "string" }
+              - { name: "id",   label: "번호",      widget: "number" }
+              - { name: "q",    label: "질문 내용",  widget: "string" }
               - name: "type"
                 label: "차원"
                 widget: "select"
@@ -167,15 +167,14 @@ collections:
             label: "16가지 유형 데이터"
             widget: "object"
             fields:
-              - &type_fields
-                name: "ISTJ"
+              - name: "ISTJ"
                 label: "ISTJ - 논리주의자"
                 widget: "object"
-                fields: &mbti_type_body
-                  - { name: "emoji",    label: "이모지",    widget: "string" }
-                  - { name: "title",    label: "유형 제목", widget: "string" }
-                  - { name: "tagline",  label: "태그라인",  widget: "string" }
-                  - { name: "overview", label: "종합 설명", widget: "text" }
+                fields:
+                  - { name: "emoji",            label: "이모지",                   widget: "string" }
+                  - { name: "title",            label: "유형 제목",                widget: "string" }
+                  - { name: "tagline",          label: "태그라인",                 widget: "string" }
+                  - { name: "overview",         label: "종합 설명",                widget: "text" }
                   - name: "traits"
                     label: "특징 목록"
                     widget: "list"
@@ -193,31 +192,481 @@ collections:
                     widget: "list"
                     field: { label: "직업", name: "career", widget: "string" }
                   - name: "famous_people"
-                    label: "같은 유형 유명인"
+                    label: "유명인"
                     widget: "list"
                     field: { label: "인물", name: "person", widget: "string" }
-                  - { name: "health_tip",      label: "건강 & 웰니스 팁",    widget: "text" }
-                  - { name: "growth_tip",      label: "성장 조언",           widget: "text" }
-                  - { name: "relationship_tip",label: "관계 & 커뮤니케이션 팁", widget: "text" }
-              - { <<: *type_fields, name: "ISFJ", label: "ISFJ - 수호자" }
-              - { <<: *type_fields, name: "INFJ", label: "INFJ - 옹호자" }
-              - { <<: *type_fields, name: "INTJ", label: "INTJ - 전략가" }
-              - { <<: *type_fields, name: "ISTP", label: "ISTP - 재주꾼" }
-              - { <<: *type_fields, name: "ISFP", label: "ISFP - 예술가" }
-              - { <<: *type_fields, name: "INFP", label: "INFP - 중재자" }
-              - { <<: *type_fields, name: "INTP", label: "INTP - 사색가" }
-              - { <<: *type_fields, name: "ESTP", label: "ESTP - 사업가" }
-              - { <<: *type_fields, name: "ESFP", label: "ESFP - 연예인" }
-              - { <<: *type_fields, name: "ENFP", label: "ENFP - 활동가" }
-              - { <<: *type_fields, name: "ENTP", label: "ENTP - 변론가" }
-              - { <<: *type_fields, name: "ESTJ", label: "ESTJ - 관리자" }
-              - { <<: *type_fields, name: "ESFJ", label: "ESFJ - 외교관" }
-              - { <<: *type_fields, name: "ENFJ", label: "ENFJ - 운동가" }
-              - { <<: *type_fields, name: "ENTJ", label: "ENTJ - 통솔자" }
+                  - { name: "health_tip",       label: "건강 팁",                  widget: "text" }
+                  - { name: "growth_tip",       label: "성장 조언",                widget: "text" }
+                  - { name: "relationship_tip", label: "관계 팁",                  widget: "text" }
+              - name: "ISFJ"
+                label: "ISFJ - 수호자"
+                widget: "object"
+                fields:
+                  - { name: "emoji",            label: "이모지",    widget: "string" }
+                  - { name: "title",            label: "유형 제목", widget: "string" }
+                  - { name: "tagline",          label: "태그라인",  widget: "string" }
+                  - { name: "overview",         label: "종합 설명", widget: "text" }
+                  - name: "traits"
+                    label: "특징 목록"
+                    widget: "list"
+                    field: { label: "특징", name: "trait", widget: "string" }
+                  - name: "strengths"
+                    label: "강점 목록"
+                    widget: "list"
+                    field: { label: "강점", name: "strength", widget: "string" }
+                  - name: "weaknesses"
+                    label: "약점 목록"
+                    widget: "list"
+                    field: { label: "약점", name: "weakness", widget: "string" }
+                  - name: "careers"
+                    label: "추천 직업"
+                    widget: "list"
+                    field: { label: "직업", name: "career", widget: "string" }
+                  - name: "famous_people"
+                    label: "유명인"
+                    widget: "list"
+                    field: { label: "인물", name: "person", widget: "string" }
+                  - { name: "health_tip",       label: "건강 팁",   widget: "text" }
+                  - { name: "growth_tip",       label: "성장 조언", widget: "text" }
+                  - { name: "relationship_tip", label: "관계 팁",   widget: "text" }
+              - name: "INFJ"
+                label: "INFJ - 옹호자"
+                widget: "object"
+                fields:
+                  - { name: "emoji",            label: "이모지",    widget: "string" }
+                  - { name: "title",            label: "유형 제목", widget: "string" }
+                  - { name: "tagline",          label: "태그라인",  widget: "string" }
+                  - { name: "overview",         label: "종합 설명", widget: "text" }
+                  - name: "traits"
+                    label: "특징 목록"
+                    widget: "list"
+                    field: { label: "특징", name: "trait", widget: "string" }
+                  - name: "strengths"
+                    label: "강점 목록"
+                    widget: "list"
+                    field: { label: "강점", name: "strength", widget: "string" }
+                  - name: "weaknesses"
+                    label: "약점 목록"
+                    widget: "list"
+                    field: { label: "약점", name: "weakness", widget: "string" }
+                  - name: "careers"
+                    label: "추천 직업"
+                    widget: "list"
+                    field: { label: "직업", name: "career", widget: "string" }
+                  - name: "famous_people"
+                    label: "유명인"
+                    widget: "list"
+                    field: { label: "인물", name: "person", widget: "string" }
+                  - { name: "health_tip",       label: "건강 팁",   widget: "text" }
+                  - { name: "growth_tip",       label: "성장 조언", widget: "text" }
+                  - { name: "relationship_tip", label: "관계 팁",   widget: "text" }
+              - name: "INTJ"
+                label: "INTJ - 전략가"
+                widget: "object"
+                fields:
+                  - { name: "emoji",            label: "이모지",    widget: "string" }
+                  - { name: "title",            label: "유형 제목", widget: "string" }
+                  - { name: "tagline",          label: "태그라인",  widget: "string" }
+                  - { name: "overview",         label: "종합 설명", widget: "text" }
+                  - name: "traits"
+                    label: "특징 목록"
+                    widget: "list"
+                    field: { label: "특징", name: "trait", widget: "string" }
+                  - name: "strengths"
+                    label: "강점 목록"
+                    widget: "list"
+                    field: { label: "강점", name: "strength", widget: "string" }
+                  - name: "weaknesses"
+                    label: "약점 목록"
+                    widget: "list"
+                    field: { label: "약점", name: "weakness", widget: "string" }
+                  - name: "careers"
+                    label: "추천 직업"
+                    widget: "list"
+                    field: { label: "직업", name: "career", widget: "string" }
+                  - name: "famous_people"
+                    label: "유명인"
+                    widget: "list"
+                    field: { label: "인물", name: "person", widget: "string" }
+                  - { name: "health_tip",       label: "건강 팁",   widget: "text" }
+                  - { name: "growth_tip",       label: "성장 조언", widget: "text" }
+                  - { name: "relationship_tip", label: "관계 팁",   widget: "text" }
+              - name: "ISTP"
+                label: "ISTP - 재주꾼"
+                widget: "object"
+                fields:
+                  - { name: "emoji",            label: "이모지",    widget: "string" }
+                  - { name: "title",            label: "유형 제목", widget: "string" }
+                  - { name: "tagline",          label: "태그라인",  widget: "string" }
+                  - { name: "overview",         label: "종합 설명", widget: "text" }
+                  - name: "traits"
+                    label: "특징 목록"
+                    widget: "list"
+                    field: { label: "특징", name: "trait", widget: "string" }
+                  - name: "strengths"
+                    label: "강점 목록"
+                    widget: "list"
+                    field: { label: "강점", name: "strength", widget: "string" }
+                  - name: "weaknesses"
+                    label: "약점 목록"
+                    widget: "list"
+                    field: { label: "약점", name: "weakness", widget: "string" }
+                  - name: "careers"
+                    label: "추천 직업"
+                    widget: "list"
+                    field: { label: "직업", name: "career", widget: "string" }
+                  - name: "famous_people"
+                    label: "유명인"
+                    widget: "list"
+                    field: { label: "인물", name: "person", widget: "string" }
+                  - { name: "health_tip",       label: "건강 팁",   widget: "text" }
+                  - { name: "growth_tip",       label: "성장 조언", widget: "text" }
+                  - { name: "relationship_tip", label: "관계 팁",   widget: "text" }
+              - name: "ISFP"
+                label: "ISFP - 예술가"
+                widget: "object"
+                fields:
+                  - { name: "emoji",            label: "이모지",    widget: "string" }
+                  - { name: "title",            label: "유형 제목", widget: "string" }
+                  - { name: "tagline",          label: "태그라인",  widget: "string" }
+                  - { name: "overview",         label: "종합 설명", widget: "text" }
+                  - name: "traits"
+                    label: "특징 목록"
+                    widget: "list"
+                    field: { label: "특징", name: "trait", widget: "string" }
+                  - name: "strengths"
+                    label: "강점 목록"
+                    widget: "list"
+                    field: { label: "강점", name: "strength", widget: "string" }
+                  - name: "weaknesses"
+                    label: "약점 목록"
+                    widget: "list"
+                    field: { label: "약점", name: "weakness", widget: "string" }
+                  - name: "careers"
+                    label: "추천 직업"
+                    widget: "list"
+                    field: { label: "직업", name: "career", widget: "string" }
+                  - name: "famous_people"
+                    label: "유명인"
+                    widget: "list"
+                    field: { label: "인물", name: "person", widget: "string" }
+                  - { name: "health_tip",       label: "건강 팁",   widget: "text" }
+                  - { name: "growth_tip",       label: "성장 조언", widget: "text" }
+                  - { name: "relationship_tip", label: "관계 팁",   widget: "text" }
+              - name: "INFP"
+                label: "INFP - 중재자"
+                widget: "object"
+                fields:
+                  - { name: "emoji",            label: "이모지",    widget: "string" }
+                  - { name: "title",            label: "유형 제목", widget: "string" }
+                  - { name: "tagline",          label: "태그라인",  widget: "string" }
+                  - { name: "overview",         label: "종합 설명", widget: "text" }
+                  - name: "traits"
+                    label: "특징 목록"
+                    widget: "list"
+                    field: { label: "특징", name: "trait", widget: "string" }
+                  - name: "strengths"
+                    label: "강점 목록"
+                    widget: "list"
+                    field: { label: "강점", name: "strength", widget: "string" }
+                  - name: "weaknesses"
+                    label: "약점 목록"
+                    widget: "list"
+                    field: { label: "약점", name: "weakness", widget: "string" }
+                  - name: "careers"
+                    label: "추천 직업"
+                    widget: "list"
+                    field: { label: "직업", name: "career", widget: "string" }
+                  - name: "famous_people"
+                    label: "유명인"
+                    widget: "list"
+                    field: { label: "인물", name: "person", widget: "string" }
+                  - { name: "health_tip",       label: "건강 팁",   widget: "text" }
+                  - { name: "growth_tip",       label: "성장 조언", widget: "text" }
+                  - { name: "relationship_tip", label: "관계 팁",   widget: "text" }
+              - name: "INTP"
+                label: "INTP - 사색가"
+                widget: "object"
+                fields:
+                  - { name: "emoji",            label: "이모지",    widget: "string" }
+                  - { name: "title",            label: "유형 제목", widget: "string" }
+                  - { name: "tagline",          label: "태그라인",  widget: "string" }
+                  - { name: "overview",         label: "종합 설명", widget: "text" }
+                  - name: "traits"
+                    label: "특징 목록"
+                    widget: "list"
+                    field: { label: "특징", name: "trait", widget: "string" }
+                  - name: "strengths"
+                    label: "강점 목록"
+                    widget: "list"
+                    field: { label: "강점", name: "strength", widget: "string" }
+                  - name: "weaknesses"
+                    label: "약점 목록"
+                    widget: "list"
+                    field: { label: "약점", name: "weakness", widget: "string" }
+                  - name: "careers"
+                    label: "추천 직업"
+                    widget: "list"
+                    field: { label: "직업", name: "career", widget: "string" }
+                  - name: "famous_people"
+                    label: "유명인"
+                    widget: "list"
+                    field: { label: "인물", name: "person", widget: "string" }
+                  - { name: "health_tip",       label: "건강 팁",   widget: "text" }
+                  - { name: "growth_tip",       label: "성장 조언", widget: "text" }
+                  - { name: "relationship_tip", label: "관계 팁",   widget: "text" }
+              - name: "ESTP"
+                label: "ESTP - 사업가"
+                widget: "object"
+                fields:
+                  - { name: "emoji",            label: "이모지",    widget: "string" }
+                  - { name: "title",            label: "유형 제목", widget: "string" }
+                  - { name: "tagline",          label: "태그라인",  widget: "string" }
+                  - { name: "overview",         label: "종합 설명", widget: "text" }
+                  - name: "traits"
+                    label: "특징 목록"
+                    widget: "list"
+                    field: { label: "특징", name: "trait", widget: "string" }
+                  - name: "strengths"
+                    label: "강점 목록"
+                    widget: "list"
+                    field: { label: "강점", name: "strength", widget: "string" }
+                  - name: "weaknesses"
+                    label: "약점 목록"
+                    widget: "list"
+                    field: { label: "약점", name: "weakness", widget: "string" }
+                  - name: "careers"
+                    label: "추천 직업"
+                    widget: "list"
+                    field: { label: "직업", name: "career", widget: "string" }
+                  - name: "famous_people"
+                    label: "유명인"
+                    widget: "list"
+                    field: { label: "인물", name: "person", widget: "string" }
+                  - { name: "health_tip",       label: "건강 팁",   widget: "text" }
+                  - { name: "growth_tip",       label: "성장 조언", widget: "text" }
+                  - { name: "relationship_tip", label: "관계 팁",   widget: "text" }
+              - name: "ESFP"
+                label: "ESFP - 연예인"
+                widget: "object"
+                fields:
+                  - { name: "emoji",            label: "이모지",    widget: "string" }
+                  - { name: "title",            label: "유형 제목", widget: "string" }
+                  - { name: "tagline",          label: "태그라인",  widget: "string" }
+                  - { name: "overview",         label: "종합 설명", widget: "text" }
+                  - name: "traits"
+                    label: "특징 목록"
+                    widget: "list"
+                    field: { label: "특징", name: "trait", widget: "string" }
+                  - name: "strengths"
+                    label: "강점 목록"
+                    widget: "list"
+                    field: { label: "강점", name: "strength", widget: "string" }
+                  - name: "weaknesses"
+                    label: "약점 목록"
+                    widget: "list"
+                    field: { label: "약점", name: "weakness", widget: "string" }
+                  - name: "careers"
+                    label: "추천 직업"
+                    widget: "list"
+                    field: { label: "직업", name: "career", widget: "string" }
+                  - name: "famous_people"
+                    label: "유명인"
+                    widget: "list"
+                    field: { label: "인물", name: "person", widget: "string" }
+                  - { name: "health_tip",       label: "건강 팁",   widget: "text" }
+                  - { name: "growth_tip",       label: "성장 조언", widget: "text" }
+                  - { name: "relationship_tip", label: "관계 팁",   widget: "text" }
+              - name: "ENFP"
+                label: "ENFP - 활동가"
+                widget: "object"
+                fields:
+                  - { name: "emoji",            label: "이모지",    widget: "string" }
+                  - { name: "title",            label: "유형 제목", widget: "string" }
+                  - { name: "tagline",          label: "태그라인",  widget: "string" }
+                  - { name: "overview",         label: "종합 설명", widget: "text" }
+                  - name: "traits"
+                    label: "특징 목록"
+                    widget: "list"
+                    field: { label: "특징", name: "trait", widget: "string" }
+                  - name: "strengths"
+                    label: "강점 목록"
+                    widget: "list"
+                    field: { label: "강점", name: "strength", widget: "string" }
+                  - name: "weaknesses"
+                    label: "약점 목록"
+                    widget: "list"
+                    field: { label: "약점", name: "weakness", widget: "string" }
+                  - name: "careers"
+                    label: "추천 직업"
+                    widget: "list"
+                    field: { label: "직업", name: "career", widget: "string" }
+                  - name: "famous_people"
+                    label: "유명인"
+                    widget: "list"
+                    field: { label: "인물", name: "person", widget: "string" }
+                  - { name: "health_tip",       label: "건강 팁",   widget: "text" }
+                  - { name: "growth_tip",       label: "성장 조언", widget: "text" }
+                  - { name: "relationship_tip", label: "관계 팁",   widget: "text" }
+              - name: "ENTP"
+                label: "ENTP - 변론가"
+                widget: "object"
+                fields:
+                  - { name: "emoji",            label: "이모지",    widget: "string" }
+                  - { name: "title",            label: "유형 제목", widget: "string" }
+                  - { name: "tagline",          label: "태그라인",  widget: "string" }
+                  - { name: "overview",         label: "종합 설명", widget: "text" }
+                  - name: "traits"
+                    label: "특징 목록"
+                    widget: "list"
+                    field: { label: "특징", name: "trait", widget: "string" }
+                  - name: "strengths"
+                    label: "강점 목록"
+                    widget: "list"
+                    field: { label: "강점", name: "strength", widget: "string" }
+                  - name: "weaknesses"
+                    label: "약점 목록"
+                    widget: "list"
+                    field: { label: "약점", name: "weakness", widget: "string" }
+                  - name: "careers"
+                    label: "추천 직업"
+                    widget: "list"
+                    field: { label: "직업", name: "career", widget: "string" }
+                  - name: "famous_people"
+                    label: "유명인"
+                    widget: "list"
+                    field: { label: "인물", name: "person", widget: "string" }
+                  - { name: "health_tip",       label: "건강 팁",   widget: "text" }
+                  - { name: "growth_tip",       label: "성장 조언", widget: "text" }
+                  - { name: "relationship_tip", label: "관계 팁",   widget: "text" }
+              - name: "ESTJ"
+                label: "ESTJ - 관리자"
+                widget: "object"
+                fields:
+                  - { name: "emoji",            label: "이모지",    widget: "string" }
+                  - { name: "title",            label: "유형 제목", widget: "string" }
+                  - { name: "tagline",          label: "태그라인",  widget: "string" }
+                  - { name: "overview",         label: "종합 설명", widget: "text" }
+                  - name: "traits"
+                    label: "특징 목록"
+                    widget: "list"
+                    field: { label: "특징", name: "trait", widget: "string" }
+                  - name: "strengths"
+                    label: "강점 목록"
+                    widget: "list"
+                    field: { label: "강점", name: "strength", widget: "string" }
+                  - name: "weaknesses"
+                    label: "약점 목록"
+                    widget: "list"
+                    field: { label: "약점", name: "weakness", widget: "string" }
+                  - name: "careers"
+                    label: "추천 직업"
+                    widget: "list"
+                    field: { label: "직업", name: "career", widget: "string" }
+                  - name: "famous_people"
+                    label: "유명인"
+                    widget: "list"
+                    field: { label: "인물", name: "person", widget: "string" }
+                  - { name: "health_tip",       label: "건강 팁",   widget: "text" }
+                  - { name: "growth_tip",       label: "성장 조언", widget: "text" }
+                  - { name: "relationship_tip", label: "관계 팁",   widget: "text" }
+              - name: "ESFJ"
+                label: "ESFJ - 외교관"
+                widget: "object"
+                fields:
+                  - { name: "emoji",            label: "이모지",    widget: "string" }
+                  - { name: "title",            label: "유형 제목", widget: "string" }
+                  - { name: "tagline",          label: "태그라인",  widget: "string" }
+                  - { name: "overview",         label: "종합 설명", widget: "text" }
+                  - name: "traits"
+                    label: "특징 목록"
+                    widget: "list"
+                    field: { label: "특징", name: "trait", widget: "string" }
+                  - name: "strengths"
+                    label: "강점 목록"
+                    widget: "list"
+                    field: { label: "강점", name: "strength", widget: "string" }
+                  - name: "weaknesses"
+                    label: "약점 목록"
+                    widget: "list"
+                    field: { label: "약점", name: "weakness", widget: "string" }
+                  - name: "careers"
+                    label: "추천 직업"
+                    widget: "list"
+                    field: { label: "직업", name: "career", widget: "string" }
+                  - name: "famous_people"
+                    label: "유명인"
+                    widget: "list"
+                    field: { label: "인물", name: "person", widget: "string" }
+                  - { name: "health_tip",       label: "건강 팁",   widget: "text" }
+                  - { name: "growth_tip",       label: "성장 조언", widget: "text" }
+                  - { name: "relationship_tip", label: "관계 팁",   widget: "text" }
+              - name: "ENFJ"
+                label: "ENFJ - 운동가"
+                widget: "object"
+                fields:
+                  - { name: "emoji",            label: "이모지",    widget: "string" }
+                  - { name: "title",            label: "유형 제목", widget: "string" }
+                  - { name: "tagline",          label: "태그라인",  widget: "string" }
+                  - { name: "overview",         label: "종합 설명", widget: "text" }
+                  - name: "traits"
+                    label: "특징 목록"
+                    widget: "list"
+                    field: { label: "특징", name: "trait", widget: "string" }
+                  - name: "strengths"
+                    label: "강점 목록"
+                    widget: "list"
+                    field: { label: "강점", name: "strength", widget: "string" }
+                  - name: "weaknesses"
+                    label: "약점 목록"
+                    widget: "list"
+                    field: { label: "약점", name: "weakness", widget: "string" }
+                  - name: "careers"
+                    label: "추천 직업"
+                    widget: "list"
+                    field: { label: "직업", name: "career", widget: "string" }
+                  - name: "famous_people"
+                    label: "유명인"
+                    widget: "list"
+                    field: { label: "인물", name: "person", widget: "string" }
+                  - { name: "health_tip",       label: "건강 팁",   widget: "text" }
+                  - { name: "growth_tip",       label: "성장 조언", widget: "text" }
+                  - { name: "relationship_tip", label: "관계 팁",   widget: "text" }
+              - name: "ENTJ"
+                label: "ENTJ - 통솔자"
+                widget: "object"
+                fields:
+                  - { name: "emoji",            label: "이모지",    widget: "string" }
+                  - { name: "title",            label: "유형 제목", widget: "string" }
+                  - { name: "tagline",          label: "태그라인",  widget: "string" }
+                  - { name: "overview",         label: "종합 설명", widget: "text" }
+                  - name: "traits"
+                    label: "특징 목록"
+                    widget: "list"
+                    field: { label: "특징", name: "trait", widget: "string" }
+                  - name: "strengths"
+                    label: "강점 목록"
+                    widget: "list"
+                    field: { label: "강점", name: "strength", widget: "string" }
+                  - name: "weaknesses"
+                    label: "약점 목록"
+                    widget: "list"
+                    field: { label: "약점", name: "weakness", widget: "string" }
+                  - name: "careers"
+                    label: "추천 직업"
+                    widget: "list"
+                    field: { label: "직업", name: "career", widget: "string" }
+                  - name: "famous_people"
+                    label: "유명인"
+                    widget: "list"
+                    field: { label: "인물", name: "person", widget: "string" }
+                  - { name: "health_tip",       label: "건강 팁",   widget: "text" }
+                  - { name: "growth_tip",       label: "성장 조언", widget: "text" }
+                  - { name: "relationship_tip", label: "관계 팁",   widget: "text" }
 
   # ④ 오늘의 운세
   - name: "fortune"
-    label: "🔮 오늘의 운세"
+    label: "오늘의 운세"
     files:
       - name: "fortune_data"
         label: "타로 카드 & 사주"
@@ -232,13 +681,10 @@ collections:
                 label: "카드 목록 (22장)"
                 widget: "list"
                 fields:
-                  - { name: "id",       label: "카드 번호", widget: "number" }
-                  - { name: "name",     label: "카드 이름", widget: "string" }
-                  - name: "image"
-                    label: "카드 이미지 URL"
-                    widget: "string"
-                    hint: "Wikimedia Commons 이미지 URL"
-                  - { name: "meaning",  label: "카드 해석", widget: "text" }
+                  - { name: "id",       label: "카드 번호",    widget: "number" }
+                  - { name: "name",     label: "카드 이름",    widget: "string" }
+                  - { name: "image",    label: "카드 이미지 URL", widget: "string" }
+                  - { name: "meaning",  label: "카드 해석",    widget: "text" }
                   - { name: "keywords", label: "키워드 (·로 구분)", widget: "string" }
           - name: "saju"
             label: "사주 설정"
@@ -254,7 +700,7 @@ collections:
 
   # ⑤ 심리 분석 테스트
   - name: "psychology"
-    label: "🧘 심리 분석"
+    label: "심리 분석"
     files:
       - name: "tests"
         label: "심리 테스트 목록"
@@ -280,13 +726,14 @@ collections:
                       - { name: "text",  label: "선택지 텍스트", widget: "string" }
                       - { name: "score", label: "점수",          widget: "number" }
               - name: "results"
-                label: "점수 구간별 결과"
-                widget: "object"
-                hint: "키: '최솟값-최댓값' 형식 (예: 0-4), 값: 결과 텍스트"
+                label: "점수 구간별 결과 (JSON)"
+                widget: "code"
+                default_language: json
+                hint: "예: {\"0-4\": \"설명...\", \"5-8\": \"설명...\"}"
 
   # ⑥ 미디어 (이미지)
   - name: "media"
-    label: "🖼️ 운동 이미지 관리"
+    label: "운동 이미지 관리"
     folder: "e1"
     create: true
     label_singular: "이미지"
@@ -298,7 +745,7 @@ collections:
 
   # ⑦ 영양소 & 의약품
   - name: "data"
-    label: "💊 AI 영양 데이터"
+    label: "AI 영양 데이터"
     files:
       - name: "nutrients"
         label: "영양소 데이터"
@@ -309,14 +756,14 @@ collections:
             label: "영양소 목록"
             widget: "list"
             fields:
-              - { name: "id",          label: "ID",      widget: "string" }
-              - { name: "name",        label: "이름",    widget: "string" }
-              - { name: "category",    label: "카테고리", widget: "string" }
-              - { name: "efficacy",    label: "효능",    widget: "text" }
-              - { name: "description", label: "상세 설명", widget: "text" }
+              - { name: "id",          label: "ID",          widget: "string" }
+              - { name: "name",        label: "이름",        widget: "string" }
+              - { name: "category",    label: "카테고리",    widget: "string" }
+              - { name: "efficacy",    label: "효능",        widget: "text" }
+              - { name: "description", label: "상세 설명",   widget: "text" }
               - { name: "dri",         label: "권장 섭취량", widget: "string" }
-              - { name: "food",        label: "함유 식품", widget: "string" }
-              - { name: "caution",     label: "주의 사항", widget: "text" }
+              - { name: "food",        label: "함유 식품",   widget: "string" }
+              - { name: "caution",     label: "주의 사항",   widget: "text" }
       - name: "drugs"
         label: "의약품 데이터"
         file: "drugs.json"
@@ -326,13 +773,13 @@ collections:
             label: "의약품 목록"
             widget: "list"
             fields:
-              - { name: "id",            label: "ID",      widget: "number" }
-              - { name: "name",          label: "이름",    widget: "string" }
-              - { name: "manufacturer",  label: "제조사",  widget: "string" }
-              - { name: "category",      label: "분류",    widget: "string" }
-              - { name: "ingredients",   label: "성분",    widget: "text" }
-              - { name: "efficacy",      label: "효능",    widget: "text" }
-              - { name: "usage",         label: "용법/용량", widget: "text" }
-              - { name: "insuranceCode", label: "보험코드", widget: "string", required: false }
-              - { name: "storage",       label: "보관 방법", widget: "string", required: false }
-              - { name: "description",   label: "상세 설명", widget: "text", required: false }
+              - { name: "id",            label: "ID",          widget: "number" }
+              - { name: "name",          label: "이름",        widget: "string" }
+              - { name: "manufacturer",  label: "제조사",      widget: "string" }
+              - { name: "category",      label: "분류",        widget: "string" }
+              - { name: "ingredients",   label: "성분",        widget: "text" }
+              - { name: "efficacy",      label: "효능",        widget: "text" }
+              - { name: "usage",         label: "용법/용량",   widget: "text" }
+              - { name: "insuranceCode", label: "보험코드",    widget: "string", required: false }
+              - { name: "storage",       label: "보관 방법",   widget: "string", required: false }
+              - { name: "description",   label: "상세 설명",   widget: "text",   required: false }
