@@ -726,10 +726,11 @@ collections:
                       - { name: "text",  label: "선택지 텍스트", widget: "string" }
                       - { name: "score", label: "점수",          widget: "number" }
               - name: "results"
-                label: "점수 구간별 결과 (JSON)"
-                widget: "code"
-                default_language: json
-                hint: "예: {\"0-4\": \"설명...\", \"5-8\": \"설명...\"}"
+                label: "점수 구간별 결과"
+                widget: "list"
+                fields:
+                  - { name: "range", label: "점수 범위 (예: 0-4)", widget: "string" }
+                  - { name: "text",  label: "결과 설명",           widget: "text" }
 
   # ⑥ 미디어 (이미지)
   - name: "media"

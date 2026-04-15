@@ -52,20 +52,40 @@
       display: none;
       background: #1e293b;
       border: 1px solid #ef4444;
-      border-radius: 12px;
-      padding: 20px 28px;
-      max-width: 480px;
-      text-align: center;
+      border-radius: 14px;
+      padding: 24px 32px;
+      max-width: 520px;
+      width: 100%;
     }
-    #error-box h3 { color: #ef4444; margin-bottom: 8px; font-size: 1rem; }
-    #error-box p  { color: #94a3b8; font-size: 0.85rem; line-height: 1.6; }
+    #error-box h3 { color: #ef4444; margin-bottom: 12px; font-size: 1rem; display: flex; align-items: center; gap: 8px; }
+    #error-box .err-list { color: #94a3b8; font-size: 0.82rem; line-height: 2; list-style: none; }
+    #error-box .err-list li::before { content: "• "; color: #6366f1; }
+    #error-box .reload-btn {
+      margin-top: 16px;
+      display: block;
+      width: 100%;
+      padding: 10px;
+      background: #6366f1;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      font-size: 0.9rem;
+      cursor: pointer;
+    }
+    #error-detail {
+      margin-top: 10px;
+      font-size: 0.75rem;
+      color: #475569;
+      word-break: break-all;
+      max-height: 80px;
+      overflow-y: auto;
+    }
     .loading-features {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
       gap: 12px;
       max-width: 640px;
       width: 100%;
-      margin-top: 8px;
     }
     .feature-chip {
       background: #1e293b;
@@ -86,13 +106,21 @@
   <div id="cms-loading">
     <div class="loading-logo">VitalRest</div>
     <div class="loading-title">관리자 센터 초기화 중...</div>
-    <div class="loading-spinner"></div>
-    <div class="loading-text" id="loading-status">GitHub 인증을 준비하고 있습니다.</div>
+    <div class="loading-spinner" id="spinner"></div>
+    <div class="loading-text" id="loading-status">Sveltia CMS 로딩 중...</div>
+
     <div id="error-box">
-      <h3>CMS 로드 실패</h3>
-      <p>설정 파일 오류 또는 네트워크 문제일 수 있습니다.<br>페이지를 새로고침하거나 브라우저 콘솔(F12)에서 오류를 확인하세요.</p>
+      <h3>⚠️ CMS 로드 실패</h3>
+      <ul class="err-list">
+        <li id="err-script">CMS 스크립트 로드 중 오류 발생</li>
+        <li>브라우저 F12 → Console 탭에서 상세 오류 확인 가능</li>
+        <li>네트워크 연결 또는 광고 차단기를 확인해 주세요</li>
+      </ul>
+      <div id="error-detail"></div>
+      <button class="reload-btn" onclick="location.reload()">페이지 새로고침</button>
     </div>
-    <div class="loading-features">
+
+    <div class="loading-features" id="feature-list">
       <div class="feature-chip"><span>⚙️</span> 사이트 설정</div>
       <div class="feature-chip"><span>💪</span> 운동 가이드</div>
       <div class="feature-chip"><span>🧠</span> MBTI 테스트</div>
@@ -105,33 +133,51 @@
 
   <noscript>자바스크립트를 활성화해야 관리자 페이지를 이용할 수 있습니다.</noscript>
 
-  <script src="https://unpkg.com/sveltia-cms@latest/dist/sveltia-cms.js" type="module"></script>
   <script>
-    // Hide loading screen once CMS mounts
-    document.addEventListener('DOMContentLoaded', () => {
-      const observer = new MutationObserver(() => {
-        const cmsRoot = document.querySelector('sveltia-cms, [data-sveltia-cms], #nc-root, .nc-app-container');
-        if (cmsRoot) {
-          const loader = document.getElementById('cms-loading');
-          if (loader) loader.style.display = 'none';
-          observer.disconnect();
-        }
-      });
-      observer.observe(document.body, { childList: true, subtree: true });
+    function showError(detail) {
+      document.getElementById('spinner').style.display = 'none';
+      document.getElementById('loading-status').style.display = 'none';
+      document.getElementById('feature-list').style.display = 'none';
+      const errBox = document.getElementById('error-box');
+      errBox.style.display = 'block';
+      if (detail) {
+        document.getElementById('error-detail').textContent = detail;
+      }
+      console.error('[VitalRest Admin] CMS load error:', detail);
+    }
 
-      // Fallback: if CMS hasn't mounted after 12s, show error
-      setTimeout(() => {
-        const cmsRoot = document.querySelector('sveltia-cms, [data-sveltia-cms], #nc-root, .nc-app-container');
-        if (!cmsRoot) {
-          const status = document.getElementById('loading-status');
-          const spinner = document.querySelector('.loading-spinner');
-          const errBox = document.getElementById('error-box');
-          if (status) status.style.display = 'none';
-          if (spinner) spinner.style.display = 'none';
-          if (errBox) errBox.style.display = 'block';
-        }
-      }, 12000);
-    });
+    // 1. Verify config.yml is accessible before loading CMS
+    fetch('./config.yml')
+      .then(r => {
+        if (!r.ok) throw new Error('config.yml HTTP ' + r.status);
+        document.getElementById('loading-status').textContent = 'config.yml 확인 완료 — CMS 로딩 중...';
+        return r.text();
+      })
+      .then(() => {
+        // 2. Dynamically load Sveltia CMS after config is confirmed reachable
+        const script = document.createElement('script');
+        script.type = 'module';
+        script.src = 'https://unpkg.com/sveltia-cms@0.45.0/dist/sveltia-cms.js';
+        script.onerror = (e) => showError('unpkg CDN 로드 실패 — 네트워크 연결을 확인하세요.');
+        document.head.appendChild(script);
+
+        // 3. Watch for CMS mounting
+        const observer = new MutationObserver(() => {
+          const root = document.querySelector('sveltia-cms, #nc-root, .nc-app-container, [data-sveltia-cms]');
+          if (root) {
+            document.getElementById('cms-loading').style.display = 'none';
+            observer.disconnect();
+          }
+        });
+        observer.observe(document.body, { childList: true, subtree: true });
+
+        // 4. Timeout fallback — if CMS hasn't appeared after 15s
+        setTimeout(() => {
+          const root = document.querySelector('sveltia-cms, #nc-root, .nc-app-container, [data-sveltia-cms]');
+          if (!root) showError('15초 후에도 CMS가 마운트되지 않았습니다.');
+        }, 15000);
+      })
+      .catch(err => showError('config.yml 접근 실패: ' + err.message));
   </script>
 
 </body>
