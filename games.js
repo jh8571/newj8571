@@ -267,47 +267,121 @@ document.addEventListener('DOMContentLoaded', () => {
     // 6. Snake
     function startSnake() {
         title.innerText = "스네이크";
-        container.innerHTML = `<canvas id="snake" width="300" height="300"></canvas>`;
+        container.innerHTML = `
+            <div style="text-align:center;">
+                <div style="margin-bottom:10px; font-size:0.85rem; color:var(--text-muted);">점수: <span id="snake-score">0</span></div>
+                <canvas id="snake" width="300" height="300" style="border-radius:10px;"></canvas>
+                <div style="margin-top:12px; display:grid; grid-template-columns:1fr 1fr 1fr; gap:6px; max-width:150px; margin-left:auto; margin-right:auto;">
+                    <div></div>
+                    <button id="s-up" class="calc-btn" style="padding:10px;">↑</button>
+                    <div></div>
+                    <button id="s-left" class="calc-btn" style="padding:10px;">←</button>
+                    <div></div>
+                    <button id="s-right" class="calc-btn" style="padding:10px;">→</button>
+                    <div></div>
+                    <button id="s-down" class="calc-btn" style="padding:10px;">↓</button>
+                    <div></div>
+                </div>
+                <p style="font-size:0.75rem; color:var(--text-muted); margin-top:8px;">키보드 화살표 또는 버튼으로 조작</p>
+            </div>
+        `;
         const canvas = document.getElementById('snake');
         const ctx = canvas.getContext('2d');
-        let snake = [{x:10, y:10}]; let food = {x:15, y:15}; let dx = 1; let dy = 0;
-        document.onkeydown = e => {
-            if(e.keyCode===37 && dx===0) {dx=-1; dy=0;}
-            if(e.keyCode===38 && dy===0) {dx=0; dy=-1;}
-            if(e.keyCode===39 && dx===0) {dx=1; dy=0;}
-            if(e.keyCode===40 && dy===0) {dx=0; dy=1;}
+        let snake = [{x:10, y:10}]; let food = {x:15, y:15}; let dx = 1; let dy = 0; let snakeScore = 0;
+        const move = (ndx, ndy) => {
+            if(ndx !== 0 && dx === 0) { dx=ndx; dy=0; }
+            if(ndy !== 0 && dy === 0) { dx=0; dy=ndy; }
         };
+        document.onkeydown = e => {
+            if(e.keyCode===37) move(-1,0);
+            if(e.keyCode===38) move(0,-1);
+            if(e.keyCode===39) move(1,0);
+            if(e.keyCode===40) move(0,1);
+        };
+        document.getElementById('s-up').onclick = () => move(0,-1);
+        document.getElementById('s-down').onclick = () => move(0,1);
+        document.getElementById('s-left').onclick = () => move(-1,0);
+        document.getElementById('s-right').onclick = () => move(1,0);
         gameInterval = setInterval(() => {
             const head = {x: snake[0].x + dx, y: snake[0].y + dy};
-            if(head.x<0 || head.x>=20 || head.y<0 || head.y>=20) { clearInterval(gameInterval); alert('Game Over'); closeGame(); return; }
+            if(head.x<0 || head.x>=20 || head.y<0 || head.y>=20 || snake.some(s=>s.x===head.x&&s.y===head.y)) {
+                clearInterval(gameInterval);
+                ctx.fillStyle='rgba(0,0,0,0.6)'; ctx.fillRect(0,0,300,300);
+                ctx.fillStyle='white'; ctx.font='bold 24px sans-serif'; ctx.textAlign='center';
+                ctx.fillText('Game Over', 150, 140);
+                ctx.font='16px sans-serif';
+                ctx.fillText('점수: ' + snakeScore, 150, 170);
+                return;
+            }
             snake.unshift(head);
-            if(head.x === food.x && head.y === food.y) { food = {x: Math.floor(Math.random()*20), y: Math.floor(Math.random()*20)}; }
-            else snake.pop();
-            ctx.fillStyle='black'; ctx.fillRect(0,0,300,300);
-            ctx.fillStyle='lime'; snake.forEach(s => ctx.fillRect(s.x*15, s.y*15, 14, 14));
-            ctx.fillStyle='red'; ctx.fillRect(food.x*15, food.y*15, 14, 14);
-        }, 100);
+            if(head.x === food.x && head.y === food.y) {
+                snakeScore++;
+                document.getElementById('snake-score').innerText = snakeScore;
+                food = {x: Math.floor(Math.random()*20), y: Math.floor(Math.random()*20)};
+            } else snake.pop();
+            ctx.fillStyle='#111'; ctx.fillRect(0,0,300,300);
+            ctx.fillStyle='#4ade80'; snake.forEach((s,i) => { ctx.fillStyle = i===0 ? '#22c55e' : '#4ade80'; ctx.fillRect(s.x*15, s.y*15, 13, 13); });
+            ctx.fillStyle='#f87171'; ctx.beginPath(); ctx.arc(food.x*15+7, food.y*15+7, 6, 0, Math.PI*2); ctx.fill();
+        }, 120);
     }
 
     // 7. Memory
     function startMemory() {
-        title.innerText = "기억력 테스트";
-        container.innerHTML = `<div style="display:grid; grid-template-columns:repeat(4,1fr); gap:10px;" id="m"></div>`;
-        const m = document.getElementById('m');
-        let cards = [...'AABBCCDD'].sort(() => Math.random()-0.5);
-        let first = null;
-        cards.forEach((val, i) => {
-            const c = document.createElement('div');
-            c.style = "height:80px; background:#ddd; display:flex; align-items:center; justify-content:center; font-size:2rem; cursor:pointer;";
-            c.onclick = () => {
-                c.innerText = val; c.style.background = 'white';
-                if(!first) first = {val, el:c};
-                else {
-                    if(first.val === val) { first = null; if([...m.children].every(x=>x.innerText)) alert('성공!'); }
-                    else { setTimeout(() => { c.innerText = ''; c.style.background = '#ddd'; first.el.innerText = ''; first.el.style.background = '#ddd'; first = null; }, 500); }
+        title.innerText = "기억력 카드";
+        const emojis = '🍎🍊🍋🍇🍓🍒🥝🍑';
+        const pairs = (emojis + emojis).split('').sort(() => Math.random() - 0.5);
+        let tries = 0, matched = 0, first = null, locked = false;
+        const startTime = Date.now();
+
+        container.innerHTML = `
+            <div style="text-align:center; width:100%;">
+                <div style="display:flex; justify-content:center; gap:30px; margin-bottom:15px; font-size:0.9rem; color:var(--text-muted);">
+                    <span>시도: <strong id="mem-tries">0</strong></span>
+                    <span>맞춤: <strong id="mem-matched">0</strong>/8</span>
+                </div>
+                <div style="display:grid; grid-template-columns:repeat(4,1fr); gap:10px; max-width:320px; margin:0 auto;" id="mem-grid"></div>
+            </div>
+        `;
+        const grid = document.getElementById('mem-grid');
+        pairs.forEach((emoji, i) => {
+            const card = document.createElement('div');
+            card.style.cssText = 'height:70px; background:var(--card-bg); border:2px solid var(--border-color); border-radius:12px; display:flex; align-items:center; justify-content:center; font-size:1.8rem; cursor:pointer; transition:0.2s; user-select:none;';
+            card.dataset.val = emoji;
+            card.dataset.flipped = 'false';
+            card.innerHTML = '<span style="font-size:1.4rem;">❓</span>';
+            card.onclick = () => {
+                if (locked || card.dataset.flipped === 'true') return;
+                card.innerHTML = emoji;
+                card.style.background = 'var(--accent-color)22';
+                card.dataset.flipped = 'true';
+                if (!first) { first = card; return; }
+                locked = true; tries++;
+                document.getElementById('mem-tries').innerText = tries;
+                if (first.dataset.val === card.dataset.val) {
+                    first.style.background = '#10b98122';
+                    card.style.background = '#10b98122';
+                    first.style.borderColor = '#10b981';
+                    card.style.borderColor = '#10b981';
+                    matched++;
+                    document.getElementById('mem-matched').innerText = matched;
+                    first = null; locked = false;
+                    if (matched === 8) {
+                        const elapsed = ((Date.now() - startTime) / 1000).toFixed(1);
+                        setTimeout(() => alert(`🎉 완성! ${tries}번 시도 · ${elapsed}초`), 300);
+                    }
+                } else {
+                    setTimeout(() => {
+                        first.innerHTML = '<span style="font-size:1.4rem;">❓</span>';
+                        card.innerHTML = '<span style="font-size:1.4rem;">❓</span>';
+                        first.style.background = 'var(--card-bg)';
+                        card.style.background = 'var(--card-bg)';
+                        first.dataset.flipped = 'false';
+                        card.dataset.flipped = 'false';
+                        first = null; locked = false;
+                    }, 700);
                 }
             };
-            m.appendChild(c);
+            grid.appendChild(card);
         });
     }
 
