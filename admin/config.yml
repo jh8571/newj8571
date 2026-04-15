@@ -7,124 +7,332 @@ backend:
 
 site_url: https://newj8571.pages.dev
 display_url: https://newj8571.pages.dev
+logo_url: https://newj8571.pages.dev/favicon.svg
 
 media_folder: "e1"
-public_folder: "e1"
+public_folder: "/e1"
 
+locale: ko
+
+# ────────────────────────────────────────────────────────────────
 collections:
-  - name: "data"
-    label: "데이터 관리"
+
+  # ① 사이트 설정
+  - name: "settings"
+    label: "⚙️ 사이트 설정"
     files:
-      - name: "nutrients"
-        label: "영양소 데이터"
-        file: "nutrients.json"
+      - name: "site_config"
+        label: "내비게이션 & 기본 정보"
+        file: "site_config.json"
         format: json
         fields:
-          - label: "영양소 목록"
-            name: "nutrients"
+          - name: "site"
+            label: "사이트 기본 정보"
+            widget: "object"
+            fields:
+              - { name: "title",        label: "사이트 제목",    widget: "string" }
+              - { name: "logo_text",    label: "로고 텍스트",    widget: "string" }
+              - { name: "tagline",      label: "슬로건 (한국어)", widget: "string" }
+              - { name: "description",  label: "사이트 설명",    widget: "text" }
+              - name: "accent_color"
+                label: "포인트 컬러"
+                widget: "select"
+                options:
+                  - { label: "인디고 (기본)", value: "#6366f1" }
+                  - { label: "보라", value: "#8b5cf6" }
+                  - { label: "핑크", value: "#ec4899" }
+                  - { label: "에메랄드", value: "#10b981" }
+                  - { label: "스카이블루", value: "#0ea5e9" }
+                  - { label: "오렌지", value: "#f59e0b" }
+                  - { label: "로즈", value: "#f43f5e" }
+                default: "#6366f1"
+          - name: "nav"
+            label: "내비게이션 메뉴"
             widget: "list"
             fields:
-              - { label: "ID", name: "id", widget: "string" }
-              - { label: "이름", name: "name", widget: "string" }
-              - { label: "카테고리", name: "category", widget: "string" }
-              - { label: "효능", name: "efficacy", widget: "text" }
-              - { label: "상세 설명", name: "description", widget: "text" }
-              - { label: "권장 섭취량", name: "dri", widget: "string" }
-              - { label: "함유 식품", name: "food", widget: "string" }
-              - { label: "주의 사항", name: "caution", widget: "text" }
-
-      - name: "drugs"
-        label: "의약품 데이터"
-        file: "drugs.json"
-        format: json
-        fields:
-          - label: "의약품 목록"
-            name: "drugs"
-            widget: "list"
+              - { name: "id",       label: "메뉴 ID",       widget: "string" }
+              - { name: "label_ko", label: "메뉴명 (한국어)", widget: "string" }
+              - { name: "label_en", label: "메뉴명 (영어)",  widget: "string" }
+              - { name: "href",     label: "링크 (파일명)",  widget: "string" }
+              - name: "enabled"
+                label: "표시 여부"
+                widget: "boolean"
+                default: true
+          - name: "footer"
+            label: "푸터 설정"
+            widget: "object"
             fields:
-              - { label: "ID", name: "id", widget: "number" }
-              - { label: "이름", name: "name", widget: "string" }
-              - { label: "제조사", name: "manufacturer", widget: "string" }
-              - { label: "분류", name: "category", widget: "string" }
-              - { label: "성분", name: "ingredients", widget: "text" }
-              - { label: "효능", name: "efficacy", widget: "text" }
-              - { label: "용법/용량", name: "usage", widget: "text" }
-              - { label: "보험코드", name: "insuranceCode", widget: "string", required: false }
-              - { label: "보관 방법", name: "storage", widget: "string", required: false }
-              - { label: "상세 설명", name: "description", widget: "text", required: false }
+              - { name: "copyright",    label: "저작권 (한국어)", widget: "string" }
+              - { name: "copyright_en", label: "저작권 (영어)",   widget: "string" }
 
-      - name: "exercises"
-        label: "운동 가이드"
+  # ② 운동 가이드
+  - name: "exercise"
+    label: "💪 운동 가이드"
+    files:
+      - name: "exercise_data"
+        label: "운동 목록 & 프로그램"
         file: "exercise_data.json"
         format: json
         fields:
-          - label: "운동 목록"
-            name: "exercises"
+          - name: "exercises"
+            label: "운동 목록"
             widget: "list"
             fields:
-              - { label: "ID", name: "id", widget: "string" }
-              - { label: "이름", name: "name", widget: "string" }
-              - { label: "카테고리", name: "category", widget: "string" }
-              - { label: "타겟 부위", name: "target", widget: "string" }
-              - { label: "난이도", name: "difficulty", widget: "string" }
-              - { label: "운동 단계", name: "steps", widget: "list", field: { label: "단계", name: "step", widget: "string" } }
-              - { label: "자세 팁", name: "posture_tips", widget: "string" }
-              - { label: "이미지 경로", name: "image", widget: "image" }
-          - label: "운동 프로그램"
-            name: "programs"
+              - { name: "id",           label: "ID",         widget: "string" }
+              - { name: "name",         label: "운동명",      widget: "string" }
+              - { name: "category",     label: "카테고리",    widget: "string" }
+              - { name: "target",       label: "타겟 부위",   widget: "string" }
+              - name: "difficulty"
+                label: "난이도"
+                widget: "select"
+                options: ["초급", "중급", "고급"]
+              - name: "steps"
+                label: "수행 단계"
+                widget: "list"
+                field: { label: "단계 설명", name: "step", widget: "string" }
+              - { name: "posture_tips", label: "자세 포인트", widget: "text" }
+              - name: "image"
+                label: "이미지"
+                widget: "string"
+                hint: "웹 이미지 URL (https://...) 또는 로컬 경로 (e1/파일명.png)"
+          - name: "programs"
+            label: "운동 프로그램"
             widget: "list"
             fields:
-              - { label: "ID", name: "id", widget: "string" }
-              - { label: "제목", name: "title", widget: "string" }
-              - { label: "설명", name: "desc", widget: "text" }
-              - label: "운동 ID 목록"
-                name: "exerciseIds"
+              - { name: "id",    label: "프로그램 ID", widget: "string" }
+              - { name: "title", label: "프로그램명",   widget: "string" }
+              - { name: "desc",  label: "프로그램 설명", widget: "text" }
+              - name: "exerciseIds"
+                label: "포함 운동 ID 목록"
                 widget: "list"
                 field: { label: "운동 ID", name: "exerciseId", widget: "string" }
-              - { label: "식단 팁", name: "diet_tip", widget: "text" }
-          - label: "BMI 가이드"
-            name: "bmi_guide"
+              - { name: "diet_tip", label: "식단 팁", widget: "text" }
+          - name: "bmi_guide"
+            label: "BMI 가이드"
             widget: "object"
             fields:
               - name: "underweight"
                 label: "저체중"
                 widget: "object"
                 fields:
-                  - { label: "라벨", name: "label", widget: "string" }
-                  - { label: "설명", name: "desc", widget: "text" }
-                  - { label: "프로그램 ID", name: "programId", widget: "string" }
+                  - { name: "label", label: "라벨", widget: "string" }
+                  - { name: "desc",  label: "설명", widget: "text" }
+                  - { name: "programId", label: "연결 프로그램 ID", widget: "string" }
               - name: "normal"
                 label: "정상"
                 widget: "object"
                 fields:
-                  - { label: "라벨", name: "label", widget: "string" }
-                  - { label: "설명", name: "desc", widget: "text" }
-                  - { label: "프로그램 ID", name: "programId", widget: "string" }
+                  - { name: "label", label: "라벨", widget: "string" }
+                  - { name: "desc",  label: "설명", widget: "text" }
+                  - { name: "programId", label: "연결 프로그램 ID", widget: "string" }
               - name: "overweight"
                 label: "과체중"
                 widget: "object"
                 fields:
-                  - { label: "라벨", name: "label", widget: "string" }
-                  - { label: "설명", name: "desc", widget: "text" }
-                  - { label: "프로그램 ID", name: "programId", widget: "string" }
+                  - { name: "label", label: "라벨", widget: "string" }
+                  - { name: "desc",  label: "설명", widget: "text" }
+                  - { name: "programId", label: "연결 프로그램 ID", widget: "string" }
               - name: "obesity"
                 label: "비만"
                 widget: "object"
                 fields:
-                  - { label: "라벨", name: "label", widget: "string" }
-                  - { label: "설명", name: "desc", widget: "text" }
-                  - { label: "프로그램 ID", name: "programId", widget: "string" }
+                  - { name: "label", label: "라벨", widget: "string" }
+                  - { name: "desc",  label: "설명", widget: "text" }
+                  - { name: "programId", label: "연결 프로그램 ID", widget: "string" }
 
-      - name: "mbti"
-        label: "MBTI 질문"
+  # ③ MBTI
+  - name: "mbti"
+    label: "🧠 MBTI 테스트"
+    files:
+      - name: "mbti_questions"
+        label: "MBTI 질문 (60문항)"
         file: "mbti_data.json"
         format: json
         fields:
-          - label: "질문 목록"
-            name: "questions"
+          - name: "questions"
+            label: "질문 목록"
             widget: "list"
             fields:
-              - { label: "ID", name: "id", widget: "number" }
-              - { label: "질문 내용", name: "q", widget: "string" }
-              - { label: "유형(EI/SN/TF/PJ)", name: "type", widget: "string" }
-              - { label: "가중치", name: "weight", widget: "number" }
+              - { name: "id",   label: "번호",   widget: "number" }
+              - { name: "q",    label: "질문 내용", widget: "string" }
+              - name: "type"
+                label: "차원"
+                widget: "select"
+                options: ["EI", "SN", "TF", "JP"]
+              - name: "pole"
+                label: "높은 점수가 가리키는 방향"
+                widget: "select"
+                options: ["E", "I", "S", "N", "T", "F", "J", "P"]
+          - name: "types"
+            label: "16가지 유형 데이터"
+            widget: "object"
+            fields:
+              - &type_fields
+                name: "ISTJ"
+                label: "ISTJ - 논리주의자"
+                widget: "object"
+                fields: &mbti_type_body
+                  - { name: "emoji",    label: "이모지",    widget: "string" }
+                  - { name: "title",    label: "유형 제목", widget: "string" }
+                  - { name: "tagline",  label: "태그라인",  widget: "string" }
+                  - { name: "overview", label: "종합 설명", widget: "text" }
+                  - name: "traits"
+                    label: "특징 목록"
+                    widget: "list"
+                    field: { label: "특징", name: "trait", widget: "string" }
+                  - name: "strengths"
+                    label: "강점 목록"
+                    widget: "list"
+                    field: { label: "강점", name: "strength", widget: "string" }
+                  - name: "weaknesses"
+                    label: "약점 목록"
+                    widget: "list"
+                    field: { label: "약점", name: "weakness", widget: "string" }
+                  - name: "careers"
+                    label: "추천 직업"
+                    widget: "list"
+                    field: { label: "직업", name: "career", widget: "string" }
+                  - name: "famous_people"
+                    label: "같은 유형 유명인"
+                    widget: "list"
+                    field: { label: "인물", name: "person", widget: "string" }
+                  - { name: "health_tip",      label: "건강 & 웰니스 팁",    widget: "text" }
+                  - { name: "growth_tip",      label: "성장 조언",           widget: "text" }
+                  - { name: "relationship_tip",label: "관계 & 커뮤니케이션 팁", widget: "text" }
+              - { <<: *type_fields, name: "ISFJ", label: "ISFJ - 수호자" }
+              - { <<: *type_fields, name: "INFJ", label: "INFJ - 옹호자" }
+              - { <<: *type_fields, name: "INTJ", label: "INTJ - 전략가" }
+              - { <<: *type_fields, name: "ISTP", label: "ISTP - 재주꾼" }
+              - { <<: *type_fields, name: "ISFP", label: "ISFP - 예술가" }
+              - { <<: *type_fields, name: "INFP", label: "INFP - 중재자" }
+              - { <<: *type_fields, name: "INTP", label: "INTP - 사색가" }
+              - { <<: *type_fields, name: "ESTP", label: "ESTP - 사업가" }
+              - { <<: *type_fields, name: "ESFP", label: "ESFP - 연예인" }
+              - { <<: *type_fields, name: "ENFP", label: "ENFP - 활동가" }
+              - { <<: *type_fields, name: "ENTP", label: "ENTP - 변론가" }
+              - { <<: *type_fields, name: "ESTJ", label: "ESTJ - 관리자" }
+              - { <<: *type_fields, name: "ESFJ", label: "ESFJ - 외교관" }
+              - { <<: *type_fields, name: "ENFJ", label: "ENFJ - 운동가" }
+              - { <<: *type_fields, name: "ENTJ", label: "ENTJ - 통솔자" }
+
+  # ④ 오늘의 운세
+  - name: "fortune"
+    label: "🔮 오늘의 운세"
+    files:
+      - name: "fortune_data"
+        label: "타로 카드 & 사주"
+        file: "fortune_data.json"
+        format: json
+        fields:
+          - name: "tarot"
+            label: "타로 카드"
+            widget: "object"
+            fields:
+              - name: "cards"
+                label: "카드 목록 (22장)"
+                widget: "list"
+                fields:
+                  - { name: "id",       label: "카드 번호", widget: "number" }
+                  - { name: "name",     label: "카드 이름", widget: "string" }
+                  - name: "image"
+                    label: "카드 이미지 URL"
+                    widget: "string"
+                    hint: "Wikimedia Commons 이미지 URL"
+                  - { name: "meaning",  label: "카드 해석", widget: "text" }
+                  - { name: "keywords", label: "키워드 (·로 구분)", widget: "string" }
+          - name: "saju"
+            label: "사주 설정"
+            widget: "object"
+            fields:
+              - name: "descriptions"
+                label: "사주 설명"
+                widget: "object"
+                fields:
+                  - name: "professional_analysis"
+                    label: "기본 분석 텍스트"
+                    widget: "text"
+
+  # ⑤ 심리 분석 테스트
+  - name: "psychology"
+    label: "🧘 심리 분석"
+    files:
+      - name: "tests"
+        label: "심리 테스트 목록"
+        file: "tests.json"
+        format: json
+        fields:
+          - name: "root"
+            label: "테스트 배열"
+            widget: "list"
+            fields:
+              - { name: "id",          label: "테스트 ID",   widget: "number" }
+              - { name: "title",       label: "테스트 제목", widget: "string" }
+              - { name: "description", label: "설명",        widget: "text" }
+              - name: "questions"
+                label: "질문 목록"
+                widget: "list"
+                fields:
+                  - { name: "q", label: "질문 내용", widget: "string" }
+                  - name: "options"
+                    label: "선택지"
+                    widget: "list"
+                    fields:
+                      - { name: "text",  label: "선택지 텍스트", widget: "string" }
+                      - { name: "score", label: "점수",          widget: "number" }
+              - name: "results"
+                label: "점수 구간별 결과"
+                widget: "object"
+                hint: "키: '최솟값-최댓값' 형식 (예: 0-4), 값: 결과 텍스트"
+
+  # ⑥ 미디어 (이미지)
+  - name: "media"
+    label: "🖼️ 운동 이미지 관리"
+    folder: "e1"
+    create: true
+    label_singular: "이미지"
+    fields:
+      - name: "image"
+        label: "이미지 업로드"
+        widget: "image"
+      - { name: "title", label: "이미지 설명", widget: "string", required: false }
+
+  # ⑦ 영양소 & 의약품
+  - name: "data"
+    label: "💊 AI 영양 데이터"
+    files:
+      - name: "nutrients"
+        label: "영양소 데이터"
+        file: "nutrients.json"
+        format: json
+        fields:
+          - name: "nutrients"
+            label: "영양소 목록"
+            widget: "list"
+            fields:
+              - { name: "id",          label: "ID",      widget: "string" }
+              - { name: "name",        label: "이름",    widget: "string" }
+              - { name: "category",    label: "카테고리", widget: "string" }
+              - { name: "efficacy",    label: "효능",    widget: "text" }
+              - { name: "description", label: "상세 설명", widget: "text" }
+              - { name: "dri",         label: "권장 섭취량", widget: "string" }
+              - { name: "food",        label: "함유 식품", widget: "string" }
+              - { name: "caution",     label: "주의 사항", widget: "text" }
+      - name: "drugs"
+        label: "의약품 데이터"
+        file: "drugs.json"
+        format: json
+        fields:
+          - name: "drugs"
+            label: "의약품 목록"
+            widget: "list"
+            fields:
+              - { name: "id",            label: "ID",      widget: "number" }
+              - { name: "name",          label: "이름",    widget: "string" }
+              - { name: "manufacturer",  label: "제조사",  widget: "string" }
+              - { name: "category",      label: "분류",    widget: "string" }
+              - { name: "ingredients",   label: "성분",    widget: "text" }
+              - { name: "efficacy",      label: "효능",    widget: "text" }
+              - { name: "usage",         label: "용법/용량", widget: "text" }
+              - { name: "insuranceCode", label: "보험코드", widget: "string", required: false }
+              - { name: "storage",       label: "보관 방법", widget: "string", required: false }
+              - { name: "description",   label: "상세 설명", widget: "text", required: false }

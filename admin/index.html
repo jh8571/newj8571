@@ -4,9 +4,113 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>VitalRest Admin Center</title>
-  <script src="https://unpkg.com/sveltia-cms@latest/dist/sveltia-cms.js" type="module"></script>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      background: #0f172a;
+      color: #e2e8f0;
+      min-height: 100vh;
+    }
+    #cms-loading {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      gap: 24px;
+      padding: 40px;
+    }
+    .loading-logo {
+      font-size: 2rem;
+      font-weight: 800;
+      background: linear-gradient(135deg, #6366f1, #8b5cf6);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      letter-spacing: -1px;
+    }
+    .loading-title {
+      font-size: 1.1rem;
+      color: #94a3b8;
+      margin-top: -16px;
+    }
+    .loading-spinner {
+      width: 48px;
+      height: 48px;
+      border: 4px solid #1e293b;
+      border-top-color: #6366f1;
+      border-radius: 50%;
+      animation: spin 0.9s linear infinite;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+    .loading-text {
+      color: #64748b;
+      font-size: 0.9rem;
+    }
+    .loading-features {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+      gap: 12px;
+      max-width: 640px;
+      width: 100%;
+      margin-top: 8px;
+    }
+    .feature-chip {
+      background: #1e293b;
+      border: 1px solid #334155;
+      border-radius: 10px;
+      padding: 10px 14px;
+      font-size: 0.82rem;
+      color: #94a3b8;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .feature-chip span { font-size: 1.1rem; }
+  </style>
 </head>
 <body>
-  <noscript>자바스크립트가 필요합니다.</noscript>
+
+  <div id="cms-loading">
+    <div class="loading-logo">VitalRest</div>
+    <div class="loading-title">관리자 센터 초기화 중...</div>
+    <div class="loading-spinner"></div>
+    <div class="loading-text">GitHub 인증을 준비하고 있습니다.</div>
+    <div class="loading-features">
+      <div class="feature-chip"><span>⚙️</span> 사이트 설정</div>
+      <div class="feature-chip"><span>💪</span> 운동 가이드</div>
+      <div class="feature-chip"><span>🧠</span> MBTI 테스트</div>
+      <div class="feature-chip"><span>🔮</span> 오늘의 운세</div>
+      <div class="feature-chip"><span>🧘</span> 심리 분석</div>
+      <div class="feature-chip"><span>💊</span> AI 영양 데이터</div>
+      <div class="feature-chip"><span>🖼️</span> 이미지 관리</div>
+    </div>
+  </div>
+
+  <noscript>자바스크립트를 활성화해야 관리자 페이지를 이용할 수 있습니다.</noscript>
+
+  <script src="https://unpkg.com/sveltia-cms@latest/dist/sveltia-cms.js" type="module"></script>
+  <script>
+    // Hide loading screen once CMS mounts
+    document.addEventListener('DOMContentLoaded', () => {
+      const observer = new MutationObserver(() => {
+        const cmsRoot = document.querySelector('sveltia-cms, [data-sveltia-cms], #nc-root, .nc-app-container');
+        if (cmsRoot) {
+          const loader = document.getElementById('cms-loading');
+          if (loader) loader.style.display = 'none';
+          observer.disconnect();
+        }
+      });
+      observer.observe(document.body, { childList: true, subtree: true });
+
+      // Fallback: hide loader after 8s even if CMS doesn't signal
+      setTimeout(() => {
+        const loader = document.getElementById('cms-loading');
+        if (loader) loader.style.display = 'none';
+      }, 8000);
+    });
+  </script>
+
 </body>
 </html>
