@@ -58,7 +58,7 @@
                 </div>
             </div>
 
-            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 20px;">
                 <div class="input-field">
                     <label style="font-weight: 800; font-size: 0.9rem; color: var(--text-muted);" data-ko="연령대 선택" data-en="Life Stage">연령대 선택</label>
                     <select id="age-range">
@@ -71,17 +71,51 @@
                 <div class="input-field">
                     <label style="font-weight: 800; font-size: 0.9rem; color: var(--text-muted);" data-ko="주요 건강 고민" data-en="Health Concern">주요 건강 고민</label>
                     <select id="health-concern">
-                        <option value="fatigue" data-ko="만성 피로" data-en="Chronic Fatigue">만성 피로</option>
-                        <option value="eye" data-ko="시력 보호" data-en="Vision Care">시력 보호</option>
-                        <option value="immune" data-ko="면역력 강화" data-en="Immunity">면역력 강화</option>
-                        <option value="bone" data-ko="뼈/관절 건강" data-en="Bone & Joint">뼈/관절 건강</option>
-                        <option value="liver" data-ko="간 기능/해독" data-en="Liver Detox">간 기능/해독</option>
-                        <option value="brain" data-ko="기억력/집중력" data-en="Cognitive Health">기억력/집중력</option>
+                        <option value="fatigue">⚡ 만성 피로 / 에너지 부족</option>
+                        <option value="immune">🛡️ 면역력 강화</option>
+                        <option value="brain">🧠 기억력 / 집중력</option>
+                        <option value="bone">🦴 뼈 / 관절 건강</option>
+                        <option value="heart">❤️ 심혈관 건강</option>
+                        <option value="liver">🫀 간 기능 / 해독</option>
+                        <option value="eye">👁️ 시력 / 눈 건강</option>
+                        <option value="skin">✨ 피부 / 모발 케어</option>
+                        <option value="sleep">🌙 수면 / 스트레스</option>
+                        <option value="gut">🌿 장 건강 / 소화</option>
+                        <option value="weight">⚖️ 체중 / 대사 관리</option>
+                        <option value="blood_sugar">🩸 혈당 / 당뇨 예방</option>
+                        <option value="antiaging">🔬 항노화 / 세포 재생</option>
                     </select>
                 </div>
             </div>
 
-            <button class="luxury-btn" onclick="analyzeNutrition()" data-ko="분석 리포트 생성하기" data-en="Generate Analysis Report">분석 리포트 생성하기</button>
+            <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 16px; margin-bottom: 24px;">
+                <div class="input-field">
+                    <label style="font-weight: 800; font-size: 0.85rem; color: var(--text-muted);">😤 스트레스 수준</label>
+                    <select id="stress-level">
+                        <option value="low">낮음 (여유로운 편)</option>
+                        <option value="medium" selected>보통</option>
+                        <option value="high">높음 (만성 스트레스)</option>
+                    </select>
+                </div>
+                <div class="input-field">
+                    <label style="font-weight: 800; font-size: 0.85rem; color: var(--text-muted);">🥗 식이 유형</label>
+                    <select id="diet-type">
+                        <option value="normal" selected>일반식</option>
+                        <option value="vegetarian">채식 (달걀·유제품 허용)</option>
+                        <option value="vegan">비건 (완전 채식)</option>
+                    </select>
+                </div>
+                <div class="input-field">
+                    <label style="font-weight: 800; font-size: 0.85rem; color: var(--text-muted);">🏃 운동 빈도</label>
+                    <select id="exercise-level">
+                        <option value="low">주 1회 미만</option>
+                        <option value="medium" selected>주 2~3회</option>
+                        <option value="high">주 4회 이상</option>
+                    </select>
+                </div>
+            </div>
+
+            <button class="luxury-btn" onclick="analyzeNutrition()" data-ko="AI 정밀 분석 시작하기" data-en="Start AI Analysis">AI 정밀 분석 시작하기</button>
         </div>
 
         <div id="ai-result-section" style="display: none; margin-top: 80px;">

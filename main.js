@@ -38,126 +38,309 @@ document.addEventListener('DOMContentLoaded', () => {
     window.analyzeNutrition = function() {
         const age = document.getElementById('age-range').value;
         const concern = document.getElementById('health-concern').value;
-        
+        const stress = (document.getElementById('stress-level') || {}).value || 'medium';
+        const diet = (document.getElementById('diet-type') || {}).value || 'normal';
+        const exercise = (document.getElementById('exercise-level') || {}).value || 'medium';
+
         if (!aiResultSection || !aiResultContent) return;
 
         aiResultSection.style.display = 'block';
         aiResultContent.innerHTML = `
-            <div style="grid-column: 1/-1; text-align: center; padding: 100px 0;">
+            <div style="text-align: center; padding: 100px 40px;">
                 <div class="premium-loader"></div>
-                <p style="margin-top:20px; color: #64748b;" data-ko="고정밀 AI가 최적의 영양 조합을 설계 중입니다..." data-en="High-precision AI is designing the optimal nutrition combination...">고정밀 AI가 최적의 영양 조합을 설계 중입니다...</p>
-            </div>
-        `;
+                <p style="margin-top:24px; color: #64748b; font-size:1rem;">🔬 임상 데이터베이스 분석 중...<br><span style="font-size:0.85rem; opacity:0.7">60종 영양 성분 × 라이프스타일 교차 분석</span></p>
+            </div>`;
 
         setTimeout(() => {
-            const report = generateHyperPersonalizedReport(userGender, age, concern);
-            displayPremiumReport(report);
+            const report = generateAdvancedReport(userGender, age, concern, stress, diet, exercise);
+            displayAdvancedReport(report);
             aiResultSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
-        }, 1500);
+        }, 1800);
     };
 
-    function generateHyperPersonalizedReport(gender, age, concern) {
-        const nutrientMap = {
-            male: {
-                teen: { fatigue: ["비타민 B군", "아연", "마그네슘"], eye: ["루테인", "비타민 A", "베타카로틴"], immune: ["비타민 C", "유산균", "프로폴리스"], bone: ["칼슘", "비타민 D", "망간"], liver: ["밀크씨슬", "비타민 B6", "타우린"], brain: ["DHA", "테아닌", "포스파티딜세린"] },
-                young: { fatigue: ["L-아르기닌", "비타민 B12", "타우린", "마그네슘"], eye: ["오메가3", "루테인", "아스타잔틴"], immune: ["비타민 D", "홍삼", "아연"], bone: ["MSM", "마그네슘", "비타민 K2"], liver: ["실리마린", "비타민 B군", "글루타치온"], brain: ["포스파티딜세린", "오메가3", "은행잎 추출물"] },
-                middle: { fatigue: ["코엔자임 Q10", "옥타코사놀", "비타민 B군", "마카"], eye: ["지아잔틴", "아스타잔틴", "루테인"], immune: ["베타글루칸", "아연", "셀레늄"], bone: ["칼슘", "비타민 K2", "MSM", "보스웰리아"], liver: ["글루타치온", "헛개", "실리마린"], brain: ["은행잎 추출물", "비타민 E", "포스파티딜콜린"] },
-                senior: { fatigue: ["포스파티딜콜린", "BCAA", "코엔자임 Q10"], eye: ["비타민 A", "루테인", "지아잔틴"], immune: ["프로폴리스", "셀레늄", "비타민 D"], bone: ["N-아세틸글루코사민", "칼슘", "비타민 D", "K2"], liver: ["우르소데옥시콜산", "밀크씨슬", "아티초크"], brain: ["은행잎", "오메가3", "커큐민"] }
+    // ─── 추천 매트릭스 ───
+    const NUTRIENT_MAP = {
+        male: {
+            teen: {
+                fatigue: { core: ["비타민 B1 (티아민)", "비타민 B2 (리보플라빈)", "아연 (Zn)"], support: ["마그네슘 (Mg)", "코엔자임 Q10 (유비퀴논/유비퀴놀)"] },
+                immune: { core: ["비타민 C (L-아스코르빈산)", "비타민 D3 (콜레칼시페롤)", "아연 (Zn)"], support: ["프로바이오틱스 (유산균 복합균주)", "베타글루칸 (효모/귀리 유래)"] },
+                brain:  { core: ["오메가-3 지방산 (EPA/DHA)", "포스파티딜세린 (PS)", "엽산 (비타민 B9 / L-메틸폴레이트)"], support: ["비타민 B12 (메틸코발라민)", "테아닌 (L-테아닌)"] },
+                bone:   { core: ["칼슘 (Ca)", "비타민 D3 (콜레칼시페롤)", "망간 (Mn)"], support: ["비타민 K2 (메나퀴논-7, MK-7)", "마그네슘 (Mg)"] },
+                liver:  { core: ["밀크씨슬 (실리마린)", "비타민 B6 (피리독살-5-인산)", "NAC (N-아세틸시스테인)"], support: ["비타민 C (L-아스코르빈산)", "아연 (Zn)"] },
+                eye:    { core: ["루테인 (마리골드꽃 추출물)", "비타민 A (레티놀 / 베타카로틴)", "아스타잔틴 (헤마토코쿠스 조류 추출)"], support: ["오메가-3 지방산 (EPA/DHA)", "비타민 C (L-아스코르빈산)"] },
+                skin:   { core: ["비오틴 (비타민 B7)", "비타민 C (L-아스코르빈산)", "아연 (Zn)"], support: ["오메가-3 지방산 (EPA/DHA)", "프로바이오틱스 (유산균 복합균주)"] },
+                heart:  { core: ["오메가-3 지방산 (EPA/DHA)", "마그네슘 (Mg)", "코엔자임 Q10 (유비퀴논/유비퀴놀)"], support: ["비타민 D3 (콜레칼시페롤)", "비타민 K2 (메나퀴논-7, MK-7)"] },
+                weight: { core: ["L-카르니틴", "크롬 (Cr, 피콜린산크롬)", "이눌린/FOS (프리바이오틱스)"], support: ["베르베린", "프로바이오틱스 (유산균 복합균주)"] },
+                sleep:  { core: ["마그네슘 (Mg)", "테아닌 (L-테아닌)", "L-트립토판 / 5-HTP"], support: ["글리신", "비타민 B6 (피리독살-5-인산)"] },
+                gut:    { core: ["프로바이오틱스 (유산균 복합균주)", "이눌린/FOS (프리바이오틱스)", "L-글루타민"], support: ["아연 (Zn)", "비타민 D3 (콜레칼시페롤)"] },
+                blood_sugar: { core: ["베르베린", "크롬 (Cr, 피콜린산크롬)", "알파리포산 (R-ALA, 활성형)"], support: ["마그네슘 (Mg)", "이눌린/FOS (프리바이오틱스)"] },
+                antiaging:   { core: ["NMN (니코틴아마이드 모노뉴클레오타이드)", "코엔자임 Q10 (유비퀴논/유비퀴놀)", "레스베라트롤 (경질 껍질 추출)"], support: ["글루타치온 (환원형 GSH)", "비타민 D3 (콜레칼시페롤)"] }
             },
-            female: {
-                teen: { fatigue: ["철분", "비타민 B군", "비타민 C"], eye: ["루테인", "비타민 A", "블루베리추출물"], immune: ["유산균", "비타민 C", "아연"], bone: ["칼슘", "망간", "비타민 D"], liver: ["비타민 B6", "밀크씨슬", "테아닌"], brain: ["DHA", "철분", "엽산"] },
-                young: { fatigue: ["철분", "마그네슘", "비타민 B군", "L-카르니틴"], eye: ["오메가3", "히알루론산", "루테인"], immune: ["여성 유산균", "비타민 D", "크랜베리"], bone: ["엽산", "칼슘", "비타민 D"], liver: ["밀크씨슬", "이노시톨", "비타민 B군"], brain: ["오메가3", "엽산", "테아닌"] },
-                middle: { fatigue: ["감마리놀렌산", "이소플라본", "코엔자임 Q10"], eye: ["지아잔틴", "오메가3", "루테인"], immune: ["콜라겐", "비타민 C", "히알루론산", "엘라스틴"], bone: ["칼슘", "대두이소플라본", "비타민 K2"], liver: ["실리마린", "글루타치온", "비타민 B군"], brain: ["포스파티딜세린", "비타민 B12", "오메가3"] },
-                senior: { fatigue: ["로열젤리", "코엔자임 Q10", "비타민 B12"], eye: ["루테인", "비타민 E", "지아잔틴"], immune: ["프로폴리스", "유산균", "셀레늄"], bone: ["비타민 D", "칼슘", "K2", "MSM"], liver: ["우르소데옥시콜산", "글루타치온", "밀크씨슬"], brain: ["은행잎", "DHA", "포스파티딜세린"] }
+            young: {
+                fatigue: { core: ["L-아르기닌 / L-시트룰린", "비타민 B12 (메틸코발라민)", "마그네슘 (Mg)"], support: ["코엔자임 Q10 (유비퀴논/유비퀴놀)", "옥타코사놀 (사탕수수 추출)"] },
+                immune: { core: ["비타민 D3 (콜레칼시페롤)", "홍삼 (6년근 진세노사이드 복합)", "아연 (Zn)"], support: ["비타민 C (L-아스코르빈산)", "베타글루칸 (효모/귀리 유래)"] },
+                brain:  { core: ["포스파티딜세린 (PS)", "오메가-3 지방산 (EPA/DHA)", "은행잎 추출물 (EGb761® 징코플라본)"], support: ["비타민 B12 (메틸코발라민)", "테아닌 (L-테아닌)"] },
+                bone:   { core: ["MSM (메틸설포닐메탄)", "비타민 K2 (메나퀴논-7, MK-7)", "비타민 D3 (콜레칼시페롤)"], support: ["마그네슘 (Mg)", "칼슘 (Ca)"] },
+                liver:  { core: ["밀크씨슬 (실리마린)", "글루타치온 (환원형 GSH)", "NAC (N-아세틸시스테인)"], support: ["비타민 B군", "헛개나무 열매 추출물 (디하이드로미리세틴 DHM)"] },
+                eye:    { core: ["오메가-3 지방산 (EPA/DHA)", "루테인 (마리골드꽃 추출물)", "아스타잔틴 (헤마토코쿠스 조류 추출)"], support: ["비타민 A (레티놀 / 베타카로틴)", "비타민 C (L-아스코르빈산)"] },
+                skin:   { core: ["저분자 피쉬 콜라겐 펩타이드", "비타민 C (L-아스코르빈산)", "아스타잔틴 (헤마토코쿠스 조류 추출)"], support: ["히알루론산 (HA, 저분자)", "아연 (Zn)"] },
+                heart:  { core: ["오메가-3 지방산 (EPA/DHA)", "코엔자임 Q10 (유비퀴논/유비퀴놀)", "비타민 K2 (메나퀴논-7, MK-7)"], support: ["마그네슘 (Mg)", "L-아르기닌 / L-시트룰린"] },
+                weight: { core: ["L-카르니틴", "베르베린", "BCAA (분지사슬 아미노산)"], support: ["크롬 (Cr, 피콜린산크롬)", "이눌린/FOS (프리바이오틱스)"] },
+                sleep:  { core: ["마그네슘 (Mg)", "테아닌 (L-테아닌)", "아슈와간다 (KSM-66® 위타놀라이드)"], support: ["L-트립토판 / 5-HTP", "글리신"] },
+                gut:    { core: ["프로바이오틱스 (유산균 복합균주)", "L-글루타민", "이눌린/FOS (프리바이오틱스)"], support: ["아연 (Zn)", "커큐민 (강황 추출물 + 바이오페린)"] },
+                blood_sugar: { core: ["베르베린", "알파리포산 (R-ALA, 활성형)", "크롬 (Cr, 피콜린산크롬)"], support: ["마그네슘 (Mg)", "오메가-3 지방산 (EPA/DHA)"] },
+                antiaging:   { core: ["NMN (니코틴아마이드 모노뉴클레오타이드)", "레스베라트롤 (경질 껍질 추출)", "글루타치온 (환원형 GSH)"], support: ["코엔자임 Q10 (유비퀴논/유비퀴놀)", "아스타잔틴 (헤마토코쿠스 조류 추출)"] }
+            },
+            middle: {
+                fatigue: { core: ["코엔자임 Q10 (유비퀴논/유비퀴놀)", "옥타코사놀 (사탕수수 추출)", "마카 추출물 (페루산, 표준화)"], support: ["비타민 B12 (메틸코발라민)", "마그네슘 (Mg)"] },
+                immune: { core: ["베타글루칸 (효모/귀리 유래)", "셀레늄 (Se, 유기셀레늄)", "비타민 D3 (콜레칼시페롤)"], support: ["아연 (Zn)", "홍삼 (6년근 진세노사이드 복합)"] },
+                brain:  { core: ["은행잎 추출물 (EGb761® 징코플라본)", "포스파티딜세린 (PS)", "커큐민 (강황 추출물 + 바이오페린)"], support: ["오메가-3 지방산 (EPA/DHA)", "NMN (니코틴아마이드 모노뉴클레오타이드)"] },
+                bone:   { core: ["칼슘 (Ca)", "비타민 K2 (메나퀴논-7, MK-7)", "보스웰리아 (AKBA 표준화)"], support: ["MSM (메틸설포닐메탄)", "비타민 D3 (콜레칼시페롤)"] },
+                liver:  { core: ["글루타치온 (환원형 GSH)", "밀크씨슬 (실리마린)", "헛개나무 열매 추출물 (디하이드로미리세틴 DHM)"], support: ["아티초크 추출물 (시나린·루테올린)", "NAC (N-아세틸시스테인)"] },
+                eye:    { core: ["아스타잔틴 (헤마토코쿠스 조류 추출)", "루테인 (마리골드꽃 추출물)", "오메가-3 지방산 (EPA/DHA)"], support: ["비타민 E (혼합 토코페롤/토코트리에놀)", "비타민 A (레티놀 / 베타카로틴)"] },
+                skin:   { core: ["저분자 피쉬 콜라겐 펩타이드", "아스타잔틴 (헤마토코쿠스 조류 추출)", "글루타치온 (환원형 GSH)"], support: ["히알루론산 (HA, 저분자)", "비타민 C (L-아스코르빈산)"] },
+                heart:  { core: ["오메가-3 지방산 (EPA/DHA)", "코엔자임 Q10 (유비퀴논/유비퀴놀)", "레스베라트롤 (경질 껍질 추출)"], support: ["비타민 K2 (메나퀴논-7, MK-7)", "마그네슘 (Mg)"] },
+                weight: { core: ["베르베린", "L-카르니틴", "아티초크 추출물 (시나린·루테올린)"], support: ["이눌린/FOS (프리바이오틱스)", "크롬 (Cr, 피콜린산크롬)"] },
+                sleep:  { core: ["마그네슘 (Mg)", "아슈와간다 (KSM-66® 위타놀라이드)", "L-트립토판 / 5-HTP"], support: ["테아닌 (L-테아닌)", "글리신"] },
+                gut:    { core: ["프로바이오틱스 (유산균 복합균주)", "이눌린/FOS (프리바이오틱스)", "커큐민 (강황 추출물 + 바이오페린)"], support: ["L-글루타민", "아연 (Zn)"] },
+                blood_sugar: { core: ["베르베린", "알파리포산 (R-ALA, 활성형)", "NMN (니코틴아마이드 모노뉴클레오타이드)"], support: ["크롬 (Cr, 피콜린산크롬)", "마그네슘 (Mg)"] },
+                antiaging:   { core: ["NMN (니코틴아마이드 모노뉴클레오타이드)", "아스타잔틴 (헤마토코쿠스 조류 추출)", "레스베라트롤 (경질 껍질 추출)"], support: ["글루타치온 (환원형 GSH)", "커큐민 (강황 추출물 + 바이오페린)"] }
+            },
+            senior: {
+                fatigue: { core: ["코엔자임 Q10 (유비퀴논/유비퀴놀)", "BCAA (분지사슬 아미노산)", "비타민 B12 (메틸코발라민)"], support: ["마그네슘 (Mg)", "철분 (헴철 / 킬레이트 비헴철)"] },
+                immune: { core: ["비타민 D3 (콜레칼시페롤)", "셀레늄 (Se, 유기셀레늄)", "베타글루칸 (효모/귀리 유래)"], support: ["아연 (Zn)", "비타민 C (L-아스코르빈산)"] },
+                brain:  { core: ["은행잎 추출물 (EGb761® 징코플라본)", "오메가-3 지방산 (EPA/DHA)", "커큐민 (강황 추출물 + 바이오페린)"], support: ["포스파티딜세린 (PS)", "NMN (니코틴아마이드 모노뉴클레오타이드)"] },
+                bone:   { core: ["칼슘 (Ca)", "비타민 D3 (콜레칼시페롤)", "비타민 K2 (메나퀴논-7, MK-7)"], support: ["마그네슘 (Mg)", "보스웰리아 (AKBA 표준화)"] },
+                liver:  { core: ["밀크씨슬 (실리마린)", "아티초크 추출물 (시나린·루테올린)", "글루타치온 (환원형 GSH)"], support: ["NAC (N-아세틸시스테인)", "비타민 E (혼합 토코페롤/토코트리에놀)"] },
+                eye:    { core: ["루테인 (마리골드꽃 추출물)", "아스타잔틴 (헤마토코쿠스 조류 추출)", "오메가-3 지방산 (EPA/DHA)"], support: ["비타민 A (레티놀 / 베타카로틴)", "비타민 E (혼합 토코페롤/토코트리에놀)"] },
+                skin:   { core: ["저분자 피쉬 콜라겐 펩타이드", "히알루론산 (HA, 저분자)", "글루타치온 (환원형 GSH)"], support: ["비타민 C (L-아스코르빈산)", "아스타잔틴 (헤마토코쿠스 조류 추출)"] },
+                heart:  { core: ["오메가-3 지방산 (EPA/DHA)", "코엔자임 Q10 (유비퀴논/유비퀴놀)", "비타민 K2 (메나퀴논-7, MK-7)"], support: ["마그네슘 (Mg)", "레스베라트롤 (경질 껍질 추출)"] },
+                weight: { core: ["L-카르니틴", "베르베린", "프로바이오틱스 (유산균 복합균주)"], support: ["이눌린/FOS (프리바이오틱스)", "아티초크 추출물 (시나린·루테올린)"] },
+                sleep:  { core: ["마그네슘 (Mg)", "글리신", "L-트립토판 / 5-HTP"], support: ["테아닌 (L-테아닌)", "아슈와간다 (KSM-66® 위타놀라이드)"] },
+                gut:    { core: ["프로바이오틱스 (유산균 복합균주)", "이눌린/FOS (프리바이오틱스)", "L-글루타민"], support: ["아연 (Zn)", "비타민 D3 (콜레칼시페롤)"] },
+                blood_sugar: { core: ["베르베린", "알파리포산 (R-ALA, 활성형)", "크롬 (Cr, 피콜린산크롬)"], support: ["마그네슘 (Mg)", "베타글루칸 (효모/귀리 유래)"] },
+                antiaging:   { core: ["NMN (니코틴아마이드 모노뉴클레오타이드)", "레스베라트롤 (경질 껍질 추출)", "커큐민 (강황 추출물 + 바이오페린)"], support: ["글루타치온 (환원형 GSH)", "아스타잔틴 (헤마토코쿠스 조류 추출)"] }
             }
+        },
+        female: {
+            teen: {
+                fatigue: { core: ["철분 (헴철 / 킬레이트 비헴철)", "비타민 B2 (리보플라빈)", "비타민 C (L-아스코르빈산)"], support: ["마그네슘 (Mg)", "비타민 B6 (피리독살-5-인산)"] },
+                immune: { core: ["비타민 C (L-아스코르빈산)", "프로바이오틱스 (유산균 복합균주)", "아연 (Zn)"], support: ["비타민 D3 (콜레칼시페롤)", "베타글루칸 (효모/귀리 유래)"] },
+                brain:  { core: ["오메가-3 지방산 (EPA/DHA)", "엽산 (비타민 B9 / L-메틸폴레이트)", "철분 (헴철 / 킬레이트 비헴철)"], support: ["테아닌 (L-테아닌)", "비타민 B12 (메틸코발라민)"] },
+                bone:   { core: ["칼슘 (Ca)", "비타민 D3 (콜레칼시페롤)", "망간 (Mn)"], support: ["마그네슘 (Mg)", "비타민 K2 (메나퀴논-7, MK-7)"] },
+                liver:  { core: ["밀크씨슬 (실리마린)", "비타민 B6 (피리독살-5-인산)", "NAC (N-아세틸시스테인)"], support: ["비타민 C (L-아스코르빈산)", "글루타치온 (환원형 GSH)"] },
+                eye:    { core: ["루테인 (마리골드꽃 추출물)", "비타민 A (레티놀 / 베타카로틴)", "비타민 C (L-아스코르빈산)"], support: ["오메가-3 지방산 (EPA/DHA)", "아스타잔틴 (헤마토코쿠스 조류 추출)"] },
+                skin:   { core: ["비오틴 (비타민 B7)", "비타민 C (L-아스코르빈산)", "아연 (Zn)"], support: ["오메가-3 지방산 (EPA/DHA)", "감마리놀렌산 GLA (달맞이꽃종자유/보라지유)"] },
+                heart:  { core: ["오메가-3 지방산 (EPA/DHA)", "마그네슘 (Mg)", "비타민 K2 (메나퀴논-7, MK-7)"], support: ["코엔자임 Q10 (유비퀴논/유비퀴놀)", "비타민 D3 (콜레칼시페롤)"] },
+                weight: { core: ["철분 (헴철 / 킬레이트 비헴철)", "이눌린/FOS (프리바이오틱스)", "크롬 (Cr, 피콜린산크롬)"], support: ["프로바이오틱스 (유산균 복합균주)", "비타민 B군"] },
+                sleep:  { core: ["마그네슘 (Mg)", "테아닌 (L-테아닌)", "L-트립토판 / 5-HTP"], support: ["비타민 B6 (피리독살-5-인산)", "글리신"] },
+                gut:    { core: ["프로바이오틱스 (유산균 복합균주)", "이눌린/FOS (프리바이오틱스)", "L-글루타민"], support: ["아연 (Zn)", "비타민 D3 (콜레칼시페롤)"] },
+                blood_sugar: { core: ["크롬 (Cr, 피콜린산크롬)", "마그네슘 (Mg)", "이눌린/FOS (프리바이오틱스)"], support: ["베르베린", "알파리포산 (R-ALA, 활성형)"] },
+                antiaging:   { core: ["글루타치온 (환원형 GSH)", "비타민 C (L-아스코르빈산)", "레스베라트롤 (경질 껍질 추출)"], support: ["NMN (니코틴아마이드 모노뉴클레오타이드)", "아스타잔틴 (헤마토코쿠스 조류 추출)"] }
+            },
+            young: {
+                fatigue: { core: ["철분 (헴철 / 킬레이트 비헴철)", "마그네슘 (Mg)", "L-카르니틴"], support: ["비타민 B12 (메틸코발라민)", "코엔자임 Q10 (유비퀴논/유비퀴놀)"] },
+                immune: { core: ["비타민 D3 (콜레칼시페롤)", "프로바이오틱스 (유산균 복합균주)", "비타민 C (L-아스코르빈산)"], support: ["아연 (Zn)", "크랜베리 추출물 (프로안토시아니딘 PAC)"] },
+                brain:  { core: ["오메가-3 지방산 (EPA/DHA)", "엽산 (비타민 B9 / L-메틸폴레이트)", "테아닌 (L-테아닌)"], support: ["포스파티딜세린 (PS)", "철분 (헴철 / 킬레이트 비헴철)"] },
+                bone:   { core: ["칼슘 (Ca)", "비타민 D3 (콜레칼시페롤)", "비타민 K2 (메나퀴논-7, MK-7)"], support: ["마그네슘 (Mg)", "엽산 (비타민 B9 / L-메틸폴레이트)"] },
+                liver:  { core: ["밀크씨슬 (실리마린)", "글루타치온 (환원형 GSH)", "비타민 B군"], support: ["NAC (N-아세틸시스테인)", "아티초크 추출물 (시나린·루테올린)"] },
+                eye:    { core: ["오메가-3 지방산 (EPA/DHA)", "루테인 (마리골드꽃 추출물)", "히알루론산 (HA, 저분자)"], support: ["비타민 A (레티놀 / 베타카로틴)", "아스타잔틴 (헤마토코쿠스 조류 추출)"] },
+                skin:   { core: ["저분자 피쉬 콜라겐 펩타이드", "비타민 C (L-아스코르빈산)", "감마리놀렌산 GLA (달맞이꽃종자유/보라지유)"], support: ["히알루론산 (HA, 저분자)", "아스타잔틴 (헤마토코쿠스 조류 추출)"] },
+                heart:  { core: ["오메가-3 지방산 (EPA/DHA)", "마그네슘 (Mg)", "코엔자임 Q10 (유비퀴논/유비퀴놀)"], support: ["비타민 K2 (메나퀴논-7, MK-7)", "엽산 (비타민 B9 / L-메틸폴레이트)"] },
+                weight: { core: ["L-카르니틴", "이눌린/FOS (프리바이오틱스)", "베르베린"], support: ["크롬 (Cr, 피콜린산크롬)", "프로바이오틱스 (유산균 복합균주)"] },
+                sleep:  { core: ["마그네슘 (Mg)", "테아닌 (L-테아닌)", "아슈와간다 (KSM-66® 위타놀라이드)"], support: ["L-트립토판 / 5-HTP", "비타민 B6 (피리독살-5-인산)"] },
+                gut:    { core: ["프로바이오틱스 (유산균 복합균주)", "L-글루타민", "이눌린/FOS (프리바이오틱스)"], support: ["크랜베리 추출물 (프로안토시아니딘 PAC)", "아연 (Zn)"] },
+                blood_sugar: { core: ["베르베린", "크롬 (Cr, 피콜린산크롬)", "알파리포산 (R-ALA, 활성형)"], support: ["마그네슘 (Mg)", "이눌린/FOS (프리바이오틱스)"] },
+                antiaging:   { core: ["글루타치온 (환원형 GSH)", "아스타잔틴 (헤마토코쿠스 조류 추출)", "비타민 C (L-아스코르빈산)"], support: ["NMN (니코틴아마이드 모노뉴클레오타이드)", "레스베라트롤 (경질 껍질 추출)"] }
+            },
+            middle: {
+                fatigue: { core: ["대두 이소플라본 (제니스테인·다이제인)", "코엔자임 Q10 (유비퀴논/유비퀴놀)", "감마리놀렌산 GLA (달맞이꽃종자유/보라지유)"], support: ["마카 추출물 (페루산, 표준화)", "마그네슘 (Mg)"] },
+                immune: { core: ["비타민 D3 (콜레칼시페롤)", "비타민 C (L-아스코르빈산)", "셀레늄 (Se, 유기셀레늄)"], support: ["베타글루칸 (효모/귀리 유래)", "아연 (Zn)"] },
+                brain:  { core: ["포스파티딜세린 (PS)", "오메가-3 지방산 (EPA/DHA)", "은행잎 추출물 (EGb761® 징코플라본)"], support: ["비타민 B12 (메틸코발라민)", "커큐민 (강황 추출물 + 바이오페린)"] },
+                bone:   { core: ["칼슘 (Ca)", "대두 이소플라본 (제니스테인·다이제인)", "비타민 K2 (메나퀴논-7, MK-7)"], support: ["비타민 D3 (콜레칼시페롤)", "마그네슘 (Mg)"] },
+                liver:  { core: ["밀크씨슬 (실리마린)", "글루타치온 (환원형 GSH)", "NAC (N-아세틸시스테인)"], support: ["아티초크 추출물 (시나린·루테올린)", "비타민 B군"] },
+                eye:    { core: ["루테인 (마리골드꽃 추출물)", "아스타잔틴 (헤마토코쿠스 조류 추출)", "오메가-3 지방산 (EPA/DHA)"], support: ["비타민 E (혼합 토코페롤/토코트리에놀)", "비타민 A (레티놀 / 베타카로틴)"] },
+                skin:   { core: ["저분자 피쉬 콜라겐 펩타이드", "글루타치온 (환원형 GSH)", "히알루론산 (HA, 저분자)"], support: ["감마리놀렌산 GLA (달맞이꽃종자유/보라지유)", "비타민 C (L-아스코르빈산)"] },
+                heart:  { core: ["오메가-3 지방산 (EPA/DHA)", "대두 이소플라본 (제니스테인·다이제인)", "코엔자임 Q10 (유비퀴논/유비퀴놀)"], support: ["마그네슘 (Mg)", "레스베라트롤 (경질 껍질 추출)"] },
+                weight: { core: ["베르베린", "L-카르니틴", "이눌린/FOS (프리바이오틱스)"], support: ["대두 이소플라본 (제니스테인·다이제인)", "아티초크 추출물 (시나린·루테올린)"] },
+                sleep:  { core: ["마그네슘 (Mg)", "아슈와간다 (KSM-66® 위타놀라이드)", "L-트립토판 / 5-HTP"], support: ["대두 이소플라본 (제니스테인·다이제인)", "글리신"] },
+                gut:    { core: ["프로바이오틱스 (유산균 복합균주)", "이눌린/FOS (프리바이오틱스)", "L-글루타민"], support: ["커큐민 (강황 추출물 + 바이오페린)", "아연 (Zn)"] },
+                blood_sugar: { core: ["베르베린", "크롬 (Cr, 피콜린산크롬)", "알파리포산 (R-ALA, 활성형)"], support: ["마그네슘 (Mg)", "이눌린/FOS (프리바이오틱스)"] },
+                antiaging:   { core: ["NMN (니코틴아마이드 모노뉴클레오타이드)", "글루타치온 (환원형 GSH)", "레스베라트롤 (경질 껍질 추출)"], support: ["아스타잔틴 (헤마토코쿠스 조류 추출)", "커큐민 (강황 추출물 + 바이오페린)"] }
+            },
+            senior: {
+                fatigue: { core: ["비타민 B12 (메틸코발라민)", "코엔자임 Q10 (유비퀴논/유비퀴놀)", "철분 (헴철 / 킬레이트 비헴철)"], support: ["마그네슘 (Mg)", "BCAA (분지사슬 아미노산)"] },
+                immune: { core: ["비타민 D3 (콜레칼시페롤)", "셀레늄 (Se, 유기셀레늄)", "프로바이오틱스 (유산균 복합균주)"], support: ["아연 (Zn)", "베타글루칸 (효모/귀리 유래)"] },
+                brain:  { core: ["은행잎 추출물 (EGb761® 징코플라본)", "오메가-3 지방산 (EPA/DHA)", "포스파티딜세린 (PS)"], support: ["커큐민 (강황 추출물 + 바이오페린)", "NMN (니코틴아마이드 모노뉴클레오타이드)"] },
+                bone:   { core: ["칼슘 (Ca)", "비타민 D3 (콜레칼시페롤)", "비타민 K2 (메나퀴논-7, MK-7)"], support: ["마그네슘 (Mg)", "보스웰리아 (AKBA 표준화)"] },
+                liver:  { core: ["밀크씨슬 (실리마린)", "글루타치온 (환원형 GSH)", "아티초크 추출물 (시나린·루테올린)"], support: ["NAC (N-아세틸시스테인)", "비타민 E (혼합 토코페롤/토코트리에놀)"] },
+                eye:    { core: ["루테인 (마리골드꽃 추출물)", "아스타잔틴 (헤마토코쿠스 조류 추출)", "비타민 A (레티놀 / 베타카로틴)"], support: ["비타민 E (혼합 토코페롤/토코트리에놀)", "오메가-3 지방산 (EPA/DHA)"] },
+                skin:   { core: ["저분자 피쉬 콜라겐 펩타이드", "히알루론산 (HA, 저분자)", "글루타치온 (환원형 GSH)"], support: ["비타민 C (L-아스코르빈산)", "대두 이소플라본 (제니스테인·다이제인)"] },
+                heart:  { core: ["오메가-3 지방산 (EPA/DHA)", "코엔자임 Q10 (유비퀴논/유비퀴놀)", "비타민 K2 (메나퀴논-7, MK-7)"], support: ["마그네슘 (Mg)", "레스베라트롤 (경질 껍질 추출)"] },
+                weight: { core: ["L-카르니틴", "프로바이오틱스 (유산균 복합균주)", "베르베린"], support: ["이눌린/FOS (프리바이오틱스)", "크롬 (Cr, 피콜린산크롬)"] },
+                sleep:  { core: ["마그네슘 (Mg)", "글리신", "L-트립토판 / 5-HTP"], support: ["테아닌 (L-테아닌)", "아슈와간다 (KSM-66® 위타놀라이드)"] },
+                gut:    { core: ["프로바이오틱스 (유산균 복합균주)", "이눌린/FOS (프리바이오틱스)", "L-글루타민"], support: ["아연 (Zn)", "비타민 D3 (콜레칼시페롤)"] },
+                blood_sugar: { core: ["베르베린", "크롬 (Cr, 피콜린산크롬)", "알파리포산 (R-ALA, 활성형)"], support: ["마그네슘 (Mg)", "베타글루칸 (효모/귀리 유래)"] },
+                antiaging:   { core: ["NMN (니코틴아마이드 모노뉴클레오타이드)", "레스베라트롤 (경질 껍질 추출)", "커큐민 (강황 추출물 + 바이오페린)"], support: ["글루타치온 (환원형 GSH)", "아스타잔틴 (헤마토코쿠스 조류 추출)"] }
+            }
+        }
+    };
+
+    // 라이프스타일 추가 추천
+    const LIFESTYLE_ADD = {
+        stress:    { high:  ["아슈와간다 (KSM-66® 위타놀라이드)", "마그네슘 (Mg)", "테아닌 (L-테아닌)"] },
+        diet:      { vegan: ["비타민 B12 (메틸코발라민)", "철분 (헴철 / 킬레이트 비헴철)", "비타민 D3 (콜레칼시페롤)", "오메가-3 지방산 (EPA/DHA)"],
+                     vegetarian: ["비타민 B12 (메틸코발라민)", "철분 (헴철 / 킬레이트 비헴철)"] },
+        exercise:  { high: ["BCAA (분지사슬 아미노산)", "마그네슘 (Mg)", "코엔자임 Q10 (유비퀴논/유비퀴놀)"],
+                     low:  ["L-카르니틴", "비타민 D3 (콜레칼시페롤)"] }
+    };
+
+    const CONCERN_LABELS = {
+        fatigue:'⚡ 만성 피로', immune:'🛡️ 면역력 강화', brain:'🧠 기억력/집중력', bone:'🦴 뼈/관절',
+        heart:'❤️ 심혈관', liver:'🫀 간 기능', eye:'👁️ 눈 건강', skin:'✨ 피부/모발',
+        sleep:'🌙 수면/스트레스', gut:'🌿 장 건강', weight:'⚖️ 체중/대사', blood_sugar:'🩸 혈당 관리', antiaging:'🔬 항노화'
+    };
+
+    function findNutrient(name) {
+        return nutrientData.find(n => n.name === name || n.name.startsWith(name.split(' ')[0]));
+    }
+
+    function generateAdvancedReport(gender, age, concern, stress, diet, exercise) {
+        const base = NUTRIENT_MAP[gender][age][concern] || { core: [], support: [] };
+        const coreNames = [...base.core];
+        const supportNames = [...base.support];
+
+        // 라이프스타일 추가 성분 (중복 제거)
+        const extras = new Set();
+        if (stress === 'high') LIFESTYLE_ADD.stress.high.forEach(n => extras.add(n));
+        if (diet !== 'normal') (LIFESTYLE_ADD.diet[diet] || []).forEach(n => extras.add(n));
+        if (exercise === 'high') LIFESTYLE_ADD.exercise.high.forEach(n => extras.add(n));
+        if (exercise === 'low')  LIFESTYLE_ADD.exercise.low.forEach(n => extras.add(n));
+        const allNames = new Set([...coreNames, ...supportNames]);
+        const lifestyleExtras = [...extras].filter(n => !allNames.has(n)).slice(0, 2);
+
+        const toCard = (name, priority) => {
+            const d = findNutrient(name) || {};
+            return { name: d.name || name, category: d.category || '–', efficacy: d.efficacy || '–', description: d.description || '', dri: d.dri || '–', food: d.food || '–', caution: d.caution || '–', timing: d.timing || '–', priority };
         };
 
-        const resNames = nutrientMap[gender][age][concern];
-        const detailedNutrients = resNames.map(n => {
-            // nutrientData에서 실제 데이터 찾기 (부분 일치 포함)
-            const realData = nutrientData.find(rd => rd.name.includes(n)) || getNutrientDetail(n);
-            return {
-                name: realData.name || n,
-                info: realData.efficacy || realData.info,
-                dri: realData.dri,
-                composition: realData.category || realData.composition
-            };
+        const coreCards    = coreNames.map(n => toCard(n, 'core'));
+        const supportCards = supportNames.map(n => toCard(n, 'support'));
+        const extraCards   = lifestyleExtras.map(n => toCard(n, 'lifestyle'));
+
+        // 복용 타이밍 분류
+        const timingGroups = { '아침 식사 후': [], '식사와 함께': [], '공복': [], '저녁 식사 후': [], '취침 전': [] };
+        [...coreCards, ...supportCards, ...extraCards].forEach(n => {
+            if (n.timing && timingGroups[n.timing]) timingGroups[n.timing].push(n.name.split(' ')[0]);
+            else if (n.timing) timingGroups['식사와 함께'].push(n.name.split(' ')[0]);
         });
 
-        return {
-            title: `${gender==='male'?'남성':'여성'} 맞춤형 정밀 분석 리포트`,
-            nutrients: detailedNutrients,
-            lifestyle: "규칙적인 수면과 하루 2L 이상의 수분 섭취는 영양소의 생체 이용률을 극대화합니다.",
-            caution: "질환이 있거나 약물을 복용 중인 경우 섭취 전 반드시 전문가와 상담하십시오."
-        };
+        // 라이프스타일 가이드
+        const lifestyleGuide = [];
+        if (stress === 'high') lifestyleGuide.push('⚠️ 만성 스트레스는 코르티솔을 높여 영양소 소모를 2~3배 가속합니다. 마그네슘·비타민 C·B군이 특히 빠르게 소진됩니다.');
+        if (stress === 'medium') lifestyleGuide.push('🌿 보통 수준의 스트레스도 장기화 시 부신 기능을 소진시킵니다. 규칙적인 심호흡과 수면 루틴으로 코르티솔 리듬을 유지하세요.');
+        if (diet === 'vegan') lifestyleGuide.push('🌱 비건 식단은 비타민 B12, 철분, 비타민 D, 오메가-3(DHA/EPA), 아연, 요오드가 결핍되기 쉽습니다. 반드시 보충제로 보완하세요.');
+        if (diet === 'vegetarian') lifestyleGuide.push('🥗 채식 식단에서 비타민 B12·철분 결핍이 흔합니다. 발효 식품과 콩류를 통해 보완하고 헴철 대신 비타민 C와 함께 비헴철을 섭취하세요.');
+        if (exercise === 'high') lifestyleGuide.push('💪 고강도 운동은 산화 스트레스와 염증을 증가시킵니다. 항산화제(비타민 C·E, 아스타잔틴)와 마그네슘, BCAA로 회복을 최적화하세요.');
+        if (exercise === 'low') lifestyleGuide.push('🚶 운동 부족은 인슐린 감수성과 미토콘드리아 기능을 저하시킵니다. 하루 30분 걷기만으로도 비타민 D 합성과 대사가 크게 개선됩니다.');
+        lifestyleGuide.push('💧 하루 체중 × 30ml 이상의 수분 섭취는 수용성 영양소의 흡수율과 신장 여과 기능을 최적화합니다.');
+
+        return { gender, age, concern, stress, diet, exercise, coreCards, supportCards, extraCards, timingGroups, lifestyleGuide };
     }
 
-    function getNutrientDetail(n) {
-        const details = {
-            "비타민 B군": { info: "에너지 대사와 피로 회복의 핵심 성분입니다.", dri: "B1: 1.2mg, B2: 1.4mg, B6: 1.5mg", composition: "티아민, 리보플라빈, 니아신, 판토텐산 등 8종 복합체" },
-            "L-아르기닌": { info: "혈관 확장 및 혈행 개선을 도와 활력을 높입니다.", dri: "1,000 ~ 3,000mg", composition: "준필수 아미노산 (단백질 합성 및 질소 산화물 생성)" },
-            "마그네슘": { info: "천연의 진정제라 불리며 근육 및 신경 안정을 돕습니다.", dri: "350mg (남성), 280mg (여성)", composition: "산화마그네슘 또는 킬레이트 마그네슘" },
-            "오메가3": { info: "혈행 개선 및 건조한 눈 개선에 필수적인 지방산입니다.", dri: "500 ~ 2,000mg (EPA+DHA 합계)", composition: "EPA(혈행) 및 DHA(뇌/망막) 비율 최적화" },
-            "루테인": { info: "눈의 황반 색소 밀도를 유지하여 노화를 방지합니다.", dri: "10 ~ 20mg", composition: "마리골드꽃 추출물 (루테인 단일 또는 지아잔틴 복합)" },
-            "비타민 D": { info: "칼슘 흡수를 돕고 면역 시스템을 조절합니다.", dri: "400 ~ 1,000 IU (결핍 시 2,000 IU 이상)", composition: "비타민 D3 (콜레칼시페롤 - 흡수율 높음)" },
-            "비타민 C": { info: "강력한 항산화 작용과 콜라겐 합성을 돕습니다.", dri: "100 ~ 1,000mg (수용성으로 과량 시 배출)", composition: "순수 아스코르빈산 또는 중성화 비타민 C" },
-            "아연": { info: "정상적인 면역 기능과 세포 분열에 필수적입니다.", dri: "8.5 ~ 11mg", composition: "글루콘산 아연 또는 산화 아연" },
-            "실리마린": { info: "간 세포 재생을 돕고 독소로부터 간을 보호합니다.", dri: "130mg", composition: "밀크씨슬 추출물 유효 성분" },
-            "포스파티딜세린": { info: "뇌 세포막의 구성 성분으로 인지 능력 개선에 도움을 줍니다.", dri: "300mg", composition: "대두 추출 인지질 (기억력 및 집중력 강화)" },
-            "철분": { info: "체내 산소 운반과 혈액 생성에 핵심적인 역할을 합니다.", dri: "12 ~ 14mg (남성), 18mg (여성)", composition: "헴철(동물성) 또는 비헴철(식물성)" },
-            "칼슘": { info: "뼈와 치아 형성에 필수적이며 신경 기능을 조절합니다.", dri: "700 ~ 800mg", composition: "해조칼슘 또는 구연산칼슘 (흡수율 고려)" },
-            "코엔자임 Q10": { info: "세포 내 에너지 생성을 돕고 항산화 작용을 합니다.", dri: "100mg", composition: "유비퀴논 (에너지 생성 및 혈압 감소)" },
-            "지아잔틴": { info: "황반 중심부의 밀도를 유지하여 시력을 보호합니다.", dri: "2 ~ 4mg (루테인과 5:1 비율 권장)", composition: "눈 건강 정밀 케어 성분" },
-            "글루타치온": { info: "강력한 항산화제로 체내 해독 및 미백을 돕습니다.", dri: "250 ~ 500mg", composition: "L-글루타치온 효모 추출물" },
-            "유산균": { info: "장내 유익균 증식을 돕고 면역력의 70%를 담당합니다.", dri: "1억 ~ 100억 CFU (보장균수 확인)", composition: "프로바이오틱스 (복합 균주 설계)" },
-            "MSM": { info: "관절 및 연골 건강에 도움을 주는 유기 유황 성분입니다.", dri: "1,500 ~ 2,000mg", composition: "디메틸설폰 (식이유황)" },
-            "테아닌": { info: "스트레스로 인한 긴장 완화에 도움을 줍니다.", dri: "200 ~ 250mg", composition: "녹차 추출 아미노산 성분" },
-            "셀레늄": { info: "유해산소로부터 세포를 보호하는 항산화 미네랄입니다.", dri: "55μg", composition: "건조효모 유래 유기셀레늄" },
-            "베타카로틴": { info: "체내에서 비타민 A로 전환되어 시력과 피부를 보호합니다.", dri: "1.26mg RE", composition: "식물성 비타민 A 전구체" },
-            "망간": { info: "뼈 형성과 에너지 이용, 유해산소 차단에 필요합니다.", dri: "3.0 ~ 4.0mg", composition: "필수 미량 미네랄" },
-            "엽산": { info: "세포와 혈액 생성, 태아 신경관 발달에 필수적입니다.", dri: "400μg (임신 준비 시 800μg)", composition: "비타민 B9" },
-            "홍삼": { info: "면역력 증진, 피로 개선, 혈행 흐름을 돕습니다.", dri: "진세노사이드 Rg1+Rb1+Rg3 합계 3 ~ 80mg", composition: "사포닌 복합체" }
-        };
-        return details[n] || { info: "임상적으로 검증된 프리미엄 건강 성분입니다.", dri: "별도 상담 권장", composition: "천연 유래 고기능성 성분" };
-    }
+    function displayAdvancedReport(r) {
+        const genderLabel = r.gender === 'male' ? '남성' : '여성';
+        const concernLabel = CONCERN_LABELS[r.concern] || r.concern;
+        const ageLabel = { teen:'청소년', young:'청년', middle:'중년', senior:'노년' }[r.age] || r.age;
 
-    function displayPremiumReport(report) {
+        const nutrientCard = (n, badgeLabel, badgeColor) => `
+            <div style="background:var(--bg-color);border:1px solid var(--border-color);border-radius:20px;padding:24px;position:relative;overflow:hidden;">
+                <div style="position:absolute;top:16px;right:16px;background:${badgeColor};color:white;font-size:0.7rem;font-weight:900;padding:3px 10px;border-radius:20px;letter-spacing:0.5px;">${badgeLabel}</div>
+                <h4 style="font-size:1.05rem;font-weight:800;color:var(--primary-color);margin-bottom:6px;padding-right:70px;line-height:1.3;">${n.name}</h4>
+                <div style="font-size:0.75rem;color:var(--text-muted);margin-bottom:10px;">${n.category}</div>
+                <p style="font-size:0.88rem;line-height:1.65;color:var(--text-color);margin-bottom:14px;">${n.efficacy}</p>
+                <div style="background:var(--card-bg,#f1f5f9);border-radius:12px;padding:12px;font-size:0.82rem;display:grid;gap:6px;">
+                    <div><b style="color:var(--accent-color);">📋 권장 함량:</b> ${n.dri}</div>
+                    <div><b style="color:#10b981;">🥗 주요 식품:</b> ${n.food}</div>
+                    <div><b style="color:#6366f1;">⏰ 복용 타이밍:</b> ${n.timing}</div>
+                    ${n.caution ? `<div style="color:#f59e0b;"><b>⚠️ 주의:</b> ${n.caution.length > 80 ? n.caution.slice(0,80)+'…' : n.caution}</div>` : ''}
+                </div>
+            </div>`;
+
+        const timingHTML = Object.entries(r.timingGroups)
+            .filter(([,list]) => list.length > 0)
+            .map(([time, list]) => `
+                <div style="display:flex;align-items:flex-start;gap:14px;padding:12px 0;border-bottom:1px solid var(--border-color);">
+                    <span style="font-size:0.8rem;font-weight:900;color:var(--primary-color);min-width:90px;padding-top:2px;">${time}</span>
+                    <span style="font-size:0.88rem;color:var(--text-color);line-height:1.6;">${list.join(', ')}</span>
+                </div>`).join('');
+
         aiResultContent.innerHTML = `
-            <div class="luxury-report-card">
-                <div class="report-header">
-                    <div class="report-badge" data-ko="최적화된 영양 설계 완료" data-en="Optimal Nutrition Design Ready">최적화된 영양 설계 완료</div>
-                    <h2 style="font-size: 2.2rem; font-weight: 900; margin-bottom: 10px;">${report.title}</h2>
-                    <p style="color: var(--text-muted);" data-ko="인공지능이 제안하는 당신을 위한 최적의 영양 조합입니다." data-en="AI-driven nutrient combination tailored for you.">인공지능이 제안하는 당신을 위한 최적의 영양 조합입니다.</p>
-                </div>
-                <div class="nutrient-focus-grid" style="padding: 40px;">
-                    ${report.nutrients.map(n => `
-                        <div class="focus-item" style="border: 1px solid var(--border-color); background: var(--bg-color); padding: 25px; border-radius: 24px;">
-                            <h4 class="focus-name" style="font-size: 1.3rem; color: var(--primary-color); border-bottom: 2px solid var(--accent-color); display: inline-block; margin-bottom: 15px;">${n.name}</h4>
-                            <p class="focus-info" style="font-size: 0.95rem; line-height: 1.6; margin-bottom: 15px;">${n.info}</p>
-                            <div style="background: white; padding: 15px; border-radius: 12px; font-size: 0.85rem;">
-                                <div style="margin-bottom: 5px;"><strong style="color: var(--accent-color);"><i class="fas fa-check-circle"></i> 일일 권장 함량:</strong> ${n.dri}</div>
-                                <div><strong style="color: var(--primary-color);"><i class="fas fa-info-circle"></i> 주요 성분 구성:</strong> ${n.composition}</div>
-                            </div>
-                        </div>
-                    `).join('')}
-                </div>
-                <div class="report-footer-grid" style="border-top: 1px solid var(--border-color); display: grid; grid-template-columns: 1fr 1fr;">
-                    <div class="footer-box" style="padding: 30px; border-right: 1px solid var(--border-color);">
-                        <label style="font-size: 0.75rem; font-weight: 900; color: var(--text-muted); display: block; margin-bottom: 10px;" data-ko="LIFESTYLE GUIDE" data-en="LIFESTYLE GUIDE">LIFESTYLE GUIDE</label>
-                        <p style="font-size: 0.95rem; font-weight: 600;">${report.lifestyle}</p>
-                    </div>
-                    <div class="footer-box" style="padding: 30px;">
-                        <label style="font-size: 0.75rem; font-weight: 900; color: #f59e0b; display: block; margin-bottom: 10px;" data-ko="CAUTION" data-en="CAUTION">CAUTION</label>
-                        <p style="font-size: 0.9rem; color: #475569;">${report.caution}</p>
-                    </div>
-                </div>
-                <div style="padding: 30px; text-align: center; background: #f8fafc;">
-                    <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 20px;" data-ko="* 위 분석 결과는 일반적인 건강 정보를 바탕으로 하며, 개인의 체질과 상태에 따라 다를 수 있습니다." data-en="* The analysis is based on general health data and may vary by individual.">* 위 분석 결과는 일반적인 건강 정보를 바탕으로 하며, 개인의 체질과 상태에 따라 다를 수 있습니다.</p>
-                    <button onclick="location.reload()" class="luxury-btn" style="max-width: 300px; margin-top: 0; margin-bottom: 20px;" data-ko="분석 다시하기" data-en="Re-analyze">분석 다시하기</button>
-                    ${window.getShareUI('AI 맞춤 영양 리포트', 'VitalRest에서 제게 딱 맞는 영양 성분 조합을 찾았어요!')}
+        <div class="luxury-report-card" style="overflow:hidden;">
+
+            <!-- 헤더 -->
+            <div class="report-header" style="padding:40px;border-bottom:1px solid var(--border-color);">
+                <div class="report-badge">최적화된 영양 설계 완료</div>
+                <h2 style="font-size:2rem;font-weight:900;margin:12px 0 8px;">${genderLabel} · ${ageLabel} · ${concernLabel}</h2>
+                <p style="color:var(--text-muted);font-size:0.95rem;">60종 임상 데이터베이스 기반 · 라이프스타일 교차 분석 완료</p>
+                <div style="display:flex;gap:10px;margin-top:18px;flex-wrap:wrap;">
+                    <span style="background:#eff6ff;color:#3b82f6;padding:4px 12px;border-radius:20px;font-size:0.78rem;font-weight:700;">스트레스 ${{low:'낮음',medium:'보통',high:'높음'}[r.stress]}</span>
+                    <span style="background:#f0fdf4;color:#16a34a;padding:4px 12px;border-radius:20px;font-size:0.78rem;font-weight:700;">${{normal:'일반식',vegetarian:'채식',vegan:'비건'}[r.diet]}</span>
+                    <span style="background:#faf5ff;color:#7c3aed;padding:4px 12px;border-radius:20px;font-size:0.78rem;font-weight:700;">운동 ${{low:'부족',medium:'적정',high:'활발'}[r.exercise]}</span>
                 </div>
             </div>
-        `;
+
+            <!-- 핵심 영양소 -->
+            <div style="padding:32px 40px;">
+                <div style="font-size:0.75rem;font-weight:900;letter-spacing:1.5px;color:var(--primary-color);margin-bottom:16px;">CORE NUTRIENTS — 핵심 영양소 ★★★</div>
+                <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px;">
+                    ${r.coreCards.map(n => nutrientCard(n, 'CORE', '#6366f1')).join('')}
+                </div>
+            </div>
+
+            <!-- 보조 영양소 -->
+            <div style="padding:0 40px 32px;">
+                <div style="font-size:0.75rem;font-weight:900;letter-spacing:1.5px;color:#8b5cf6;margin-bottom:16px;">SUPPORT NUTRIENTS — 보조 영양소 ★★</div>
+                <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px;">
+                    ${r.supportCards.map(n => nutrientCard(n, 'SUPPORT', '#8b5cf6')).join('')}
+                </div>
+            </div>
+
+            ${r.extraCards.length > 0 ? `
+            <!-- 라이프스타일 추가 -->
+            <div style="padding:0 40px 32px;">
+                <div style="font-size:0.75rem;font-weight:900;letter-spacing:1.5px;color:#10b981;margin-bottom:16px;">LIFESTYLE ADD-ON — 라이프스타일 맞춤 추가 ★</div>
+                <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px;">
+                    ${r.extraCards.map(n => nutrientCard(n, 'ADD-ON', '#10b981')).join('')}
+                </div>
+            </div>` : ''}
+
+            <!-- 복용 타이밍 가이드 -->
+            <div style="margin:0 40px 32px;background:var(--card-bg,#f8fafc);border-radius:20px;padding:28px;">
+                <div style="font-size:0.75rem;font-weight:900;letter-spacing:1.5px;color:var(--text-muted);margin-bottom:16px;">⏰ TIMING GUIDE — 복용 타이밍 가이드</div>
+                ${timingHTML}
+                <p style="font-size:0.78rem;color:var(--text-muted);margin-top:12px;">* 지용성 비타민(A·D·E·K)은 반드시 지방이 포함된 식사와 함께, 철분은 비타민 C와 함께 복용하면 흡수율이 극대화됩니다.</p>
+            </div>
+
+            <!-- 라이프스타일 가이드 -->
+            <div style="margin:0 40px 32px;border:1px solid var(--border-color);border-radius:20px;padding:28px;">
+                <div style="font-size:0.75rem;font-weight:900;letter-spacing:1.5px;color:var(--text-muted);margin-bottom:16px;">🌿 LIFESTYLE GUIDE — 개인화 생활 가이드</div>
+                ${r.lifestyleGuide.map(g => `<p style="font-size:0.88rem;line-height:1.7;color:var(--text-color);margin-bottom:10px;">${g}</p>`).join('')}
+            </div>
+
+            <!-- 주의사항 -->
+            <div style="margin:0 40px 40px;background:#fffbeb;border:1px solid #fde68a;border-radius:20px;padding:24px;">
+                <div style="font-size:0.75rem;font-weight:900;letter-spacing:1.5px;color:#b45309;margin-bottom:12px;">⚠️ CLINICAL CAUTION — 임상 주의사항</div>
+                <p style="font-size:0.85rem;line-height:1.7;color:#78350f;">본 분석 결과는 60종 임상 데이터베이스를 기반으로 한 일반적인 건강 정보입니다. 질환이 있거나 약물을 복용 중인 경우, 특히 <strong>항응고제·혈당강하제·항우울제·면역억제제</strong> 복용자는 반드시 의사 또는 약사와 상담 후 섭취하시기 바랍니다. 영양 보충제는 의약품을 대체하지 않습니다.</p>
+            </div>
+
+            <!-- 재분석 -->
+            <div style="padding:0 40px 40px;text-align:center;">
+                <button onclick="window.scrollTo({top:0,behavior:'smooth'})" class="luxury-btn" style="max-width:320px;margin:0 auto 16px;">🔄 조건 변경 후 재분석</button>
+                ${window.getShareUI ? window.getShareUI('AI 맞춤 영양 리포트', 'VitalRest에서 저에게 딱 맞는 프리미엄 영양 성분 조합을 찾았어요!') : ''}
+            </div>
+
+        </div>`;
     }
 
     // 4. Search Functionality
