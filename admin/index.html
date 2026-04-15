@@ -157,7 +157,7 @@
         // 2. Dynamically load Sveltia CMS after config is confirmed reachable
         const script = document.createElement('script');
         script.type = 'module';
-        script.src = 'https://unpkg.com/sveltia-cms@0.45.0/dist/sveltia-cms.js';
+        script.src = 'https://unpkg.com/sveltia-cms@0.153.0/dist/sveltia-cms.js';
         script.onerror = (e) => showError('unpkg CDN 로드 실패 — 네트워크 연결을 확인하세요.');
         document.head.appendChild(script);
 
