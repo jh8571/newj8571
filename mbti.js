@@ -216,11 +216,11 @@ function showResult() {
             <!-- Relationship -->
             <div style="display:grid; grid-template-columns:1fr 1fr; gap:20px; text-align:left; margin-bottom:20px;">
                 <div style="background:#f0fdf4; padding:20px; border-radius:16px; border:1px solid #dcfce7;">
-                    <h5 style="color:#166534; margin-bottom:8px;"><i class="fas fa-heart"></i> 궁합이 잘 맞는 유형</h5>
+                    <h5 style="color:#166534; margin-bottom:8px;"><i class="fas fa-heart"></i> ${t('궁합이 잘 맞는 유형','Best Compatibility')}</h5>
                     <p style="font-size:0.9rem; color:#14532d; font-weight:700;">${d.good.join(' · ')}</p>
                 </div>
                 <div style="background:#eff6ff; padding:20px; border-radius:16px; border:1px solid #dbeafe;">
-                    <h5 style="color:#1e40af; margin-bottom:8px;"><i class="fas fa-people-arrows"></i> 관계 개선이 필요한 유형</h5>
+                    <h5 style="color:#1e40af; margin-bottom:8px;"><i class="fas fa-people-arrows"></i> ${t('관계 개선이 필요한 유형','Challenging Compatibility')}</h5>
                     <p style="font-size:0.9rem; color:#1e3a8a; font-weight:700;">${d.bad.join(' · ')}</p>
                 </div>
             </div>
