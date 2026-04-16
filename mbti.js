@@ -182,14 +182,18 @@ function showResult() {
 
             <!-- Cognitive Functions -->
             <div style="background:var(--bg-color); padding:25px; border-radius:20px; text-align:left; margin-bottom:20px; border:1px solid var(--border-color);">
-                <h4 style="color:var(--accent-color); margin-bottom:15px;"><i class="fas fa-brain"></i> 인지 기능 스택</h4>
+                <h4 style="color:var(--accent-color); margin-bottom:15px;"><i class="fas fa-brain"></i> ${t('인지 기능 스택','Cognitive Function Stack')}</h4>
                 <div style="display:grid; grid-template-columns:repeat(4,1fr); gap:12px; text-align:center;">
-                    ${d.cognitive_functions.map((fn, i) => `
+                    ${d.cognitive_functions.map((fn, i) => {
+                        const fnLabels = lang === 'ko'
+                            ? ['주기능','부기능','3차기능','열등기능']
+                            : ['Dominant','Auxiliary','Tertiary','Inferior'];
+                        return `
                         <div style="background:var(--card-bg); padding:12px; border-radius:12px;">
-                            <div style="font-size:0.7rem; color:var(--text-muted); margin-bottom:4px;">${['주기능','부기능','3차기능','열등기능'][i]}</div>
+                            <div style="font-size:0.7rem; color:var(--text-muted); margin-bottom:4px;">${fnLabels[i]}</div>
                             <div style="font-weight:800; color:var(--primary-color); font-size:0.9rem;">${fn}</div>
-                        </div>
-                    `).join('')}
+                        </div>`;
+                    }).join('')}
                 </div>
             </div>
 
