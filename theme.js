@@ -46,36 +46,43 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // ─── 3. SNS Share ──────────────────────────────────────────────
     window.getShareUI = function (title, text) {
+        const lang = localStorage.getItem('lang') || 'ko';
         const sT = title.replace(/'/g, "\\'").replace(/"/g, '&quot;');
         const sX = text.replace(/'/g, "\\'").replace(/"/g, '&quot;');
+        const shareTitle = lang === 'ko' ? '결과 공유하기' : 'Share Results';
         return `
             <div class="share-container" style="margin-top:40px; padding:30px; background:var(--card-bg);
                  border-radius:20px; border:1px solid var(--border-color); text-align:center;">
                 <h4 style="color:var(--primary-color); margin-bottom:20px; font-size:1.1rem;">
-                    <i class="fas fa-share-nodes"></i> 결과 공유하기
+                    <i class="fas fa-share-nodes"></i> ${shareTitle}
                 </h4>
                 <div style="display:flex; justify-content:center; gap:15px;">
-                    <button onclick="shareResult('kakao','${sT}','${sX}')" style="background:#FEE500; color:#000; border:none; width:50px; height:50px; border-radius:50%; font-size:1.5rem; cursor:pointer;" title="카카오톡"><i class="fas fa-comment"></i></button>
-                    <button onclick="shareResult('facebook','${sT}','${sX}')" style="background:#1877F2; color:white; border:none; width:50px; height:50px; border-radius:50%; font-size:1.5rem; cursor:pointer;" title="페이스북"><i class="fab fa-facebook-f"></i></button>
-                    <button onclick="shareResult('twitter','${sT}','${sX}')" style="background:#1DA1F2; color:white; border:none; width:50px; height:50px; border-radius:50%; font-size:1.5rem; cursor:pointer;" title="X(트위터)"><i class="fab fa-twitter"></i></button>
-                    <button onclick="shareResult('copy','${sT}','${sX}')" style="background:var(--text-muted); color:white; border:none; width:50px; height:50px; border-radius:50%; font-size:1.5rem; cursor:pointer;" title="링크 복사"><i class="fas fa-link"></i></button>
+                    <button onclick="shareResult('kakao','${sT}','${sX}')" style="background:#FEE500; color:#000; border:none; width:50px; height:50px; border-radius:50%; font-size:1.5rem; cursor:pointer;" title="${lang === 'ko' ? '카카오톡' : 'KakaoTalk'}"><i class="fas fa-comment"></i></button>
+                    <button onclick="shareResult('facebook','${sT}','${sX}')" style="background:#1877F2; color:white; border:none; width:50px; height:50px; border-radius:50%; font-size:1.5rem; cursor:pointer;" title="Facebook"><i class="fab fa-facebook-f"></i></button>
+                    <button onclick="shareResult('twitter','${sT}','${sX}')" style="background:#1DA1F2; color:white; border:none; width:50px; height:50px; border-radius:50%; font-size:1.5rem; cursor:pointer;" title="X (Twitter)"><i class="fab fa-twitter"></i></button>
+                    <button onclick="shareResult('copy','${sT}','${sX}')" style="background:var(--text-muted); color:white; border:none; width:50px; height:50px; border-radius:50%; font-size:1.5rem; cursor:pointer;" title="${lang === 'ko' ? '링크 복사' : 'Copy Link'}"><i class="fas fa-link"></i></button>
                 </div>
             </div>`;
     };
 
     window.shareResult = function (platform, title, text) {
+        const lang = localStorage.getItem('lang') || 'ko';
         const url  = window.location.href;
         const full = `${title} | VitalRest`;
-        const msg  = `${text}\n지금 VitalRest에서 확인해 보세요!`;
+        const msg  = lang === 'ko'
+            ? `${text}\n지금 VitalRest에서 확인해 보세요!`
+            : `${text}\nCheck it out on VitalRest!`;
         if (platform === 'kakao') {
             if (navigator.share) navigator.share({ title: full, text: msg, url }).catch(console.error);
-            else alert("모바일에서 카카오톡 공유가 가능합니다. 데스크톱에서는 '링크 복사'를 이용해 주세요.");
+            else alert(lang === 'ko'
+                ? "모바일에서 카카오톡 공유가 가능합니다. 데스크톱에서는 '링크 복사'를 이용해 주세요."
+                : "KakaoTalk sharing is available on mobile. On desktop, please use 'Copy Link'.");
         } else if (platform === 'facebook') {
             window.open(`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(url)}`, '_blank', 'width=600,height=400');
         } else if (platform === 'twitter') {
             window.open(`https://twitter.com/intent/tweet?text=${encodeURIComponent(full + '\n' + msg)}&url=${encodeURIComponent(url)}`, '_blank', 'width=600,height=400');
         } else if (platform === 'copy') {
-            navigator.clipboard.writeText(url).then(() => alert('링크가 클립보드에 복사되었습니다!'));
+            navigator.clipboard.writeText(url).then(() => alert(lang === 'ko' ? '링크가 클립보드에 복사되었습니다!' : 'Link copied to clipboard!'));
         }
     };
 

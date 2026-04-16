@@ -38,6 +38,8 @@ document.addEventListener('DOMContentLoaded', () => {
         testData.forEach(test => {
             const meta = testMeta[test.id] || { icon: 'fa-brain', color: 'var(--accent-color)', badge_ko: '전문', badge_en: 'Expert' };
             const badge = lang === 'ko' ? meta.badge_ko : meta.badge_en;
+            const title = (lang === 'en' && test.title_en) ? test.title_en : test.title;
+            const desc = (lang === 'en' && test.description_en) ? test.description_en : test.description;
             const card = document.createElement('div');
             card.className = 'drug-card';
             card.innerHTML = `
@@ -48,8 +50,8 @@ document.addEventListener('DOMContentLoaded', () => {
                 <div style="display:flex; align-items:center; gap:8px; margin-bottom:10px;">
                     <span style="font-size:0.7rem; background:${meta.color}22; color:${meta.color}; padding:3px 10px; border-radius:20px; font-weight:800;">${badge}</span>
                 </div>
-                <h3 class="card-name" style="font-size:1rem; line-height:1.4;">${test.title}</h3>
-                <p style="font-size:0.88rem; color:var(--text-muted); margin-bottom:20px; line-height:1.6;">${test.description}</p>
+                <h3 class="card-name" style="font-size:1rem; line-height:1.4;">${title}</h3>
+                <p style="font-size:0.88rem; color:var(--text-muted); margin-bottom:20px; line-height:1.6;">${desc}</p>
                 <div style="display:flex; align-items:center; gap:10px; margin-bottom:20px; font-size:0.82rem; color:var(--text-muted);">
                     <span><i class="fas fa-list-ol"></i> ${test.questions.length}${t('문항','questions')}</span>
                     <span><i class="fas fa-clock"></i> ${t('약','~')} ${Math.ceil(test.questions.length / 3)}${t('분','min')}</span>
@@ -72,10 +74,13 @@ document.addEventListener('DOMContentLoaded', () => {
     };
 
     function renderQuestion() {
+        const lang = localStorage.getItem('lang') || 'ko';
         const q = currentTest.questions[currentQuestionIndex];
         const total = currentTest.questions.length;
         const progress = (currentQuestionIndex / total) * 100;
         const meta = testMeta[currentTest.id] || { color: 'var(--accent-color)' };
+        const qText = (lang === 'en' && q.q_en) ? q.q_en : q.q;
+        const testTitle = (lang === 'en' && currentTest.title_en) ? currentTest.title_en : currentTest.title;
 
         modalContent.innerHTML = `
             <div style="padding:10px 0 30px;">
@@ -83,20 +88,22 @@ document.addEventListener('DOMContentLoaded', () => {
                     <div class="progress-bar" style="width:${progress}%; background:${meta.color};"></div>
                 </div>
                 <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:25px;">
-                    <span style="font-size:0.75rem; background:${meta.color}22; color:${meta.color}; padding:4px 12px; border-radius:20px; font-weight:800;">${currentTest.title}</span>
+                    <span style="font-size:0.75rem; background:${meta.color}22; color:${meta.color}; padding:4px 12px; border-radius:20px; font-weight:800;">${testTitle}</span>
                     <span style="font-size:0.85rem; color:var(--text-muted); font-weight:700;">${currentQuestionIndex + 1} / ${total}</span>
                 </div>
-                <h2 style="font-size:1.25rem; line-height:1.7; color:var(--primary-color); margin-bottom:30px; padding-bottom:20px; border-bottom:1px solid var(--border-color);">${q.q}</h2>
+                <h2 style="font-size:1.25rem; line-height:1.7; color:var(--primary-color); margin-bottom:30px; padding-bottom:20px; border-bottom:1px solid var(--border-color);">${qText}</h2>
                 <div style="display:grid; gap:10px;">
-                    ${q.options.map((opt, idx) => `
+                    ${q.options.map((opt, idx) => {
+                        const optText = (lang === 'en' && opt.text_en) ? opt.text_en : opt.text;
+                        return `
                         <button class="selectable-card" onclick="selectOption(${opt.score}, ${idx})"
                             style="padding:18px 20px; text-align:left; display:flex; align-items:center; gap:14px; border-radius:14px; cursor:pointer; transition:0.2s;">
                             <span style="width:32px; height:32px; border-radius:50%; border:2px solid var(--border-color);
                                          display:flex; align-items:center; justify-content:center;
                                          font-weight:800; font-size:0.8rem; flex-shrink:0; color:${meta.color};">${idx + 1}</span>
-                            <span style="font-size:0.95rem; font-weight:600; line-height:1.4;">${opt.text}</span>
-                        </button>
-                    `).join('')}
+                            <span style="font-size:0.95rem; font-weight:600; line-height:1.4;">${optText}</span>
+                        </button>`;
+                    }).join('')}
                 </div>
             </div>
         `;
@@ -122,10 +129,12 @@ document.addEventListener('DOMContentLoaded', () => {
     };
 
     function getResultInfo() {
-        for (const range in currentTest.results) {
+        const lang = localStorage.getItem('lang') || 'ko';
+        const resultSource = (lang === 'en' && currentTest.results_en) ? currentTest.results_en : currentTest.results;
+        for (const range in resultSource) {
             const [min, max] = range.split('-').map(Number);
             if (totalScore >= min && totalScore <= max) {
-                return { text: currentTest.results[range], range, min, max };
+                return { text: resultSource[range], range, min, max };
             }
         }
         return { text: t('결과를 분석하는 중입니다.', 'Analyzing your results.'), range: '0-0', min: 0, max: 0 };

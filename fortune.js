@@ -158,9 +158,9 @@ document.addEventListener('DOMContentLoaded', () => {
                             <h4 style="font-size:1.1rem; font-weight:900; color:var(--primary-color); margin:0;">${card.name}</h4>
                         </div>
                     </div>
-                    <p style="font-size:0.95rem; line-height:1.9; color:var(--text-main); margin-bottom:12px;">${card.meaning}</p>
+                    <p style="font-size:0.95rem; line-height:1.9; color:var(--text-main); margin-bottom:12px;">${(lang === 'en' && card.meaning_en) ? card.meaning_en : card.meaning}</p>
                     <div style="display:flex; flex-wrap:wrap; gap:6px;">
-                        ${card.keywords.split('·').map(kw => `<span style="background:${pos.color}11; color:${pos.color}; padding:3px 10px; border-radius:20px; font-size:0.75rem; font-weight:700;">${kw.trim()}</span>`).join('')}
+                        ${((lang === 'en' && card.keywords_en) ? card.keywords_en : card.keywords).split('·').map(kw => `<span style="background:${pos.color}11; color:${pos.color}; padding:3px 10px; border-radius:20px; font-size:0.75rem; font-weight:700;">${kw.trim()}</span>`).join('')}
                     </div>
                 </div>
             `;
@@ -398,9 +398,9 @@ document.addEventListener('DOMContentLoaded', () => {
                                 <div style="font-size:0.8rem; color:var(--text-muted);">${zodiac.element}</div>
                             </div>
                             <div>
-                                <p style="font-size:0.95rem; line-height:1.8; color:var(--text-main);">${zodiac.trait}</p>
+                                <p style="font-size:0.95rem; line-height:1.8; color:var(--text-main);">${(lang === 'en' && zodiac.trait_en) ? zodiac.trait_en : zodiac.trait}</p>
                                 <div style="margin-top:10px; display:flex; gap:10px; font-size:0.82rem;">
-                                    <span style="background:#fef3c7; color:#92400e; padding:4px 10px; border-radius:20px; font-weight:700;">${t('행운의 색','Lucky Color')}: ${zodiac.lucky_color}</span>
+                                    <span style="background:#fef3c7; color:#92400e; padding:4px 10px; border-radius:20px; font-weight:700;">${t('행운의 색','Lucky Color')}: ${(lang === 'en' && zodiac.lucky_color_en) ? zodiac.lucky_color_en : zodiac.lucky_color}</span>
                                     <span style="background:#dbeafe; color:#1e40af; padding:4px 10px; border-radius:20px; font-weight:700;">${t('행운의 숫자','Lucky Number')}: ${zodiac.lucky_number}</span>
                                 </div>
                             </div>
@@ -411,7 +411,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     <div style="background:var(--card-bg); border:1px solid var(--border-color); padding:30px; border-radius:20px; margin-bottom:25px;">
                         <h4 style="color:var(--primary-color); margin-bottom:15px;"><i class="fas fa-scroll"></i> ${t('격국 및 운기 분석','Pattern & Fortune Analysis')}</h4>
                         <p style="font-size:0.95rem; line-height:2; color:var(--text-main);">
-                            ${fortuneData.saju.descriptions.professional_analysis}
+                            ${(lang === 'en' && fortuneData.saju.descriptions.professional_analysis_en) ? fortuneData.saju.descriptions.professional_analysis_en : fortuneData.saju.descriptions.professional_analysis}
                         </p>
                     </div>
 

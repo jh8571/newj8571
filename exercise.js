@@ -76,7 +76,7 @@ function renderExerciseReport(bmi, guide, program, color, height, weight, age) {
             <div class="report-header">
                 <div class="report-badge" style="background:${color}22; color:${color};">${t('건강 분석','Health Analysis')} · ${dateStr}</div>
                 <h2 style="font-size:3.5rem; font-weight:900; margin-bottom:8px; color:var(--primary-color);">BMI ${bmi}</h2>
-                <p style="font-size:1.2rem; font-weight:800; color:${color};">${guide.label} — ${guide.desc}</p>
+                <p style="font-size:1.2rem; font-weight:800; color:${color};">${(lang === 'en' && guide.label_en) ? guide.label_en : guide.label} — ${(lang === 'en' && guide.desc_en) ? guide.desc_en : guide.desc}</p>
             </div>
 
             <div style="padding:40px;">
@@ -110,9 +110,9 @@ function renderExerciseReport(bmi, guide, program, color, height, weight, age) {
                 <!-- Recommended Program -->
                 <div style="background:var(--bg-color); padding:25px; border-radius:24px; margin-bottom:30px; border-left:6px solid ${color};">
                     <h3 style="font-size:1.3rem; margin-bottom:8px; color:var(--primary-color);">
-                        <i class="fas fa-running" style="color:${color};"></i> ${t('추천 프로그램','Recommended Program')}: ${program.title}
+                        <i class="fas fa-running" style="color:${color};"></i> ${t('추천 프로그램','Recommended Program')}: ${(lang === 'en' && program.title_en) ? program.title_en : program.title}
                     </h3>
-                    <p style="color:var(--text-muted); font-size:0.9rem;">${program.desc}</p>
+                    <p style="color:var(--text-muted); font-size:0.9rem;">${(lang === 'en' && program.desc_en) ? program.desc_en : program.desc}</p>
                 </div>
 
                 <!-- Exercise Routines -->
@@ -123,35 +123,41 @@ function renderExerciseReport(bmi, guide, program, color, height, weight, age) {
                     ${program.exerciseIds.map((id, idx) => {
                         const ex = exerciseData.exercises.find(e => e.id === id);
                         if (!ex) return '';
+                        const exName = (lang === 'en' && ex.name_en) ? ex.name_en : ex.name;
+                        const exCat = (lang === 'en' && ex.category_en) ? ex.category_en : ex.category;
+                        const exTarget = (lang === 'en' && ex.target_en) ? ex.target_en : ex.target;
+                        const exDiff = (lang === 'en' && ex.difficulty_en) ? ex.difficulty_en : ex.difficulty;
+                        const exSteps = (lang === 'en' && ex.steps_en) ? ex.steps_en : ex.steps;
+                        const exTips = (lang === 'en' && ex.posture_tips_en) ? ex.posture_tips_en : ex.posture_tips;
                         return `
                             <div class="exercise-focus-item">
                                 <div class="exercise-image-wrapper">
-                                    <img src="${ex.image}" alt="${ex.name}"
+                                    <img src="${ex.image}" alt="${exName}"
                                      style="width:100%; height:100%; object-fit:cover; border-radius:12px;"
-                                     onerror="this.parentElement.innerHTML='<div style=\'width:100%;height:100%;display:flex;align-items:center;justify-content:center;flex-direction:column;background:#f1f5f9;border-radius:12px;\'><i class=\'fas fa-dumbbell\' style=\'font-size:2.5rem;color:#94a3b8;margin-bottom:8px;\'></i><span style=\'font-size:0.75rem;color:#94a3b8;\'>${ex.name}</span></div>'"
+                                     onerror="this.parentElement.innerHTML='<div style=\'width:100%;height:100%;display:flex;align-items:center;justify-content:center;flex-direction:column;background:#f1f5f9;border-radius:12px;\'><i class=\'fas fa-dumbbell\' style=\'font-size:2.5rem;color:#94a3b8;margin-bottom:8px;\'></i><span style=\'font-size:0.75rem;color:#94a3b8;\'>${exName}</span></div>'"
                                 >
                                 </div>
                                 <div style="flex:1;">
                                     <div style="display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:12px;">
                                         <div>
                                             <div style="display:flex; gap:8px; margin-bottom:6px; flex-wrap:wrap;">
-                                                <span style="font-size:0.72rem; background:${color}22; color:${color}; padding:3px 10px; border-radius:50px; font-weight:800;">${ex.category}</span>
-                                                <span style="font-size:0.72rem; background:var(--bg-color); color:var(--text-muted); padding:3px 10px; border-radius:50px; font-weight:700;">${ex.target}</span>
+                                                <span style="font-size:0.72rem; background:${color}22; color:${color}; padding:3px 10px; border-radius:50px; font-weight:800;">${exCat}</span>
+                                                <span style="font-size:0.72rem; background:var(--bg-color); color:var(--text-muted); padding:3px 10px; border-radius:50px; font-weight:700;">${exTarget}</span>
                                             </div>
                                             <h5 style="font-size:1.15rem; font-weight:900; color:var(--primary-color);">
-                                                <span style="color:${color};">${idx + 1}.</span> ${ex.name}
+                                                <span style="color:${color};">${idx + 1}.</span> ${exName}
                                             </h5>
                                         </div>
-                                        <span style="font-size:0.8rem; background:var(--card-bg); color:var(--text-muted); padding:4px 10px; border-radius:20px; font-weight:700; white-space:nowrap;">${t('난이도','Level')}: ${ex.difficulty}</span>
+                                        <span style="font-size:0.8rem; background:var(--card-bg); color:var(--text-muted); padding:4px 10px; border-radius:20px; font-weight:700; white-space:nowrap;">${t('난이도','Level')}: ${exDiff}</span>
                                     </div>
                                     <div style="margin-bottom:12px;">
                                         <p style="font-size:0.85rem; font-weight:800; color:var(--text-main); margin-bottom:6px;">${t('수행 방법','How to Perform')}</p>
                                         <ol style="padding-left:18px; font-size:0.88rem; color:var(--text-muted); line-height:1.8; margin:0;">
-                                            ${ex.steps.map(step => `<li>${step}</li>`).join('')}
+                                            ${exSteps.map(step => `<li>${step}</li>`).join('')}
                                         </ol>
                                     </div>
                                     <div style="background:linear-gradient(135deg,#fffbeb,#fef3c7); padding:12px 15px; border-radius:12px; font-size:0.83rem; color:#92400e; border:1px solid #fef3c7;">
-                                        <strong><i class="fas fa-lightbulb"></i> ${t('자세 포인트','Form Tips')}:</strong> ${ex.posture_tips}
+                                        <strong><i class="fas fa-lightbulb"></i> ${t('자세 포인트','Form Tips')}:</strong> ${exTips}
                                     </div>
                                 </div>
                             </div>
