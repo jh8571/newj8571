@@ -227,7 +227,7 @@ function showResult() {
 
             <!-- Health Tips -->
             <div style="background:var(--card-bg); border:1px solid var(--border-color); padding:25px; border-radius:20px; text-align:left; margin-bottom:20px;">
-                <h4 style="color:#10b981; margin-bottom:12px;"><i class="fas fa-dumbbell"></i> 건강 & 웰니스 가이드</h4>
+                <h4 style="color:#10b981; margin-bottom:12px;"><i class="fas fa-dumbbell"></i> ${t('건강 & 웰니스 가이드','Health & Wellness Guide')}</h4>
                 <p style="font-size:0.9rem; line-height:1.8; color:var(--text-main);">${d.health_tip}</p>
             </div>
 
