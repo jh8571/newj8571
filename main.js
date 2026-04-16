@@ -511,22 +511,22 @@ document.addEventListener('DOMContentLoaded', () => {
         
         modalContent.innerHTML = `
             <div class="report-header" style="text-align: left; padding: 0 0 30px; background: none; border-bottom: 2px solid #dbeafe;">
-                <div class="report-badge" style="background:#3b82f6; color:white;">FDA Drug Label</div>
+                <div class="report-badge" style="background:#3b82f6; color:white;">FDA 의약품 정보</div>
                 <h2 style="font-size: 2.2rem; margin-top: 10px; color:#1e40af;">${brandName}</h2>
                 <p style="color: #3b82f6; font-weight: 800;">${manufacturer}</p>
             </div>
             <div style="margin-top: 30px; display: grid; gap: 20px;">
                 <div style="background: #eff6ff; padding: 25px; border-radius: 20px;">
-                    <h4 style="color: #1e40af; margin-bottom: 10px;">Indications & Usage</h4>
-                    <p style="line-height: 1.6;">${item.indications_and_usage ? item.indications_and_usage[0] : 'No information available'}</p>
+                    <h4 style="color: #1e40af; margin-bottom: 10px;">적응증 및 용법</h4>
+                    <p style="line-height: 1.6;">${item.indications_and_usage ? item.indications_and_usage[0] : '정보 없음'}</p>
                 </div>
                 <div style="background: #f8fafc; padding: 25px; border-radius: 20px;">
-                    <h4 style="color: #1e40af; margin-bottom: 10px;">Dosage & Administration</h4>
-                    <p style="line-height: 1.6;">${item.dosage_and_administration ? item.dosage_and_administration[0] : 'No information available'}</p>
+                    <h4 style="color: #1e40af; margin-bottom: 10px;">용량 및 투여</h4>
+                    <p style="line-height: 1.6;">${item.dosage_and_administration ? item.dosage_and_administration[0] : '정보 없음'}</p>
                 </div>
                 <div style="background: #fffbeb; padding: 25px; border-radius: 20px; border: 1px solid #fef3c7;">
-                    <h4 style="color: #92400e; margin-bottom: 10px;"><i class="fas fa-exclamation-circle"></i> Warnings</h4>
-                    <p style="line-height: 1.6; color: #92400e;">${item.warnings ? item.warnings[0] : 'No information available'}</p>
+                    <h4 style="color: #92400e; margin-bottom: 10px;"><i class="fas fa-exclamation-circle"></i> 경고 사항</h4>
+                    <p style="line-height: 1.6; color: #92400e;">${item.warnings ? item.warnings[0] : '정보 없음'}</p>
                 </div>
             </div>
         `;
