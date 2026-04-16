@@ -19,7 +19,12 @@
         "heart"
       ],
       "name_en": "Vitamin C (L-Ascorbic Acid)",
-      "category_en": "Vitamin / Water-Soluble"
+      "category_en": "Vitamin / Water-Soluble",
+      "efficacy_en": "Powerful antioxidant, promotes collagen synthesis, enhances iron absorption, activates immune cells",
+      "dri_en": "100mg/day (optimal 500–1,000mg recommended)",
+      "food_en": "Red pepper, bell pepper, kiwi, orange, strawberry, spinach, broccoli",
+      "caution_en": "Over 2,000mg/day may cause diarrhea or GI upset. Caution with history of kidney stones.",
+      "timing_en": "After breakfast"
     },
     {
       "id": "n2",
@@ -40,7 +45,12 @@
         "skin"
       ],
       "name_en": "Omega-3 Fatty Acids (EPA/DHA)",
-      "category_en": "Fatty Acid / Essential"
+      "category_en": "Fatty Acid / Essential",
+      "efficacy_en": "Reduces triglycerides, improves blood circulation, supports brain function, relieves dry eyes, anti-inflammatory",
+      "dri_en": "500–2,000mg EPA+DHA combined (cardiovascular risk: 2,000–4,000mg)",
+      "food_en": "Salmon, mackerel, sardine, walnut, perilla oil",
+      "caution_en": "Inhibits blood clotting — caution with anticoagulants and before surgery. Check for fish allergy.",
+      "timing_en": "With a meal"
     },
     {
       "id": "n3",
@@ -57,7 +67,12 @@
         "antiaging"
       ],
       "name_en": "Lutein (Marigold Extract)",
-      "category_en": "Carotenoid / Antioxidant"
+      "category_en": "Carotenoid / Antioxidant",
+      "efficacy_en": "Maintains macular pigment density, filters blue light and UV, prevents lens aging",
+      "dri_en": "10–20mg/day",
+      "food_en": "Spinach, kale, broccoli, egg yolk",
+      "caution_en": "Excess intake may cause temporary skin yellowing (reversible). Fat-soluble — take with a meal containing fat.",
+      "timing_en": "With a meal"
     },
     {
       "id": "n4",
@@ -77,7 +92,12 @@
         "stress"
       ],
       "name_en": "Magnesium (Mg)",
-      "category_en": "Mineral / Macro"
+      "category_en": "Mineral / Macro",
+      "efficacy_en": "Involved in 300+ enzyme reactions, relaxes muscles, improves sleep quality, reduces stress hormones",
+      "dri_en": "Men 350–400mg, women 280–320mg",
+      "food_en": "Almonds, bananas, spinach, legumes, dark chocolate",
+      "caution_en": "Caution in renal insufficiency. High doses may cause diarrhea (glycinate form preferred over oxide).",
+      "timing_en": "After dinner"
     },
     {
       "id": "n5",
@@ -98,7 +118,12 @@
         "heart"
       ],
       "name_en": "Vitamin D3 (Cholecalciferol)",
-      "category_en": "Vitamin / Fat-Soluble"
+      "category_en": "Vitamin / Fat-Soluble",
+      "efficacy_en": "Regulates calcium/phosphorus absorption, maintains bone and teeth, modulates immune cells, supports mood via serotonin",
+      "dri_en": "1,500–2,000 IU (up to 4,000 IU if deficiency confirmed)",
+      "food_en": "Salmon, tuna, egg yolk, UV-dried shiitake mushroom",
+      "caution_en": "Fat-soluble — long-term high doses risk hypercalcemia. Target blood level: 60–80 ng/mL.",
+      "timing_en": "After breakfast"
     },
     {
       "id": "n6",
@@ -118,7 +143,12 @@
         "antiaging"
       ],
       "name_en": "Zinc (Zn)",
-      "category_en": "Mineral / Trace"
+      "category_en": "Mineral / Trace",
+      "efficacy_en": "Normalizes immune function, supports cell division and DNA synthesis, wound healing, testosterone synthesis",
+      "dri_en": "Men 10–11mg, women 7–8mg (upper limit: 35mg)",
+      "food_en": "Oysters, beef, eggs, nuts, pumpkin seeds",
+      "caution_en": "Excess intake inhibits copper absorption and may impair immunity. Competes with iron supplementation.",
+      "timing_en": "With a meal"
     },
     {
       "id": "n7",
@@ -136,7 +166,12 @@
         "fatigue"
       ],
       "name_en": "Phosphatidylserine (PS)",
-      "category_en": "Phospholipid / Brain Nutrient"
+      "category_en": "Phospholipid / Brain Nutrient",
+      "efficacy_en": "Improves age-related cognitive decline, enhances memory and learning, regulates cortisol (stress hormone)",
+      "dri_en": "300mg/day",
+      "food_en": "Soybeans, mackerel, organ meats",
+      "caution_en": "Excessive intake may cause insomnia. Check for soy allergy.",
+      "timing_en": "After breakfast"
     },
     {
       "id": "n8",
@@ -153,7 +188,12 @@
         "antiaging"
       ],
       "name_en": "Milk Thistle (Silymarin)",
-      "category_en": "Herbal / Hepatoprotective"
+      "category_en": "Herbal / Hepatoprotective",
+      "efficacy_en": "Protects and regenerates liver cells, scavenges free radicals, promotes bile secretion",
+      "dri_en": "140–420mg silymarin/day",
+      "food_en": "Milk thistle extract (primarily as supplement)",
+      "caution_en": "May cause reactions in those with Asteraceae allergy. Monitor with diabetes or anticoagulant medications.",
+      "timing_en": "With a meal"
     },
     {
       "id": "n9",
@@ -173,7 +213,12 @@
         "brain"
       ],
       "name_en": "Probiotics (Multi-Strain Complex)",
-      "category_en": "Probiotic / Live Culture"
+      "category_en": "Probiotic / Live Culture",
+      "efficacy_en": "Suppresses harmful bacteria, promotes beneficial bacteria growth, regulates bowel function, strengthens gut lining, modulates immunity",
+      "dri_en": "1–10 billion CFU (confirmed count, multi-strain formula)",
+      "food_en": "Yogurt, kimchi, miso, cheonggukjang, kefir",
+      "caution_en": "Consult a doctor if immunocompromised. Take 2+ hours apart from antibiotics.",
+      "timing_en": "On an empty stomach"
     },
     {
       "id": "n10",
@@ -193,7 +238,12 @@
         "fatigue"
       ],
       "name_en": "Glutathione (Reduced GSH)",
-      "category_en": "Antioxidant / Tripeptide"
+      "category_en": "Antioxidant / Tripeptide",
+      "efficacy_en": "Detoxifies heavy metals, reduces oxidative stress, activates immune cells, inhibits melanin synthesis",
+      "dri_en": "250–500mg (reduced L-glutathione form preferred)",
+      "food_en": "Asparagus, avocado, broccoli",
+      "caution_en": "Check for milk protein allergy. Long-term use may deplete zinc levels.",
+      "timing_en": "On an empty stomach"
     },
     {
       "id": "n11",
@@ -212,7 +262,12 @@
         "brain"
       ],
       "name_en": "Coenzyme Q10 (Ubiquinone/Ubiquinol)",
-      "category_en": "Coenzyme / Antioxidant"
+      "category_en": "Coenzyme / Antioxidant",
+      "efficacy_en": "Generates mitochondrial energy (ATP), strengthens heart muscle, antioxidant, supports blood pressure regulation",
+      "dri_en": "100–300mg/day (cardiovascular patients: 300–600mg)",
+      "food_en": "Beef heart, sardines, spinach, broccoli",
+      "caution_en": "May reduce warfarin efficacy. Fat-soluble — take with a fatty meal.",
+      "timing_en": "After breakfast"
     },
     {
       "id": "n12",
@@ -230,7 +285,12 @@
         "antiaging"
       ],
       "name_en": "MSM (Methylsulfonylmethane)",
-      "category_en": "Organic Sulfur / Joint Support"
+      "category_en": "Organic Sulfur / Joint Support",
+      "efficacy_en": "Protects joint cartilage, reduces inflammation, provides sulfur for collagen synthesis",
+      "dri_en": "1,500–3,000mg/day",
+      "food_en": "Milk, garlic, onion, broccoli (low content — supplement preferred)",
+      "caution_en": "Rare: digestive discomfort, headache, insomnia. Start with a low dose.",
+      "timing_en": "With a meal"
     },
     {
       "id": "n13",
@@ -249,7 +309,12 @@
         "antiaging"
       ],
       "name_en": "Vitamin B12 (Methylcobalamin)",
-      "category_en": "Vitamin / Water-Soluble"
+      "category_en": "Vitamin / Water-Soluble",
+      "efficacy_en": "Protects neurons (myelin sheath), supports red blood cell production, lowers homocysteine, energy metabolism",
+      "dri_en": "2.4μg (seniors/vegans: 500–1,000μg supplementation recommended)",
+      "food_en": "Liver, meat, oysters, milk, eggs",
+      "caution_en": "Vegans must supplement. Long-term PPI use impairs absorption.",
+      "timing_en": "After breakfast"
     },
     {
       "id": "n14",
@@ -268,7 +333,12 @@
         "hormone"
       ],
       "name_en": "GLA (Evening Primrose / Borage Oil)",
-      "category_en": "Fatty Acid / Omega-6"
+      "category_en": "Fatty Acid / Omega-6",
+      "efficacy_en": "Produces anti-inflammatory prostaglandins (PGE1), strengthens skin barrier, relieves premenstrual discomfort",
+      "dri_en": "240–480mg GLA/day",
+      "food_en": "Evening primrose seeds, borage seeds",
+      "caution_en": "Caution with anticoagulants. High doses may cause diarrhea or nausea.",
+      "timing_en": "After dinner"
     },
     {
       "id": "n15",
@@ -287,7 +357,12 @@
         "stress"
       ],
       "name_en": "L-Theanine",
-      "category_en": "Amino Acid / Relaxant"
+      "category_en": "Amino Acid / Relaxant",
+      "efficacy_en": "Induces alpha brainwaves for calm alertness, improves sleep quality, mitigates caffeine side effects",
+      "dri_en": "Relaxation/focus: 100–200mg / Sleep: 200–400mg",
+      "food_en": "Green tea, matcha, white tea",
+      "caution_en": "Caution during pregnancy. May enhance blood pressure-lowering effects of antihypertensives.",
+      "timing_en": "1 hour before sleep or fasted"
     },
     {
       "id": "n16",
@@ -305,7 +380,12 @@
         "antiaging"
       ],
       "name_en": "Hyaluronic Acid (HA, Low-Molecular)",
-      "category_en": "Glycosaminoglycan / Hydration"
+      "category_en": "Glycosaminoglycan / Hydration",
+      "efficacy_en": "Maintains skin dermis hydration, preserves joint synovial fluid viscosity, improves skin elasticity",
+      "dri_en": "Skin: 80–240mg / Joints: 200mg+",
+      "food_en": "Chicken wings, shark fin (primarily as supplement)",
+      "caution_en": "Pregnant/breastfeeding women should consult a healthcare professional.",
+      "timing_en": "On an empty stomach"
     },
     {
       "id": "n17",
@@ -323,7 +403,12 @@
         "antiaging"
       ],
       "name_en": "Marine Collagen Peptides (Low-Molecular)",
-      "category_en": "Protein / Structural"
+      "category_en": "Protein / Structural",
+      "efficacy_en": "Improves skin hydration and elasticity, reduces wrinkles, protects joint cartilage, maintains bone density",
+      "dri_en": "Skin: 2,500–5,000mg / Joints: 10,000mg",
+      "food_en": "Pollock skin, salmon skin, pork rinds",
+      "caution_en": "Check for fish/shellfish allergy. High-protein caution for kidney disease patients.",
+      "timing_en": "On an empty stomach"
     },
     {
       "id": "n18",
@@ -341,7 +426,12 @@
         "sleep"
       ],
       "name_en": "Calcium (Ca)",
-      "category_en": "Mineral / Macro"
+      "category_en": "Mineral / Macro",
+      "efficacy_en": "Builds bone and teeth, supports muscle contraction, nerve signal transmission, blood clotting",
+      "dri_en": "700–800mg/day for adults (upper limit: 2,500mg)",
+      "food_en": "Milk, cheese, dried anchovies, tofu, kale",
+      "caution_en": "Excess risks hypercalcemia or kidney stones. Must be balanced with Vitamin D3 and Magnesium.",
+      "timing_en": "After dinner"
     },
     {
       "id": "n19",
@@ -360,7 +450,12 @@
         "immune"
       ],
       "name_en": "Vitamin B6 (Pyridoxal-5-Phosphate)",
-      "category_en": "Vitamin / Water-Soluble"
+      "category_en": "Vitamin / Water-Soluble",
+      "efficacy_en": "Coenzyme for 100+ enzyme reactions, synthesizes neurotransmitters (serotonin, dopamine), lowers homocysteine",
+      "dri_en": "1.5mg (active P5P form has superior absorption)",
+      "food_en": "Chicken, salmon, banana, potato, sunflower seeds",
+      "caution_en": "Long-term high doses (100mg+) may cause peripheral nerve damage.",
+      "timing_en": "After breakfast"
     },
     {
       "id": "n20",
@@ -378,7 +473,12 @@
         "antiaging"
       ],
       "name_en": "Manganese (Mn)",
-      "category_en": "Mineral / Trace"
+      "category_en": "Mineral / Trace",
+      "efficacy_en": "Bone formation, energy metabolism, component of antioxidant enzyme (SOD-Mn)",
+      "dri_en": "3.0–4.0mg/day",
+      "food_en": "Whole grains, nuts, green tea, spinach",
+      "caution_en": "Deficiency is rare; inhalation of dust is neurotoxic — not a concern from food/supplement use.",
+      "timing_en": "With a meal"
     },
     {
       "id": "n21",
@@ -397,7 +497,12 @@
         "antiaging"
       ],
       "name_en": "Vitamin A (Retinol / Beta-Carotene)",
-      "category_en": "Vitamin / Fat-Soluble"
+      "category_en": "Vitamin / Fat-Soluble",
+      "efficacy_en": "Maintains night vision (rhodopsin synthesis), regulates skin keratinization, mucosal health, activates T-cells",
+      "dri_en": "Men 800μg RAE, women 650μg RAE (upper limit: 3,000μg)",
+      "food_en": "Liver, carrot, sweet potato, spinach, egg yolk",
+      "caution_en": "Fat-soluble — excess is toxic (headache, hair loss, bone pain). High doses forbidden during pregnancy.",
+      "timing_en": "After dinner"
     },
     {
       "id": "n22",
@@ -415,7 +520,12 @@
         "heart"
       ],
       "name_en": "Vitamin B1 (Thiamine)",
-      "category_en": "Vitamin / Water-Soluble"
+      "category_en": "Vitamin / Water-Soluble",
+      "efficacy_en": "Carbohydrate energy metabolism, maintains nervous system function, prevents lactic acid buildup",
+      "dri_en": "Men 1.2mg, women 1.1mg",
+      "food_en": "Pork, sunflower seeds, legumes, whole grains",
+      "caution_en": "Heavy alcohol consumption severely impairs absorption. High doses may cause digestive issues.",
+      "timing_en": "After breakfast"
     },
     {
       "id": "n23",
@@ -433,7 +543,12 @@
         "antiaging"
       ],
       "name_en": "Vitamin B2 (Riboflavin)",
-      "category_en": "Vitamin / Water-Soluble"
+      "category_en": "Vitamin / Water-Soluble",
+      "efficacy_en": "Supports cell growth and energy production (FAD/FMN coenzyme), antioxidant, may prevent migraines",
+      "dri_en": "Men 1.5mg, women 1.2mg",
+      "food_en": "Liver, milk, almonds, mushrooms, eggs",
+      "caution_en": "Bright yellow urine is normal. Protect from light — degrades in UV exposure.",
+      "timing_en": "After breakfast"
     },
     {
       "id": "n24",
@@ -452,7 +567,12 @@
         "fatigue"
       ],
       "name_en": "Vitamin B3 (Niacin/Niacinamide)",
-      "category_en": "Vitamin / Water-Soluble"
+      "category_en": "Vitamin / Water-Soluble",
+      "efficacy_en": "Generates NAD+ (energy/DNA repair), raises HDL cholesterol, strengthens skin barrier",
+      "dri_en": "14–16mg NE (skin/anti-aging: 250–500mg niacinamide)",
+      "food_en": "Chicken breast, tuna, peanuts, shiitake mushrooms",
+      "caution_en": "High-dose niacin causes flushing. Sustained-release niacin risks liver toxicity. Monitor blood sugar in diabetics.",
+      "timing_en": "With a meal"
     },
     {
       "id": "n25",
@@ -471,7 +591,12 @@
         "hormone"
       ],
       "name_en": "Vitamin B5 (Pantothenic Acid)",
-      "category_en": "Vitamin / Water-Soluble"
+      "category_en": "Vitamin / Water-Soluble",
+      "efficacy_en": "Synthesizes Coenzyme A (fat/carb metabolism), produces adrenal cortex hormones, supports wound healing",
+      "dri_en": "5mg/day (adequate intake)",
+      "food_en": "Liver, eggs, avocado, broccoli, sweet potato",
+      "caution_en": "Deficiency is rare. High doses may cause digestive discomfort.",
+      "timing_en": "After breakfast"
     },
     {
       "id": "n26",
@@ -489,7 +614,12 @@
         "blood_sugar"
       ],
       "name_en": "Biotin (Vitamin B7)",
-      "category_en": "Vitamin / Water-Soluble"
+      "category_en": "Vitamin / Water-Soluble",
+      "efficacy_en": "Promotes keratin synthesis (hair/nail strength), fatty acid synthesis, blood sugar regulation",
+      "dri_en": "30μg (hair/nails: 1,000–5,000μg)",
+      "food_en": "Liver, egg yolk, salmon, avocado, nuts",
+      "caution_en": "High doses can interfere with lab test results (thyroid, troponin). Discontinue before testing.",
+      "timing_en": "After breakfast"
     },
     {
       "id": "n27",
@@ -508,7 +638,12 @@
         "antiaging"
       ],
       "name_en": "Folate (Vitamin B9 / L-Methylfolate)",
-      "category_en": "Vitamin / Water-Soluble"
+      "category_en": "Vitamin / Water-Soluble",
+      "efficacy_en": "Essential for fetal neural tube development, DNA synthesis, red blood cell production, lowers homocysteine",
+      "dri_en": "400μg DFE (pregnancy preparation/pregnancy: 600–800μg)",
+      "food_en": "Leafy greens (spinach, asparagus), legumes, fortified grains",
+      "caution_en": "Can mask vitamin B12 deficiency. Interacts with anticonvulsants.",
+      "timing_en": "After breakfast"
     },
     {
       "id": "n28",
@@ -527,7 +662,12 @@
         "antiaging"
       ],
       "name_en": "Vitamin E (Mixed Tocopherols/Tocotrienols)",
-      "category_en": "Vitamin / Fat-Soluble"
+      "category_en": "Vitamin / Fat-Soluble",
+      "efficacy_en": "Prevents lipid peroxidation in cell membranes, supports immune function, protects skin from UV damage, reduces blood clot risk",
+      "dri_en": "12mg α-TE (upper limit: 400 IU/day)",
+      "food_en": "Sunflower seed oil, almonds, avocado, spinach",
+      "caution_en": "High doses inhibit blood clotting. Caution with anticoagulants. Store in a dark container.",
+      "timing_en": "With a meal"
     },
     {
       "id": "n29",
@@ -545,7 +685,12 @@
         "antiaging"
       ],
       "name_en": "Vitamin K2 (MK-7, Menaquinone-7)",
-      "category_en": "Vitamin / Fat-Soluble"
+      "category_en": "Vitamin / Fat-Soluble",
+      "efficacy_en": "Directs calcium into bones (activates osteocalcin), prevents arterial calcification, cardiovascular protection",
+      "dri_en": "75–200μg MK-7/day",
+      "food_en": "Natto, cheese, egg yolk, fermented foods",
+      "caution_en": "Reduces warfarin efficacy. Always consult your doctor before use.",
+      "timing_en": "After dinner"
     },
     {
       "id": "n30",
@@ -564,7 +709,12 @@
         "hormone"
       ],
       "name_en": "Iron (Heme / Chelated Non-heme)",
-      "category_en": "Mineral / Trace"
+      "category_en": "Mineral / Trace",
+      "efficacy_en": "Synthesizes hemoglobin and myoglobin (oxygen transport), energy production, maintains cognitive function",
+      "dri_en": "Men 10mg / Women (reproductive) 14–18mg / Pregnancy 24–27mg",
+      "food_en": "Liver, oysters, red meat, tofu, spinach (non-heme)",
+      "caution_en": "Coffee, tea, and calcium inhibit absorption. Excess causes oxidative damage. May cause constipation.",
+      "timing_en": "On an empty stomach"
     },
     {
       "id": "n31",
@@ -583,7 +733,12 @@
         "heart"
       ],
       "name_en": "Selenium (Se, Organic)",
-      "category_en": "Mineral / Trace"
+      "category_en": "Mineral / Trace",
+      "efficacy_en": "Component of glutathione peroxidase (GPx), thyroid hormone metabolism, antioxidant, anti-cancer research",
+      "dri_en": "60μg (upper limit: 400μg)",
+      "food_en": "Brazil nuts (1–2 nuts ≈ 100μg), tuna, oysters, eggs",
+      "caution_en": "Selenosis (toxicity): hair loss, nail damage, bad breath, neurological symptoms. Never exceed 400μg.",
+      "timing_en": "With a meal"
     },
     {
       "id": "n32",
@@ -601,7 +756,12 @@
         "fatigue"
       ],
       "name_en": "Chromium (Cr, Chromium Picolinate)",
-      "category_en": "Mineral / Trace"
+      "category_en": "Mineral / Trace",
+      "efficacy_en": "Enhances insulin action (blood sugar regulation), carbohydrate and fat metabolism, appetite control",
+      "dri_en": "25–35μg/day (adequate intake)",
+      "food_en": "Whole grains, broccoli, grape juice, beef",
+      "caution_en": "Risk of hypoglycemia when combined with antidiabetic drugs. Caution in kidney disease.",
+      "timing_en": "With a meal"
     },
     {
       "id": "n33",
@@ -620,7 +780,12 @@
         "brain"
       ],
       "name_en": "Iodine (I)",
-      "category_en": "Mineral / Trace"
+      "category_en": "Mineral / Trace",
+      "efficacy_en": "Synthesizes thyroid hormones (T3/T4), regulates basal metabolic rate, fetal brain development",
+      "dri_en": "150μg / Pregnancy 220μg / Lactation 290μg",
+      "food_en": "Dried seaweed (laver, kelp), yogurt, seafood",
+      "caution_en": "Excess intake is harmful for Hashimoto's thyroiditis. Do not exceed upper limit of 600μg.",
+      "timing_en": "With a meal"
     },
     {
       "id": "n34",
@@ -638,7 +803,12 @@
         "fatigue"
       ],
       "name_en": "L-Carnitine",
-      "category_en": "Amino Acid / Fat Metabolism"
+      "category_en": "Amino Acid / Fat Metabolism",
+      "efficacy_en": "Transports fatty acids into mitochondria for fat burning, aids exercise recovery, cardiac energy metabolism",
+      "dri_en": "Weight management: 1,000–2,000mg / Cardiovascular: 2,000–3,000mg",
+      "food_en": "Red meat, fish, poultry",
+      "caution_en": "Ongoing research on gut microbiome and TMAO production. High doses may cause nausea or diarrhea.",
+      "timing_en": "30 min before workout or morning fasted"
     },
     {
       "id": "n35",
@@ -657,7 +827,12 @@
         "stress"
       ],
       "name_en": "L-Glutamine",
-      "category_en": "Amino Acid / Gut Support"
+      "category_en": "Amino Acid / Gut Support",
+      "efficacy_en": "Primary fuel for intestinal epithelial cells, reduces intestinal permeability (leaky gut), supports immune cells",
+      "dri_en": "Gut health: 5–10g / Exercise recovery: 10–20g",
+      "food_en": "Meat, fish, eggs, legumes, cabbage",
+      "caution_en": "Contraindicated in renal failure and hepatic encephalopathy. Caution if sensitive to glutamate.",
+      "timing_en": "On an empty stomach"
     },
     {
       "id": "n36",
@@ -676,7 +851,12 @@
         "hormone"
       ],
       "name_en": "L-Tyrosine",
-      "category_en": "Amino Acid / Neurotransmitter"
+      "category_en": "Amino Acid / Neurotransmitter",
+      "efficacy_en": "Dopamine/norepinephrine precursor, supports focus and motivation, stress resistance",
+      "dri_en": "500–2,000mg (focus/stress)",
+      "food_en": "Chicken breast, tuna, tofu, eggs, cheese",
+      "caution_en": "Contraindicated with MAO inhibitors (hypertensive crisis risk). Caution in thyroid disorders.",
+      "timing_en": "On an empty stomach"
     },
     {
       "id": "n37",
@@ -695,7 +875,12 @@
         "weight"
       ],
       "name_en": "L-Tryptophan / 5-HTP",
-      "category_en": "Amino Acid / Serotonin Precursor"
+      "category_en": "Amino Acid / Serotonin Precursor",
+      "efficacy_en": "Serotonin synthesis precursor (mood balance), melatonin precursor (sleep induction), appetite regulation",
+      "dri_en": "Sleep: 5-HTP 50–200mg / L-Tryptophan 500–1,000mg",
+      "food_en": "Turkey, eggs, cheese, legumes, nuts",
+      "caution_en": "Risk of serotonin syndrome when combined with SSRIs or MAOIs. Caution during pregnancy.",
+      "timing_en": "30–60 min before sleep"
     },
     {
       "id": "n38",
@@ -714,7 +899,12 @@
         "antiaging"
       ],
       "name_en": "NAC (N-Acetylcysteine)",
-      "category_en": "Antioxidant Amino Acid"
+      "category_en": "Antioxidant Amino Acid",
+      "efficacy_en": "Glutathione precursor, mucolytic (respiratory health), liver detoxification, research into compulsive disorders",
+      "dri_en": "600–1,800mg (antioxidant/liver protection)",
+      "food_en": "Difficult to obtain from food — primarily taken as a supplement",
+      "caution_en": "May increase bleeding tendency. Caution with anticoagulants.",
+      "timing_en": "On an empty stomach"
     },
     {
       "id": "n39",
@@ -732,7 +922,12 @@
         "weight"
       ],
       "name_en": "BCAA (Branched-Chain Amino Acids)",
-      "category_en": "Amino Acid / Muscle"
+      "category_en": "Amino Acid / Muscle",
+      "efficacy_en": "Stimulates muscle protein synthesis (mTOR), prevents muscle loss, reduces exercise fatigue, liver protection",
+      "dri_en": "5–10g pre/post-workout (leucine minimum 2.5g)",
+      "food_en": "Meat, fish, whey protein, eggs",
+      "caution_en": "Monitor blood glucose in diabetes/insulin resistance. Caution in kidney failure.",
+      "timing_en": "Immediately before or after workout"
     },
     {
       "id": "n40",
@@ -752,7 +947,12 @@
         "blood_sugar"
       ],
       "name_en": "Glycine",
-      "category_en": "Amino Acid / Sleep"
+      "category_en": "Amino Acid / Sleep",
+      "efficacy_en": "Improves sleep quality (lowers core body temperature), collagen synthesis support, blood sugar regulation, cognition",
+      "dri_en": "Sleep: 3g before bed / Collagen support: 5–10g",
+      "food_en": "Gelatin, bone broth, collagen-rich cuts of meat",
+      "caution_en": "Generally safe. May interact with clozapine (antipsychotic medication).",
+      "timing_en": "Before sleep"
     },
     {
       "id": "n41",
@@ -772,7 +972,12 @@
         "antiaging"
       ],
       "name_en": "Korean Red Ginseng (6-Year Ginsenosides)",
-      "category_en": "Adaptogen / Herbal"
+      "category_en": "Adaptogen / Herbal",
+      "efficacy_en": "Activates immune cells (NK cells), recovers fatigue, improves blood flow, enhances memory/focus, anti-stress",
+      "dri_en": "Ginsenoside Rg1+Rb1+Rg3 combined 3–80mg",
+      "food_en": "6-year Korean red ginseng (health functional food)",
+      "caution_en": "Monitor with anticoagulants and antidiabetics. Excess may cause insomnia, headache, or elevated blood pressure.",
+      "timing_en": "Before breakfast"
     },
     {
       "id": "n42",
@@ -792,7 +997,12 @@
         "brain"
       ],
       "name_en": "Ashwagandha (KSM-66® Withanolides)",
-      "category_en": "Adaptogen / Herbal"
+      "category_en": "Adaptogen / Herbal",
+      "efficacy_en": "Lowers cortisol 23–33%, supports testosterone, activates thyroid function, anti-stress adaptogen",
+      "dri_en": "300–600mg (KSM-66® extract)",
+      "food_en": "Ashwagandha root (Ayurvedic herb — supplement form)",
+      "caution_en": "Caution with autoimmune diseases and hyperthyroidism. Contraindicated during pregnancy.",
+      "timing_en": "After dinner"
     },
     {
       "id": "n43",
@@ -813,7 +1023,12 @@
         "heart"
       ],
       "name_en": "Curcumin (Turmeric Extract + BioPerine)",
-      "category_en": "Polyphenol / Anti-Inflammatory"
+      "category_en": "Polyphenol / Anti-Inflammatory",
+      "efficacy_en": "Inhibits NF-κB (reduces systemic inflammation), relieves joint pain, antioxidant, increases brain BDNF",
+      "dri_en": "500–1,000mg curcumin (with BioPerine for absorption)",
+      "food_en": "Turmeric, curry powder",
+      "caution_en": "Inhibits blood clotting. Caution with gallstones. May reduce iron absorption.",
+      "timing_en": "With a meal"
     },
     {
       "id": "n44",
@@ -832,7 +1047,12 @@
         "gut"
       ],
       "name_en": "Berberine",
-      "category_en": "Alkaloid / Metabolic"
+      "category_en": "Alkaloid / Metabolic",
+      "efficacy_en": "Activates AMPK (metformin-like action), improves blood glucose and insulin resistance, reduces LDL cholesterol",
+      "dri_en": "500mg, 2–3 times daily before meals",
+      "food_en": "Goldenseal, phellodendron, barberry (primarily as supplement)",
+      "caution_en": "Strong interactions with antidiabetics, antibiotics, and immunosuppressants. Contraindicated in pregnancy. May cause GI upset.",
+      "timing_en": "30 min before meal"
     },
     {
       "id": "n45",
@@ -851,7 +1071,12 @@
         "lung"
       ],
       "name_en": "Quercetin",
-      "category_en": "Flavonoid / Antioxidant"
+      "category_en": "Flavonoid / Antioxidant",
+      "efficacy_en": "Inhibits histamine release (anti-allergy), powerful antioxidant, inhibits NF-κB (anti-inflammatory), senolytic",
+      "dri_en": "500–1,000mg/day",
+      "food_en": "Onion skins, capers, apple skins, broccoli",
+      "caution_en": "Inhibits blood clotting. May suppress thyroid function. Interacts with antibiotics and antihistamines.",
+      "timing_en": "With a meal"
     },
     {
       "id": "n46",
@@ -870,7 +1095,12 @@
         "blood_sugar"
       ],
       "name_en": "Resveratrol (Grape Skin Extract)",
-      "category_en": "Polyphenol / Longevity"
+      "category_en": "Polyphenol / Longevity",
+      "efficacy_en": "Activates sirtuins/SIRT1 (longevity genes), promotes mitochondrial biogenesis, cardiovascular protection, anti-inflammatory",
+      "dri_en": "150–500mg trans-resveratrol/day",
+      "food_en": "Grape skin, red wine, mulberry, peanut skin",
+      "caution_en": "Estrogen-like activity — caution with hormone-sensitive tumors. Interacts with anticoagulants.",
+      "timing_en": "With a meal"
     },
     {
       "id": "n47",
@@ -890,7 +1120,12 @@
         "heart"
       ],
       "name_en": "Astaxanthin (Haematococcus Algae)",
-      "category_en": "Carotenoid / Antioxidant"
+      "category_en": "Carotenoid / Antioxidant",
+      "efficacy_en": "6,000× stronger antioxidant than Vitamin C, relieves eye fatigue, protects skin from UV damage, reduces muscle damage",
+      "dri_en": "4–12mg (eye: 6mg / skin: 4mg / exercise: 12mg)",
+      "food_en": "Salmon, krill, crayfish (primarily as supplement)",
+      "caution_en": "High doses may cause skin pigmentation. Inhibits blood clotting. May interact with diabetes medications.",
+      "timing_en": "With a meal"
     },
     {
       "id": "n48",
@@ -908,7 +1143,12 @@
         "gut"
       ],
       "name_en": "Boswellia (AKBA Standardized)",
-      "category_en": "Herbal / Anti-Inflammatory"
+      "category_en": "Herbal / Anti-Inflammatory",
+      "efficacy_en": "Inhibits 5-LOX (blocks arachidonic acid pathway), protects joint cartilage, reduces inflammatory pain",
+      "dri_en": "300–500mg (product containing 100mg+ AKBA)",
+      "food_en": "Indian frankincense resin (supplement form)",
+      "caution_en": "Contraindicated in pregnancy (may stimulate uterine contractions). Possible digestive discomfort.",
+      "timing_en": "With a meal"
     },
     {
       "id": "n49",
@@ -927,7 +1167,12 @@
         "fatigue"
       ],
       "name_en": "Ginkgo Biloba (EGb761® Ginkgoflavone)",
-      "category_en": "Herbal / Cognitive"
+      "category_en": "Herbal / Cognitive",
+      "efficacy_en": "Improves peripheral and cerebral blood flow, inhibits platelet aggregation, enhances memory/focus, relieves tinnitus",
+      "dri_en": "120–240mg EGb761® (24% flavones, 6% terpenes)",
+      "food_en": "Ginkgo leaf extract (must be standardized extract form)",
+      "caution_en": "Increased bleeding risk with anticoagulants or aspirin. Discontinue 2 weeks before surgery.",
+      "timing_en": "After breakfast"
     },
     {
       "id": "n50",
@@ -946,7 +1191,12 @@
         "blood_sugar"
       ],
       "name_en": "Inulin/FOS (Prebiotic Fiber)",
-      "category_en": "Prebiotic Fiber"
+      "category_en": "Prebiotic Fiber",
+      "efficacy_en": "Promotes bifidobacteria and lactobacillus growth, produces short-chain fatty acids (SCFA), modulates blood sugar and cholesterol",
+      "dri_en": "5–20g/day",
+      "food_en": "Chicory root, Jerusalem artichoke, garlic, onion, asparagus",
+      "caution_en": "Gas and bloating common when starting (begin with small doses). May worsen IBS symptoms.",
+      "timing_en": "With a meal"
     },
     {
       "id": "n51",
@@ -966,7 +1216,12 @@
         "heart"
       ],
       "name_en": "Alpha-Lipoic Acid (R-ALA, Active Form)",
-      "category_en": "Antioxidant / Metabolic"
+      "category_en": "Antioxidant / Metabolic",
+      "efficacy_en": "Both water- and fat-soluble (unique), regenerates Vitamins C/E and glutathione, improves insulin sensitivity, nerve protection",
+      "dri_en": "300–600mg R-ALA (double the dose for RS mixed form)",
+      "food_en": "Spinach, broccoli, tomatoes, organ meats (low content — supplement preferred)",
+      "caution_en": "Hypoglycemia risk when combined with antidiabetics. Supplement Vitamin B1 first if deficient.",
+      "timing_en": "On an empty stomach"
     },
     {
       "id": "n52",
@@ -986,7 +1241,12 @@
         "heart"
       ],
       "name_en": "NMN (Nicotinamide Mononucleotide)",
-      "category_en": "NAD+ Precursor / Longevity"
+      "category_en": "NAD+ Precursor / Longevity",
+      "efficacy_en": "Restores NAD+ levels (decline 50% after age 40), restores mitochondrial function, repairs DNA damage",
+      "dri_en": "250–500mg/day (optimal dose still under research)",
+      "food_en": "Edamame, broccoli, avocado, tomatoes (trace amounts only)",
+      "caution_en": "Long-term safety data still accumulating. Caution for pregnant/breastfeeding. Cancer history — consult physician.",
+      "timing_en": "Morning fasted"
     },
     {
       "id": "n53",
@@ -1005,7 +1265,12 @@
         "antiaging"
       ],
       "name_en": "Soy Isoflavones (Genistein/Daidzein)",
-      "category_en": "Phytoestrogen / Isoflavone"
+      "category_en": "Phytoestrogen / Isoflavone",
+      "efficacy_en": "Relieves menopause symptoms (hot flashes, night sweats), maintains bone density, reduces LDL cholesterol",
+      "dri_en": "25–100mg isoflavones/day",
+      "food_en": "Soybeans, tofu, soy milk, miso, cheonggukjang",
+      "caution_en": "Patients with estrogen-sensitive tumors (breast, endometrial cancer) must consult a physician first.",
+      "timing_en": "With a meal"
     },
     {
       "id": "n54",
@@ -1023,7 +1288,12 @@
         "antiaging"
       ],
       "name_en": "Cranberry Extract (Proanthocyanidins PAC)",
-      "category_en": "Herbal / Urinary Health"
+      "category_en": "Herbal / Urinary Health",
+      "efficacy_en": "Prevents urinary tract infections (blocks bacterial adhesion), bladder health, antioxidant, inhibits H. pylori",
+      "dri_en": "400–500mg dry extract (containing 36mg+ PAC)",
+      "food_en": "Unsweetened cranberry juice, cranberries",
+      "caution_en": "May increase warfarin efficacy. High oxalate content — caution with kidney stone history.",
+      "timing_en": "With a meal"
     },
     {
       "id": "n55",
@@ -1040,7 +1310,12 @@
         "antiaging"
       ],
       "name_en": "Hovenia Dulcis Extract (DHM)",
-      "category_en": "Herbal / Liver Support"
+      "category_en": "Herbal / Liver Support",
+      "efficacy_en": "Activates alcohol-metabolizing enzymes (ADH/ALDH), reduces acetaldehyde toxicity, liver protection, hangover relief",
+      "dri_en": "300–500mg DHM (before and after drinking)",
+      "food_en": "Hovenia dulcis fruit (supplement form)",
+      "caution_en": "Caution with liver disease. High doses may cause low blood pressure.",
+      "timing_en": "음주 전 또는 식사와 함께"
     },
     {
       "id": "n56",
@@ -1059,7 +1334,12 @@
         "weight"
       ],
       "name_en": "Artichoke Extract (Cynarin/Luteolin)",
-      "category_en": "Herbal / Digestive"
+      "category_en": "Herbal / Digestive",
+      "efficacy_en": "Promotes bile secretion (improves digestion), inhibits LDL cholesterol synthesis (HMG-CoA blockade), liver protection",
+      "dri_en": "300–640mg dry extract (5%+ cynarin)",
+      "food_en": "Artichoke (supplement form)",
+      "caution_en": "Contraindicated with bile duct obstruction or gallstones. Caution with Asteraceae allergy.",
+      "timing_en": "30 min before meal"
     },
     {
       "id": "n57",
@@ -1078,7 +1358,12 @@
         "hormone"
       ],
       "name_en": "L-Arginine / L-Citrulline",
-      "category_en": "Amino Acid / Cardiovascular"
+      "category_en": "Amino Acid / Cardiovascular",
+      "efficacy_en": "Nitric oxide (NO) precursor (vasodilation), reduces blood pressure, supports erectile function, enhances exercise endurance",
+      "dri_en": "L-Arginine: 3–6g / L-Citrulline: 3–6g (citrulline more efficient)",
+      "food_en": "Watermelon (citrulline), pumpkin seeds (arginine), chicken breast",
+      "caution_en": "Caution with low blood pressure and antihypertensives. May worsen active herpes infections.",
+      "timing_en": "30–60 min before workout or fasted"
     },
     {
       "id": "n58",
@@ -1096,7 +1381,12 @@
         "weight"
       ],
       "name_en": "Octacosanol (Sugarcane Extract)",
-      "category_en": "Lipid / Energy"
+      "category_en": "Lipid / Energy",
+      "efficacy_en": "Increases VO2max, improves exercise endurance, enhances reaction speed, supports cholesterol balance",
+      "dri_en": "5–20mg/day",
+      "food_en": "Sugarcane wax, wheat germ, rice bran",
+      "caution_en": "Possible interaction with anticoagulants. Consult a specialist for long-term use.",
+      "timing_en": "Before breakfast"
     },
     {
       "id": "n59",
@@ -1114,7 +1404,12 @@
         "bone"
       ],
       "name_en": "Maca Extract (Peruvian, Standardized)",
-      "category_en": "Adaptogen / Herbal"
+      "category_en": "Adaptogen / Herbal",
+      "efficacy_en": "Enhances libido and sexual function, relieves menopausal symptoms, improves sperm motility, boosts energy and stamina",
+      "dri_en": "1,500–3,000mg/day (gelatinized maca preferred)",
+      "food_en": "Peruvian maca root",
+      "caution_en": "Caution with thyroid conditions (contains glucosinolates). Caution with estrogen-sensitive conditions.",
+      "timing_en": "After breakfast"
     },
     {
       "id": "n60",
@@ -1133,7 +1428,12 @@
         "gut"
       ],
       "name_en": "Beta-Glucan (Yeast/Oat Derived)",
-      "category_en": "Polysaccharide / Immune"
+      "category_en": "Polysaccharide / Immune",
+      "efficacy_en": "Activates immune cells (macrophages, NK cells, dendritic cells), reduces cholesterol, buffers blood sugar",
+      "dri_en": "Immune: 250–500mg (yeast-derived) / Cholesterol: 3g (oat-derived)",
+      "food_en": "Oats, barley, shiitake and reishi mushrooms",
+      "caution_en": "Consult a physician if taking immunosuppressants. Use cautiously with autoimmune conditions.",
+      "timing_en": "With a meal"
     }
   ]
 }
