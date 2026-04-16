@@ -296,7 +296,7 @@ document.addEventListener('DOMContentLoaded', () => {
         resultDiv.innerHTML = `
             <div class="luxury-report" style="margin-top:40px; background:var(--bg-color);">
                 <div class="report-header">
-                    <div class="report-badge">Analysis Completed · ${new Date().toLocaleDateString('ko-KR')}</div>
+                    <div class="report-badge">분석 완료 · ${new Date().toLocaleDateString('ko-KR')}</div>
                     <h2 style="margin-bottom:8px;">사주 정밀 분석 리포트</h2>
                     <p style="color:var(--text-muted);">${year}년 ${month}월 ${day}일 ${timeVal >= 0 ? timeVal + '시' : ''} · ${gender === 'male' ? '남성' : '여성'}</p>
                 </div>
