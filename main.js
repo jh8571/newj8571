@@ -3,7 +3,6 @@ document.addEventListener('DOMContentLoaded', () => {
     let nutrientData = [];
     let userGender = 'male';
 
-    // Elements
     const drugListElement = document.getElementById('drug-list');
     const searchInput = document.getElementById('search-input');
     const searchBtn = document.getElementById('search-btn');
@@ -13,17 +12,14 @@ document.addEventListener('DOMContentLoaded', () => {
     const modalContent = document.getElementById('modal-body');
     const closeModal = document.querySelector('.close');
 
-    // 1. Data Loading
     Promise.all([
         fetch('drugs.json').then(r => r.json()),
         fetch('nutrients.json').then(r => r.json())
     ]).then(([drugs, nutrients]) => {
         drugData = drugs.drugs || drugs;
         nutrientData = nutrients.nutrients || nutrients;
-        console.log('Database synced:', drugData.length + nutrientData.length);
     }).catch(e => console.error('Load error:', e));
 
-    // 2. Gender Selection
     window.setGender = function(gender) {
         userGender = gender;
         const maleBtn = document.getElementById('gender-male');
@@ -34,21 +30,21 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     };
 
-    // 3. AI Analysis Report
     window.analyzeNutrition = function() {
         const age = document.getElementById('age-range').value;
         const concern = document.getElementById('health-concern').value;
         const stress = (document.getElementById('stress-level') || {}).value || 'medium';
         const diet = (document.getElementById('diet-type') || {}).value || 'normal';
         const exercise = (document.getElementById('exercise-level') || {}).value || 'medium';
-
         if (!aiResultSection || !aiResultContent) return;
 
+        const t = window.t;
         aiResultSection.style.display = 'block';
         aiResultContent.innerHTML = `
             <div style="text-align: center; padding: 100px 40px;">
                 <div class="premium-loader"></div>
-                <p style="margin-top:24px; color: #64748b; font-size:1rem;">🔬 임상 데이터베이스 분석 중...<br><span style="font-size:0.85rem; opacity:0.7">60종 영양 성분 × 라이프스타일 교차 분석</span></p>
+                <p style="margin-top:24px; color: #64748b; font-size:1rem;">🔬 ${t('임상 데이터베이스 분석 중...','Analyzing clinical database...')}<br>
+                <span style="font-size:0.85rem; opacity:0.7">${t('60종 영양 성분 × 라이프스타일 교차 분석','60 nutrients × lifestyle cross-analysis')}</span></p>
             </div>`;
 
         setTimeout(() => {
@@ -58,7 +54,6 @@ document.addEventListener('DOMContentLoaded', () => {
         }, 1800);
     };
 
-    // ─── 추천 매트릭스 ───
     const NUTRIENT_MAP = {
         male: {
             teen: {
@@ -118,7 +113,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 weight: { core: ["L-카르니틴", "베르베린", "프로바이오틱스 (유산균 복합균주)"], support: ["이눌린/FOS (프리바이오틱스)", "아티초크 추출물 (시나린·루테올린)"] },
                 sleep:  { core: ["마그네슘 (Mg)", "글리신", "L-트립토판 / 5-HTP"], support: ["테아닌 (L-테아닌)", "아슈와간다 (KSM-66® 위타놀라이드)"] },
                 gut:    { core: ["프로바이오틱스 (유산균 복합균주)", "이눌린/FOS (프리바이오틱스)", "L-글루타민"], support: ["아연 (Zn)", "비타민 D3 (콜레칼시페롤)"] },
-                blood_sugar: { core: ["베르베린", "알파리포산 (R-ALA, 활성형)", "크롬 (Cr, 피콜린산크롬)"], support: ["마그네슘 (Mg)", "베타글루칸 (효모/귀리 유래)"] },
+                blood_sugar: { core: ["베르베린", "크롬 (Cr, 피콜린산크롬)", "알파리포산 (R-ALA, 활성형)"], support: ["마그네슘 (Mg)", "베타글루칸 (효모/귀리 유래)"] },
                 antiaging:   { core: ["NMN (니코틴아마이드 모노뉴클레오타이드)", "레스베라트롤 (경질 껍질 추출)", "커큐민 (강황 추출물 + 바이오페린)"], support: ["글루타치온 (환원형 GSH)", "아스타잔틴 (헤마토코쿠스 조류 추출)"] }
             }
         },
@@ -186,7 +181,6 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     };
 
-    // 라이프스타일 추가 추천
     const LIFESTYLE_ADD = {
         stress:    { high:  ["아슈와간다 (KSM-66® 위타놀라이드)", "마그네슘 (Mg)", "테아닌 (L-테아닌)"] },
         diet:      { vegan: ["비타민 B12 (메틸코발라민)", "철분 (헴철 / 킬레이트 비헴철)", "비타민 D3 (콜레칼시페롤)", "오메가-3 지방산 (EPA/DHA)"],
@@ -196,9 +190,12 @@ document.addEventListener('DOMContentLoaded', () => {
     };
 
     const CONCERN_LABELS = {
-        fatigue:'⚡ 만성 피로', immune:'🛡️ 면역력 강화', brain:'🧠 기억력/집중력', bone:'🦴 뼈/관절',
-        heart:'❤️ 심혈관', liver:'🫀 간 기능', eye:'👁️ 눈 건강', skin:'✨ 피부/모발',
-        sleep:'🌙 수면/스트레스', gut:'🌿 장 건강', weight:'⚖️ 체중/대사', blood_sugar:'🩸 혈당 관리', antiaging:'🔬 항노화'
+        ko: { fatigue:'⚡ 만성 피로', immune:'🛡️ 면역력 강화', brain:'🧠 기억력/집중력', bone:'🦴 뼈/관절',
+              heart:'❤️ 심혈관', liver:'🫀 간 기능', eye:'👁️ 눈 건강', skin:'✨ 피부/모발',
+              sleep:'🌙 수면/스트레스', gut:'🌿 장 건강', weight:'⚖️ 체중/대사', blood_sugar:'🩸 혈당 관리', antiaging:'🔬 항노화' },
+        en: { fatigue:'⚡ Chronic Fatigue', immune:'🛡️ Immune Support', brain:'🧠 Memory/Focus', bone:'🦴 Bone/Joint',
+              heart:'❤️ Heart Health', liver:'🫀 Liver Function', eye:'👁️ Eye Health', skin:'✨ Skin/Hair',
+              sleep:'🌙 Sleep/Stress', gut:'🌿 Gut Health', weight:'⚖️ Weight/Metabolism', blood_sugar:'🩸 Blood Sugar', antiaging:'🔬 Anti-Aging' }
     };
 
     function findNutrient(name) {
@@ -206,11 +203,11 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function generateAdvancedReport(gender, age, concern, stress, diet, exercise) {
+        const t = window.t;
         const base = NUTRIENT_MAP[gender][age][concern] || { core: [], support: [] };
         const coreNames = [...base.core];
         const supportNames = [...base.support];
 
-        // 라이프스타일 추가 성분 (중복 제거)
         const extras = new Set();
         if (stress === 'high') LIFESTYLE_ADD.stress.high.forEach(n => extras.add(n));
         if (diet !== 'normal') (LIFESTYLE_ADD.diet[diet] || []).forEach(n => extras.add(n));
@@ -221,37 +218,76 @@ document.addEventListener('DOMContentLoaded', () => {
 
         const toCard = (name, priority) => {
             const d = findNutrient(name) || {};
-            return { name: d.name || name, category: d.category || '–', efficacy: d.efficacy || '–', description: d.description || '', dri: d.dri || '–', food: d.food || '–', caution: d.caution || '–', timing: d.timing || '–', priority };
+            const lang = localStorage.getItem('lang') || 'ko';
+            return {
+                name: d.name || name,
+                category: (lang === 'en' && d.category_en) ? d.category_en : (d.category || '–'),
+                efficacy: (lang === 'en' && d.efficacy_en) ? d.efficacy_en : (d.efficacy || '–'),
+                description: (lang === 'en' && d.description_en) ? d.description_en : (d.description || ''),
+                dri: (lang === 'en' && d.dri_en) ? d.dri_en : (d.dri || '–'),
+                food: (lang === 'en' && d.food_en) ? d.food_en : (d.food || '–'),
+                caution: (lang === 'en' && d.caution_en) ? d.caution_en : (d.caution || '–'),
+                timing: (lang === 'en' && d.timing_en) ? d.timing_en : (d.timing || '–'),
+                priority
+            };
         };
 
         const coreCards    = coreNames.map(n => toCard(n, 'core'));
         const supportCards = supportNames.map(n => toCard(n, 'support'));
         const extraCards   = lifestyleExtras.map(n => toCard(n, 'lifestyle'));
 
-        // 복용 타이밍 분류
-        const timingGroups = { '아침 식사 후': [], '식사와 함께': [], '공복': [], '저녁 식사 후': [], '취침 전': [] };
-        [...coreCards, ...supportCards, ...extraCards].forEach(n => {
-            if (n.timing && timingGroups[n.timing]) timingGroups[n.timing].push(n.name.split(' ')[0]);
-            else if (n.timing) timingGroups['식사와 함께'].push(n.name.split(' ')[0]);
-        });
+        const timingGroupsKo = { '아침 식사 후': [], '식사와 함께': [], '공복': [], '저녁 식사 후': [], '취침 전': [] };
+        const timingGroupsEn = { 'After breakfast': [], 'With a meal': [], 'Empty stomach': [], 'After dinner': [], 'Before sleep': [] };
+        const timingMap = { '아침 식사 후':'After breakfast', '식사와 함께':'With a meal', '공복':'Empty stomach', '저녁 식사 후':'After dinner', '취침 전':'Before sleep' };
+        const lang = localStorage.getItem('lang') || 'ko';
 
-        // 라이프스타일 가이드
-        const lifestyleGuide = [];
-        if (stress === 'high') lifestyleGuide.push('⚠️ 만성 스트레스는 코르티솔을 높여 영양소 소모를 2~3배 가속합니다. 마그네슘·비타민 C·B군이 특히 빠르게 소진됩니다.');
-        if (stress === 'medium') lifestyleGuide.push('🌿 보통 수준의 스트레스도 장기화 시 부신 기능을 소진시킵니다. 규칙적인 심호흡과 수면 루틴으로 코르티솔 리듬을 유지하세요.');
-        if (diet === 'vegan') lifestyleGuide.push('🌱 비건 식단은 비타민 B12, 철분, 비타민 D, 오메가-3(DHA/EPA), 아연, 요오드가 결핍되기 쉽습니다. 반드시 보충제로 보완하세요.');
-        if (diet === 'vegetarian') lifestyleGuide.push('🥗 채식 식단에서 비타민 B12·철분 결핍이 흔합니다. 발효 식품과 콩류를 통해 보완하고 헴철 대신 비타민 C와 함께 비헴철을 섭취하세요.');
-        if (exercise === 'high') lifestyleGuide.push('💪 고강도 운동은 산화 스트레스와 염증을 증가시킵니다. 항산화제(비타민 C·E, 아스타잔틴)와 마그네슘, BCAA로 회복을 최적화하세요.');
-        if (exercise === 'low') lifestyleGuide.push('🚶 운동 부족은 인슐린 감수성과 미토콘드리아 기능을 저하시킵니다. 하루 30분 걷기만으로도 비타민 D 합성과 대사가 크게 개선됩니다.');
-        lifestyleGuide.push('💧 하루 체중 × 30ml 이상의 수분 섭취는 수용성 영양소의 흡수율과 신장 여과 기능을 최적화합니다.');
+        [...coreCards, ...supportCards, ...extraCards].forEach(n => {
+            const rawTiming = findNutrient(n.name)?.timing || n.timing;
+            const koKey = rawTiming && timingGroupsKo[rawTiming] !== undefined ? rawTiming : '식사와 함께';
+            const enKey = timingMap[koKey] || 'With a meal';
+            const shortName = n.name.split(' ')[0];
+            if (lang === 'en') timingGroupsEn[enKey].push(shortName);
+            else timingGroupsKo[koKey].push(shortName);
+        });
+        const timingGroups = lang === 'en' ? timingGroupsEn : timingGroupsKo;
+
+        const lifestyleGuide = lang === 'en' ? [] : [];
+        if (lang === 'en') {
+            if (stress === 'high') lifestyleGuide.push('⚠️ Chronic stress elevates cortisol, accelerating nutrient depletion 2–3×. Magnesium, vitamin C, and B vitamins are particularly exhausted quickly.');
+            if (stress === 'medium') lifestyleGuide.push('🌿 Even moderate stress, if prolonged, can exhaust adrenal function. Maintain cortisol rhythm with regular breathing and consistent sleep routines.');
+            if (diet === 'vegan') lifestyleGuide.push('🌱 Vegan diets are prone to deficiencies in B12, iron, vitamin D, omega-3 (DHA/EPA), zinc, and iodine. Supplementation is essential.');
+            if (diet === 'vegetarian') lifestyleGuide.push('🥗 Vegetarian diets commonly lack B12 and iron. Use fermented foods, legumes, and pair non-heme iron with vitamin C for better absorption.');
+            if (exercise === 'high') lifestyleGuide.push('💪 High-intensity exercise increases oxidative stress and inflammation. Optimize recovery with antioxidants (vitamins C & E, astaxanthin), magnesium, and BCAAs.');
+            if (exercise === 'low') lifestyleGuide.push('🚶 Sedentary lifestyle reduces insulin sensitivity and mitochondrial function. Even 30 minutes of daily walking significantly improves vitamin D synthesis and metabolism.');
+            lifestyleGuide.push('💧 Drinking at least body weight (kg) × 30 ml of water daily optimizes absorption of water-soluble nutrients and kidney filtration function.');
+        } else {
+            if (stress === 'high') lifestyleGuide.push('⚠️ 만성 스트레스는 코르티솔을 높여 영양소 소모를 2~3배 가속합니다. 마그네슘·비타민 C·B군이 특히 빠르게 소진됩니다.');
+            if (stress === 'medium') lifestyleGuide.push('🌿 보통 수준의 스트레스도 장기화 시 부신 기능을 소진시킵니다. 규칙적인 심호흡과 수면 루틴으로 코르티솔 리듬을 유지하세요.');
+            if (diet === 'vegan') lifestyleGuide.push('🌱 비건 식단은 비타민 B12, 철분, 비타민 D, 오메가-3(DHA/EPA), 아연, 요오드가 결핍되기 쉽습니다. 반드시 보충제로 보완하세요.');
+            if (diet === 'vegetarian') lifestyleGuide.push('🥗 채식 식단에서 비타민 B12·철분 결핍이 흔합니다. 발효 식품과 콩류를 통해 보완하고 헴철 대신 비타민 C와 함께 비헴철을 섭취하세요.');
+            if (exercise === 'high') lifestyleGuide.push('💪 고강도 운동은 산화 스트레스와 염증을 증가시킵니다. 항산화제(비타민 C·E, 아스타잔틴)와 마그네슘, BCAA로 회복을 최적화하세요.');
+            if (exercise === 'low') lifestyleGuide.push('🚶 운동 부족은 인슐린 감수성과 미토콘드리아 기능을 저하시킵니다. 하루 30분 걷기만으로도 비타민 D 합성과 대사가 크게 개선됩니다.');
+            lifestyleGuide.push('💧 하루 체중 × 30ml 이상의 수분 섭취는 수용성 영양소의 흡수율과 신장 여과 기능을 최적화합니다.');
+        }
 
         return { gender, age, concern, stress, diet, exercise, coreCards, supportCards, extraCards, timingGroups, lifestyleGuide };
     }
 
     function displayAdvancedReport(r) {
-        const genderLabel = r.gender === 'male' ? '남성' : '여성';
-        const concernLabel = CONCERN_LABELS[r.concern] || r.concern;
-        const ageLabel = { teen:'청소년', young:'청년', middle:'중년', senior:'노년' }[r.age] || r.age;
+        const t = window.t;
+        const lang = localStorage.getItem('lang') || 'ko';
+        const genderLabel = r.gender === 'male' ? t('남성','Male') : t('여성','Female');
+        const concernLabel = (CONCERN_LABELS[lang] || CONCERN_LABELS.ko)[r.concern] || r.concern;
+        const ageLabel = {
+            teen:   t('청소년','Teen'),
+            young:  t('청년','Young Adult'),
+            middle: t('중년','Middle Age'),
+            senior: t('노년','Senior')
+        }[r.age] || r.age;
+
+        const stressLabel = { low: t('낮음','Low'), medium: t('보통','Moderate'), high: t('높음','High') }[r.stress];
+        const dietLabel = { normal: t('일반식','Regular'), vegetarian: t('채식','Vegetarian'), vegan: t('비건','Vegan') }[r.diet];
+        const exerciseLabel = t('운동','Exercise') + ' ' + { low: t('부족','Low'), medium: t('적정','Moderate'), high: t('활발','Active') }[r.exercise];
 
         const nutrientCard = (n, badgeLabel, badgeColor) => `
             <div style="background:var(--bg-color);border:1px solid var(--border-color);border-radius:20px;padding:24px;position:relative;overflow:hidden;">
@@ -260,10 +296,10 @@ document.addEventListener('DOMContentLoaded', () => {
                 <div style="font-size:0.75rem;color:var(--text-muted);margin-bottom:10px;">${n.category}</div>
                 <p style="font-size:0.88rem;line-height:1.65;color:var(--text-color);margin-bottom:14px;">${n.efficacy}</p>
                 <div style="background:var(--card-bg,#f1f5f9);border-radius:12px;padding:12px;font-size:0.82rem;display:grid;gap:6px;">
-                    <div><b style="color:var(--accent-color);">📋 권장 함량:</b> ${n.dri}</div>
-                    <div><b style="color:#10b981;">🥗 주요 식품:</b> ${n.food}</div>
-                    <div><b style="color:#6366f1;">⏰ 복용 타이밍:</b> ${n.timing}</div>
-                    ${n.caution ? `<div style="color:#f59e0b;"><b>⚠️ 주의:</b> ${n.caution.length > 80 ? n.caution.slice(0,80)+'…' : n.caution}</div>` : ''}
+                    <div><b style="color:var(--accent-color);">📋 ${t('권장 함량','Recommended')}:</b> ${n.dri}</div>
+                    <div><b style="color:#10b981;">🥗 ${t('주요 식품','Food Sources')}:</b> ${n.food}</div>
+                    <div><b style="color:#6366f1;">⏰ ${t('복용 타이밍','Best Timing')}:</b> ${n.timing}</div>
+                    ${n.caution ? `<div style="color:#f59e0b;"><b>⚠️ ${t('주의','Caution')}:</b> ${n.caution.length > 80 ? n.caution.slice(0,80)+'…' : n.caution}</div>` : ''}
                 </div>
             </div>`;
 
@@ -271,79 +307,74 @@ document.addEventListener('DOMContentLoaded', () => {
             .filter(([,list]) => list.length > 0)
             .map(([time, list]) => `
                 <div style="display:flex;align-items:flex-start;gap:14px;padding:12px 0;border-bottom:1px solid var(--border-color);">
-                    <span style="font-size:0.8rem;font-weight:900;color:var(--primary-color);min-width:90px;padding-top:2px;">${time}</span>
+                    <span style="font-size:0.8rem;font-weight:900;color:var(--primary-color);min-width:100px;padding-top:2px;">${time}</span>
                     <span style="font-size:0.88rem;color:var(--text-color);line-height:1.6;">${list.join(', ')}</span>
                 </div>`).join('');
 
         aiResultContent.innerHTML = `
         <div class="luxury-report-card" style="overflow:hidden;">
-
-            <!-- 헤더 -->
             <div class="report-header" style="padding:40px;border-bottom:1px solid var(--border-color);">
-                <div class="report-badge">최적화된 영양 설계 완료</div>
+                <div class="report-badge">${t('최적화된 영양 설계 완료','Optimized Nutrition Plan Complete')}</div>
                 <h2 style="font-size:2rem;font-weight:900;margin:12px 0 8px;">${genderLabel} · ${ageLabel} · ${concernLabel}</h2>
-                <p style="color:var(--text-muted);font-size:0.95rem;">60종 임상 데이터베이스 기반 · 라이프스타일 교차 분석 완료</p>
+                <p style="color:var(--text-muted);font-size:0.95rem;">${t('60종 임상 데이터베이스 기반 · 라이프스타일 교차 분석 완료','Based on 60-nutrient clinical DB · Lifestyle cross-analysis complete')}</p>
                 <div style="display:flex;gap:10px;margin-top:18px;flex-wrap:wrap;">
-                    <span style="background:#eff6ff;color:#3b82f6;padding:4px 12px;border-radius:20px;font-size:0.78rem;font-weight:700;">스트레스 ${{low:'낮음',medium:'보통',high:'높음'}[r.stress]}</span>
-                    <span style="background:#f0fdf4;color:#16a34a;padding:4px 12px;border-radius:20px;font-size:0.78rem;font-weight:700;">${{normal:'일반식',vegetarian:'채식',vegan:'비건'}[r.diet]}</span>
-                    <span style="background:#faf5ff;color:#7c3aed;padding:4px 12px;border-radius:20px;font-size:0.78rem;font-weight:700;">운동 ${{low:'부족',medium:'적정',high:'활발'}[r.exercise]}</span>
+                    <span style="background:#eff6ff;color:#3b82f6;padding:4px 12px;border-radius:20px;font-size:0.78rem;font-weight:700;">${t('스트레스','Stress')} ${stressLabel}</span>
+                    <span style="background:#f0fdf4;color:#16a34a;padding:4px 12px;border-radius:20px;font-size:0.78rem;font-weight:700;">${dietLabel}</span>
+                    <span style="background:#faf5ff;color:#7c3aed;padding:4px 12px;border-radius:20px;font-size:0.78rem;font-weight:700;">${exerciseLabel}</span>
                 </div>
             </div>
 
-            <!-- 핵심 영양소 -->
             <div style="padding:32px 40px;">
-                <div style="font-size:0.75rem;font-weight:900;letter-spacing:1.5px;color:var(--primary-color);margin-bottom:16px;">CORE NUTRIENTS — 핵심 영양소 ★★★</div>
+                <div style="font-size:0.75rem;font-weight:900;letter-spacing:1.5px;color:var(--primary-color);margin-bottom:16px;">CORE NUTRIENTS — ${t('핵심 영양소','Key Nutrients')} ★★★</div>
                 <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px;">
                     ${r.coreCards.map(n => nutrientCard(n, 'CORE', '#6366f1')).join('')}
                 </div>
             </div>
 
-            <!-- 보조 영양소 -->
             <div style="padding:0 40px 32px;">
-                <div style="font-size:0.75rem;font-weight:900;letter-spacing:1.5px;color:#8b5cf6;margin-bottom:16px;">SUPPORT NUTRIENTS — 보조 영양소 ★★</div>
+                <div style="font-size:0.75rem;font-weight:900;letter-spacing:1.5px;color:#8b5cf6;margin-bottom:16px;">SUPPORT NUTRIENTS — ${t('보조 영양소','Support Nutrients')} ★★</div>
                 <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px;">
                     ${r.supportCards.map(n => nutrientCard(n, 'SUPPORT', '#8b5cf6')).join('')}
                 </div>
             </div>
 
             ${r.extraCards.length > 0 ? `
-            <!-- 라이프스타일 추가 -->
             <div style="padding:0 40px 32px;">
-                <div style="font-size:0.75rem;font-weight:900;letter-spacing:1.5px;color:#10b981;margin-bottom:16px;">LIFESTYLE ADD-ON — 라이프스타일 맞춤 추가 ★</div>
+                <div style="font-size:0.75rem;font-weight:900;letter-spacing:1.5px;color:#10b981;margin-bottom:16px;">LIFESTYLE ADD-ON — ${t('라이프스타일 맞춤 추가','Lifestyle Personalization')} ★</div>
                 <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px;">
                     ${r.extraCards.map(n => nutrientCard(n, 'ADD-ON', '#10b981')).join('')}
                 </div>
             </div>` : ''}
 
-            <!-- 복용 타이밍 가이드 -->
             <div style="margin:0 40px 32px;background:var(--card-bg,#f8fafc);border-radius:20px;padding:28px;">
-                <div style="font-size:0.75rem;font-weight:900;letter-spacing:1.5px;color:var(--text-muted);margin-bottom:16px;">⏰ TIMING GUIDE — 복용 타이밍 가이드</div>
+                <div style="font-size:0.75rem;font-weight:900;letter-spacing:1.5px;color:var(--text-muted);margin-bottom:16px;">⏰ TIMING GUIDE — ${t('복용 타이밍 가이드','Dosage Timing Guide')}</div>
                 ${timingHTML}
-                <p style="font-size:0.78rem;color:var(--text-muted);margin-top:12px;">* 지용성 비타민(A·D·E·K)은 반드시 지방이 포함된 식사와 함께, 철분은 비타민 C와 함께 복용하면 흡수율이 극대화됩니다.</p>
+                <p style="font-size:0.78rem;color:var(--text-muted);margin-top:12px;">${t(
+                    '* 지용성 비타민(A·D·E·K)은 반드시 지방이 포함된 식사와 함께, 철분은 비타민 C와 함께 복용하면 흡수율이 극대화됩니다.',
+                    '* Fat-soluble vitamins (A·D·E·K) with a fatty meal; iron with vitamin C maximizes absorption.'
+                )}</p>
             </div>
 
-            <!-- 라이프스타일 가이드 -->
             <div style="margin:0 40px 32px;border:1px solid var(--border-color);border-radius:20px;padding:28px;">
-                <div style="font-size:0.75rem;font-weight:900;letter-spacing:1.5px;color:var(--text-muted);margin-bottom:16px;">🌿 LIFESTYLE GUIDE — 개인화 생활 가이드</div>
+                <div style="font-size:0.75rem;font-weight:900;letter-spacing:1.5px;color:var(--text-muted);margin-bottom:16px;">🌿 LIFESTYLE GUIDE — ${t('개인화 생활 가이드','Personalized Lifestyle Guide')}</div>
                 ${r.lifestyleGuide.map(g => `<p style="font-size:0.88rem;line-height:1.7;color:var(--text-color);margin-bottom:10px;">${g}</p>`).join('')}
             </div>
 
-            <!-- 주의사항 -->
             <div style="margin:0 40px 40px;background:#fffbeb;border:1px solid #fde68a;border-radius:20px;padding:24px;">
-                <div style="font-size:0.75rem;font-weight:900;letter-spacing:1.5px;color:#b45309;margin-bottom:12px;">⚠️ CLINICAL CAUTION — 임상 주의사항</div>
-                <p style="font-size:0.85rem;line-height:1.7;color:#78350f;">본 분석 결과는 60종 임상 데이터베이스를 기반으로 한 일반적인 건강 정보입니다. 질환이 있거나 약물을 복용 중인 경우, 특히 <strong>항응고제·혈당강하제·항우울제·면역억제제</strong> 복용자는 반드시 의사 또는 약사와 상담 후 섭취하시기 바랍니다. 영양 보충제는 의약품을 대체하지 않습니다.</p>
+                <div style="font-size:0.75rem;font-weight:900;letter-spacing:1.5px;color:#b45309;margin-bottom:12px;">⚠️ CLINICAL CAUTION — ${t('임상 주의사항','Clinical Notice')}</div>
+                <p style="font-size:0.85rem;line-height:1.7;color:#78350f;">${t(
+                    '본 분석 결과는 60종 임상 데이터베이스를 기반으로 한 일반적인 건강 정보입니다. 질환이 있거나 약물을 복용 중인 경우, 특히 항응고제·혈당강하제·항우울제·면역억제제 복용자는 반드시 의사 또는 약사와 상담 후 섭취하시기 바랍니다. 영양 보충제는 의약품을 대체하지 않습니다.',
+                    'These results are general health information based on a 60-nutrient clinical database. Consult a doctor or pharmacist before use, especially if you take anticoagulants, antidiabetics, antidepressants, or immunosuppressants. Supplements do not replace medication.'
+                )}</p>
             </div>
 
-            <!-- 재분석 -->
             <div style="padding:0 40px 40px;text-align:center;">
-                <button onclick="window.scrollTo({top:0,behavior:'smooth'})" class="luxury-btn" style="max-width:320px;margin:0 auto 16px;">🔄 조건 변경 후 재분석</button>
-                ${window.getShareUI ? window.getShareUI('AI 맞춤 영양 리포트', 'VitalRest에서 저에게 딱 맞는 프리미엄 영양 성분 조합을 찾았어요!') : ''}
+                <button onclick="window.scrollTo({top:0,behavior:'smooth'})" class="luxury-btn" style="max-width:320px;margin:0 auto 16px;">🔄 ${t('조건 변경 후 재분석','Reanalyze with New Conditions')}</button>
+                ${window.getShareUI ? window.getShareUI(t('AI 맞춤 영양 리포트','AI Personalized Nutrition Report'), t('VitalRest에서 저에게 딱 맞는 프리미엄 영양 성분 조합을 찾았어요!','I found my perfect premium nutrition plan on VitalRest!')) : ''}
             </div>
-
         </div>`;
     }
 
-    // 4. Search Functionality
     const KOREAN_TO_ENGLISH = {
         "비타민c": "vitamin c", "비타민 c": "vitamin c", "오메가3": "omega-3", "오메가-3": "omega-3",
         "루테인": "lutein", "마그네슘": "magnesium", "비타민d": "vitamin d", "비타민 d": "vitamin d",
@@ -360,32 +391,26 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     window.quickSearch = function(q) {
-        if (searchInput) {
-            searchInput.value = q;
-            performSearch();
-        }
+        if (searchInput) { searchInput.value = q; performSearch(); }
     };
 
     async function performSearch() {
+        const t = window.t;
         const q = searchInput.value.trim().toLowerCase();
         if (!q) return;
 
-        // 1. Local Search (immediate results)
-        const filteredNutrients = nutrientData.filter(n => 
-            n.name.toLowerCase().includes(q) || 
+        const filteredNutrients = nutrientData.filter(n =>
+            n.name.toLowerCase().includes(q) ||
             n.efficacy.toLowerCase().includes(q) ||
             n.category.toLowerCase().includes(q)
         );
-
-        const filteredDrugs = drugData.filter(d => 
-            d.name.toLowerCase().includes(q) || 
+        const filteredDrugs = drugData.filter(d =>
+            d.name.toLowerCase().includes(q) ||
             d.ingredients.toLowerCase().includes(q) ||
             d.efficacy.toLowerCase().includes(q)
         );
-
         renderSearchResults(filteredNutrients, filteredDrugs);
 
-        // 2. FDA Global Search (Async)
         const translated = KOREAN_TO_ENGLISH[q] || q;
         const isEnglish = /[a-zA-Z]/.test(translated);
 
@@ -395,21 +420,17 @@ document.addEventListener('DOMContentLoaded', () => {
             loadingMsg.style.cssText = 'grid-column:1/-1; text-align:center; padding:20px;';
             loadingMsg.innerHTML = `
                 <div class="premium-loader" style="width:30px; height:30px; margin:0 auto;"></div>
-                <p style="margin-top:10px; font-size:0.9rem; color:var(--primary-color); font-weight:700;">FDA 글로벌 데이터베이스 검색 중...</p>
-            `;
+                <p style="margin-top:10px; font-size:0.9rem; color:var(--primary-color); font-weight:700;">${t('FDA 글로벌 데이터베이스 검색 중...','Searching FDA global database...')}</p>`;
             drugListElement.appendChild(loadingMsg);
 
             try {
                 const fdaResults = await searchFDA(translated);
                 if (loadingMsg.parentNode) drugListElement.removeChild(loadingMsg);
-                
                 if (fdaResults.length > 0) {
-                    if (filteredNutrients.length === 0 && filteredDrugs.length === 0) {
-                        drugListElement.innerHTML = '';
-                    }
+                    if (filteredNutrients.length === 0 && filteredDrugs.length === 0) drugListElement.innerHTML = '';
                     renderFDAResults(fdaResults);
                 } else if (filteredNutrients.length === 0 && filteredDrugs.length === 0) {
-                    drugListElement.innerHTML = '<p style="grid-column:1/-1; text-align:center; padding:40px;">검색 결과가 없습니다. (글로벌 데이터 포함)</p>';
+                    drugListElement.innerHTML = `<p style="grid-column:1/-1; text-align:center; padding:40px;">${t('검색 결과가 없습니다. (글로벌 데이터 포함)','No results found. (Including global data)')}</p>`;
                 }
             } catch (e) {
                 if (loadingMsg.parentNode) drugListElement.removeChild(loadingMsg);
@@ -422,138 +443,67 @@ document.addEventListener('DOMContentLoaded', () => {
         const results = [];
         const enforcementUrl = `https://api.fda.gov/food/enforcement.json?search=product_description:"${query}"&limit=5`;
         const labelUrl = `https://api.fda.gov/drug/label.json?search=openfda.brand_name:"${query}"&limit=5`;
-
         try {
             const [enforcementRes, labelRes] = await Promise.allSettled([
                 fetch(enforcementUrl).then(r => r.ok ? r.json() : null),
                 fetch(labelUrl).then(r => r.ok ? r.json() : null)
             ]);
-
-            if (enforcementRes.status === 'fulfilled' && enforcementRes.value && enforcementRes.value.results) {
+            if (enforcementRes.status === 'fulfilled' && enforcementRes.value?.results)
                 enforcementRes.value.results.forEach(item => results.push({ ...item, fdaType: 'enforcement' }));
-            }
-            if (labelRes.status === 'fulfilled' && labelRes.value && labelRes.value.results) {
+            if (labelRes.status === 'fulfilled' && labelRes.value?.results)
                 labelRes.value.results.forEach(item => results.push({ ...item, fdaType: 'label' }));
-            }
-        } catch (e) {
-            console.warn('FDA fetch failed', e);
-        }
+        } catch (e) { console.warn('FDA fetch failed', e); }
         return results;
     }
 
     function renderFDAResults(results) {
+        const t = window.t;
         if (!drugListElement) return;
-        
         results.forEach(item => {
             const card = document.createElement('div');
             card.className = 'drug-card';
-            
             if (item.fdaType === 'enforcement') {
                 card.style.borderLeft = '6px solid #ef4444';
                 card.innerHTML = `
-                    <div class="card-category" style="background: #ef4444; color: white;">FDA Safety Recall</div>
+                    <div class="card-category" style="background: #ef4444; color: white;">${t('FDA 안전 리콜','FDA Safety Recall')}</div>
                     <h3 class="card-name">${item.recalling_firm}</h3>
-                    <p style="font-size:0.85rem; color:#ef4444; font-weight:700;">Recalled Product</p>
-                    <div class="card-efficacy" style="margin-top:10px; font-size:0.8rem; color:#475569;">${item.product_description.substring(0,100)}...</div>
-                `;
+                    <p style="font-size:0.85rem; color:#ef4444; font-weight:700;">${t('리콜 제품','Recalled Product')}</p>
+                    <div class="card-efficacy" style="margin-top:10px; font-size:0.8rem; color:#475569;">${item.product_description.substring(0,100)}...</div>`;
                 card.onclick = () => showFDAEnforcementDetail(item);
             } else {
                 card.style.borderLeft = '6px solid #3b82f6';
-                const brandName = (item.openfda && item.openfda.brand_name) ? item.openfda.brand_name[0] : 'Global Drug Data';
+                const brandName = (item.openfda?.brand_name) ? item.openfda.brand_name[0] : t('글로벌 의약품 데이터','Global Drug Data');
                 card.innerHTML = `
-                    <div class="card-category" style="background: #3b82f6; color: white;">FDA Global Label</div>
+                    <div class="card-category" style="background: #3b82f6; color: white;">${t('FDA 글로벌 의약품','FDA Global Label')}</div>
                     <h3 class="card-name">${brandName}</h3>
-                    <p style="font-size:0.85rem; color:#3b82f6; font-weight:700;">International Standard</p>
-                    <div class="card-efficacy" style="margin-top:10px; font-size:0.8rem; color:#475569;">${(item.indications_and_usage ? item.indications_and_usage[0] : 'View details').substring(0,100)}...</div>
-                `;
+                    <p style="font-size:0.85rem; color:#3b82f6; font-weight:700;">${t('국제 표준 의약품','International Standard')}</p>
+                    <div class="card-efficacy" style="margin-top:10px; font-size:0.8rem; color:#475569;">${(item.indications_and_usage ? item.indications_and_usage[0] : t('상세 보기','View details')).substring(0,100)}...</div>`;
                 card.onclick = () => showFDADrugDetail(item);
             }
             drugListElement.appendChild(card);
         });
     }
 
-    window.showFDAEnforcementDetail = function(item) {
-        if (!modal) return;
-        modalContent.innerHTML = `
-            <div class="report-header" style="text-align: left; padding: 0 0 30px; background: none; border-bottom: 2px solid #fee2e2;">
-                <div class="report-badge" style="background:#ef4444; color:white;">FDA 리콜 정보</div>
-                <h2 style="font-size: 2rem; margin-top: 10px; color:#b91c1c;">${item.recalling_firm}</h2>
-                <p style="color: #ef4444; font-weight: 800; font-size: 1.1rem;">리콜 상태: ${item.status}</p>
-            </div>
-            <div style="margin-top: 30px; display: grid; gap: 20px;">
-                <div style="background: #fef2f2; padding: 25px; border-radius: 20px; border: 1px solid #fee2e2;">
-                    <h4 style="color: #dc2626; margin-bottom: 10px;"><i class="fas fa-exclamation-triangle"></i> 리콜 사유</h4>
-                    <p style="line-height: 1.6; color: #991b1b;">${item.reason_for_recall}</p>
-                </div>
-                <div style="background: #f8fafc; padding: 20px; border-radius: 15px;">
-                    <h5 style="color: #475569; margin-bottom: 8px;">제품 설명</h5>
-                    <p style="font-size: 0.9rem; line-height: 1.5;">${item.product_description}</p>
-                </div>
-                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
-                    <div style="background: #f1f5f9; padding: 15px; border-radius: 12px;">
-                        <h6 style="font-size: 0.75rem; color: #64748b; margin-bottom: 5px;">리콜 등급</h6>
-                        <p style="font-weight: 700;">${item.classification}</p>
-                    </div>
-                    <div style="background: #f1f5f9; padding: 15px; border-radius: 12px;">
-                        <h6 style="font-size: 0.75rem; color: #64748b; margin-bottom: 5px;">개시 일자</h6>
-                        <p style="font-weight: 700;">${item.recall_initiation_date}</p>
-                    </div>
-                </div>
-            </div>
-        `;
-        modal.style.display = 'block';
-    };
-
-    window.showFDADrugDetail = function(item) {
-        if (!modal) return;
-        const brandName = (item.openfda && item.openfda.brand_name) ? item.openfda.brand_name[0] : 'Global Drug Data';
-        const manufacturer = (item.openfda && item.openfda.manufacturer_name) ? item.openfda.manufacturer_name[0] : 'Unknown';
-        
-        modalContent.innerHTML = `
-            <div class="report-header" style="text-align: left; padding: 0 0 30px; background: none; border-bottom: 2px solid #dbeafe;">
-                <div class="report-badge" style="background:#3b82f6; color:white;">FDA 의약품 정보</div>
-                <h2 style="font-size: 2.2rem; margin-top: 10px; color:#1e40af;">${brandName}</h2>
-                <p style="color: #3b82f6; font-weight: 800;">${manufacturer}</p>
-            </div>
-            <div style="margin-top: 30px; display: grid; gap: 20px;">
-                <div style="background: #eff6ff; padding: 25px; border-radius: 20px;">
-                    <h4 style="color: #1e40af; margin-bottom: 10px;">적응증 및 용법</h4>
-                    <p style="line-height: 1.6;">${item.indications_and_usage ? item.indications_and_usage[0] : '정보 없음'}</p>
-                </div>
-                <div style="background: #f8fafc; padding: 25px; border-radius: 20px;">
-                    <h4 style="color: #1e40af; margin-bottom: 10px;">용량 및 투여</h4>
-                    <p style="line-height: 1.6;">${item.dosage_and_administration ? item.dosage_and_administration[0] : '정보 없음'}</p>
-                </div>
-                <div style="background: #fffbeb; padding: 25px; border-radius: 20px; border: 1px solid #fef3c7;">
-                    <h4 style="color: #92400e; margin-bottom: 10px;"><i class="fas fa-exclamation-circle"></i> 경고 사항</h4>
-                    <p style="line-height: 1.6; color: #92400e;">${item.warnings ? item.warnings[0] : '정보 없음'}</p>
-                </div>
-            </div>
-        `;
-        modal.style.display = 'block';
-    };
-
     function renderSearchResults(nutrients, drugs) {
+        const t = window.t;
         if (!drugListElement) return;
         const totalCount = nutrients.length + drugs.length;
-        drugListElement.innerHTML = totalCount ? '' : '<p style="grid-column:1/-1; text-align:center; padding:40px;">검색 결과가 없습니다.</p>';
+        drugListElement.innerHTML = totalCount ? '' : `<p style="grid-column:1/-1; text-align:center; padding:40px;">${t('검색 결과가 없습니다.','No results found.')}</p>`;
+        const lang = localStorage.getItem('lang') || 'ko';
 
-        // Render Nutrients First (Encyclopedia style)
         nutrients.forEach(n => {
             const card = document.createElement('div');
             card.className = 'drug-card';
             card.style.borderLeft = '6px solid var(--accent-color)';
             card.innerHTML = `
-                <div class="card-category" style="background: var(--accent-color); color: white;">성분 백과</div>
+                <div class="card-category" style="background: var(--accent-color); color: white;">${t('성분 백과','Ingredient Encyclopedia')}</div>
                 <h3 class="card-name">${n.name}</h3>
-                <p style="font-size:0.85rem; color: var(--accent-color); font-weight: 700;">${n.category}</p>
-                <div class="card-efficacy" style="margin-top:10px; font-size:0.9rem; color:#475569;">${n.efficacy.substring(0,80)}...</div>
-            `;
+                <p style="font-size:0.85rem; color: var(--accent-color); font-weight: 700;">${(lang === 'en' && n.category_en) ? n.category_en : n.category}</p>
+                <div class="card-efficacy" style="margin-top:10px; font-size:0.9rem; color:#475569;">${((lang === 'en' && n.efficacy_en) ? n.efficacy_en : n.efficacy).substring(0,80)}...</div>`;
             card.onclick = () => showNutrientDetail(n.id);
             drugListElement.appendChild(card);
         });
 
-        // Render Drugs
         drugs.forEach(d => {
             const card = document.createElement('div');
             card.className = 'drug-card';
@@ -561,56 +511,119 @@ document.addEventListener('DOMContentLoaded', () => {
                 <div class="card-category ${d.category==='전문의약품'?'pro':'general'}">${d.category}</div>
                 <h3 class="card-name">${d.name}</h3>
                 <p style="font-size:0.85rem; color:#64748b;">${d.manufacturer}</p>
-                <div class="card-efficacy" style="margin-top:10px; font-size:0.9rem; color:#475569;">${d.efficacy.substring(0,60)}...</div>
-            `;
+                <div class="card-efficacy" style="margin-top:10px; font-size:0.9rem; color:#475569;">${d.efficacy.substring(0,60)}...</div>`;
             card.onclick = () => showDetail(d.id);
             drugListElement.appendChild(card);
         });
-        
         drugListElement.scrollIntoView({ behavior: 'smooth' });
     }
 
     window.showNutrientDetail = function(id) {
+        const t = window.t;
+        const lang = localStorage.getItem('lang') || 'ko';
         const n = nutrientData.find(x => x.id === id);
         if (!n || !modal) return;
+        const efficacy  = (lang === 'en' && n.efficacy_en)     ? n.efficacy_en     : n.efficacy;
+        const desc      = (lang === 'en' && n.description_en)  ? n.description_en  : n.description;
+        const dri       = (lang === 'en' && n.dri_en)          ? n.dri_en          : n.dri;
+        const food      = (lang === 'en' && n.food_en)         ? n.food_en         : n.food;
+        const caution   = (lang === 'en' && n.caution_en)      ? n.caution_en      : n.caution;
+        const category  = (lang === 'en' && n.category_en)     ? n.category_en     : n.category;
         modalContent.innerHTML = `
             <div class="report-header" style="text-align: left; padding: 0 0 30px; background: none; border-bottom: 2px solid var(--border-color);">
-                <div class="report-badge">영양 성분 백과</div>
+                <div class="report-badge">${t('영양 성분 백과','Nutrient Encyclopedia')}</div>
                 <h2 style="font-size: 2.5rem; margin-top: 10px;">${n.name}</h2>
-                <p style="color: var(--accent-color); font-weight: 800; font-size: 1.1rem;">${n.category}</p>
+                <p style="color: var(--accent-color); font-weight: 800; font-size: 1.1rem;">${category}</p>
             </div>
             <div style="margin-top: 30px; display: grid; gap: 25px;">
                 <div style="background: var(--bg-color); padding: 25px; border-radius: 20px;">
-                    <h4 style="color: var(--primary-color); margin-bottom: 10px;"><i class="fas fa-info-circle"></i> 성분 설명</h4>
-                    <p style="line-height: 1.8; color: var(--text-main);">${n.description}</p>
+                    <h4 style="color: var(--primary-color); margin-bottom: 10px;"><i class="fas fa-info-circle"></i> ${t('성분 설명','Description')}</h4>
+                    <p style="line-height: 1.8; color: var(--text-main);">${desc}</p>
                 </div>
-                
                 <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
                     <div style="background: #f0fdf4; padding: 20px; border-radius: 15px; border-left: 5px solid #22c55e;">
-                        <h5 style="color: #166534; margin-bottom: 8px;">주요 효능</h5>
-                        <p style="font-size: 0.9rem;">${n.efficacy}</p>
+                        <h5 style="color: #166534; margin-bottom: 8px;">${t('주요 효능','Key Benefits')}</h5>
+                        <p style="font-size: 0.9rem;">${efficacy}</p>
                     </div>
                     <div style="background: #fffbeb; padding: 20px; border-radius: 15px; border-left: 5px solid #f59e0b;">
-                        <h5 style="color: #92400e; margin-bottom: 8px;">일일 권장량</h5>
-                        <p style="font-size: 0.9rem;">${n.dri}</p>
+                        <h5 style="color: #92400e; margin-bottom: 8px;">${t('일일 권장량','Daily Recommended')}</h5>
+                        <p style="font-size: 0.9rem;">${dri}</p>
                     </div>
                 </div>
-
                 <div style="background: #f8fafc; padding: 25px; border-radius: 20px;">
-                    <h4 style="color: var(--primary-color); margin-bottom: 10px;"><i class="fas fa-utensils"></i> 풍부한 식품</h4>
-                    <p style="font-size: 0.95rem;">${n.food}</p>
+                    <h4 style="color: var(--primary-color); margin-bottom: 10px;"><i class="fas fa-utensils"></i> ${t('풍부한 식품','Rich Food Sources')}</h4>
+                    <p style="font-size: 0.95rem;">${food}</p>
                 </div>
-
                 <div style="background: #fef2f2; padding: 25px; border-radius: 20px; border: 1px solid #fee2e2;">
-                    <h4 style="color: #dc2626; margin-bottom: 10px;"><i class="fas fa-exclamation-triangle"></i> 주의사항</h4>
-                    <p style="font-size: 0.95rem; color: #991b1b;">${n.caution}</p>
+                    <h4 style="color: #dc2626; margin-bottom: 10px;"><i class="fas fa-exclamation-triangle"></i> ${t('주의사항','Cautions')}</h4>
+                    <p style="font-size: 0.95rem; color: #991b1b;">${caution}</p>
                 </div>
+            </div>`;
+        modal.style.display = 'block';
+    };
+
+    window.showFDAEnforcementDetail = function(item) {
+        const t = window.t;
+        if (!modal) return;
+        modalContent.innerHTML = `
+            <div class="report-header" style="text-align: left; padding: 0 0 30px; background: none; border-bottom: 2px solid #fee2e2;">
+                <div class="report-badge" style="background:#ef4444; color:white;">${t('FDA 리콜 정보','FDA Enforcement (Recall)')}</div>
+                <h2 style="font-size: 2rem; margin-top: 10px; color:#b91c1c;">${item.recalling_firm}</h2>
+                <p style="color: #ef4444; font-weight: 800; font-size: 1.1rem;">${t('리콜 상태','Recall Status')}: ${item.status}</p>
             </div>
-        `;
+            <div style="margin-top: 30px; display: grid; gap: 20px;">
+                <div style="background: #fef2f2; padding: 25px; border-radius: 20px; border: 1px solid #fee2e2;">
+                    <h4 style="color: #dc2626; margin-bottom: 10px;"><i class="fas fa-exclamation-triangle"></i> ${t('리콜 사유','Reason for Recall')}</h4>
+                    <p style="line-height: 1.6; color: #991b1b;">${item.reason_for_recall}</p>
+                </div>
+                <div style="background: #f8fafc; padding: 20px; border-radius: 15px;">
+                    <h5 style="color: #475569; margin-bottom: 8px;">${t('제품 설명','Product Description')}</h5>
+                    <p style="font-size: 0.9rem; line-height: 1.5;">${item.product_description}</p>
+                </div>
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
+                    <div style="background: #f1f5f9; padding: 15px; border-radius: 12px;">
+                        <h6 style="font-size: 0.75rem; color: #64748b; margin-bottom: 5px;">${t('리콜 등급','Recall Class')}</h6>
+                        <p style="font-weight: 700;">${item.classification}</p>
+                    </div>
+                    <div style="background: #f1f5f9; padding: 15px; border-radius: 12px;">
+                        <h6 style="font-size: 0.75rem; color: #64748b; margin-bottom: 5px;">${t('개시 일자','Initiation Date')}</h6>
+                        <p style="font-weight: 700;">${item.recall_initiation_date}</p>
+                    </div>
+                </div>
+            </div>`;
+        modal.style.display = 'block';
+    };
+
+    window.showFDADrugDetail = function(item) {
+        const t = window.t;
+        if (!modal) return;
+        const brandName = (item.openfda?.brand_name) ? item.openfda.brand_name[0] : t('글로벌 의약품 데이터','Global Drug Data');
+        const manufacturer = (item.openfda?.manufacturer_name) ? item.openfda.manufacturer_name[0] : t('알 수 없음','Unknown');
+        modalContent.innerHTML = `
+            <div class="report-header" style="text-align: left; padding: 0 0 30px; background: none; border-bottom: 2px solid #dbeafe;">
+                <div class="report-badge" style="background:#3b82f6; color:white;">${t('FDA 의약품 정보','FDA Drug Label')}</div>
+                <h2 style="font-size: 2.2rem; margin-top: 10px; color:#1e40af;">${brandName}</h2>
+                <p style="color: #3b82f6; font-weight: 800;">${manufacturer}</p>
+            </div>
+            <div style="margin-top: 30px; display: grid; gap: 20px;">
+                <div style="background: #eff6ff; padding: 25px; border-radius: 20px;">
+                    <h4 style="color: #1e40af; margin-bottom: 10px;">${t('적응증 및 용법','Indications & Usage')}</h4>
+                    <p style="line-height: 1.6;">${item.indications_and_usage ? item.indications_and_usage[0] : t('정보 없음','No information available')}</p>
+                </div>
+                <div style="background: #f8fafc; padding: 25px; border-radius: 20px;">
+                    <h4 style="color: #1e40af; margin-bottom: 10px;">${t('용량 및 투여','Dosage & Administration')}</h4>
+                    <p style="line-height: 1.6;">${item.dosage_and_administration ? item.dosage_and_administration[0] : t('정보 없음','No information available')}</p>
+                </div>
+                <div style="background: #fffbeb; padding: 25px; border-radius: 20px; border: 1px solid #fef3c7;">
+                    <h4 style="color: #92400e; margin-bottom: 10px;"><i class="fas fa-exclamation-circle"></i> ${t('경고 사항','Warnings')}</h4>
+                    <p style="line-height: 1.6; color: #92400e;">${item.warnings ? item.warnings[0] : t('정보 없음','No information available')}</p>
+                </div>
+            </div>`;
         modal.style.display = 'block';
     };
 
     window.showDetail = function(id) {
+        const t = window.t;
         const d = drugData.find(x => x.id === id);
         if (!d || !modal) return;
         modalContent.innerHTML = `
@@ -620,11 +633,10 @@ document.addEventListener('DOMContentLoaded', () => {
                 <p>${d.manufacturer}</p>
             </div>
             <div style="margin-top:30px; display:grid; gap:20px;">
-                <p><strong>주요 성분:</strong> ${d.ingredients}</p>
-                <p><strong>효능 효과:</strong> ${d.efficacy}</p>
+                <p><strong>${t('주요 성분','Key Ingredients')}:</strong> ${d.ingredients}</p>
+                <p><strong>${t('효능 효과','Indications')}:</strong> ${d.efficacy}</p>
                 <div style="background:#f8fafc; padding:20px; border-radius:15px;">${d.description}</div>
-            </div>
-        `;
+            </div>`;
         modal.style.display = 'block';
     };
 
