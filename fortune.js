@@ -203,7 +203,7 @@ document.addEventListener('DOMContentLoaded', () => {
     function renderSaju() {
         container.innerHTML = `
             <div style="text-align:center; margin-bottom:40px;">
-                <div class="report-badge">Ancient Wisdom · 사주명리</div>
+                <div class="report-badge">고전 지혜 · 사주명리</div>
                 <h2 style="font-size:2.2rem; font-weight:900; color:var(--primary-color); margin-bottom:12px;">심층 사주 분석</h2>
                 <p style="color:var(--text-muted); font-size:1rem; line-height:1.7;">
                     생년월일시를 기반으로 오행(五行)과 천간지지(天干地支)의 흐름을 분석합니다.<br>
