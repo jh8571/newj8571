@@ -56,99 +56,99 @@
             <!-- Game 1: Tetris -->
             <div class="drug-card">
                 <div style="font-size:2.5rem; color:var(--accent-color); margin-bottom:15px;"><i class="fas fa-cubes"></i></div>
-                <div style="display:inline-block; background:var(--accent-color)22; color:var(--accent-color); padding:3px 10px; border-radius:20px; font-size:0.75rem; font-weight:800; margin-bottom:10px;">집중력</div>
-                <h3 class="card-name">클래식 테트리스</h3>
-                <p style="font-size:0.88rem; color:var(--text-muted); margin-bottom:20px; line-height:1.6;">내려오는 블록을 빈틈없이 쌓아 줄을 제거하세요. ← → 이동, W/Q 회전, ↓ 빠른 낙하</p>
-                <button class="luxury-btn" style="margin-top:0; padding:12px 25px; font-size:0.9rem;" onclick="startGame('tetris')">게임 시작</button>
+                <div style="display:inline-block; background:var(--accent-color)22; color:var(--accent-color); padding:3px 10px; border-radius:20px; font-size:0.75rem; font-weight:800; margin-bottom:10px;" data-ko="집중력" data-en="Focus">집중력</div>
+                <h3 class="card-name" data-ko="클래식 테트리스" data-en="Classic Tetris">클래식 테트리스</h3>
+                <p style="font-size:0.88rem; color:var(--text-muted); margin-bottom:20px; line-height:1.6;" data-ko="내려오는 블록을 빈틈없이 쌓아 줄을 제거하세요. ← → 이동, W/Q 회전, ↓ 빠른 낙하" data-en="Stack the falling blocks to clear lines. ← → to move, W/Q to rotate, ↓ to drop fast.">내려오는 블록을 빈틈없이 쌓아 줄을 제거하세요. ← → 이동, W/Q 회전, ↓ 빠른 낙하</p>
+                <button class="luxury-btn" style="margin-top:0; padding:12px 25px; font-size:0.9rem;" onclick="startGame('tetris')" data-ko="게임 시작" data-en="Play">게임 시작</button>
             </div>
 
             <!-- Game 2: Sudoku -->
             <div class="drug-card">
                 <div style="font-size:2.5rem; color:var(--accent-color); margin-bottom:15px;"><i class="fas fa-th"></i></div>
-                <div style="display:inline-block; background:#10b98122; color:#10b981; padding:3px 10px; border-radius:20px; font-size:0.75rem; font-weight:800; margin-bottom:10px;">논리력</div>
-                <h3 class="card-name">정통 스도쿠</h3>
-                <p style="font-size:0.88rem; color:var(--text-muted); margin-bottom:20px; line-height:1.6;">9×9 격자에 1~9 숫자를 배치하는 논리 퍼즐. 각 행·열·3×3 박스에 중복 없이!</p>
-                <button class="luxury-btn" style="margin-top:0; padding:12px 25px; font-size:0.9rem;" onclick="startGame('sudoku')">게임 시작</button>
+                <div style="display:inline-block; background:#10b98122; color:#10b981; padding:3px 10px; border-radius:20px; font-size:0.75rem; font-weight:800; margin-bottom:10px;" data-ko="논리력" data-en="Logic">논리력</div>
+                <h3 class="card-name" data-ko="정통 스도쿠" data-en="Sudoku">정통 스도쿠</h3>
+                <p style="font-size:0.88rem; color:var(--text-muted); margin-bottom:20px; line-height:1.6;" data-ko="9×9 격자에 1~9 숫자를 배치하는 논리 퍼즐. 각 행·열·3×3 박스에 중복 없이!" data-en="Place 1–9 in a 9×9 grid. No repeats in any row, column, or 3×3 box!">9×9 격자에 1~9 숫자를 배치하는 논리 퍼즐. 각 행·열·3×3 박스에 중복 없이!</p>
+                <button class="luxury-btn" style="margin-top:0; padding:12px 25px; font-size:0.9rem;" onclick="startGame('sudoku')" data-ko="게임 시작" data-en="Play">게임 시작</button>
             </div>
 
             <!-- Game 3: Snake -->
             <div class="drug-card">
                 <div style="font-size:2.5rem; color:var(--accent-color); margin-bottom:15px;"><i class="fas fa-worm"></i></div>
-                <div style="display:inline-block; background:#f59e0b22; color:#f59e0b; padding:3px 10px; border-radius:20px; font-size:0.75rem; font-weight:800; margin-bottom:10px;">반응속도</div>
-                <h3 class="card-name">스네이크</h3>
-                <p style="font-size:0.88rem; color:var(--text-muted); margin-bottom:20px; line-height:1.6;">먹이를 먹고 몸집을 키우는 고전 게임. 화살표로 방향을 조종하고 벽에 부딪히지 마세요!</p>
-                <button class="luxury-btn" style="margin-top:0; padding:12px 25px; font-size:0.9rem;" onclick="startGame('snake')">게임 시작</button>
+                <div style="display:inline-block; background:#f59e0b22; color:#f59e0b; padding:3px 10px; border-radius:20px; font-size:0.75rem; font-weight:800; margin-bottom:10px;" data-ko="반응속도" data-en="Reaction">반응속도</div>
+                <h3 class="card-name" data-ko="스네이크" data-en="Snake">스네이크</h3>
+                <p style="font-size:0.88rem; color:var(--text-muted); margin-bottom:20px; line-height:1.6;" data-ko="먹이를 먹고 몸집을 키우는 고전 게임. 화살표로 방향을 조종하고 벽에 부딪히지 마세요!" data-en="Eat food, grow longer — the classic snake game. Use arrow keys and don't hit the walls!">먹이를 먹고 몸집을 키우는 고전 게임. 화살표로 방향을 조종하고 벽에 부딪히지 마세요!</p>
+                <button class="luxury-btn" style="margin-top:0; padding:12px 25px; font-size:0.9rem;" onclick="startGame('snake')" data-ko="게임 시작" data-en="Play">게임 시작</button>
             </div>
 
             <!-- Game 4: Memory -->
             <div class="drug-card">
                 <div style="font-size:2.5rem; color:var(--accent-color); margin-bottom:15px;"><i class="fas fa-brain"></i></div>
-                <div style="display:inline-block; background:#ec489922; color:#ec4899; padding:3px 10px; border-radius:20px; font-size:0.75rem; font-weight:800; margin-bottom:10px;">기억력</div>
-                <h3 class="card-name">기억력 카드</h3>
-                <p style="font-size:0.88rem; color:var(--text-muted); margin-bottom:20px; line-height:1.6;">뒤집힌 카드를 클릭해 짝을 맞추세요. 가장 적은 시도로 모든 쌍을 맞추면 성공!</p>
-                <button class="luxury-btn" style="margin-top:0; padding:12px 25px; font-size:0.9rem;" onclick="startGame('memory')">게임 시작</button>
+                <div style="display:inline-block; background:#ec489922; color:#ec4899; padding:3px 10px; border-radius:20px; font-size:0.75rem; font-weight:800; margin-bottom:10px;" data-ko="기억력" data-en="Memory">기억력</div>
+                <h3 class="card-name" data-ko="기억력 카드" data-en="Memory Cards">기억력 카드</h3>
+                <p style="font-size:0.88rem; color:var(--text-muted); margin-bottom:20px; line-height:1.6;" data-ko="뒤집힌 카드를 클릭해 짝을 맞추세요. 가장 적은 시도로 모든 쌍을 맞추면 성공!" data-en="Flip cards to find matching pairs. Match all 8 pairs with the fewest tries!">뒤집힌 카드를 클릭해 짝을 맞추세요. 가장 적은 시도로 모든 쌍을 맞추면 성공!</p>
+                <button class="luxury-btn" style="margin-top:0; padding:12px 25px; font-size:0.9rem;" onclick="startGame('memory')" data-ko="게임 시작" data-en="Play">게임 시작</button>
             </div>
 
             <!-- Game 5: Clicker -->
             <div class="drug-card">
                 <div style="font-size:2.5rem; color:var(--accent-color); margin-bottom:15px;"><i class="fas fa-hand-pointer"></i></div>
-                <div style="display:inline-block; background:#6366f122; color:#6366f1; padding:3px 10px; border-radius:20px; font-size:0.75rem; font-weight:800; margin-bottom:10px;">스트레스해소</div>
-                <h3 class="card-name">클릭커 마스터</h3>
-                <p style="font-size:0.88rem; color:var(--text-muted); margin-bottom:20px; line-height:1.6;">10초 안에 버튼을 최대한 많이 클릭하세요! 스트레스 해소에 최고입니다.</p>
-                <button class="luxury-btn" style="margin-top:0; padding:12px 25px; font-size:0.9rem;" onclick="startGame('clicker')">게임 시작</button>
+                <div style="display:inline-block; background:#6366f122; color:#6366f1; padding:3px 10px; border-radius:20px; font-size:0.75rem; font-weight:800; margin-bottom:10px;" data-ko="스트레스해소" data-en="Stress Relief">스트레스해소</div>
+                <h3 class="card-name" data-ko="클릭커 마스터" data-en="Clicker Master">클릭커 마스터</h3>
+                <p style="font-size:0.88rem; color:var(--text-muted); margin-bottom:20px; line-height:1.6;" data-ko="10초 안에 버튼을 최대한 많이 클릭하세요! 스트레스 해소에 최고입니다." data-en="Click the button as many times as possible in 10 seconds — great for stress relief!">10초 안에 버튼을 최대한 많이 클릭하세요! 스트레스 해소에 최고입니다.</p>
+                <button class="luxury-btn" style="margin-top:0; padding:12px 25px; font-size:0.9rem;" onclick="startGame('clicker')" data-ko="게임 시작" data-en="Play">게임 시작</button>
             </div>
 
             <!-- Game 6: Math -->
             <div class="drug-card">
                 <div style="font-size:2.5rem; color:var(--accent-color); margin-bottom:15px;"><i class="fas fa-calculator"></i></div>
-                <div style="display:inline-block; background:#10b98122; color:#10b981; padding:3px 10px; border-radius:20px; font-size:0.75rem; font-weight:800; margin-bottom:10px;">두뇌트레이닝</div>
-                <h3 class="card-name">암산왕</h3>
-                <p style="font-size:0.88rem; color:var(--text-muted); margin-bottom:20px; line-height:1.6;">수학 계산 문제를 빠르게 풀어보세요. 연속으로 맞출수록 점수가 오릅니다!</p>
-                <button class="luxury-btn" style="margin-top:0; padding:12px 25px; font-size:0.9rem;" onclick="startGame('math')">게임 시작</button>
+                <div style="display:inline-block; background:#10b98122; color:#10b981; padding:3px 10px; border-radius:20px; font-size:0.75rem; font-weight:800; margin-bottom:10px;" data-ko="두뇌트레이닝" data-en="Brain Training">두뇌트레이닝</div>
+                <h3 class="card-name" data-ko="암산왕" data-en="Mental Math">암산왕</h3>
+                <p style="font-size:0.88rem; color:var(--text-muted); margin-bottom:20px; line-height:1.6;" data-ko="수학 계산 문제를 빠르게 풀어보세요. 연속으로 맞출수록 점수가 오릅니다!" data-en="Solve math problems quickly. The more in a row you get right, the higher your score!">수학 계산 문제를 빠르게 풀어보세요. 연속으로 맞출수록 점수가 오릅니다!</p>
+                <button class="luxury-btn" style="margin-top:0; padding:12px 25px; font-size:0.9rem;" onclick="startGame('math')" data-ko="게임 시작" data-en="Play">게임 시작</button>
             </div>
 
             <!-- Game 7: Reaction -->
             <div class="drug-card">
                 <div style="font-size:2.5rem; color:var(--accent-color); margin-bottom:15px;"><i class="fas fa-bolt"></i></div>
-                <div style="display:inline-block; background:#f59e0b22; color:#f59e0b; padding:3px 10px; border-radius:20px; font-size:0.75rem; font-weight:800; margin-bottom:10px;">반응속도</div>
-                <h3 class="card-name">반응 속도 테스트</h3>
-                <p style="font-size:0.88rem; color:var(--text-muted); margin-bottom:20px; line-height:1.6;">화면이 초록색으로 바뀌는 순간 즉시 클릭! 당신의 반응 속도는 몇 ms일까요?</p>
-                <button class="luxury-btn" style="margin-top:0; padding:12px 25px; font-size:0.9rem;" onclick="startGame('reaction')">게임 시작</button>
+                <div style="display:inline-block; background:#f59e0b22; color:#f59e0b; padding:3px 10px; border-radius:20px; font-size:0.75rem; font-weight:800; margin-bottom:10px;" data-ko="반응속도" data-en="Reaction Speed">반응속도</div>
+                <h3 class="card-name" data-ko="반응 속도 테스트" data-en="Reaction Speed Test">반응 속도 테스트</h3>
+                <p style="font-size:0.88rem; color:var(--text-muted); margin-bottom:20px; line-height:1.6;" data-ko="화면이 초록색으로 바뀌는 순간 즉시 클릭! 당신의 반응 속도는 몇 ms일까요?" data-en="Click the instant the screen turns green! How fast are your reflexes in ms?">화면이 초록색으로 바뀌는 순간 즉시 클릭! 당신의 반응 속도는 몇 ms일까요?</p>
+                <button class="luxury-btn" style="margin-top:0; padding:12px 25px; font-size:0.9rem;" onclick="startGame('reaction')" data-ko="게임 시작" data-en="Play">게임 시작</button>
             </div>
 
             <!-- Game 8: Color -->
             <div class="drug-card">
                 <div style="font-size:2.5rem; color:var(--accent-color); margin-bottom:15px;"><i class="fas fa-palette"></i></div>
-                <div style="display:inline-block; background:#ec489922; color:#ec4899; padding:3px 10px; border-radius:20px; font-size:0.75rem; font-weight:800; margin-bottom:10px;">색각능력</div>
-                <h3 class="card-name">색상 차이 찾기</h3>
-                <p style="font-size:0.88rem; color:var(--text-muted); margin-bottom:20px; line-height:1.6;">9개 색상 블록 중 미묘하게 다른 색깔 하나를 찾아 클릭하세요. 단계가 올라갈수록 어려워집니다!</p>
-                <button class="luxury-btn" style="margin-top:0; padding:12px 25px; font-size:0.9rem;" onclick="startGame('color')">게임 시작</button>
+                <div style="display:inline-block; background:#ec489922; color:#ec4899; padding:3px 10px; border-radius:20px; font-size:0.75rem; font-weight:800; margin-bottom:10px;" data-ko="색각능력" data-en="Color Vision">색각능력</div>
+                <h3 class="card-name" data-ko="색상 차이 찾기" data-en="Spot the Color">색상 차이 찾기</h3>
+                <p style="font-size:0.88rem; color:var(--text-muted); margin-bottom:20px; line-height:1.6;" data-ko="9개 색상 블록 중 미묘하게 다른 색깔 하나를 찾아 클릭하세요. 단계가 올라갈수록 어려워집니다!" data-en="Find the one block with a slightly different color out of 9. Gets harder as you progress!">9개 색상 블록 중 미묘하게 다른 색깔 하나를 찾아 클릭하세요. 단계가 올라갈수록 어려워집니다!</p>
+                <button class="luxury-btn" style="margin-top:0; padding:12px 25px; font-size:0.9rem;" onclick="startGame('color')" data-ko="게임 시작" data-en="Play">게임 시작</button>
             </div>
 
             <!-- Game 9: Typing -->
             <div class="drug-card">
                 <div style="font-size:2.5rem; color:var(--accent-color); margin-bottom:15px;"><i class="fas fa-keyboard"></i></div>
-                <div style="display:inline-block; background:#6366f122; color:#6366f1; padding:3px 10px; border-radius:20px; font-size:0.75rem; font-weight:800; margin-bottom:10px;">집중력</div>
-                <h3 class="card-name">타이핑 챌린지</h3>
-                <p style="font-size:0.88rem; color:var(--text-muted); margin-bottom:20px; line-height:1.6;">화면에 나타나는 단어를 정확하게 입력하세요. 틀리지 않고 연속으로 맞춰보세요!</p>
-                <button class="luxury-btn" style="margin-top:0; padding:12px 25px; font-size:0.9rem;" onclick="startGame('typing')">게임 시작</button>
+                <div style="display:inline-block; background:#6366f122; color:#6366f1; padding:3px 10px; border-radius:20px; font-size:0.75rem; font-weight:800; margin-bottom:10px;" data-ko="집중력" data-en="Focus">집중력</div>
+                <h3 class="card-name" data-ko="타이핑 챌린지" data-en="Typing Challenge">타이핑 챌린지</h3>
+                <p style="font-size:0.88rem; color:var(--text-muted); margin-bottom:20px; line-height:1.6;" data-ko="화면에 나타나는 단어를 정확하게 입력하세요. 틀리지 않고 연속으로 맞춰보세요!" data-en="Type the displayed word accurately. How many can you get right in a row?">화면에 나타나는 단어를 정확하게 입력하세요. 틀리지 않고 연속으로 맞춰보세요!</p>
+                <button class="luxury-btn" style="margin-top:0; padding:12px 25px; font-size:0.9rem;" onclick="startGame('typing')" data-ko="게임 시작" data-en="Play">게임 시작</button>
             </div>
 
             <!-- Game 10: Number Guess -->
             <div class="drug-card">
                 <div style="font-size:2.5rem; color:var(--accent-color); margin-bottom:15px;"><i class="fas fa-hashtag"></i></div>
-                <div style="display:inline-block; background:#10b98122; color:#10b981; padding:3px 10px; border-radius:20px; font-size:0.75rem; font-weight:800; margin-bottom:10px;">추론능력</div>
-                <h3 class="card-name">숫자 맞추기</h3>
-                <p style="font-size:0.88rem; color:var(--text-muted); margin-bottom:20px; line-height:1.6;">1~100 사이의 숫자를 Up/Down 힌트를 이용해 최소 시도 횟수로 맞춰보세요!</p>
-                <button class="luxury-btn" style="margin-top:0; padding:12px 25px; font-size:0.9rem;" onclick="startGame('number')">게임 시작</button>
+                <div style="display:inline-block; background:#10b98122; color:#10b981; padding:3px 10px; border-radius:20px; font-size:0.75rem; font-weight:800; margin-bottom:10px;" data-ko="추론능력" data-en="Deduction">추론능력</div>
+                <h3 class="card-name" data-ko="숫자 맞추기" data-en="Number Guess">숫자 맞추기</h3>
+                <p style="font-size:0.88rem; color:var(--text-muted); margin-bottom:20px; line-height:1.6;" data-ko="1~100 사이의 숫자를 Up/Down 힌트를 이용해 최소 시도 횟수로 맞춰보세요!" data-en="Guess the number between 1–100 using Up/Down hints. Can you do it in the fewest tries?">1~100 사이의 숫자를 Up/Down 힌트를 이용해 최소 시도 횟수로 맞춰보세요!</p>
+                <button class="luxury-btn" style="margin-top:0; padding:12px 25px; font-size:0.9rem;" onclick="startGame('number')" data-ko="게임 시작" data-en="Play">게임 시작</button>
             </div>
         </div>
 
         <!-- Share Section -->
         <div style="max-width:600px; margin:40px auto; text-align:center;">
             <div style="background:var(--card-bg); border:1px solid var(--border-color); padding:30px; border-radius:20px;">
-                <h4 style="color:var(--primary-color); margin-bottom:15px;"><i class="fas fa-share-nodes"></i> 친구에게 공유하기</h4>
-                <p style="color:var(--text-muted); font-size:0.9rem; margin-bottom:20px;">재미있는 웰니스 게임을 친구들과 함께 즐겨보세요!</p>
+                <h4 style="color:var(--primary-color); margin-bottom:15px;"><i class="fas fa-share-nodes"></i> <span data-ko="친구에게 공유하기" data-en="Share with Friends">친구에게 공유하기</span></h4>
+                <p style="color:var(--text-muted); font-size:0.9rem; margin-bottom:20px;" data-ko="재미있는 웰니스 게임을 친구들과 함께 즐겨보세요!" data-en="Enjoy fun wellness games with your friends!">재미있는 웰니스 게임을 친구들과 함께 즐겨보세요!</p>
                 <div style="display:flex; justify-content:center; gap:15px;">
                     <button onclick="shareGames('kakao')" style="background:#FEE500; color:#000; border:none; width:50px; height:50px; border-radius:50%; font-size:1.4rem; cursor:pointer;" title="카카오톡"><i class="fas fa-comment"></i></button>
                     <button onclick="shareGames('facebook')" style="background:#1877F2; color:white; border:none; width:50px; height:50px; border-radius:50%; font-size:1.4rem; cursor:pointer;" title="페이스북"><i class="fab fa-facebook-f"></i></button>

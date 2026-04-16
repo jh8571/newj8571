@@ -237,7 +237,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    function renderSaju() {
+    window.renderSaju = function renderSaju() {
         const t = window.t;
         const lang = localStorage.getItem('lang') || 'ko';
         container.innerHTML = `
@@ -262,7 +262,7 @@ document.addEventListener('DOMContentLoaded', () => {
                             <label style="font-weight:800; font-size:0.85rem; color:var(--text-muted); margin-bottom:8px; display:block;">${t('태어난 시간 (시주)','Birth Hour (Time Pillar)')}</label>
                             <select id="birth-time" style="width:100%;">
                                 <option value="-1">${t('모름 / 미입력','Unknown / Skip')}</option>
-                                ${Array(24).fill(0).map((_, i) => `<option value="${i}">${i}${t('시','h')} (${getTimeKorean(i)}${t('시',')})</option>`).join('')}
+                                ${Array(24).fill(0).map((_, i) => `<option value="${i}">${i}${t('시','h')} (${getTimeKorean(i)}${t('시','')})</option>`).join('')}
                             </select>
                         </div>
                         <div class="input-field">

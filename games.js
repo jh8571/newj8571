@@ -31,10 +31,12 @@ document.addEventListener('DOMContentLoaded', () => {
         container.innerHTML = '';
     };
 
+    const t = window.t;
+
     // 1. Tetris
     function startTetris() {
-        title.innerText = "클래식 테트리스";
-        container.innerHTML = `<canvas id="tetris" width="240" height="400"></canvas><div id="score" style="margin-top:10px; font-size:1.2rem;">점수: 0</div>`;
+        title.innerText = t("클래식 테트리스", "Classic Tetris");
+        container.innerHTML = `<canvas id="tetris" width="240" height="400"></canvas><div id="score" style="margin-top:10px; font-size:1.2rem;">${t('점수','Score')}: 0</div>`;
         const canvas = document.getElementById('tetris');
         const context = canvas.getContext('2d');
         context.scale(20, 20);
@@ -173,7 +175,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
         function updateScore() {
-            document.getElementById('score').innerText = `점수: ${player.score}`;
+            document.getElementById('score').innerText = `${t('점수','Score')}: ${player.score}`;
         }
 
         const arena = createMatrix(12, 20);
@@ -194,8 +196,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // 2. Sudoku (Simplified Generation)
     function startSudoku() {
-        title.innerText = "정통 스도쿠";
-        container.innerHTML = `<div class="sudoku-grid" id="sudoku"></div><button class="calc-btn" style="margin-top:20px;" onclick="startGame('sudoku')">새 게임</button>`;
+        title.innerText = t("정통 스도쿠", "Sudoku");
+        container.innerHTML = `<div class="sudoku-grid" id="sudoku"></div><button class="calc-btn" style="margin-top:20px;" onclick="startGame('sudoku')">${t('새 게임','New Game')}</button>`;
         const grid = document.getElementById('sudoku');
         const board = Array(81).fill(0);
         // Fill some random fixed numbers
@@ -222,28 +224,28 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // 3. Clicker
     function startClicker() {
-        title.innerText = "클릭커 마스터";
+        title.innerText = t("클릭커 마스터", "Clicker Master");
         let count = 0; let time = 10;
-        container.innerHTML = `<div style="text-align:center;"><h3>남은 시간: <span id="t">${time}</span></h3><h2 id="c" style="font-size:3rem; margin:20px 0;">0</h2><button id="b" class="calc-btn" style="width:150px; height:150px; border-radius:50%;">클릭!</button></div>`;
+        container.innerHTML = `<div style="text-align:center;"><h3>${t('남은 시간','Time Left')}: <span id="t">${time}</span></h3><h2 id="c" style="font-size:3rem; margin:20px 0;">0</h2><button id="b" class="calc-btn" style="width:150px; height:150px; border-radius:50%;">${t('클릭!','Click!')}</button></div>`;
         const b = document.getElementById('b');
         b.onclick = () => { if(time>0) document.getElementById('c').innerText = ++count; };
         gameInterval = setInterval(() => {
             document.getElementById('t').innerText = --time;
-            if(time<=0) { clearInterval(gameInterval); alert('종료! 점수: ' + count); closeGame(); }
+            if(time<=0) { clearInterval(gameInterval); alert(t('종료! 점수: ','Done! Score: ') + count); closeGame(); }
         }, 1000);
     }
 
     // 4. Math
     function startMath() {
-        title.innerText = "암산왕";
+        title.innerText = t("암산왕", "Mental Math");
         let score = 0;
         function ask() {
             const a = Math.floor(Math.random()*20); const b = Math.floor(Math.random()*20);
             const ans = a + b;
-            container.innerHTML = `<div style="text-align:center;"><h3>점수: ${score}</h3><h1>${a} + ${b} = ?</h1><input type="number" id="ans" style="padding:10px; font-size:1.5rem; width:100px;"><button id="sub" class="calc-btn">확인</button></div>`;
+            container.innerHTML = `<div style="text-align:center;"><h3>${t('점수','Score')}: ${score}</h3><h1>${a} + ${b} = ?</h1><input type="number" id="ans" style="padding:10px; font-size:1.5rem; width:100px;"><button id="sub" class="calc-btn">${t('확인','Submit')}</button></div>`;
             document.getElementById('sub').onclick = () => {
                 if(parseInt(document.getElementById('ans').value) === ans) { score++; ask(); }
-                else { alert('틀렸습니다! 최종 점수: ' + score); closeGame(); }
+                else { alert(t('틀렸습니다! 최종 점수: ','Wrong! Final score: ') + score); closeGame(); }
             };
         }
         ask();
@@ -251,25 +253,25 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // 5. Reaction
     function startReaction() {
-        title.innerText = "반응 속도";
-        container.innerHTML = `<div id="box" style="width:100%; height:300px; background:red; color:white; display:flex; align-items:center; justify-content:center; cursor:pointer;">기다리세요...</div>`;
+        title.innerText = t("반응 속도", "Reaction Speed");
+        container.innerHTML = `<div id="box" style="width:100%; height:300px; background:red; color:white; display:flex; align-items:center; justify-content:center; cursor:pointer; border-radius:16px; font-size:1.5rem; font-weight:700;">${t('기다리세요...','Wait...')}</div>`;
         const box = document.getElementById('box');
         let start = 0;
         const wait = setTimeout(() => {
-            box.style.background = 'green'; box.innerText = '클릭!!!'; start = Date.now();
+            box.style.background = 'green'; box.innerText = t('클릭!!!','Click NOW!'); start = Date.now();
         }, 2000 + Math.random()*3000);
         box.onclick = () => {
             if(start) { alert((Date.now()-start) + 'ms!'); closeGame(); }
-            else { clearTimeout(wait); alert('너무 빨랐습니다!'); closeGame(); }
+            else { clearTimeout(wait); alert(t('너무 빨랐습니다!','Too early!')); closeGame(); }
         };
     }
 
     // 6. Snake
     function startSnake() {
-        title.innerText = "스네이크";
+        title.innerText = t("스네이크", "Snake");
         container.innerHTML = `
             <div style="text-align:center;">
-                <div style="margin-bottom:10px; font-size:0.85rem; color:var(--text-muted);">점수: <span id="snake-score">0</span></div>
+                <div style="margin-bottom:10px; font-size:0.85rem; color:var(--text-muted);">${t('점수','Score')}: <span id="snake-score">0</span></div>
                 <canvas id="snake" width="300" height="300" style="border-radius:10px;"></canvas>
                 <div style="margin-top:12px; display:grid; grid-template-columns:1fr 1fr 1fr; gap:6px; max-width:150px; margin-left:auto; margin-right:auto;">
                     <div></div>
@@ -282,7 +284,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     <button id="s-down" class="calc-btn" style="padding:10px;">↓</button>
                     <div></div>
                 </div>
-                <p style="font-size:0.75rem; color:var(--text-muted); margin-top:8px;">키보드 화살표 또는 버튼으로 조작</p>
+                <p style="font-size:0.75rem; color:var(--text-muted); margin-top:8px;">${t('키보드 화살표 또는 버튼으로 조작','Use arrow keys or buttons to control')}</p>
             </div>
         `;
         const canvas = document.getElementById('snake');
@@ -308,9 +310,9 @@ document.addEventListener('DOMContentLoaded', () => {
                 clearInterval(gameInterval);
                 ctx.fillStyle='rgba(0,0,0,0.6)'; ctx.fillRect(0,0,300,300);
                 ctx.fillStyle='white'; ctx.font='bold 24px sans-serif'; ctx.textAlign='center';
-                ctx.fillText('Game Over', 150, 140);
+                ctx.fillText(t('Game Over','Game Over'), 150, 140);
                 ctx.font='16px sans-serif';
-                ctx.fillText('점수: ' + snakeScore, 150, 170);
+                ctx.fillText(t('점수','Score') + ': ' + snakeScore, 150, 170);
                 return;
             }
             snake.unshift(head);
@@ -327,17 +329,17 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // 7. Memory
     function startMemory() {
-        title.innerText = "기억력 카드";
-        const emojis = '🍎🍊🍋🍇🍓🍒🥝🍑';
-        const pairs = (emojis + emojis).split('').sort(() => Math.random() - 0.5);
+        title.innerText = t("기억력 카드", "Memory Cards");
+        const emojis = ['🍎','🍊','🍋','🍇','🍓','🍒','🥝','🍑'];
+        const pairs = [...emojis, ...emojis].sort(() => Math.random() - 0.5);
         let tries = 0, matched = 0, first = null, locked = false;
         const startTime = Date.now();
 
         container.innerHTML = `
             <div style="text-align:center; width:100%;">
                 <div style="display:flex; justify-content:center; gap:30px; margin-bottom:15px; font-size:0.9rem; color:var(--text-muted);">
-                    <span>시도: <strong id="mem-tries">0</strong></span>
-                    <span>맞춤: <strong id="mem-matched">0</strong>/8</span>
+                    <span>${t('시도','Tries')}: <strong id="mem-tries">0</strong></span>
+                    <span>${t('맞춤','Matched')}: <strong id="mem-matched">0</strong>/8</span>
                 </div>
                 <div style="display:grid; grid-template-columns:repeat(4,1fr); gap:10px; max-width:320px; margin:0 auto;" id="mem-grid"></div>
             </div>
@@ -367,7 +369,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     first = null; locked = false;
                     if (matched === 8) {
                         const elapsed = ((Date.now() - startTime) / 1000).toFixed(1);
-                        setTimeout(() => alert(`🎉 완성! ${tries}번 시도 · ${elapsed}초`), 300);
+                        setTimeout(() => alert(`🎉 ${t('완성!','Complete!')} ${tries}${t('번 시도',' tries')} · ${elapsed}${t('초','s')}`), 300);
                     }
                 } else {
                     setTimeout(() => {
@@ -387,18 +389,20 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // 8. Color
     function startColor() {
-        title.innerText = "색상 차이 찾기";
+        title.innerText = t("색상 차이 찾기", "Spot the Color");
         let score = 0;
         function ask() {
-            container.innerHTML = `<div style="display:grid; grid-template-columns:repeat(3,1fr); gap:10px;" id="g"></div>`;
+            container.innerHTML = `
+                <div style="text-align:center; margin-bottom:10px; font-size:0.9rem; color:var(--text-muted);">${t('점수','Score')}: <strong>${score}</strong> — ${t('레벨','Level')} ${score + 1}</div>
+                <div style="display:grid; grid-template-columns:repeat(3,1fr); gap:10px;" id="g"></div>`;
             const g = document.getElementById('g');
-            const r = Math.floor(Math.random()*200); const gr = Math.floor(Math.random()*200); const b = Math.floor(Math.random()*200);
-            const diff = 20 - score;
+            const r = Math.floor(Math.random()*180); const gr = Math.floor(Math.random()*180); const b = Math.floor(Math.random()*180);
+            const diff = Math.max(15, 40 - score * 2); // diff stays >= 15, decreases as score rises
             const target = Math.floor(Math.random()*9);
             for(let i=0; i<9; i++) {
                 const box = document.createElement('div');
-                box.style = `height:80px; border-radius:10px; cursor:pointer; background:rgb(${i===target?r+diff:r},${i===target?gr+diff:gr},${i===target?b+diff:b})`;
-                box.onclick = () => { if(i===target) { score++; ask(); } else { alert('탈락! 점수: ' + score); closeGame(); } };
+                box.style.cssText = `height:80px; border-radius:10px; cursor:pointer; background:rgb(${i===target?Math.min(r+diff,255):r},${i===target?Math.min(gr+diff,255):gr},${i===target?Math.min(b+diff,255):b})`;
+                box.onclick = () => { if(i===target) { score++; ask(); } else { alert(t('탈락! 점수: ','Game over! Score: ') + score); closeGame(); } };
                 g.appendChild(box);
             }
         }
@@ -407,15 +411,18 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // 9. Typing
     function startTyping() {
-        title.innerText = "타이핑 챌린지";
-        const words = ['바나나','포도','치타','코끼리','컴퓨터','자바스크립트','웰니스','밸런스','건강','운동'];
+        title.innerText = t("타이핑 챌린지", "Typing Challenge");
+        const wordsKo = ['바나나','포도','치타','코끼리','컴퓨터','자바스크립트','웰니스','밸런스','건강','운동'];
+        const wordsEn = ['banana','grapes','cheetah','elephant','computer','javascript','wellness','balance','health','exercise'];
+        const lang = localStorage.getItem('lang') || 'ko';
+        const words = lang === 'en' ? wordsEn : wordsKo;
         let score = 0;
         function ask() {
             const word = words[Math.floor(Math.random()*words.length)];
-            container.innerHTML = `<div style="text-align:center;"><h3>점수: ${score}</h3><h1 style="font-size:3rem; margin:20px 0;">${word}</h1><input id="in" style="padding:10px; font-size:1.5rem;"><button id="ok" class="calc-btn">입력</button></div>`;
+            container.innerHTML = `<div style="text-align:center;"><h3>${t('점수','Score')}: ${score}</h3><h1 style="font-size:3rem; margin:20px 0;">${word}</h1><input id="in" style="padding:10px; font-size:1.5rem;"><button id="ok" class="calc-btn">${t('입력','Submit')}</button></div>`;
             const input = document.getElementById('in');
             input.focus();
-            const check = () => { if(input.value === word) { score++; ask(); } else { alert('최종 점수: ' + score); closeGame(); } };
+            const check = () => { if(input.value === word) { score++; ask(); } else { alert(t('최종 점수: ','Final score: ') + score); closeGame(); } };
             document.getElementById('ok').onclick = check;
             input.onkeyup = e => { if(e.key==='Enter') check(); };
         }
@@ -424,13 +431,13 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // 10. Number
     function startNumber() {
-        title.innerText = "숫자 맞추기";
+        title.innerText = t("숫자 맞추기", "Number Guess");
         const target = Math.floor(Math.random()*100)+1;
-        container.innerHTML = `<div style="text-align:center;"><input type="number" id="n" placeholder="1~100" style="padding:10px;"><button id="go" class="calc-btn">Go</button><p id="h">과연 숫자는?</p></div>`;
+        container.innerHTML = `<div style="text-align:center;"><input type="number" id="n" placeholder="1~100" style="padding:10px;"><button id="go" class="calc-btn">Go</button><p id="h">${t('과연 숫자는?','What is the number?')}</p></div>`;
         document.getElementById('go').onclick = () => {
             const v = parseInt(document.getElementById('n').value);
             const h = document.getElementById('h');
-            if(v === target) { alert('정답!'); closeGame(); }
+            if(v === target) { alert(t('정답!','Correct!')); closeGame(); }
             else if(v < target) h.innerText = 'Up!';
             else h.innerText = 'Down!';
         };

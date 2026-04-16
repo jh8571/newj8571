@@ -41,7 +41,7 @@ function renderQuestion() {
             <span style="font-size:0.85rem; color:var(--text-muted); font-weight:700;">Q ${currentQuestion + 1} / ${total}</span>
             <span style="font-size:0.85rem; background:var(--accent-color)22; color:var(--accent-color); padding:4px 12px; border-radius:20px; font-weight:700;">${getDimLabel(q.type)}</span>
         </div>
-        <h4 id="question-text" style="font-size:1.3rem; margin-bottom:40px; line-height:1.7; color:var(--primary-color);">${q.q}</h4>
+        <h4 id="question-text" style="font-size:1.3rem; margin-bottom:40px; line-height:1.7; color:var(--primary-color);">${lang === 'en' && q.q_en ? q.q_en : q.q}</h4>
         <div style="display:flex; flex-direction:column; gap:12px;">
             ${LIKERT.map(opt => `
                 <button class="likert-btn" onclick="handleAnswer(${opt.value}, '${q.type}', '${q.pole}')"
