@@ -1,3 +1,8 @@
+// Translation helper — use window.t('한국어', 'English') throughout JS files
+window.t = function(ko, en) {
+    return (localStorage.getItem('lang') || 'ko') === 'en' ? en : ko;
+};
+
 document.addEventListener('DOMContentLoaded', () => {
     const themeBtn = document.getElementById('theme-toggle');
     const langBtn  = document.getElementById('lang-toggle');
