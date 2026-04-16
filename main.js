@@ -476,26 +476,26 @@ document.addEventListener('DOMContentLoaded', () => {
         if (!modal) return;
         modalContent.innerHTML = `
             <div class="report-header" style="text-align: left; padding: 0 0 30px; background: none; border-bottom: 2px solid #fee2e2;">
-                <div class="report-badge" style="background:#ef4444; color:white;">FDA Enforcement (Recall)</div>
+                <div class="report-badge" style="background:#ef4444; color:white;">FDA 리콜 정보</div>
                 <h2 style="font-size: 2rem; margin-top: 10px; color:#b91c1c;">${item.recalling_firm}</h2>
-                <p style="color: #ef4444; font-weight: 800; font-size: 1.1rem;">Recall Status: ${item.status}</p>
+                <p style="color: #ef4444; font-weight: 800; font-size: 1.1rem;">리콜 상태: ${item.status}</p>
             </div>
             <div style="margin-top: 30px; display: grid; gap: 20px;">
                 <div style="background: #fef2f2; padding: 25px; border-radius: 20px; border: 1px solid #fee2e2;">
-                    <h4 style="color: #dc2626; margin-bottom: 10px;"><i class="fas fa-exclamation-triangle"></i> Reason for Recall</h4>
+                    <h4 style="color: #dc2626; margin-bottom: 10px;"><i class="fas fa-exclamation-triangle"></i> 리콜 사유</h4>
                     <p style="line-height: 1.6; color: #991b1b;">${item.reason_for_recall}</p>
                 </div>
                 <div style="background: #f8fafc; padding: 20px; border-radius: 15px;">
-                    <h5 style="color: #475569; margin-bottom: 8px;">Product Description</h5>
+                    <h5 style="color: #475569; margin-bottom: 8px;">제품 설명</h5>
                     <p style="font-size: 0.9rem; line-height: 1.5;">${item.product_description}</p>
                 </div>
                 <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
                     <div style="background: #f1f5f9; padding: 15px; border-radius: 12px;">
-                        <h6 style="font-size: 0.75rem; color: #64748b; margin-bottom: 5px;">Recall Class</h6>
+                        <h6 style="font-size: 0.75rem; color: #64748b; margin-bottom: 5px;">리콜 등급</h6>
                         <p style="font-weight: 700;">${item.classification}</p>
                     </div>
                     <div style="background: #f1f5f9; padding: 15px; border-radius: 12px;">
-                        <h6 style="font-size: 0.75rem; color: #64748b; margin-bottom: 5px;">Initiation Date</h6>
+                        <h6 style="font-size: 0.75rem; color: #64748b; margin-bottom: 5px;">개시 일자</h6>
                         <p style="font-weight: 700;">${item.recall_initiation_date}</p>
                     </div>
                 </div>
