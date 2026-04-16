@@ -126,7 +126,7 @@ document.addEventListener('DOMContentLoaded', () => {
         let resultHTML = `
             <div class="luxury-report-card" style="margin-top:60px;">
                 <div class="report-header">
-                    <div class="report-badge">In-depth Interpretation · ${today}</div>
+                    <div class="report-badge">심층 해석 · ${today}</div>
                     <h2 style="font-size:2rem; margin-bottom:8px;">3카드 스프레드 심층 해석</h2>
                     <p style="color:var(--text-muted);">과거 · 현재 · 미래의 에너지 흐름을 읽습니다</p>
                 </div>
