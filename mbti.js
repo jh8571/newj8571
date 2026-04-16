@@ -233,7 +233,7 @@ function showResult() {
 
             <!-- Growth Tip -->
             <div style="background:linear-gradient(135deg, var(--accent-color)15, var(--primary-color)10); border:1px solid var(--accent-color)33; padding:25px; border-radius:20px; text-align:left; margin-bottom:30px;">
-                <h4 style="color:var(--accent-color); margin-bottom:12px;"><i class="fas fa-seedling"></i> 성장을 위한 조언</h4>
+                <h4 style="color:var(--accent-color); margin-bottom:12px;"><i class="fas fa-seedling"></i> ${t('성장을 위한 조언','Advice for Growth')}</h4>
                 <p style="font-size:0.9rem; line-height:1.8; color:var(--text-main);">${d.growth_tip}</p>
             </div>
 
