@@ -137,7 +137,7 @@ function showResult() {
 
     resultSection.innerHTML = `
         <div class="luxury-report" style="text-align:center;">
-            <div style="background:var(--accent-color); color:white; display:inline-block; padding:8px 28px; border-radius:50px; font-weight:900; font-size:0.85rem; margin-bottom:20px; letter-spacing:2px;">YOUR MBTI TYPE</div>
+            <div style="background:var(--accent-color); color:white; display:inline-block; padding:8px 28px; border-radius:50px; font-weight:900; font-size:0.85rem; margin-bottom:20px; letter-spacing:2px;">나의 MBTI 유형</div>
             <div style="font-size:1.2rem; color:var(--text-muted); margin-bottom:8px;">${d.emoji} ${d.title}</div>
             <h2 style="font-size:5rem; font-weight:900; color:var(--primary-color); margin-bottom:8px; letter-spacing:4px;">${mbti}</h2>
             <p style="font-style:italic; color:var(--accent-color); font-weight:700; margin-bottom:30px;">"${d.tagline}"</p>
