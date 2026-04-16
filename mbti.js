@@ -200,7 +200,7 @@ function showResult() {
             <!-- Careers & Famous -->
             <div style="display:grid; grid-template-columns:1fr 1fr; gap:20px; text-align:left; margin-bottom:20px;">
                 <div style="background:var(--bg-color); padding:25px; border-radius:20px;">
-                    <h4 style="color:#6366f1; margin-bottom:12px;"><i class="fas fa-briefcase"></i> 추천 직업</h4>
+                    <h4 style="color:#6366f1; margin-bottom:12px;"><i class="fas fa-briefcase"></i> ${t('추천 직업','Recommended Careers')}</h4>
                     <div style="display:flex; flex-wrap:wrap; gap:8px;">
                         ${d.careers.map(c => `<span style="background:#6366f111; color:#6366f1; padding:4px 10px; border-radius:20px; font-size:0.8rem; font-weight:700;">${c}</span>`).join('')}
                     </div>
