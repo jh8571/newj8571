@@ -116,11 +116,11 @@ function showResult() {
     const resultSection = document.getElementById('result-section');
     resultSection.style.display = 'block';
 
-    const e = scores.E >= 0;
-    const s = scores.S >= 0;
-    const t = scores.T >= 0;
-    const j = scores.J >= 0;
-    const mbti = (e ? 'E' : 'I') + (s ? 'S' : 'N') + (t ? 'T' : 'F') + (j ? 'J' : 'P');
+    const isE = scores.E >= 0;
+    const isS = scores.S >= 0;
+    const isT = scores.T >= 0;
+    const isJ = scores.J >= 0;
+    const mbti = (isE ? 'E' : 'I') + (isS ? 'S' : 'N') + (isT ? 'T' : 'F') + (isJ ? 'J' : 'P');
 
     const [ePct, iPct] = getPct('E', 'I');
     const [sPct, nPct] = getPct('S', 'N');
