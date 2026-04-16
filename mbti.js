@@ -239,7 +239,7 @@ function showResult() {
 
             <!-- Relationship Tip -->
             <div style="background:#fdf4ff; border:1px solid #e9d5ff; padding:25px; border-radius:20px; text-align:left; margin-bottom:30px;">
-                <h4 style="color:#7c3aed; margin-bottom:12px;"><i class="fas fa-people-group"></i> 관계 & 커뮤니케이션 팁</h4>
+                <h4 style="color:#7c3aed; margin-bottom:12px;"><i class="fas fa-people-group"></i> ${t('관계 & 커뮤니케이션 팁','Relationship & Communication Tips')}</h4>
                 <p style="font-size:0.9rem; line-height:1.8; color:#4c1d95;">${d.relationship_tip}</p>
             </div>
 
