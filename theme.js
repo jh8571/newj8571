@@ -37,11 +37,20 @@ document.addEventListener('DOMContentLoaded', () => {
     function setLanguage(lang) {
         localStorage.setItem('lang', lang);
         langBtn.innerText = lang === 'ko' ? 'EN' : 'KR';
+        // Short text elements
         document.querySelectorAll('[data-ko]').forEach(el => {
             el.innerText = lang === 'ko' ? el.getAttribute('data-ko') : (el.getAttribute('data-en') || el.getAttribute('data-ko'));
         });
+        // Input placeholders
         document.querySelectorAll('input[data-ko-ph]').forEach(el => {
             el.placeholder = lang === 'ko' ? el.getAttribute('data-ko-ph') : el.getAttribute('data-en-ph');
+        });
+        // Block content: .lang-ko shown in Korean, .lang-en shown in English
+        document.querySelectorAll('.lang-ko').forEach(el => {
+            el.style.display = lang === 'ko' ? '' : 'none';
+        });
+        document.querySelectorAll('.lang-en').forEach(el => {
+            el.style.display = lang === 'en' ? '' : 'none';
         });
     }
 

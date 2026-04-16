@@ -67,15 +67,15 @@
 
         <!-- Category Filter -->
         <div style="display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; margin-bottom: 50px;">
-            <button onclick="filterCategory('all')" class="luxury-btn" id="cat-all" style="padding: 10px 20px; font-size: 0.85rem;">전체</button>
-            <button onclick="filterCategory('nutrition')" class="luxury-btn" id="cat-nutrition" style="padding: 10px 20px; font-size: 0.85rem; background: transparent; color: var(--primary-color); border: 2px solid var(--primary-color);">영양 · 영양제</button>
-            <button onclick="filterCategory('mind')" class="luxury-btn" id="cat-mind" style="padding: 10px 20px; font-size: 0.85rem; background: transparent; color: #ec4899; border: 2px solid #ec4899;">마음 건강</button>
-            <button onclick="filterCategory('lifestyle')" class="luxury-btn" id="cat-lifestyle" style="padding: 10px 20px; font-size: 0.85rem; background: transparent; color: #10b981; border: 2px solid #10b981;">라이프스타일</button>
+            <button onclick="filterCategory('all')" class="luxury-btn" id="cat-all" style="padding: 10px 20px; font-size: 0.85rem;" data-ko="전체" data-en="All">전체</button>
+            <button onclick="filterCategory('nutrition')" class="luxury-btn" id="cat-nutrition" style="padding: 10px 20px; font-size: 0.85rem; background: transparent; color: var(--primary-color); border: 2px solid var(--primary-color);" data-ko="영양 · 영양제" data-en="Nutrition">영양 · 영양제</button>
+            <button onclick="filterCategory('mind')" class="luxury-btn" id="cat-mind" style="padding: 10px 20px; font-size: 0.85rem; background: transparent; color: #ec4899; border: 2px solid #ec4899;" data-ko="마음 건강" data-en="Mental Health">마음 건강</button>
+            <button onclick="filterCategory('lifestyle')" class="luxury-btn" id="cat-lifestyle" style="padding: 10px 20px; font-size: 0.85rem; background: transparent; color: #10b981; border: 2px solid #10b981;" data-ko="라이프스타일" data-en="Lifestyle">라이프스타일</button>
         </div>
 
         <!-- Ad slot -->
         <div style="max-width: 860px; margin: 0 auto 50px; background: var(--card-bg); border: 2px dashed var(--border-color); border-radius: 16px; padding: 20px; text-align: center; color: var(--text-muted); font-size: 0.85rem;">
-            광고 영역
+            <span data-ko="광고 영역" data-en="Ad Space">광고 영역</span>
         </div>
 
         <!-- Articles Grid -->
@@ -92,10 +92,10 @@
                             <span class="report-badge" style="font-size: 0.7rem; padding: 4px 10px;">Nutrition Guide</span>
                             <span style="font-size: 0.8rem; color: var(--text-muted);">2026.03.10</span>
                         </div>
-                        <h3 style="font-size: 1.1rem; font-weight: 800; line-height: 1.5; margin-bottom: 12px;">오메가3 완전 정복: 효능·복용법·부작용 총정리</h3>
-                        <p style="font-size: 0.88rem; color: var(--text-muted); line-height: 1.7; margin-bottom: 16px;">EPA·DHA의 심혈관 보호, 뇌 건강, 항염 효과를 과학적 근거와 함께. 올바른 복용 시간, 추천 용량, 부작용까지.</p>
+                        <h3 style="font-size: 1.1rem; font-weight: 800; line-height: 1.5; margin-bottom: 12px;" data-ko="오메가3 완전 정복: 효능·복용법·부작용 총정리" data-en="Omega-3 Complete Guide: Benefits, Dosage & Side Effects">오메가3 완전 정복: 효능·복용법·부작용 총정리</h3>
+                        <p style="font-size: 0.88rem; color: var(--text-muted); line-height: 1.7; margin-bottom: 16px;" data-ko="EPA·DHA의 심혈관 보호, 뇌 건강, 항염 효과를 과학적 근거와 함께. 올바른 복용 시간, 추천 용량, 부작용까지." data-en="EPA & DHA's cardioprotective, brain health, and anti-inflammatory effects — with scientific evidence. Correct timing, recommended dosage, and side effects.">EPA·DHA의 심혈관 보호, 뇌 건강, 항염 효과를 과학적 근거와 함께. 올바른 복용 시간, 추천 용량, 부작용까지.</p>
                         <div style="display: flex; align-items: center; gap: 6px; color: var(--primary-color); font-size: 0.85rem; font-weight: 700;">
-                            읽기 <i class="fas fa-arrow-right"></i>
+                            <span data-ko="읽기" data-en="Read">읽기</span> <i class="fas fa-arrow-right"></i>
                         </div>
                     </div>
                 </a>
@@ -112,10 +112,10 @@
                             <span class="report-badge" style="font-size: 0.7rem; padding: 4px 10px;">Nutrition Guide</span>
                             <span style="font-size: 0.8rem; color: var(--text-muted);">2026.03.18</span>
                         </div>
-                        <h3 style="font-size: 1.1rem; font-weight: 800; line-height: 1.5; margin-bottom: 12px;">비타민D 결핍의 7가지 징후와 올바른 보충 방법</h3>
-                        <p style="font-size: 0.88rem; color: var(--text-muted); line-height: 1.7; margin-bottom: 16px;">한국인 72%가 결핍 상태인 비타민D. 피로, 우울, 뼈 통증 등 결핍 신호 7가지와 K2 병용법.</p>
+                        <h3 style="font-size: 1.1rem; font-weight: 800; line-height: 1.5; margin-bottom: 12px;" data-ko="비타민D 결핍의 7가지 징후와 올바른 보충 방법" data-en="7 Signs of Vitamin D Deficiency & How to Supplement Correctly">비타민D 결핍의 7가지 징후와 올바른 보충 방법</h3>
+                        <p style="font-size: 0.88rem; color: var(--text-muted); line-height: 1.7; margin-bottom: 16px;" data-ko="한국인 72%가 결핍 상태인 비타민D. 피로, 우울, 뼈 통증 등 결핍 신호 7가지와 K2 병용법." data-en="72% of Koreans are deficient in Vitamin D. Learn 7 deficiency signals including fatigue, depression, and bone pain — plus how to combine with K2.">한국인 72%가 결핍 상태인 비타민D. 피로, 우울, 뼈 통증 등 결핍 신호 7가지와 K2 병용법.</p>
                         <div style="display: flex; align-items: center; gap: 6px; color: var(--primary-color); font-size: 0.85rem; font-weight: 700;">
-                            읽기 <i class="fas fa-arrow-right"></i>
+                            <span data-ko="읽기" data-en="Read">읽기</span> <i class="fas fa-arrow-right"></i>
                         </div>
                     </div>
                 </a>
@@ -132,10 +132,10 @@
                             <span class="report-badge" style="font-size: 0.7rem; padding: 4px 10px; background: #8b5cf6;">Mineral Guide</span>
                             <span style="font-size: 0.8rem; color: var(--text-muted);">2026.03.25</span>
                         </div>
-                        <h3 style="font-size: 1.1rem; font-weight: 800; line-height: 1.5; margin-bottom: 12px;">마그네슘 부족이 만드는 증상 10가지와 해결책</h3>
-                        <p style="font-size: 0.88rem; color: var(--text-muted); line-height: 1.7; margin-bottom: 16px;">300가지 이상 효소 반응에 관여하는 마그네슘. 근육 경련, 불면, 편두통, 불안의 숨겨진 원인.</p>
+                        <h3 style="font-size: 1.1rem; font-weight: 800; line-height: 1.5; margin-bottom: 12px;" data-ko="마그네슘 부족이 만드는 증상 10가지와 해결책" data-en="10 Symptoms of Magnesium Deficiency & Solutions">마그네슘 부족이 만드는 증상 10가지와 해결책</h3>
+                        <p style="font-size: 0.88rem; color: var(--text-muted); line-height: 1.7; margin-bottom: 16px;" data-ko="300가지 이상 효소 반응에 관여하는 마그네슘. 근육 경련, 불면, 편두통, 불안의 숨겨진 원인." data-en="Magnesium is involved in over 300 enzyme reactions. The hidden cause behind muscle cramps, insomnia, migraines, and anxiety.">300가지 이상 효소 반응에 관여하는 마그네슘. 근육 경련, 불면, 편두통, 불안의 숨겨진 원인.</p>
                         <div style="display: flex; align-items: center; gap: 6px; color: var(--primary-color); font-size: 0.85rem; font-weight: 700;">
-                            읽기 <i class="fas fa-arrow-right"></i>
+                            <span data-ko="읽기" data-en="Read">읽기</span> <i class="fas fa-arrow-right"></i>
                         </div>
                     </div>
                 </a>
@@ -152,10 +152,10 @@
                             <span class="report-badge" style="font-size: 0.7rem; padding: 4px 10px; background: #0ea5e9;">Mind Care</span>
                             <span style="font-size: 0.8rem; color: var(--text-muted);">2026.04.01</span>
                         </div>
-                        <h3 style="font-size: 1.1rem; font-weight: 800; line-height: 1.5; margin-bottom: 12px;">수면의 질 개선을 위한 과학적 방법 10가지</h3>
-                        <p style="font-size: 0.88rem; color: var(--text-muted); line-height: 1.7; margin-bottom: 16px;">수면 과학이 밝힌 숙면의 비밀. 일주기 리듬, 블루라이트, 체온 조절, 수면 영양소까지.</p>
+                        <h3 style="font-size: 1.1rem; font-weight: 800; line-height: 1.5; margin-bottom: 12px;" data-ko="수면의 질 개선을 위한 과학적 방법 10가지" data-en="10 Science-Backed Methods to Improve Sleep Quality">수면의 질 개선을 위한 과학적 방법 10가지</h3>
+                        <p style="font-size: 0.88rem; color: var(--text-muted); line-height: 1.7; margin-bottom: 16px;" data-ko="수면 과학이 밝힌 숙면의 비밀. 일주기 리듬, 블루라이트, 체온 조절, 수면 영양소까지." data-en="The secrets of deep sleep revealed by sleep science. Circadian rhythm, blue light, body temperature regulation, and sleep nutrients.">수면 과학이 밝힌 숙면의 비밀. 일주기 리듬, 블루라이트, 체온 조절, 수면 영양소까지.</p>
                         <div style="display: flex; align-items: center; gap: 6px; color: var(--primary-color); font-size: 0.85rem; font-weight: 700;">
-                            읽기 <i class="fas fa-arrow-right"></i>
+                            <span data-ko="읽기" data-en="Read">읽기</span> <i class="fas fa-arrow-right"></i>
                         </div>
                     </div>
                 </a>
@@ -172,10 +172,10 @@
                             <span class="report-badge" style="font-size: 0.7rem; padding: 4px 10px; background: #ec4899;">Mind Care</span>
                             <span style="font-size: 0.8rem; color: var(--text-muted);">2026.04.05</span>
                         </div>
-                        <h3 style="font-size: 1.1rem; font-weight: 800; line-height: 1.5; margin-bottom: 12px;">번아웃 증후군: 자가 진단과 과학적 회복 전략</h3>
-                        <p style="font-size: 0.88rem; color: var(--text-muted); line-height: 1.7; margin-bottom: 16px;">WHO 공식 인정한 번아웃. MBI 기반 자가 진단 체크리스트와 심리적 분리, 능동적 회복 전략.</p>
+                        <h3 style="font-size: 1.1rem; font-weight: 800; line-height: 1.5; margin-bottom: 12px;" data-ko="번아웃 증후군: 자가 진단과 과학적 회복 전략" data-en="Burnout Syndrome: Self-Diagnosis & Science-Based Recovery">번아웃 증후군: 자가 진단과 과학적 회복 전략</h3>
+                        <p style="font-size: 0.88rem; color: var(--text-muted); line-height: 1.7; margin-bottom: 16px;" data-ko="WHO 공식 인정한 번아웃. MBI 기반 자가 진단 체크리스트와 심리적 분리, 능동적 회복 전략." data-en="Burnout officially recognized by the WHO. MBI-based self-diagnosis checklist, psychological detachment, and active recovery strategies.">WHO 공식 인정한 번아웃. MBI 기반 자가 진단 체크리스트와 심리적 분리, 능동적 회복 전략.</p>
                         <div style="display: flex; align-items: center; gap: 6px; color: var(--primary-color); font-size: 0.85rem; font-weight: 700;">
-                            읽기 <i class="fas fa-arrow-right"></i>
+                            <span data-ko="읽기" data-en="Read">읽기</span> <i class="fas fa-arrow-right"></i>
                         </div>
                     </div>
                 </a>
@@ -192,16 +192,16 @@
                             <span class="report-badge" style="font-size: 0.7rem; padding: 4px 10px; background: #10b981;">Nutrition Guide</span>
                             <span style="font-size: 0.8rem; color: var(--text-muted);">2026.04.08</span>
                         </div>
-                        <h3 style="font-size: 1.1rem; font-weight: 800; line-height: 1.5; margin-bottom: 12px;">영양제 올바른 복용 시간대 완벽 가이드</h3>
-                        <p style="font-size: 0.88rem; color: var(--text-muted); line-height: 1.7; margin-bottom: 16px;">공복 vs 식후, 아침 vs 저녁. 영양소 30종의 최적 타이밍과 시너지·충돌 조합 완벽 정리.</p>
+                        <h3 style="font-size: 1.1rem; font-weight: 800; line-height: 1.5; margin-bottom: 12px;" data-ko="영양제 올바른 복용 시간대 완벽 가이드" data-en="The Complete Guide to Optimal Supplement Timing">영양제 올바른 복용 시간대 완벽 가이드</h3>
+                        <p style="font-size: 0.88rem; color: var(--text-muted); line-height: 1.7; margin-bottom: 16px;" data-ko="공복 vs 식후, 아침 vs 저녁. 영양소 30종의 최적 타이밍과 시너지·충돌 조합 완벽 정리." data-en="Empty stomach vs. after meals, morning vs. evening. The optimal timing for 30 nutrients — synergies and conflicts fully mapped.">공복 vs 식후, 아침 vs 저녁. 영양소 30종의 최적 타이밍과 시너지·충돌 조합 완벽 정리.</p>
                         <div style="display: flex; align-items: center; gap: 6px; color: var(--primary-color); font-size: 0.85rem; font-weight: 700;">
-                            읽기 <i class="fas fa-arrow-right"></i>
+                            <span data-ko="읽기" data-en="Read">읽기</span> <i class="fas fa-arrow-right"></i>
                         </div>
                     </div>
                 </a>
             </article>
 
-            <!-- Article 7 (기존 글 1 - 개선) -->
+            <!-- Article 7 -->
             <article class="luxury-report-card article-card-hover" data-category="nutrition" style="padding: 0; overflow: hidden;">
                 <a href="article-omega3.html" style="text-decoration: none; color: inherit; display: block;">
                     <div style="background: linear-gradient(135deg, #fff7ed, #fed7aa); padding: 30px 30px 20px; min-height: 120px; display: flex; align-items: center; justify-content: center;">
@@ -212,16 +212,16 @@
                             <span class="report-badge" style="font-size: 0.7rem; padding: 4px 10px; background: #f97316;">Nutrition Guide</span>
                             <span style="font-size: 0.8rem; color: var(--text-muted);">2026.03.25</span>
                         </div>
-                        <h3 style="font-size: 1.1rem; font-weight: 800; line-height: 1.5; margin-bottom: 12px;">흡수율을 극대화하는 영양제 복용 시간대</h3>
-                        <p style="font-size: 0.88rem; color: var(--text-muted); line-height: 1.7; margin-bottom: 16px;">유산균은 공복에, 오메가3는 식후에, 마그네슘은 취침 전에. 시간대별 흡수율 차이의 과학.</p>
+                        <h3 style="font-size: 1.1rem; font-weight: 800; line-height: 1.5; margin-bottom: 12px;" data-ko="흡수율을 극대화하는 영양제 복용 시간대" data-en="Supplement Timing to Maximize Absorption">흡수율을 극대화하는 영양제 복용 시간대</h3>
+                        <p style="font-size: 0.88rem; color: var(--text-muted); line-height: 1.7; margin-bottom: 16px;" data-ko="유산균은 공복에, 오메가3는 식후에, 마그네슘은 취침 전에. 시간대별 흡수율 차이의 과학." data-en="Probiotics on an empty stomach, Omega-3 after meals, Magnesium before bed. The science behind time-based absorption differences.">유산균은 공복에, 오메가3는 식후에, 마그네슘은 취침 전에. 시간대별 흡수율 차이의 과학.</p>
                         <div style="display: flex; align-items: center; gap: 6px; color: var(--primary-color); font-size: 0.85rem; font-weight: 700;">
-                            읽기 <i class="fas fa-arrow-right"></i>
+                            <span data-ko="읽기" data-en="Read">읽기</span> <i class="fas fa-arrow-right"></i>
                         </div>
                     </div>
                 </a>
             </article>
 
-            <!-- Article 8 (기존 글 2 - 개선) -->
+            <!-- Article 8 -->
             <article class="luxury-report-card article-card-hover" data-category="mind" style="padding: 0; overflow: hidden;">
                 <a href="article-burnout.html" style="text-decoration: none; color: inherit; display: block;">
                     <div style="background: linear-gradient(135deg, #f0fdf4, #bbf7d0); padding: 30px 30px 20px; min-height: 120px; display: flex; align-items: center; justify-content: center;">
@@ -232,16 +232,16 @@
                             <span class="report-badge" style="font-size: 0.7rem; padding: 4px 10px; background: #ec4899;">Mind Care</span>
                             <span style="font-size: 0.8rem; color: var(--text-muted);">2026.04.05</span>
                         </div>
-                        <h3 style="font-size: 1.1rem; font-weight: 800; line-height: 1.5; margin-bottom: 12px;">현대인의 스트레스 관리: 번아웃 예방 전략</h3>
-                        <p style="font-size: 0.88rem; color: var(--text-muted); line-height: 1.7; margin-bottom: 16px;">마음 챙김 명상, 디지털 디톡스, 심리적 분리. 만성 스트레스를 다스리는 과학적 접근법.</p>
+                        <h3 style="font-size: 1.1rem; font-weight: 800; line-height: 1.5; margin-bottom: 12px;" data-ko="현대인의 스트레스 관리: 번아웃 예방 전략" data-en="Stress Management for Modern Life: Burnout Prevention">현대인의 스트레스 관리: 번아웃 예방 전략</h3>
+                        <p style="font-size: 0.88rem; color: var(--text-muted); line-height: 1.7; margin-bottom: 16px;" data-ko="마음 챙김 명상, 디지털 디톡스, 심리적 분리. 만성 스트레스를 다스리는 과학적 접근법." data-en="Mindfulness meditation, digital detox, and psychological detachment. A science-based approach to managing chronic stress.">마음 챙김 명상, 디지털 디톡스, 심리적 분리. 만성 스트레스를 다스리는 과학적 접근법.</p>
                         <div style="display: flex; align-items: center; gap: 6px; color: var(--primary-color); font-size: 0.85rem; font-weight: 700;">
-                            읽기 <i class="fas fa-arrow-right"></i>
+                            <span data-ko="읽기" data-en="Read">읽기</span> <i class="fas fa-arrow-right"></i>
                         </div>
                     </div>
                 </a>
             </article>
 
-            <!-- Article 9: 장 건강 -->
+            <!-- Article 9 -->
             <article class="luxury-report-card article-card-hover" data-category="nutrition" style="padding: 0; overflow: hidden;">
                 <a href="article-supplements-time.html" style="text-decoration: none; color: inherit; display: block;">
                     <div style="background: linear-gradient(135deg, #ecfdf5, #a7f3d0); padding: 30px 30px 20px; min-height: 120px; display: flex; align-items: center; justify-content: center;">
@@ -252,16 +252,16 @@
                             <span class="report-badge" style="font-size: 0.7rem; padding: 4px 10px; background: #10b981;">Gut Health</span>
                             <span style="font-size: 0.8rem; color: var(--text-muted);">2026.04.10</span>
                         </div>
-                        <h3 style="font-size: 1.1rem; font-weight: 800; line-height: 1.5; margin-bottom: 12px;">장 건강이 전신을 좌우하는 이유: 마이크로바이옴</h3>
-                        <p style="font-size: 0.88rem; color: var(--text-muted); line-height: 1.7; margin-bottom: 16px;">장내 미생물과 뇌, 면역, 기분의 관계. 프로바이오틱스·프리바이오틱스 올바른 섭취법.</p>
+                        <h3 style="font-size: 1.1rem; font-weight: 800; line-height: 1.5; margin-bottom: 12px;" data-ko="장 건강이 전신을 좌우하는 이유: 마이크로바이옴" data-en="Why Gut Health Governs Your Whole Body: The Microbiome">장 건강이 전신을 좌우하는 이유: 마이크로바이옴</h3>
+                        <p style="font-size: 0.88rem; color: var(--text-muted); line-height: 1.7; margin-bottom: 16px;" data-ko="장내 미생물과 뇌, 면역, 기분의 관계. 프로바이오틱스·프리바이오틱스 올바른 섭취법." data-en="The link between gut microbiota and the brain, immune system, and mood. How to take probiotics and prebiotics correctly.">장내 미생물과 뇌, 면역, 기분의 관계. 프로바이오틱스·프리바이오틱스 올바른 섭취법.</p>
                         <div style="display: flex; align-items: center; gap: 6px; color: var(--primary-color); font-size: 0.85rem; font-weight: 700;">
-                            읽기 <i class="fas fa-arrow-right"></i>
+                            <span data-ko="읽기" data-en="Read">읽기</span> <i class="fas fa-arrow-right"></i>
                         </div>
                     </div>
                 </a>
             </article>
 
-            <!-- Article 10: 중년 건강 -->
+            <!-- Article 10 -->
             <article class="luxury-report-card article-card-hover" data-category="nutrition" style="padding: 0; overflow: hidden;">
                 <a href="article-vitaminD.html" style="text-decoration: none; color: inherit; display: block;">
                     <div style="background: linear-gradient(135deg, #fdf4ff, #f5d0fe); padding: 30px 30px 20px; min-height: 120px; display: flex; align-items: center; justify-content: center;">
@@ -272,16 +272,16 @@
                             <span class="report-badge" style="font-size: 0.7rem; padding: 4px 10px; background: #a855f7;">Health Guide</span>
                             <span style="font-size: 0.8rem; color: var(--text-muted);">2026.04.12</span>
                         </div>
-                        <h3 style="font-size: 1.1rem; font-weight: 800; line-height: 1.5; margin-bottom: 12px;">40대부터 챙겨야 할 7가지 핵심 영양소</h3>
-                        <p style="font-size: 0.88rem; color: var(--text-muted); line-height: 1.7; margin-bottom: 16px;">중년 건강의 열쇠는 예방입니다. 코엔자임Q10, 레스베라트롤, 나이아신아마이드 등 항노화 영양소 가이드.</p>
+                        <h3 style="font-size: 1.1rem; font-weight: 800; line-height: 1.5; margin-bottom: 12px;" data-ko="40대부터 챙겨야 할 7가지 핵심 영양소" data-en="7 Essential Nutrients to Prioritize in Your 40s">40대부터 챙겨야 할 7가지 핵심 영양소</h3>
+                        <p style="font-size: 0.88rem; color: var(--text-muted); line-height: 1.7; margin-bottom: 16px;" data-ko="중년 건강의 열쇠는 예방입니다. 코엔자임Q10, 레스베라트롤, 나이아신아마이드 등 항노화 영양소 가이드." data-en="Prevention is the key to midlife health. A guide to anti-aging nutrients including CoQ10, resveratrol, and nicotinamide.">중년 건강의 열쇠는 예방입니다. 코엔자임Q10, 레스베라트롤, 나이아신아마이드 등 항노화 영양소 가이드.</p>
                         <div style="display: flex; align-items: center; gap: 6px; color: var(--primary-color); font-size: 0.85rem; font-weight: 700;">
-                            읽기 <i class="fas fa-arrow-right"></i>
+                            <span data-ko="읽기" data-en="Read">읽기</span> <i class="fas fa-arrow-right"></i>
                         </div>
                     </div>
                 </a>
             </article>
 
-            <!-- Article 11: 운동 후 영양 -->
+            <!-- Article 11 -->
             <article class="luxury-report-card article-card-hover" data-category="lifestyle" style="padding: 0; overflow: hidden;">
                 <a href="article-supplements-time.html" style="text-decoration: none; color: inherit; display: block;">
                     <div style="background: linear-gradient(135deg, #fff1f2, #fecdd3); padding: 30px 30px 20px; min-height: 120px; display: flex; align-items: center; justify-content: center;">
@@ -292,16 +292,16 @@
                             <span class="report-badge" style="font-size: 0.7rem; padding: 4px 10px; background: #ef4444;">Fitness</span>
                             <span style="font-size: 0.8rem; color: var(--text-muted);">2026.04.13</span>
                         </div>
-                        <h3 style="font-size: 1.1rem; font-weight: 800; line-height: 1.5; margin-bottom: 12px;">운동 전후 최적의 영양 섭취 전략</h3>
-                        <p style="font-size: 0.88rem; color: var(--text-muted); line-height: 1.7; margin-bottom: 16px;">근육 성장을 위한 단백질 타이밍, 운동 전 카보로딩, BCAA와 크레아틴 활용법까지.</p>
+                        <h3 style="font-size: 1.1rem; font-weight: 800; line-height: 1.5; margin-bottom: 12px;" data-ko="운동 전후 최적의 영양 섭취 전략" data-en="Optimal Nutrition Strategy Before and After Exercise">운동 전후 최적의 영양 섭취 전략</h3>
+                        <p style="font-size: 0.88rem; color: var(--text-muted); line-height: 1.7; margin-bottom: 16px;" data-ko="근육 성장을 위한 단백질 타이밍, 운동 전 카보로딩, BCAA와 크레아틴 활용법까지." data-en="Protein timing for muscle growth, pre-workout carbohydrate loading, and how to use BCAAs and creatine.">근육 성장을 위한 단백질 타이밍, 운동 전 카보로딩, BCAA와 크레아틴 활용법까지.</p>
                         <div style="display: flex; align-items: center; gap: 6px; color: var(--primary-color); font-size: 0.85rem; font-weight: 700;">
-                            읽기 <i class="fas fa-arrow-right"></i>
+                            <span data-ko="읽기" data-en="Read">읽기</span> <i class="fas fa-arrow-right"></i>
                         </div>
                     </div>
                 </a>
             </article>
 
-            <!-- Article 12: 눈 건강 -->
+            <!-- Article 12 -->
             <article class="luxury-report-card article-card-hover" data-category="nutrition" style="padding: 0; overflow: hidden;">
                 <a href="article-omega3.html" style="text-decoration: none; color: inherit; display: block;">
                     <div style="background: linear-gradient(135deg, #f0f9ff, #bae6fd); padding: 30px 30px 20px; min-height: 120px; display: flex; align-items: center; justify-content: center;">
@@ -312,10 +312,10 @@
                             <span class="report-badge" style="font-size: 0.7rem; padding: 4px 10px; background: #0284c7;">Eye Health</span>
                             <span style="font-size: 0.8rem; color: var(--text-muted);">2026.04.14</span>
                         </div>
-                        <h3 style="font-size: 1.1rem; font-weight: 800; line-height: 1.5; margin-bottom: 12px;">루테인과 지아잔틴: 디지털 시대의 눈 건강 가이드</h3>
-                        <p style="font-size: 0.88rem; color: var(--text-muted); line-height: 1.7; margin-bottom: 16px;">하루 8시간 이상 화면을 보는 현대인을 위한 눈 건강 영양소와 황반 보호 전략.</p>
+                        <h3 style="font-size: 1.1rem; font-weight: 800; line-height: 1.5; margin-bottom: 12px;" data-ko="루테인과 지아잔틴: 디지털 시대의 눈 건강 가이드" data-en="Lutein & Zeaxanthin: Eye Health Guide for the Digital Age">루테인과 지아잔틴: 디지털 시대의 눈 건강 가이드</h3>
+                        <p style="font-size: 0.88rem; color: var(--text-muted); line-height: 1.7; margin-bottom: 16px;" data-ko="하루 8시간 이상 화면을 보는 현대인을 위한 눈 건강 영양소와 황반 보호 전략." data-en="Eye health nutrients and macular protection strategies for those who spend 8+ hours a day in front of screens.">하루 8시간 이상 화면을 보는 현대인을 위한 눈 건강 영양소와 황반 보호 전략.</p>
                         <div style="display: flex; align-items: center; gap: 6px; color: var(--primary-color); font-size: 0.85rem; font-weight: 700;">
-                            읽기 <i class="fas fa-arrow-right"></i>
+                            <span data-ko="읽기" data-en="Read">읽기</span> <i class="fas fa-arrow-right"></i>
                         </div>
                     </div>
                 </a>
@@ -327,19 +327,19 @@
         <section style="max-width: 700px; margin: 100px auto 0; text-align: center;">
             <div class="luxury-report-card" style="padding: 60px;">
                 <div style="font-size: 2.5rem; margin-bottom: 20px;">📬</div>
-                <h3 style="font-size: 1.8rem; font-weight: 900; margin-bottom: 16px;">콘텐츠 오류를 발견하셨나요?</h3>
+                <h3 style="font-size: 1.8rem; font-weight: 900; margin-bottom: 16px;" data-ko="콘텐츠 오류를 발견하셨나요?" data-en="Found an Error in Our Content?">콘텐츠 오류를 발견하셨나요?</h3>
                 <p style="color: var(--text-muted); line-height: 1.8; margin-bottom: 30px;">
-                    VitalRest는 정확하고 신뢰할 수 있는 건강 정보를 제공하기 위해 노력합니다.<br>
-                    잘못된 정보나 개선 의견이 있으시면 언제든지 알려주세요.
+                    <span class="lang-ko">VitalRest는 정확하고 신뢰할 수 있는 건강 정보를 제공하기 위해 노력합니다.<br>잘못된 정보나 개선 의견이 있으시면 언제든지 알려주세요.</span>
+                    <span class="lang-en" style="display:none">VitalRest strives to provide accurate and reliable health information.<br>If you find incorrect information or have suggestions for improvement, please let us know.</span>
                 </p>
-                <a href="contact.html" class="luxury-btn" style="display: inline-block; text-decoration: none;">문의하기 →</a>
+                <a href="contact.html" class="luxury-btn" style="display: inline-block; text-decoration: none;" data-ko="문의하기 →" data-en="Contact Us →">문의하기 →</a>
             </div>
         </section>
     </main>
 
     <footer>
         <div class="container">
-            <p data-ko="&copy; 2026 VitalRest. 전인적 건강을 위한 고품격 가이드." data-en="&copy; 2026 VitalRest. Premium Guide for Holistic Health.">&copy; 2026 VitalRest. 전인적 건강을 위한 고품격 가이드.</p>
+            <p data-ko="© 2026 VitalRest. 전인적 건강을 위한 고품격 가이드." data-en="© 2026 VitalRest. Premium Guide for Holistic Health.">© 2026 VitalRest. 전인적 건강을 위한 고품격 가이드.</p>
             <div style="margin-top: 20px; display: flex; justify-content: center; gap: 20px; font-size: 0.8rem; flex-wrap: wrap;">
                 <a href="privacy.html" style="color: var(--text-muted); text-decoration: none;">Privacy</a>
                 <a href="terms.html" style="color: var(--text-muted); text-decoration: none;">Terms</a>
@@ -360,7 +360,6 @@
                     a.style.display = 'none';
                 }
             });
-            // Update button styles
             document.querySelectorAll('[id^="cat-"]').forEach(btn => {
                 btn.style.opacity = '0.5';
             });
