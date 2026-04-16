@@ -149,7 +149,7 @@ function showResult() {
 
             <!-- Dimension Bars -->
             <div style="max-width:600px; margin:0 auto 40px; text-align:left;">
-                <h4 style="color:var(--primary-color); margin-bottom:20px; font-size:1.1rem;">📊 차원별 성향 분석</h4>
+                <h4 style="color:var(--primary-color); margin-bottom:20px; font-size:1.1rem;">📊 ${t('차원별 성향 분석','Dimension Analysis')}</h4>
                 ${dimData.map((dim, i) => `
                     <div style="margin-bottom:22px;">
                         <div style="display:flex; justify-content:space-between; font-size:0.85rem; font-weight:800; margin-bottom:8px;">
