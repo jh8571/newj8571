@@ -243,8 +243,12 @@ function showResult() {
                 <p style="font-size:0.9rem; line-height:1.8; color:#4c1d95;">${d.relationship_tip}</p>
             </div>
 
-            <button class="luxury-btn" onclick="location.reload()" style="margin-top:10px; margin-bottom:10px;">테스트 다시하기</button>
-            ${window.getShareUI ? window.getShareUI(`나의 MBTI: ${mbti} ${d.emoji}`, `저는 ${d.title}(${mbti}) 유형입니다! VitalRest 정밀 MBTI 분석으로 당신의 유형도 확인해 보세요.`) : ''}
+            <button class="luxury-btn" onclick="location.reload()" style="margin-top:10px; margin-bottom:10px;">${t('테스트 다시하기','Retake Test')}</button>
+            ${window.getShareUI ? window.getShareUI(
+                t(`나의 MBTI: ${mbti} ${d.emoji}`, `My MBTI: ${mbti} ${d.emoji}`),
+                t(`저는 ${d.title}(${mbti}) 유형입니다! VitalRest 정밀 MBTI 분석으로 당신의 유형도 확인해 보세요.`,
+                  `I got ${d.title} (${mbti})! Check your type with VitalRest's in-depth MBTI analysis.`)
+            ) : ''}
         </div>
     `;
 
