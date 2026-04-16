@@ -575,7 +575,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if (!n || !modal) return;
         modalContent.innerHTML = `
             <div class="report-header" style="text-align: left; padding: 0 0 30px; background: none; border-bottom: 2px solid var(--border-color);">
-                <div class="report-badge">Nutrient Encyclopedia</div>
+                <div class="report-badge">영양 성분 백과</div>
                 <h2 style="font-size: 2.5rem; margin-top: 10px;">${n.name}</h2>
                 <p style="color: var(--accent-color); font-weight: 800; font-size: 1.1rem;">${n.category}</p>
             </div>
