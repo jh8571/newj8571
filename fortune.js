@@ -30,7 +30,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         container.innerHTML = `
             <div style="text-align:center; margin-bottom:40px;">
-                <div class="report-badge">Premium Tarot Reading</div>
+                <div class="report-badge">프리미엄 타로 리딩</div>
                 <h2 style="font-size:2.2rem; font-weight:900; color:var(--primary-color); margin-bottom:12px;">타로 카드를 선택하세요</h2>
                 <p style="color:var(--text-muted); font-size:1rem; line-height:1.7;">
                     깊게 숨을 들이마시고 마음을 고요히 하세요.<br>
