@@ -127,12 +127,14 @@ function showResult() {
     const [tPct, fPct] = getPct('T', 'F');
     const [jPct, pPct] = getPct('J', 'P');
 
+    const t = window.t;
+    const lang = localStorage.getItem('lang') || 'ko';
     const d = mbtiData.types[mbti];
     const dimData = [
-        { a: 'E', b: 'I', aPct: ePct, bPct: iPct, label: '에너지 방향' },
-        { a: 'S', b: 'N', aPct: sPct, bPct: nPct, label: '인식 방식' },
-        { a: 'T', b: 'F', aPct: tPct, bPct: fPct, label: '판단 기준' },
-        { a: 'J', b: 'P', aPct: jPct, bPct: pPct, label: '생활 양식' }
+        { a: 'E', b: 'I', aPct: ePct, bPct: iPct, label: t('에너지 방향','Energy') },
+        { a: 'S', b: 'N', aPct: sPct, bPct: nPct, label: t('인식 방식','Perception') },
+        { a: 'T', b: 'F', aPct: tPct, bPct: fPct, label: t('판단 기준','Judgment') },
+        { a: 'J', b: 'P', aPct: jPct, bPct: pPct, label: t('생활 양식','Lifestyle') }
     ];
 
     const dimColors = ['#6366f1', '#8b5cf6', '#ec4899', '#f59e0b'];
