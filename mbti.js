@@ -72,8 +72,10 @@ function renderQuestion() {
 }
 
 function getDimLabel(type) {
-    const map = { EI: '에너지 방향', SN: '인식 방식', TF: '판단 기준', JP: '생활 양식' };
-    return map[type] || type;
+    const lang = localStorage.getItem('lang') || 'ko';
+    const mapKo = { EI: '에너지 방향', SN: '인식 방식', TF: '판단 기준', JP: '생활 양식' };
+    const mapEn = { EI: 'Energy', SN: 'Perception', TF: 'Judgment', JP: 'Lifestyle' };
+    return (lang === 'ko' ? mapKo : mapEn)[type] || type;
 }
 
 window.handleAnswer = function (value, type, pole) {
