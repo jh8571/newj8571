@@ -220,7 +220,8 @@ document.addEventListener('DOMContentLoaded', () => {
             const d = findNutrient(name) || {};
             const lang = localStorage.getItem('lang') || 'ko';
             return {
-                name: d.name || name,
+                koName: d.name || name,
+                name: (lang === 'en' && d.name_en) ? d.name_en : (d.name || name),
                 category: (lang === 'en' && d.category_en) ? d.category_en : (d.category || '–'),
                 efficacy: (lang === 'en' && d.efficacy_en) ? d.efficacy_en : (d.efficacy || '–'),
                 description: (lang === 'en' && d.description_en) ? d.description_en : (d.description || ''),
@@ -242,7 +243,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const lang = localStorage.getItem('lang') || 'ko';
 
         [...coreCards, ...supportCards, ...extraCards].forEach(n => {
-            const rawTiming = findNutrient(n.name)?.timing || n.timing;
+            const rawTiming = findNutrient(n.koName || n.name)?.timing || n.timing;
             const koKey = rawTiming && timingGroupsKo[rawTiming] !== undefined ? rawTiming : '식사와 함께';
             const enKey = timingMap[koKey] || 'With a meal';
             const shortName = n.name.split(' ')[0];

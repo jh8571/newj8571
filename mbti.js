@@ -139,13 +139,26 @@ function showResult() {
 
     const dimColors = ['#6366f1', '#8b5cf6', '#ec4899', '#f59e0b'];
 
+    const title_d = (lang === 'en' && d.title_en) ? d.title_en : d.title;
+    const tagline_d = (lang === 'en' && d.tagline_en) ? d.tagline_en : d.tagline;
+    const overview_d = (lang === 'en' && d.overview_en) ? d.overview_en : d.overview;
+    const strengths_d = (lang === 'en' && d.strengths_en) ? d.strengths_en : d.strengths;
+    const weaknesses_d = (lang === 'en' && d.weaknesses_en) ? d.weaknesses_en : d.weaknesses;
+    const famous_d = (lang === 'en' && d.famous_en) ? d.famous_en.split(', ') : d.famous_people;
+    const careers_d = (lang === 'en' && d.careers_en) ? d.careers_en.split(', ') : d.careers;
+    const health_tip_d = (lang === 'en' && d.health_tip_en) ? d.health_tip_en : d.health_tip;
+    const growth_tip_d = (lang === 'en' && d.growth_tip_en) ? d.growth_tip_en : d.growth_tip;
+    const relationship_tip_d = (lang === 'en' && d.relationship_tip_en) ? d.relationship_tip_en : d.relationship_tip;
+    const good_d = (lang === 'en' && d.good_en) ? d.good_en.split(', ') : d.good;
+    const bad_d = (lang === 'en' && d.bad_en) ? d.bad_en.split(', ') : d.bad;
+
     resultSection.innerHTML = `
         <div class="luxury-report" style="text-align:center;">
             <div style="background:var(--accent-color); color:white; display:inline-block; padding:8px 28px; border-radius:50px; font-weight:900; font-size:0.85rem; margin-bottom:20px; letter-spacing:2px;">${t('나의 MBTI 유형','My MBTI Type')}</div>
-            <div style="font-size:1.2rem; color:var(--text-muted); margin-bottom:8px;">${d.emoji} ${d.title}</div>
+            <div style="font-size:1.2rem; color:var(--text-muted); margin-bottom:8px;">${d.emoji} ${title_d}</div>
             <h2 style="font-size:5rem; font-weight:900; color:var(--primary-color); margin-bottom:8px; letter-spacing:4px;">${mbti}</h2>
-            <p style="font-style:italic; color:var(--accent-color); font-weight:700; margin-bottom:30px;">"${d.tagline}"</p>
-            <p style="font-size:1.05rem; color:var(--text-main); margin-bottom:40px; line-height:1.9; max-width:650px; margin-left:auto; margin-right:auto;">${d.overview}</p>
+            <p style="font-style:italic; color:var(--accent-color); font-weight:700; margin-bottom:30px;">"${tagline_d}"</p>
+            <p style="font-size:1.05rem; color:var(--text-main); margin-bottom:40px; line-height:1.9; max-width:650px; margin-left:auto; margin-right:auto;">${overview_d}</p>
 
             <!-- Dimension Bars -->
             <div style="max-width:600px; margin:0 auto 40px; text-align:left;">
@@ -169,13 +182,13 @@ function showResult() {
                 <div style="background:var(--bg-color); padding:25px; border-radius:20px; border-left:4px solid #10b981;">
                     <h4 style="color:#10b981; margin-bottom:15px; font-size:1rem;"><i class="fas fa-arrow-up"></i> ${t('강점','Strengths')}</h4>
                     <ul style="list-style:none; padding:0; font-size:0.88rem; line-height:1.8;">
-                        ${d.strengths.map(s => `<li>✅ ${s}</li>`).join('')}
+                        ${strengths_d.map(s => `<li>✅ ${s}</li>`).join('')}
                     </ul>
                 </div>
                 <div style="background:var(--bg-color); padding:25px; border-radius:20px; border-left:4px solid #f59e0b;">
                     <h4 style="color:#f59e0b; margin-bottom:15px; font-size:1rem;"><i class="fas fa-arrow-down"></i> ${t('성장 포인트','Growth Points')}</h4>
                     <ul style="list-style:none; padding:0; font-size:0.88rem; line-height:1.8;">
-                        ${d.weaknesses.map(w => `<li>⚠️ ${w}</li>`).join('')}
+                        ${weaknesses_d.map(w => `<li>⚠️ ${w}</li>`).join('')}
                     </ul>
                 </div>
             </div>
@@ -202,13 +215,13 @@ function showResult() {
                 <div style="background:var(--bg-color); padding:25px; border-radius:20px;">
                     <h4 style="color:#6366f1; margin-bottom:12px;"><i class="fas fa-briefcase"></i> ${t('추천 직업','Recommended Careers')}</h4>
                     <div style="display:flex; flex-wrap:wrap; gap:8px;">
-                        ${d.careers.map(c => `<span style="background:#6366f111; color:#6366f1; padding:4px 10px; border-radius:20px; font-size:0.8rem; font-weight:700;">${c}</span>`).join('')}
+                        ${careers_d.map(c => `<span style="background:#6366f111; color:#6366f1; padding:4px 10px; border-radius:20px; font-size:0.8rem; font-weight:700;">${c}</span>`).join('')}
                     </div>
                 </div>
                 <div style="background:var(--bg-color); padding:25px; border-radius:20px;">
                     <h4 style="color:#ec4899; margin-bottom:12px;"><i class="fas fa-star"></i> ${t('같은 유형 유명인','Famous People of This Type')}</h4>
                     <div style="display:flex; flex-wrap:wrap; gap:8px;">
-                        ${d.famous_people.map(p => `<span style="background:#ec489911; color:#ec4899; padding:4px 10px; border-radius:20px; font-size:0.8rem; font-weight:700;">${p}</span>`).join('')}
+                        ${famous_d.map(p => `<span style="background:#ec489911; color:#ec4899; padding:4px 10px; border-radius:20px; font-size:0.8rem; font-weight:700;">${p}</span>`).join('')}
                     </div>
                 </div>
             </div>
@@ -217,37 +230,37 @@ function showResult() {
             <div style="display:grid; grid-template-columns:1fr 1fr; gap:20px; text-align:left; margin-bottom:20px;">
                 <div style="background:#f0fdf4; padding:20px; border-radius:16px; border:1px solid #dcfce7;">
                     <h5 style="color:#166534; margin-bottom:8px;"><i class="fas fa-heart"></i> ${t('궁합이 잘 맞는 유형','Best Compatibility')}</h5>
-                    <p style="font-size:0.9rem; color:#14532d; font-weight:700;">${d.good.join(' · ')}</p>
+                    <p style="font-size:0.9rem; color:#14532d; font-weight:700;">${good_d.join(' · ')}</p>
                 </div>
                 <div style="background:#eff6ff; padding:20px; border-radius:16px; border:1px solid #dbeafe;">
                     <h5 style="color:#1e40af; margin-bottom:8px;"><i class="fas fa-people-arrows"></i> ${t('관계 개선이 필요한 유형','Challenging Compatibility')}</h5>
-                    <p style="font-size:0.9rem; color:#1e3a8a; font-weight:700;">${d.bad.join(' · ')}</p>
+                    <p style="font-size:0.9rem; color:#1e3a8a; font-weight:700;">${bad_d.join(' · ')}</p>
                 </div>
             </div>
 
             <!-- Health Tips -->
             <div style="background:var(--card-bg); border:1px solid var(--border-color); padding:25px; border-radius:20px; text-align:left; margin-bottom:20px;">
                 <h4 style="color:#10b981; margin-bottom:12px;"><i class="fas fa-dumbbell"></i> ${t('건강 & 웰니스 가이드','Health & Wellness Guide')}</h4>
-                <p style="font-size:0.9rem; line-height:1.8; color:var(--text-main);">${d.health_tip}</p>
+                <p style="font-size:0.9rem; line-height:1.8; color:var(--text-main);">${health_tip_d}</p>
             </div>
 
             <!-- Growth Tip -->
             <div style="background:linear-gradient(135deg, var(--accent-color)15, var(--primary-color)10); border:1px solid var(--accent-color)33; padding:25px; border-radius:20px; text-align:left; margin-bottom:30px;">
                 <h4 style="color:var(--accent-color); margin-bottom:12px;"><i class="fas fa-seedling"></i> ${t('성장을 위한 조언','Advice for Growth')}</h4>
-                <p style="font-size:0.9rem; line-height:1.8; color:var(--text-main);">${d.growth_tip}</p>
+                <p style="font-size:0.9rem; line-height:1.8; color:var(--text-main);">${growth_tip_d}</p>
             </div>
 
             <!-- Relationship Tip -->
             <div style="background:#fdf4ff; border:1px solid #e9d5ff; padding:25px; border-radius:20px; text-align:left; margin-bottom:30px;">
                 <h4 style="color:#7c3aed; margin-bottom:12px;"><i class="fas fa-people-group"></i> ${t('관계 & 커뮤니케이션 팁','Relationship & Communication Tips')}</h4>
-                <p style="font-size:0.9rem; line-height:1.8; color:#4c1d95;">${d.relationship_tip}</p>
+                <p style="font-size:0.9rem; line-height:1.8; color:#4c1d95;">${relationship_tip_d}</p>
             </div>
 
             <button class="luxury-btn" onclick="location.reload()" style="margin-top:10px; margin-bottom:10px;">${t('테스트 다시하기','Retake Test')}</button>
             ${window.getShareUI ? window.getShareUI(
                 t(`나의 MBTI: ${mbti} ${d.emoji}`, `My MBTI: ${mbti} ${d.emoji}`),
                 t(`저는 ${d.title}(${mbti}) 유형입니다! VitalRest 정밀 MBTI 분석으로 당신의 유형도 확인해 보세요.`,
-                  `I got ${d.title} (${mbti})! Check your type with VitalRest's in-depth MBTI analysis.`)
+                  `I got ${title_d} (${mbti})! Check your type with VitalRest's in-depth MBTI analysis.`)
             ) : ''}
         </div>
     `;

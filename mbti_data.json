@@ -476,7 +476,36 @@
       ],
       "relationship_tip": "감정을 표현하는 연습을 통해 가까운 이들에게 더 따뜻한 사람이 될 수 있습니다. 파트너의 감정적 필요에 주의를 기울이세요.",
       "health_tip": "규칙적인 루틴을 선호하는 ISTJ에게 꾸준한 유산소 운동(조깅, 사이클링)과 명상이 효과적입니다. 과도한 완벽주의로 인한 스트레스를 인식하고 주기적으로 이완 시간을 확보하세요.",
-      "growth_tip": "새로운 관점과 변화를 적으로 여기지 말고, 지금껏 쌓아온 경험과 결합하면 더 강력한 결과물을 만들 수 있음을 기억하세요."
+      "growth_tip": "새로운 관점과 변화를 적으로 여기지 말고, 지금껏 쌓아온 경험과 결합하면 더 강력한 결과물을 만들 수 있음을 기억하세요.",
+      "title_en": "The Logistician",
+      "tagline_en": "The dependable pillar who builds the world on responsibility",
+      "overview_en": "ISTJs are the embodiment of reliability, practicality, and dedication. Once they take on a task, they see it through with iron-willed commitment. Their deep reservoir of practical wisdom, built from years of experience, makes them indispensable in any organization. Integrity and honesty are their core values, and they create stable, orderly environments that those around them can depend on.",
+      "traits_en": [
+        "Iron-willed responsibility",
+        "Outstanding execution",
+        "Logical analysis",
+        "Respect for tradition",
+        "Thorough honesty"
+      ],
+      "strengths_en": [
+        "Always keeps promises",
+        "Meticulous and detail-oriented",
+        "Builds stable, predictable environments",
+        "Exceptional organization and management skills"
+      ],
+      "weaknesses_en": [
+        "Resistant to change and new ideas",
+        "Can appear cold and rigid in emotions",
+        "Difficulty with flexible thinking",
+        "Struggles to express feelings openly"
+      ],
+      "famous_en": "George Washington, Warren Buffett, Angela Merkel",
+      "careers_en": "Accountant, Military Officer, Judge, Administrator, Auditor",
+      "good_en": "ESFP, ESTP",
+      "bad_en": "ENFP, ENTP",
+      "relationship_tip_en": "Make an effort to express emotions and show flexibility toward a partner's spontaneous ideas.",
+      "health_tip_en": "ISTJs tend to over-focus on duties and neglect rest. Schedule regular breaks and ensure consistent sleep.",
+      "growth_tip_en": "Embrace the view that change can be opportunity. Occasionally try new approaches and challenge convention."
     },
     "ISFJ": {
       "emoji": "🛡️",
@@ -532,7 +561,36 @@
       ],
       "relationship_tip": "자신의 감정과 필요도 중요하다는 것을 기억하세요. 과도한 자기희생은 장기적으로 번아웃으로 이어질 수 있습니다.",
       "health_tip": "타인을 돌보는 데 집중하다 자신의 건강을 소홀히 하기 쉽습니다. 요가, 수영, 산책 같은 심신을 이완시키는 활동과 정기적인 건강검진을 우선시하세요.",
-      "growth_tip": "'No'라고 말하는 것도 사랑의 표현임을 기억하세요. 자신의 경계를 설정하는 것이 더 오래, 더 잘 타인을 도울 수 있는 길입니다."
+      "growth_tip": "'No'라고 말하는 것도 사랑의 표현임을 기억하세요. 자신의 경계를 설정하는 것이 더 오래, 더 잘 타인을 도울 수 있는 길입니다.",
+      "title_en": "The Defender",
+      "tagline_en": "The warm guardian who protects those they love",
+      "overview_en": "ISFJs are selfless caregivers who find deep meaning in protecting and supporting others. Their extraordinary memory for personal details and emotional needs makes them exceptional friends and colleagues. Though introverted, they are highly attuned to the feelings of those around them and quietly work behind the scenes to ensure everyone is cared for.",
+      "traits_en": [
+        "Warm-hearted and caring",
+        "Exceptional memory",
+        "Patient and attentive",
+        "Loyal and devoted",
+        "Hardworking and thorough"
+      ],
+      "strengths_en": [
+        "Deeply empathetic and supportive",
+        "Reliable and consistent",
+        "Excellent at practical tasks",
+        "Strong sense of duty and commitment"
+      ],
+      "weaknesses_en": [
+        "Often neglects own needs",
+        "Dislikes conflict and may suppress feelings",
+        "Can be overly self-sacrificing",
+        "Resistant to change"
+      ],
+      "famous_en": "Mother Teresa, Kate Middleton, Queen Elizabeth II",
+      "careers_en": "Nurse, Teacher, Counselor, Social Worker, HR Manager",
+      "good_en": "ESFP, ESTP",
+      "bad_en": "ENTJ, ENTP",
+      "relationship_tip_en": "Learn to communicate your own needs clearly — caring for yourself enables better care for others.",
+      "health_tip_en": "Your tendency to prioritize others can lead to burnout. Schedule 'me time' as a non-negotiable daily practice.",
+      "growth_tip_en": "Practice saying 'no' without guilt. Setting healthy boundaries protects both you and your relationships."
     },
     "INFJ": {
       "emoji": "🌌",
@@ -588,7 +646,36 @@
       ],
       "relationship_tip": "깊은 연결을 원하지만 지나친 헌신으로 자신을 잃을 수 있습니다. 자신만의 시간과 공간을 지키는 것이 건강한 관계의 기반입니다.",
       "health_tip": "INFJ는 타인의 감정을 흡수하는 경향이 있어 정서적 번아웃에 취약합니다. 자연 속 산책, 명상, 저널 쓰기 등 에너지를 회복하는 개인적 의식(ritual)이 필수입니다.",
-      "growth_tip": "모든 것을 완벽하게 실현하려 하기보다, 작은 진전도 가치 있는 변화임을 인정하세요. 당신이 이미 만들고 있는 긍정적 영향에 집중하세요."
+      "growth_tip": "모든 것을 완벽하게 실현하려 하기보다, 작은 진전도 가치 있는 변화임을 인정하세요. 당신이 이미 만들고 있는 긍정적 영향에 집중하세요.",
+      "title_en": "The Advocate",
+      "tagline_en": "The rare visionary who transforms the world with quiet conviction",
+      "overview_en": "INFJs are the rarest personality type — idealistic visionaries driven by deep values and an unwavering belief in human potential. They combine profound empathy with strategic thinking, often seeing paths others miss. Quietly passionate, they commit fully to causes they believe in and inspire others through the depth of their integrity and insight.",
+      "traits_en": [
+        "Deep empathy",
+        "Visionary insight",
+        "Unwavering conviction",
+        "Creative intuition",
+        "Principled integrity"
+      ],
+      "strengths_en": [
+        "Exceptional insight into people and situations",
+        "Strong moral compass",
+        "Creative problem-solving",
+        "Deeply inspiring to others"
+      ],
+      "weaknesses_en": [
+        "Prone to perfectionism and burnout",
+        "Overly sensitive to criticism",
+        "Tendency to absorb others' emotions",
+        "Can become isolated"
+      ],
+      "famous_en": "Martin Luther King Jr., Nelson Mandela, Plato",
+      "careers_en": "Therapist, Writer, Professor, Nonprofit Leader, Physician",
+      "good_en": "ENFP, ENTP",
+      "bad_en": "ESTP, ESFP",
+      "relationship_tip_en": "Allow yourself to be vulnerable — opening up deepens connections rather than risking them.",
+      "health_tip_en": "INFJs absorb emotional energy from others. Build a practice of energetic boundaries and solitary recovery time.",
+      "growth_tip_en": "Accept imperfection — both in yourself and the world. Progress matters more than perfection."
     },
     "INTJ": {
       "emoji": "♟️",
@@ -643,7 +730,36 @@
       ],
       "relationship_tip": "감정적 친밀감을 인위적인 것으로 여길 수 있지만, 취약함을 공유하는 것이 오히려 가장 깊은 지적·감정적 연결을 만듦을 기억하세요.",
       "health_tip": "두뇌 활동에 집중하다 신체 활동을 소홀히 하기 쉽습니다. 지적 도전과 신체 훈련을 결합한 무술, 체스, 트레킹을 추천합니다.",
-      "growth_tip": "완벽한 조건이 갖춰질 때까지 기다리기보다 '충분히 좋은' 상태에서 실행해 보세요. 실행에서 얻는 피드백이 계획보다 빠른 성장을 이끕니다."
+      "growth_tip": "완벽한 조건이 갖춰질 때까지 기다리기보다 '충분히 좋은' 상태에서 실행해 보세요. 실행에서 얻는 피드백이 계획보다 빠른 성장을 이끕니다.",
+      "title_en": "The Architect",
+      "tagline_en": "The strategic mastermind who redesigns the world",
+      "overview_en": "INTJs are rare strategic thinkers who combine visionary imagination with relentless drive for implementation. They see the big picture while simultaneously engineering the precise steps to achieve it. Independent and self-confident, they set exceptionally high standards for themselves and those around them, and pursue long-term goals with unyielding focus.",
+      "traits_en": [
+        "Strategic long-term thinking",
+        "Relentless execution",
+        "Independent mindset",
+        "High standards",
+        "Systems-level thinking"
+      ],
+      "strengths_en": [
+        "Exceptional strategic planning",
+        "Highly self-motivated and driven",
+        "Ability to see through complexity",
+        "Original and innovative thinker"
+      ],
+      "weaknesses_en": [
+        "Can appear arrogant or dismissive",
+        "Struggles with emotional expression",
+        "Impatient with inefficiency",
+        "Tendency toward isolation"
+      ],
+      "famous_en": "Elon Musk, Friedrich Nietzsche, Nikola Tesla",
+      "careers_en": "Entrepreneur, Engineer, Scientist, Strategist, Architect",
+      "good_en": "ENFP, ENTP",
+      "bad_en": "ESFP, ESFJ",
+      "relationship_tip_en": "Practice showing appreciation openly. Small expressions of warmth build trust far more than grand gestures.",
+      "health_tip_en": "Guard against over-intellectualizing stress. Physical exercise and social connection are essential recharging tools.",
+      "growth_tip_en": "Embrace collaboration — other perspectives often reveal blind spots even brilliant minds miss."
     },
     "ISTP": {
       "emoji": "🔧",
@@ -698,7 +814,36 @@
       ],
       "relationship_tip": "감정 표현이 어색하더라도 파트너에게 관심과 애정을 행동으로 표현하는 작은 노력이 관계를 깊게 만들어 줍니다.",
       "health_tip": "스포츠, 암벽등반, 오토바이, 무술 등 신체적 스릴과 기술이 결합된 활동에서 최고의 즐거움을 느낍니다. 단, 무리한 리스크는 주의하세요.",
-      "growth_tip": "현재의 문제 해결 능력을 장기적인 목표와 연결해 보세요. 당신의 실용적 재능은 더 큰 그림에 기여할 잠재력이 충분합니다."
+      "growth_tip": "현재의 문제 해결 능력을 장기적인 목표와 연결해 보세요. 당신의 실용적 재능은 더 큰 그림에 기여할 잠재력이 충분합니다.",
+      "title_en": "The Virtuoso",
+      "tagline_en": "The cool-headed problem solver who masters any tool",
+      "overview_en": "ISTPs are observant, practical explorers who thrive on understanding how things work. They approach problems with a calm, analytical mind and excel at finding elegant solutions under pressure. Masters of tools and systems, they prefer learning through direct experience and bring a refreshingly unfiltered perspective to everything they engage with.",
+      "traits_en": [
+        "Calm under pressure",
+        "Mechanical aptitude",
+        "Logical analysis",
+        "Adaptability",
+        "Action-oriented"
+      ],
+      "strengths_en": [
+        "Excellent crisis management",
+        "Fast, practical problem-solving",
+        "Highly adaptable",
+        "Self-reliant and resourceful"
+      ],
+      "weaknesses_en": [
+        "Difficulty with long-term commitment",
+        "Can seem emotionally detached",
+        "Easily bored by routine",
+        "Insensitive to emotional cues"
+      ],
+      "famous_en": "Bruce Lee, Clint Eastwood, Steve Jobs",
+      "careers_en": "Engineer, Pilot, Surgeon, Mechanic, Detective",
+      "good_en": "ESTJ, ESFJ",
+      "bad_en": "ENFJ, INFJ",
+      "relationship_tip_en": "Make an effort to check in emotionally with partners — even brief gestures of care go a long way.",
+      "health_tip_en": "Channel your need for stimulation into physical activities that challenge coordination and problem-solving.",
+      "growth_tip_en": "Invest in long-term plans — short-term thinking limits the scale of what you can build."
     },
     "ISFP": {
       "emoji": "🎨",
@@ -753,7 +898,36 @@
       ],
       "relationship_tip": "갈등을 피하려는 성향이 장기적으로 억울함을 쌓을 수 있습니다. 당신의 감정과 필요를 부드럽지만 분명하게 표현하는 연습을 하세요.",
       "health_tip": "자연 속에서의 활동, 댄스, 수영 등 오감을 풍부하게 사용하는 운동이 적합합니다. 창의적 활동 자체가 ISFP에게는 훌륭한 심리 치료입니다.",
-      "growth_tip": "아름다운 것을 감상하는 능력을 넘어, 그것을 타인과 나누는 창작 활동에 도전해 보세요. 세상은 당신의 독창적 시각을 필요로 합니다."
+      "growth_tip": "아름다운 것을 감상하는 능력을 넘어, 그것을 타인과 나누는 창작 활동에 도전해 보세요. 세상은 당신의 독창적 시각을 필요로 합니다.",
+      "title_en": "The Adventurer",
+      "tagline_en": "The gentle artist who expresses the world through feeling",
+      "overview_en": "ISFPs are sensitive, compassionate artists who experience life with extraordinary intensity. They live fully in the present moment, guided by deeply held personal values. Quietly artistic and fiercely individualistic, they express themselves through action, aesthetics, and authentic living rather than words. Their kindness is genuine and their openness to experience is boundless.",
+      "traits_en": [
+        "Artistic sensibility",
+        "Present-moment awareness",
+        "Deep personal values",
+        "Adaptability",
+        "Quiet compassion"
+      ],
+      "strengths_en": [
+        "Highly attuned to beauty and aesthetics",
+        "Empathetic and kind",
+        "Non-judgmental and open-minded",
+        "Energetic and spontaneous"
+      ],
+      "weaknesses_en": [
+        "Easily stressed by conflict",
+        "Unpredictable and hard to plan with",
+        "Low long-term goal orientation",
+        "Struggles with self-assertion"
+      ],
+      "famous_en": "Michael Jackson, Frida Kahlo, Britney Spears",
+      "careers_en": "Artist, Musician, Chef, Veterinarian, Physical Therapist",
+      "good_en": "ESTJ, ESFJ",
+      "bad_en": "ENTJ, ESTJ",
+      "relationship_tip_en": "Communicate your inner world through words sometimes — partners can't always read your emotions through actions alone.",
+      "health_tip_en": "Your sensitivity means you absorb stress easily. Regular creative expression is a vital outlet and stress reliever.",
+      "growth_tip_en": "Build a few longer-term goals to channel your passion into lasting achievements."
     },
     "INFP": {
       "emoji": "🌿",
@@ -808,7 +982,36 @@
       ],
       "relationship_tip": "파트너에게 깊은 이해받고 싶은 욕구가 강합니다. 자신의 내면세계를 조금씩 열어 공유하면 더 깊은 연결이 만들어집니다.",
       "health_tip": "자연 속 산책이나 시, 음악 감상 등 감성을 충전하는 활동이 INFP의 정서 건강에 필수입니다. 지나친 자기비판에서 벗어나 마음 챙김 명상을 일상화하세요.",
-      "growth_tip": "완벽한 조건을 기다리지 말고 불완전한 첫 발을 내딛는 용기를 키우세요. 당신의 이상은 작은 행동들이 모여 현실이 됩니다."
+      "growth_tip": "완벽한 조건을 기다리지 말고 불완전한 첫 발을 내딛는 용기를 키우세요. 당신의 이상은 작은 행동들이 모여 현실이 됩니다.",
+      "title_en": "The Mediator",
+      "tagline_en": "The idealistic dreamer who heals the world through stories",
+      "overview_en": "INFPs are deeply empathetic idealists driven by a profound desire to make the world better. Their rich inner life and powerful imagination allow them to see possibility where others see limitation. Though private and reserved, they hold fierce convictions about what is meaningful, and are capable of extraordinary creative and humanitarian contributions when aligned with their values.",
+      "traits_en": [
+        "Deep empathy",
+        "Rich imagination",
+        "Strong values",
+        "Creative vision",
+        "Genuine authenticity"
+      ],
+      "strengths_en": [
+        "Profound empathy and compassion",
+        "Highly creative and original",
+        "Dedicated to meaningful causes",
+        "Open-minded and non-judgmental"
+      ],
+      "weaknesses_en": [
+        "Prone to overthinking and self-criticism",
+        "Impractical and idealistic at times",
+        "Difficulty with conflict",
+        "Easily overwhelmed by criticism"
+      ],
+      "famous_en": "J.R.R. Tolkien, William Shakespeare, Johnny Depp",
+      "careers_en": "Writer, Counselor, Psychologist, Artist, Humanitarian",
+      "good_en": "ENFJ, ENTJ",
+      "bad_en": "ESTJ, ESFJ",
+      "relationship_tip_en": "Ground your idealism with realistic expectations — accepting imperfection in relationships allows them to flourish.",
+      "health_tip_en": "Your inner world can become overwhelming. Regular journaling and creative expression are essential outlets.",
+      "growth_tip_en": "Take action before perfect conditions arrive. Your values matter most when applied to the real world."
     },
     "INTP": {
       "emoji": "🔭",
@@ -863,7 +1066,36 @@
       ],
       "relationship_tip": "감정 표현보다 논리적 해결책을 먼저 제시하는 경향이 있습니다. 때로는 답을 주기보다 그냥 곁에서 들어주는 것이 더 큰 위로임을 기억하세요.",
       "health_tip": "두뇌 작업 위주의 생활로 신체 활동이 부족해지기 쉽습니다. 하이킹, 자전거, 마라톤 등 혼자 즐기며 사색할 수 있는 운동이 INTP에게 잘 맞습니다.",
-      "growth_tip": "완벽한 이론을 완성하기보다 '충분히 좋은' 아이디어를 세상에 내보내는 용기가 필요합니다. 실패도 소중한 데이터입니다."
+      "growth_tip": "완벽한 이론을 완성하기보다 '충분히 좋은' 아이디어를 세상에 내보내는 용기가 필요합니다. 실패도 소중한 데이터입니다.",
+      "title_en": "The Logician",
+      "tagline_en": "The insatiable thinker who pursues truth to its logical end",
+      "overview_en": "INTPs are innovative and relentlessly curious thinkers who take nothing at face value. They love theories, systems, and the underlying logic of everything. Often lost in thought, they seek to understand the world at its deepest structural level. Though quiet and reserved in social settings, their minds are constantly generating connections, hypotheses, and frameworks of remarkable originality.",
+      "traits_en": [
+        "Analytical precision",
+        "Logical consistency",
+        "Intellectual curiosity",
+        "Theoretical creativity",
+        "Independence"
+      ],
+      "strengths_en": [
+        "Brilliant logical analysis",
+        "Highly original ideas",
+        "Objective and rational",
+        "Passionate intellectual depth"
+      ],
+      "weaknesses_en": [
+        "Absent-minded and disorganized",
+        "Emotionally reserved",
+        "Difficulty following through",
+        "Can be insensitive in communication"
+      ],
+      "famous_en": "Albert Einstein, Bill Gates, Charles Darwin",
+      "careers_en": "Mathematician, Programmer, Philosopher, Scientist, Analyst",
+      "good_en": "ENTJ, ENFJ",
+      "bad_en": "ESFJ, ESTJ",
+      "relationship_tip_en": "Make a conscious effort to express appreciation — your partners need verbal affirmation, not just intellectual respect.",
+      "health_tip_en": "Guard against analysis paralysis. Schedule breaks from thinking and reconnect with your physical senses.",
+      "growth_tip_en": "Completion matters. An implemented idea beats ten brilliant theories. Choose one and execute it."
     },
     "ESTP": {
       "emoji": "⚡",
@@ -918,7 +1150,36 @@
       ],
       "relationship_tip": "스릴을 추구하는 본성이 장기적 헌신을 어렵게 만들 수 있습니다. 파트너의 감정적 필요를 인식하고 안정감을 주는 노력이 관계를 지속시킵니다.",
       "health_tip": "ESTP는 격렬한 스포츠, 팀 스포츠, 격투기 등 고강도 활동에서 최고의 에너지를 발산합니다. 충동적 음식 선택보다 영양 균형 있는 식단 관리를 신경 쓰세요.",
-      "growth_tip": "빠른 결단력이 장점이지만, 때로는 잠시 멈춰 장기적 결과를 생각하는 습관을 들이면 더 큰 성공을 이룰 수 있습니다."
+      "growth_tip": "빠른 결단력이 장점이지만, 때로는 잠시 멈춰 장기적 결과를 생각하는 습관을 들이면 더 큰 성공을 이룰 수 있습니다.",
+      "title_en": "The Entrepreneur",
+      "tagline_en": "The bold action-taker who seizes every opportunity",
+      "overview_en": "ESTPs are energetic, perceptive thrill-seekers who live for the moment. They are masters at reading situations and people, and excel at negotiating, persuading, and navigating complex social dynamics. Practical and direct, they prefer hands-on action to lengthy deliberation, and are often the first to leap into challenges others hesitate to face.",
+      "traits_en": [
+        "Bold action-orientation",
+        "Perceptive social intelligence",
+        "Practical adaptability",
+        "Charisma",
+        "Risk tolerance"
+      ],
+      "strengths_en": [
+        "Exceptional crisis response",
+        "Highly persuasive and charming",
+        "Energetic and decisive",
+        "Skilled at reading people"
+      ],
+      "weaknesses_en": [
+        "Impatient with theory and planning",
+        "Can be insensitive or blunt",
+        "Risk of reckless decisions",
+        "Difficulty with long-term focus"
+      ],
+      "famous_en": "Donald Trump, Ernest Hemingway, James Bond",
+      "careers_en": "Entrepreneur, Sales Director, Paramedic, Detective, Athlete",
+      "good_en": "ISTJ, ISFJ",
+      "bad_en": "INFJ, INTJ",
+      "relationship_tip_en": "Slow down enough to attend to your partner's emotional needs — not every problem needs an immediate solution.",
+      "health_tip_en": "Channel high energy with structured physical challenges. Manage stress through sports and competitive activities.",
+      "growth_tip_en": "Invest in long-term thinking. The biggest wins come from combining your action-bias with strategic patience."
     },
     "ESFP": {
       "emoji": "🎉",
@@ -973,7 +1234,36 @@
       ],
       "relationship_tip": "장기적인 헌신과 책임에 대한 진지한 대화를 회피하지 마세요. 파트너와의 미래에 대한 솔직한 소통이 관계의 깊이를 더해 줍니다.",
       "health_tip": "댄스, 에어로빅, 팀 스포츠 등 사람들과 함께하는 활동적인 운동을 즐깁니다. 충동적인 식습관을 조절하고 규칙적인 수면 루틴을 만드는 것이 중요합니다.",
-      "growth_tip": "현재의 즐거움을 누리되, 미래를 위한 투자(저축, 건강 관리, 기술 개발)에도 주의를 기울이세요. 준비된 자유로움이 더 오래 지속됩니다."
+      "growth_tip": "현재의 즐거움을 누리되, 미래를 위한 투자(저축, 건강 관리, 기술 개발)에도 주의를 기울이세요. 준비된 자유로움이 더 오래 지속됩니다.",
+      "title_en": "The Entertainer",
+      "tagline_en": "The spontaneous performer who brightens every room",
+      "overview_en": "ESFPs are vibrant, fun-loving performers who bring joy and excitement to everything they do. They live fully in the present, thriving on social energy and the thrill of new experiences. Generous and warm-hearted, they have a natural gift for making everyone feel included and celebrated. Their enthusiasm for life is genuinely infectious.",
+      "traits_en": [
+        "Spontaneous energy",
+        "Social warmth",
+        "Present-moment joy",
+        "Aesthetic sensibility",
+        "Generous spirit"
+      ],
+      "strengths_en": [
+        "Exceptional social connection skills",
+        "Warm and encouraging",
+        "Highly adaptable and fun",
+        "Strong aesthetic and practical sense"
+      ],
+      "weaknesses_en": [
+        "Avoids long-term planning",
+        "Can be easily distracted",
+        "Sensitivity to criticism",
+        "Struggle with structure and routine"
+      ],
+      "famous_en": "Elvis Presley, Marilyn Monroe, Jamie Oliver",
+      "careers_en": "Performer, Event Planner, Tour Guide, Interior Designer, Coach",
+      "good_en": "ISTJ, ISFJ",
+      "bad_en": "INTJ, INFJ",
+      "relationship_tip_en": "Create shared rituals and traditions with your partner — stability deepens intimacy over time.",
+      "health_tip_en": "Your love of socializing can lead to irregular habits. Protect your sleep and meals with consistent scheduling.",
+      "growth_tip_en": "Build one long-term project you're passionate about — the discipline required will unlock a new dimension of fulfillment."
     },
     "ENFP": {
       "emoji": "🌈",
@@ -1029,7 +1319,36 @@
       ],
       "relationship_tip": "강렬한 초반 열정 이후 루틴에 지루함을 느낄 수 있습니다. 관계에서도 새로운 경험을 함께 만들어가는 방법을 찾으면 오래 유지할 수 있습니다.",
       "health_tip": "ENFP는 다양한 운동을 섞어 새로운 방식을 시도하는 것에서 활력을 얻습니다. 크로스핏, 댄스 클래스, 팀 스포츠가 잘 맞습니다. 과도한 사교 활동 후 충분한 회복 시간을 확보하세요.",
-      "growth_tip": "아이디어를 완성하는 힘을 길러보세요. 하나를 끝내는 성취감이 쌓이면 자신감과 신뢰성이 함께 성장합니다."
+      "growth_tip": "아이디어를 완성하는 힘을 길러보세요. 하나를 끝내는 성취감이 쌓이면 자신감과 신뢰성이 함께 성장합니다.",
+      "title_en": "The Campaigner",
+      "tagline_en": "The enthusiastic visionary who ignites every possibility",
+      "overview_en": "ENFPs are charismatic, imaginative free spirits who see life as a canvas full of possibility. Their enthusiasm is genuine and contagious, and they have an uncanny ability to connect deeply with people and inspire them toward a better future. They thrive on ideas, novelty, and meaningful human connection, and bring creative energy and warmth to every space they inhabit.",
+      "traits_en": [
+        "Enthusiastic imagination",
+        "Deep empathy",
+        "Spontaneous curiosity",
+        "Charismatic connection",
+        "Values-driven passion"
+      ],
+      "strengths_en": [
+        "Exceptional people skills",
+        "Inspiring and motivating",
+        "Highly creative and original",
+        "Deeply empathetic"
+      ],
+      "weaknesses_en": [
+        "Poor follow-through on commitments",
+        "Easily distracted",
+        "Overthinks and overanalyzes",
+        "Struggles with practical details"
+      ],
+      "famous_en": "Robin Williams, Walt Disney, Ellen DeGeneres",
+      "careers_en": "Coach, Journalist, Marketing Director, Actor, Entrepreneur",
+      "good_en": "INTJ, INFJ",
+      "bad_en": "ISTJ, ISFJ",
+      "relationship_tip_en": "Practice finishing what you start — your partner's security depends on consistency as much as enthusiasm.",
+      "health_tip_en": "Your mind races constantly. Mindfulness and meditation help you land in the present and reduce mental fatigue.",
+      "growth_tip_en": "Pick one priority project and protect it from your own enthusiasm for new ideas. Depth beats breadth."
     },
     "ENTP": {
       "emoji": "💡",
@@ -1084,7 +1403,36 @@
       ],
       "relationship_tip": "모든 대화를 지적 게임으로 만들지 않도록 주의하세요. 파트너가 원할 때는 이기려 하지 말고 공감하는 연습이 관계 깊이를 더해줍니다.",
       "health_tip": "다양한 운동 유형을 순환하며 지루함을 피하는 것이 ENTP에게 맞습니다. 크로스핏, 새로운 무술 도전, 지적 퍼즐과 결합된 활동을 시도해 보세요.",
-      "growth_tip": "아이디어를 현실로 만드는 실행력을 키워보세요. 계획을 완수할 때 오는 성취감은 지적 탐구만큼 강렬한 만족을 줄 수 있습니다."
+      "growth_tip": "아이디어를 현실로 만드는 실행력을 키워보세요. 계획을 완수할 때 오는 성취감은 지적 탐구만큼 강렬한 만족을 줄 수 있습니다.",
+      "title_en": "The Debater",
+      "tagline_en": "The ingenious challenger who sharpens every idea through friction",
+      "overview_en": "ENTPs are quick-witted, inventive challengers who delight in intellectual sparring and unconventional thinking. They are energized by ideas, possibilities, and the thrill of dismantling weak arguments. Visionary and versatile, they generate creative solutions with startling speed and have an infectious enthusiasm for exploring the frontier of any field they touch.",
+      "traits_en": [
+        "Quick analytical wit",
+        "Contrarian creativity",
+        "Intellectual enthusiasm",
+        "Strategic flexibility",
+        "Inventive originality"
+      ],
+      "strengths_en": [
+        "Brilliant brainstorming and ideation",
+        "Highly adaptable and resourceful",
+        "Persuasive and intellectually compelling",
+        "Fast learner across domains"
+      ],
+      "weaknesses_en": [
+        "Loses interest in implementation",
+        "Argumentative and combative",
+        "Disregards rules and convention",
+        "Unreliable follow-through"
+      ],
+      "famous_en": "Steve Wozniak, Benjamin Franklin, Barack Obama",
+      "careers_en": "Startup Founder, Lawyer, Inventor, Strategist, Professor",
+      "good_en": "INTJ, INFJ",
+      "bad_en": "ISFJ, ISTJ",
+      "relationship_tip_en": "Debate energizes you but exhausts others. Learn when to listen instead of challenge — it's actually the smarter move.",
+      "health_tip_en": "Mental restlessness can disrupt sleep. Create a consistent wind-down routine that doesn't involve screens or arguments.",
+      "growth_tip_en": "The best ideas are the ones you actually build. Pair your vision with one committed implementation effort."
     },
     "ESTJ": {
       "emoji": "⚖️",
@@ -1139,7 +1487,36 @@
       ],
       "relationship_tip": "파트너나 팀원의 감정적 필요를 간과하지 마세요. 효율적인 관계를 넘어 따뜻한 연결을 만드는 것이 더 강한 팀과 가정을 만듭니다.",
       "health_tip": "ESTJ는 규칙적이고 체계적인 운동 프로그램(PT, 구조적인 헬스)을 잘 따릅니다. 과도한 업무 스트레스 해소를 위해 명상이나 요가를 병행하면 좋습니다.",
-      "growth_tip": "옳고 그름의 흑백 논리에서 벗어나 다양한 회색 지대를 인정하는 유연함이 더 위대한 리더를 만듭니다."
+      "growth_tip": "옳고 그름의 흑백 논리에서 벗어나 다양한 회색 지대를 인정하는 유연함이 더 위대한 리더를 만듭니다.",
+      "title_en": "The Executive",
+      "tagline_en": "The decisive organizer who leads with order and resolve",
+      "overview_en": "ESTJs are natural leaders who bring order, structure, and decisive action to any environment. Highly practical and results-oriented, they thrive on clear systems, defined roles, and measurable outcomes. They hold themselves and others to high standards and are respected for their reliability, directness, and ability to get things done — especially under pressure.",
+      "traits_en": [
+        "Decisive leadership",
+        "Structured thinking",
+        "High standards",
+        "Results-orientation",
+        "Dependability"
+      ],
+      "strengths_en": [
+        "Excellent organizational leadership",
+        "Highly dependable and consistent",
+        "Strong work ethic",
+        "Clear and direct communicator"
+      ],
+      "weaknesses_en": [
+        "Inflexible and resistant to new methods",
+        "Can be domineering",
+        "Struggles with emotional sensitivity",
+        "Overly focused on rules and hierarchy"
+      ],
+      "famous_en": "Frank Sinatra, Sonia Sotomayor, Lyndon B. Johnson",
+      "careers_en": "Manager, Military Officer, Judge, CFO, School Principal",
+      "good_en": "ISTP, ISFP",
+      "bad_en": "INFP, INTP",
+      "relationship_tip_en": "Your standards are high, but warmth matters more than efficiency in close relationships. Practice appreciation over critique.",
+      "health_tip_en": "Type-A intensity creates cardiovascular risk. Schedule unstructured downtime as deliberately as you schedule meetings.",
+      "growth_tip_en": "Listen before deciding — the best leaders know that the team often sees what the general misses."
     },
     "ESFJ": {
       "emoji": "🤝",
@@ -1194,7 +1571,36 @@
       ],
       "relationship_tip": "타인의 승인에 대한 과도한 의존을 줄이세요. 자신의 가치는 타인의 평가와 독립적으로 존재함을 기억하면 더 건강한 관계를 만들 수 있습니다.",
       "health_tip": "그룹 피트니스, 줌바, 요가 클래스 등 사람들과 함께하는 운동에서 동기부여를 얻습니다. 과도한 감정 소모를 막기 위한 혼자만의 명상 시간도 필요합니다.",
-      "growth_tip": "다른 사람의 필요를 채우는 것만큼 자신의 필요도 소중히 여기세요. 건강한 자기 사랑이 더 오래, 더 잘 타인을 도울 수 있는 기반입니다."
+      "growth_tip": "다른 사람의 필요를 채우는 것만큼 자신의 필요도 소중히 여기세요. 건강한 자기 사랑이 더 오래, 더 잘 타인을 도울 수 있는 기반입니다.",
+      "title_en": "The Consul",
+      "tagline_en": "The warm host who weaves community together",
+      "overview_en": "ESFJs are warm, conscientious caretakers who are deeply committed to the well-being of those around them. They bring people together, remember everyone's needs and preferences, and work tirelessly to create harmony and belonging in their communities. Loyal and dependable, they thrive when they feel valued and when the people they care for are thriving.",
+      "traits_en": [
+        "Warm social leadership",
+        "Strong loyalty",
+        "Empathetic attunement",
+        "Practical nurturing",
+        "Community-building"
+      ],
+      "strengths_en": [
+        "Exceptional social and interpersonal skills",
+        "Reliable and caring",
+        "Highly organized and responsible",
+        "Creates strong team cohesion"
+      ],
+      "weaknesses_en": [
+        "Overly sensitive to criticism",
+        "Struggles to set boundaries",
+        "Can be needy for approval",
+        "Inflexible in values"
+      ],
+      "famous_en": "Taylor Swift, Bill Clinton, Jennifer Garner",
+      "careers_en": "Teacher, HR Manager, Event Planner, Social Worker, Nurse",
+      "good_en": "ISTP, ISFP",
+      "bad_en": "INTP, INTJ",
+      "relationship_tip_en": "Your instinct to please can lead to resentment. Practice expressing your actual needs directly and early.",
+      "health_tip_en": "Emotional caregiving drains energy reserves. Regular alone-time and self-care rituals are non-negotiable for you.",
+      "growth_tip_en": "Your worth is not determined by others' approval. Strengthen your independent sense of identity."
     },
     "ENFJ": {
       "emoji": "🌟",
@@ -1249,7 +1655,36 @@
       ],
       "relationship_tip": "타인을 돌보는 것만큼 자신도 돌봐야 합니다. 번아웃을 방지하기 위해 자신의 필요와 한계를 파트너와 솔직하게 나누세요.",
       "health_tip": "팀 스포츠나 그룹 피트니스에서 에너지를 얻습니다. 다만 타인의 필요에 과도하게 반응하다 자신의 회복 시간을 빼앗기지 않도록 의식적으로 경계를 만드세요.",
-      "growth_tip": "모든 사람을 구하려 하지 말고, 당신의 에너지가 가장 큰 영향을 미칠 곳에 집중하세요. 더 오래 지속되는 영향력을 위해 자기 관리가 우선입니다."
+      "growth_tip": "모든 사람을 구하려 하지 말고, 당신의 에너지가 가장 큰 영향을 미칠 곳에 집중하세요. 더 오래 지속되는 영향력을 위해 자기 관리가 우선입니다.",
+      "title_en": "The Protagonist",
+      "tagline_en": "The inspiring leader who draws out the best in everyone",
+      "overview_en": "ENFJs are charismatic, empathetic natural-born leaders who are genuinely invested in the growth of every person around them. Their ability to understand and articulate what motivates people makes them extraordinary coaches, mentors, and communicators. They lead with vision and compassion, and are driven by a deep sense of responsibility toward the communities they serve.",
+      "traits_en": [
+        "Empathetic leadership",
+        "Strategic communication",
+        "Genuine altruism",
+        "Inspiring vision",
+        "Social intelligence"
+      ],
+      "strengths_en": [
+        "Extraordinary motivator and communicator",
+        "Deep empathy and social insight",
+        "Principled and reliable",
+        "Inspires loyalty and growth"
+      ],
+      "weaknesses_en": [
+        "Takes on too much responsibility",
+        "Overly sensitive to disapproval",
+        "Can be manipulative when desperate",
+        "Neglects personal needs"
+      ],
+      "famous_en": "Barack Obama, Oprah Winfrey, Martin Luther King Jr.",
+      "careers_en": "Coach, CEO, Politician, Teacher, Therapist",
+      "good_en": "INFP, INTP",
+      "bad_en": "ISTP, ISFP",
+      "relationship_tip_en": "You give effortlessly — ensure you're also receiving. A relationship must be reciprocal to be sustainable.",
+      "health_tip_en": "Your sensitivity to others' emotions makes boundaries essential. Learn to distinguish your feelings from those you've absorbed.",
+      "growth_tip_en": "Give yourself the same compassion you so freely give others. Self-care is not selfish — it's foundational."
     },
     "ENTJ": {
       "emoji": "👑",
@@ -1304,7 +1739,36 @@
       ],
       "relationship_tip": "파트너를 프로젝트처럼 관리하려는 경향을 인식하세요. 관계는 효율성이 아닌 상호 이해와 취약함의 공유에서 깊어집니다.",
       "health_tip": "경쟁적인 스포츠, 마라톤, 크로스핏 등 목표 지향적인 운동이 ENTJ에게 잘 맞습니다. 과로를 방지하기 위해 의도적인 휴식과 회복을 계획에 포함시키세요.",
-      "growth_tip": "모든 것을 혼자 통제하려는 욕구를 내려놓고 신뢰할 수 있는 팀을 구축하세요. 위임하는 리더가 오히려 더 큰 목표를 달성할 수 있습니다."
+      "growth_tip": "모든 것을 혼자 통제하려는 욕구를 내려놓고 신뢰할 수 있는 팀을 구축하세요. 위임하는 리더가 오히려 더 큰 목표를 달성할 수 있습니다.",
+      "title_en": "The Commander",
+      "tagline_en": "The bold strategist who builds empires through will alone",
+      "overview_en": "ENTJs are natural-born commanders who combine strategic vision with an unrelenting drive to lead. They see opportunity in every challenge and mobilize people and resources with exceptional efficiency. Confident and assertive, they set ambitious goals and pursue them with a discipline and intensity that typically produces extraordinary results.",
+      "traits_en": [
+        "Strategic command",
+        "Decisive ambition",
+        "Systems leadership",
+        "Drive for excellence",
+        "Visionary confidence"
+      ],
+      "strengths_en": [
+        "Exceptional strategic and executive ability",
+        "Highly confident and decisive",
+        "Energizes and organizes teams",
+        "Long-term goal orientation"
+      ],
+      "weaknesses_en": [
+        "Impatient and intolerant of inefficiency",
+        "Can be domineering or aggressive",
+        "Struggles with emotional intelligence",
+        "Dismissive of less capable people"
+      ],
+      "famous_en": "Steve Jobs, Margaret Thatcher, Jack Welch",
+      "careers_en": "CEO, Military Commander, Investment Banker, Entrepreneur, Strategist",
+      "good_en": "INFP, INTP",
+      "bad_en": "ISFP, ISFJ",
+      "relationship_tip_en": "Your strength is inspiring, but leadership at home requires softness. Practice asking instead of directing.",
+      "health_tip_en": "Your relentless drive creates cortisol overload. Non-negotiable rest and recovery are as important as execution.",
+      "growth_tip_en": "Develop your emotional intelligence deliberately — it will multiply your effectiveness as a leader."
     }
   }
 }

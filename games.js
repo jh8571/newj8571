@@ -394,7 +394,7 @@ document.addEventListener('DOMContentLoaded', () => {
         function ask() {
             container.innerHTML = `
                 <div style="text-align:center; margin-bottom:10px; font-size:0.9rem; color:var(--text-muted);">${t('점수','Score')}: <strong>${score}</strong> — ${t('레벨','Level')} ${score + 1}</div>
-                <div style="display:grid; grid-template-columns:repeat(3,1fr); gap:10px;" id="g"></div>`;
+                <div style="display:grid; grid-template-columns:repeat(3,1fr); gap:10px; width:300px;" id="g"></div>`;
             const g = document.getElementById('g');
             const r = Math.floor(Math.random()*180); const gr = Math.floor(Math.random()*180); const b = Math.floor(Math.random()*180);
             const diff = Math.max(15, 40 - score * 2); // diff stays >= 15, decreases as score rises
