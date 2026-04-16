@@ -165,7 +165,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     </div>
                     <!-- Today's Affirmation -->
                     <div style="background:#f0fdf4; border:1px solid #dcfce7; padding:25px; border-radius:20px; margin-bottom:30px; text-align:center;">
-                        <h4 style="color:#166534; margin-bottom:10px;"><i class="fas fa-seedling"></i> 오늘의 확언 (Affirmation)</h4>
+                        <h4 style="color:#166534; margin-bottom:10px;"><i class="fas fa-seedling"></i> 오늘의 확언</h4>
                         <p style="font-size:1.1rem; font-weight:700; color:#14532d; font-style:italic; line-height:1.8;">"${getTarotAffirmation(selectedCardsData)}"</p>
                     </div>
                     <div style="text-align:center;">
