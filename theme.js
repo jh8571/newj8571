@@ -30,7 +30,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
     langBtn.addEventListener('click', () => {
         const next = (localStorage.getItem('lang') || 'ko') === 'ko' ? 'en' : 'ko';
-        setLanguage(next);
+        localStorage.setItem('lang', next);
+        location.reload();
     });
 
     function setLanguage(lang) {
