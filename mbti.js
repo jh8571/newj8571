@@ -206,7 +206,7 @@ function showResult() {
                     </div>
                 </div>
                 <div style="background:var(--bg-color); padding:25px; border-radius:20px;">
-                    <h4 style="color:#ec4899; margin-bottom:12px;"><i class="fas fa-star"></i> 같은 유형 유명인</h4>
+                    <h4 style="color:#ec4899; margin-bottom:12px;"><i class="fas fa-star"></i> ${t('같은 유형 유명인','Famous People of This Type')}</h4>
                     <div style="display:flex; flex-wrap:wrap; gap:8px;">
                         ${d.famous_people.map(p => `<span style="background:#ec489911; color:#ec4899; padding:4px 10px; border-radius:20px; font-size:0.8rem; font-weight:700;">${p}</span>`).join('')}
                     </div>
