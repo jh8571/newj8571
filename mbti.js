@@ -167,13 +167,13 @@ function showResult() {
             <!-- Strengths & Weaknesses -->
             <div style="display:grid; grid-template-columns:1fr 1fr; gap:20px; text-align:left; margin-bottom:30px;">
                 <div style="background:var(--bg-color); padding:25px; border-radius:20px; border-left:4px solid #10b981;">
-                    <h4 style="color:#10b981; margin-bottom:15px; font-size:1rem;"><i class="fas fa-arrow-up"></i> 강점</h4>
+                    <h4 style="color:#10b981; margin-bottom:15px; font-size:1rem;"><i class="fas fa-arrow-up"></i> ${t('강점','Strengths')}</h4>
                     <ul style="list-style:none; padding:0; font-size:0.88rem; line-height:1.8;">
                         ${d.strengths.map(s => `<li>✅ ${s}</li>`).join('')}
                     </ul>
                 </div>
                 <div style="background:var(--bg-color); padding:25px; border-radius:20px; border-left:4px solid #f59e0b;">
-                    <h4 style="color:#f59e0b; margin-bottom:15px; font-size:1rem;"><i class="fas fa-arrow-down"></i> 성장 포인트</h4>
+                    <h4 style="color:#f59e0b; margin-bottom:15px; font-size:1rem;"><i class="fas fa-arrow-down"></i> ${t('성장 포인트','Growth Points')}</h4>
                     <ul style="list-style:none; padding:0; font-size:0.88rem; line-height:1.8;">
                         ${d.weaknesses.map(w => `<li>⚠️ ${w}</li>`).join('')}
                     </ul>
