@@ -8,7 +8,8 @@ document.addEventListener('DOMContentLoaded', () => {
         modal.style.display = 'block';
         document.body.style.overflow = 'hidden';
         container.innerHTML = '';
-        if (gameInterval) clearInterval(gameInterval);
+        if (gameInterval) { clearInterval(gameInterval); cancelAnimationFrame(gameInterval); }
+        document.onkeydown = null;
 
         switch(type) {
             case 'tetris': startTetris(); break;
@@ -27,7 +28,11 @@ document.addEventListener('DOMContentLoaded', () => {
     window.closeGame = function() {
         modal.style.display = 'none';
         document.body.style.overflow = 'auto';
-        if (gameInterval) clearInterval(gameInterval);
+        if (gameInterval) {
+            clearInterval(gameInterval);
+            cancelAnimationFrame(gameInterval);
+        }
+        document.onkeydown = null;
         container.innerHTML = '';
     };
 
@@ -36,7 +41,16 @@ document.addEventListener('DOMContentLoaded', () => {
     // 1. Tetris
     function startTetris() {
         title.innerText = t("클래식 테트리스", "Classic Tetris");
-        container.innerHTML = `<canvas id="tetris" width="240" height="400"></canvas><div id="score" style="margin-top:10px; font-size:1.2rem;">${t('점수','Score')}: 0</div>`;
+        container.innerHTML = `
+            <canvas id="tetris" width="240" height="400" style="display:block; margin:0 auto;"></canvas>
+            <div id="score" style="margin-top:10px; font-size:1.2rem; text-align:center;">${t('점수','Score')}: 0</div>
+            <div style="display:grid; grid-template-columns:repeat(4,1fr); gap:6px; max-width:240px; margin:10px auto 0;">
+                <button id="tb-left" class="calc-btn" style="padding:14px; font-size:1.2rem;">←</button>
+                <button id="tb-rotate" class="calc-btn" style="padding:14px; font-size:1.2rem;">↻</button>
+                <button id="tb-down" class="calc-btn" style="padding:14px; font-size:1.2rem;">↓</button>
+                <button id="tb-right" class="calc-btn" style="padding:14px; font-size:1.2rem;">→</button>
+            </div>
+            <p style="font-size:0.75rem; color:var(--text-muted); text-align:center; margin-top:6px;">${t('←→ 이동 | ↻ 회전 | ↓ 빠른낙하','← → move | ↻ rotate | ↓ drop')}</p>`;
         const canvas = document.getElementById('tetris');
         const context = canvas.getContext('2d');
         context.scale(20, 20);
@@ -77,7 +91,7 @@ document.addEventListener('DOMContentLoaded', () => {
             else if (type === 'O') return [[2, 2], [2, 2]];
             else if (type === 'L') return [[0, 3, 0], [0, 3, 0], [0, 3, 3]];
             else if (type === 'J') return [[0, 4, 0], [0, 4, 0], [4, 4, 0]];
-            else if (type === 'I') return [[0, 5, 0, 0], [0, 5, 0, 0], [0, 5, 0, 0], [0, 5, 0, 0]];
+            else if (type === 'I') return [[0, 0, 0, 0], [5, 5, 5, 5], [0, 0, 0, 0], [0, 0, 0, 0]];
             else if (type === 'S') return [[0, 6, 6], [6, 6, 0], [0, 0, 0]];
             else if (type === 'Z') return [[7, 7, 0], [0, 7, 7], [0, 0, 0]];
         }
@@ -174,6 +188,11 @@ document.addEventListener('DOMContentLoaded', () => {
             gameInterval = requestAnimationFrame(update);
         }
 
+        document.getElementById('tb-left').onclick = () => playerMove(-1);
+        document.getElementById('tb-right').onclick = () => playerMove(1);
+        document.getElementById('tb-rotate').onclick = () => playerRotate(1);
+        document.getElementById('tb-down').onclick = () => playerDrop();
+
         function updateScore() {
             document.getElementById('score').innerText = `${t('점수','Score')}: ${player.score}`;
         }
@@ -194,28 +213,62 @@ document.addEventListener('DOMContentLoaded', () => {
         update();
     }
 
-    // 2. Sudoku (Simplified Generation)
+    // 2. Sudoku
     function startSudoku() {
         title.innerText = t("정통 스도쿠", "Sudoku");
-        container.innerHTML = `<div class="sudoku-grid" id="sudoku"></div><button class="calc-btn" style="margin-top:20px;" onclick="startGame('sudoku')">${t('새 게임','New Game')}</button>`;
-        const grid = document.getElementById('sudoku');
-        const board = Array(81).fill(0);
-        // Fill some random fixed numbers
-        for(let i=0; i<25; i++) {
-            let idx = Math.floor(Math.random()*81);
-            board[idx] = Math.floor(Math.random()*9)+1;
+
+        function isValid(board, pos, num) {
+            const row = Math.floor(pos / 9), col = pos % 9;
+            for (let c = 0; c < 9; c++) if (board[row * 9 + c] === num) return false;
+            for (let r = 0; r < 9; r++) if (board[r * 9 + col] === num) return false;
+            const br = Math.floor(row / 3) * 3, bc = Math.floor(col / 3) * 3;
+            for (let r = 0; r < 3; r++) for (let c = 0; c < 3; c++) if (board[(br + r) * 9 + (bc + c)] === num) return false;
+            return true;
         }
-        
-        board.forEach((val, i) => {
+
+        function solve(board, pos = 0) {
+            if (pos === 81) return true;
+            if (board[pos] !== 0) return solve(board, pos + 1);
+            const nums = [1,2,3,4,5,6,7,8,9].sort(() => Math.random() - 0.5);
+            for (const num of nums) {
+                if (isValid(board, pos, num)) {
+                    board[pos] = num;
+                    if (solve(board, pos + 1)) return true;
+                    board[pos] = 0;
+                }
+            }
+            return false;
+        }
+
+        const solution = Array(81).fill(0);
+        solve(solution);
+        const puzzle = [...solution];
+        const positions = Array.from({length: 81}, (_, i) => i).sort(() => Math.random() - 0.5);
+        for (let i = 0; i < 46; i++) puzzle[positions[i]] = 0;
+
+        container.innerHTML = `
+            <div class="sudoku-grid" id="sudoku"></div>
+            <div style="display:flex; gap:10px; margin-top:15px; justify-content:center; flex-wrap:wrap;">
+                <button class="calc-btn" onclick="startGame('sudoku')">${t('새 게임','New Game')}</button>
+            </div>`;
+        const grid = document.getElementById('sudoku');
+
+        puzzle.forEach((val, i) => {
             const cell = document.createElement('div');
             cell.className = 'sudoku-cell' + (val !== 0 ? ' fixed' : '');
             cell.innerText = val !== 0 ? val : '';
             if (val === 0) {
                 cell.onclick = () => {
                     let next = (parseInt(cell.innerText) || 0) + 1;
-                    if (next > 9) next = '';
-                    cell.innerText = next;
-                    cell.style.color = 'var(--accent-color)';
+                    if (next > 9) next = 0;
+                    cell.innerText = next || '';
+                    if (next === 0) {
+                        cell.style.color = '';
+                    } else if (next === solution[i]) {
+                        cell.style.color = 'var(--accent-color)';
+                    } else {
+                        cell.style.color = '#ef4444';
+                    }
                 };
             }
             grid.appendChild(cell);

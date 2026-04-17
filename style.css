@@ -54,10 +54,10 @@ header {
     -webkit-background-clip: text; -webkit-text-fill-color: transparent;
 }
 
-nav { display: flex; gap: 5px; margin-top: 15px; justify-content: center; }
+nav { display: flex; flex-wrap: wrap; gap: 5px; margin-top: 15px; justify-content: center; }
 nav a {
     color: var(--text-muted); text-decoration: none; font-weight: 600; font-size: 0.85rem;
-    padding: 10px 18px; border-radius: 12px; transition: 0.3s;
+    padding: 10px 18px; border-radius: 12px; transition: 0.3s; white-space: nowrap;
 }
 nav a:hover, nav a.active { background: var(--primary-color); color: white; }
 [data-theme='dark'] nav a:hover, [data-theme='dark'] nav a.active { background: var(--accent-color); color: var(--primary-color); }
@@ -255,3 +255,11 @@ footer { padding: 80px 0; text-align: center; color: var(--text-muted); border-t
 .sudoku-cell.fixed { background: var(--bg-color); color: var(--primary-color); cursor: default; }
 .sudoku-cell:nth-child(3n) { border-right: 2px solid var(--primary-color); }
 .sudoku-cell:nth-child(9n) { border-right: 1px solid var(--border-color); }
+
+/* Mobile overrides */
+@media (max-width: 480px) {
+    nav a { font-size: 0.78rem; padding: 8px 10px; }
+    .modal-content { padding: 30px 20px !important; border-radius: 24px; }
+    .sudoku-cell { width: 30px; height: 30px; font-size: 0.8rem; }
+    .drug-list { grid-template-columns: 1fr; }
+}
