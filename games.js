@@ -56,6 +56,7 @@ document.addEventListener('DOMContentLoaded', () => {
                         ${t('점수','SCORE')}
                     </p>
                     <div id="score" style="font-size:0.9rem; font-weight:800; color:var(--accent-color);">0</div>
+                    <div id="tetris-level" style="font-size:0.75rem; font-weight:700; color:var(--text-muted); margin-top:4px;">Lv.1</div>
                 </div>
                 <canvas id="tetris" width="240" height="400"
                     style="display:block; background:#111; border-radius:6px;"></canvas>
@@ -253,6 +254,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
         function updateScore() {
             document.getElementById('score').innerText = player.score;
+            const lv = Math.floor(player.score / 200) + 1;
+            const lvEl = document.getElementById('tetris-level');
+            if (lvEl) lvEl.innerText = `Lv.${lv}`;
         }
 
         // ── game loop ─────────────────────────────────────────────────
@@ -262,6 +266,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const dt = time - lastTime;
             lastTime = time;
             dropCounter += dt;
+            dropInterval = Math.max(80, 1000 - Math.floor(player.score / 200) * 100);
             if (dropCounter > dropInterval) playerDrop();
             draw();
             gameInterval = requestAnimationFrame(update);
@@ -505,28 +510,108 @@ document.addEventListener('DOMContentLoaded', () => {
     // 3. Clicker
     function startClicker() {
         title.innerText = t("클릭커 마스터", "Clicker Master");
-        let count = 0; let time = 10;
-        container.innerHTML = `<div style="text-align:center;"><h3>${t('남은 시간','Time Left')}: <span id="t">${time}</span></h3><h2 id="c" style="font-size:3rem; margin:20px 0;">0</h2><button id="b" class="calc-btn" style="width:150px; height:150px; border-radius:50%;">${t('클릭!','Click!')}</button></div>`;
+        let count = 0, time = 10, combo = 1, lastClick = 0;
+        container.innerHTML = `
+            <div style="text-align:center; width:100%;">
+                <div style="display:flex; justify-content:center; gap:24px; margin-bottom:10px; font-size:0.9rem;">
+                    <div>${t('시간','Time')}: <strong id="ct">10</strong>s</div>
+                    <div>${t('점수','Score')}: <strong id="cc" style="color:var(--accent-color);">0</strong></div>
+                    <div>${t('콤보','Combo')}: <strong id="cmb" style="color:#f59e0b;">x1</strong></div>
+                </div>
+                <button id="b" style="width:160px; height:160px; border-radius:50%; font-size:1.4rem; font-weight:900;
+                    background:var(--accent-color); color:white; border:none; cursor:pointer; transition:transform 0.05s;
+                    box-shadow:0 8px 30px rgba(99,102,241,0.45); user-select:none;">${t('클릭!','CLICK!')}</button>
+                <p id="cmsg" style="height:22px; font-size:0.95rem; font-weight:800; color:#f59e0b; margin-top:8px;"></p>
+            </div>`;
         const b = document.getElementById('b');
-        b.onclick = () => { if(time>0) document.getElementById('c').innerText = ++count; };
+        const MSGS = ['','','DOUBLE!','TRIPLE!','QUAD!!','MAX COMBO!!!'];
+        b.addEventListener('click', () => {
+            if (time <= 0) return;
+            const now = Date.now();
+            combo = (now - lastClick < 350) ? Math.min(combo + 1, 5) : 1;
+            lastClick = now;
+            count += combo;
+            document.getElementById('cc').innerText = count;
+            document.getElementById('cmb').innerText = `x${combo}`;
+            document.getElementById('cmsg').innerText = combo >= 2 ? MSGS[combo] : '';
+            b.style.transform = 'scale(0.88)';
+            b.style.boxShadow = combo >= 3 ? '0 0 30px #f59e0b' : '0 8px 30px rgba(99,102,241,0.45)';
+            setTimeout(() => { b.style.transform = 'scale(1)'; b.style.boxShadow = '0 8px 30px rgba(99,102,241,0.45)'; }, 80);
+        });
         gameInterval = setInterval(() => {
-            document.getElementById('t').innerText = --time;
-            if(time<=0) { clearInterval(gameInterval); alert(t('종료! 점수: ','Done! Score: ') + count); closeGame(); }
+            document.getElementById('ct').innerText = --time;
+            if (time <= 0) {
+                clearInterval(gameInterval);
+                const stars = count < 20 ? 1 : count < 50 ? 2 : count < 80 ? 3 : count < 120 ? 4 : 5;
+                setTimeout(() => alert(t(`완료! 점수: ${count}점 ${'⭐'.repeat(stars)}`, `Done! ${count} pts ${'⭐'.repeat(stars)}`)), 50);
+                closeGame();
+            }
         }, 1000);
     }
 
     // 4. Math
     function startMath() {
         title.innerText = t("암산왕", "Mental Math");
-        let score = 0;
+        let score = 0, mathTimer = null;
+
+        function makeQ(s) {
+            let a, b, op, ans;
+            if (s < 5) {
+                a = Math.floor(Math.random()*20); b = Math.floor(Math.random()*20); op='+'; ans=a+b;
+            } else if (s < 10) {
+                a = Math.floor(Math.random()*30)+1; b = Math.floor(Math.random()*a)+1;
+                op = Math.random()>0.5?'+':'-'; ans = op==='+'? a+b : a-b;
+            } else if (s < 20) {
+                const r=Math.random();
+                if(r<0.4){a=Math.floor(Math.random()*40);b=Math.floor(Math.random()*40);op='+';ans=a+b;}
+                else if(r<0.7){a=Math.floor(Math.random()*40)+1;b=Math.floor(Math.random()*a)+1;op='-';ans=a-b;}
+                else{a=Math.floor(Math.random()*12)+1;b=Math.floor(Math.random()*12)+1;op='×';ans=a*b;}
+            } else {
+                const r=Math.random();
+                if(r<0.25){a=Math.floor(Math.random()*50);b=Math.floor(Math.random()*50);op='+';ans=a+b;}
+                else if(r<0.5){a=Math.floor(Math.random()*50)+1;b=Math.floor(Math.random()*a)+1;op='-';ans=a-b;}
+                else if(r<0.75){a=Math.floor(Math.random()*12)+1;b=Math.floor(Math.random()*12)+1;op='×';ans=a*b;}
+                else{b=Math.floor(Math.random()*11)+2;ans=Math.floor(Math.random()*11)+2;a=b*ans;op='÷';}
+            }
+            return {a,b,op,ans};
+        }
+
         function ask() {
-            const a = Math.floor(Math.random()*20); const b = Math.floor(Math.random()*20);
-            const ans = a + b;
-            container.innerHTML = `<div style="text-align:center;"><h3>${t('점수','Score')}: ${score}</h3><h1>${a} + ${b} = ?</h1><input type="number" id="ans" style="padding:10px; font-size:1.5rem; width:100px;"><button id="sub" class="calc-btn">${t('확인','Submit')}</button></div>`;
-            document.getElementById('sub').onclick = () => {
-                if(parseInt(document.getElementById('ans').value) === ans) { score++; ask(); }
-                else { alert(t('틀렸습니다! 최종 점수: ','Wrong! Final score: ') + score); closeGame(); }
+            if (mathTimer) clearInterval(mathTimer);
+            const totalSec = Math.max(5, 10 - Math.floor(score/5));
+            let timeLeft = totalSec;
+            const q = makeQ(score);
+            const stage = score<5?t('덧셈','Addition'):score<10?t('덧셈/뺄셈','±'):score<20?t('사칙','× ÷ ±'):t('고난도','Expert');
+            container.innerHTML = `
+                <div style="text-align:center; width:100%;">
+                    <div style="display:flex; justify-content:center; gap:20px; font-size:0.85rem; color:var(--text-muted); margin-bottom:6px;">
+                        <span>${t('점수','Score')}: <strong style="color:var(--accent-color);">${score}</strong></span>
+                        <span>${stage}</span>
+                        <span id="mt">${timeLeft}s</span>
+                    </div>
+                    <div style="height:6px; background:var(--border-color); border-radius:3px; margin-bottom:16px;">
+                        <div id="mbar" style="height:100%; width:100%; background:var(--accent-color); border-radius:3px; transition:width 0.08s linear;"></div>
+                    </div>
+                    <h1 style="font-size:2.8rem; margin:10px 0; letter-spacing:3px;">${q.a} ${q.op} ${q.b} = ?</h1>
+                    <input type="number" id="mans" style="padding:12px; font-size:1.6rem; width:130px; text-align:center; margin:8px 0;" autofocus>
+                    <br>
+                    <button id="msub" class="calc-btn" style="max-width:160px; padding:12px; margin-top:8px;">${t('확인','Submit')}</button>
+                </div>`;
+            document.getElementById('mans').focus();
+            const submit = () => {
+                clearInterval(mathTimer);
+                if (parseInt(document.getElementById('mans').value) === q.ans) { score++; ask(); }
+                else { alert(t(`틀렸습니다! 정답: ${q.ans} / 최종 점수: ${score}`,`Wrong! Answer: ${q.ans} / Score: ${score}`)); closeGame(); }
             };
+            document.getElementById('msub').onclick = submit;
+            document.getElementById('mans').onkeyup = e => { if(e.key==='Enter') submit(); };
+            mathTimer = setInterval(() => {
+                timeLeft -= 0.1;
+                const bar = document.getElementById('mbar'), te = document.getElementById('mt');
+                if (bar) bar.style.width = `${Math.max(0,(timeLeft/totalSec)*100)}%`;
+                if (te) te.innerText = Math.ceil(timeLeft)+'s';
+                if (timeLeft <= 0) { clearInterval(mathTimer); alert(t(`시간 초과! 정답: ${q.ans} / 점수: ${score}`,`Time up! Answer: ${q.ans} / Score: ${score}`)); closeGame(); }
+            }, 100);
         }
         ask();
     }
@@ -534,16 +619,74 @@ document.addEventListener('DOMContentLoaded', () => {
     // 5. Reaction
     function startReaction() {
         title.innerText = t("반응 속도", "Reaction Speed");
-        container.innerHTML = `<div id="box" style="width:100%; height:300px; background:red; color:white; display:flex; align-items:center; justify-content:center; cursor:pointer; border-radius:16px; font-size:1.5rem; font-weight:700;">${t('기다리세요...','Wait...')}</div>`;
-        const box = document.getElementById('box');
-        let start = 0;
-        const wait = setTimeout(() => {
-            box.style.background = 'green'; box.innerText = t('클릭!!!','Click NOW!'); start = Date.now();
-        }, 2000 + Math.random()*3000);
-        box.onclick = () => {
-            if(start) { alert((Date.now()-start) + 'ms!'); closeGame(); }
-            else { clearTimeout(wait); alert(t('너무 빨랐습니다!','Too early!')); closeGame(); }
-        };
+        const ROUNDS = 5;
+        let round = 0, results = [];
+
+        function nextRound() {
+            round++;
+            container.innerHTML = `
+                <div style="text-align:center; font-size:0.85rem; color:var(--text-muted); margin-bottom:10px;">
+                    ${t(`라운드 ${round} / ${ROUNDS}`, `Round ${round} / ${ROUNDS}`)}
+                    ${results.length ? ` &nbsp;·&nbsp; ${t('직전','Last')}: <strong>${results[results.length-1]}ms</strong>` : ''}
+                </div>
+                <div id="rbox" style="width:100%; height:240px; background:#ef4444; color:white;
+                    display:flex; align-items:center; justify-content:center; cursor:pointer;
+                    border-radius:16px; font-size:1.4rem; font-weight:800; user-select:none; transition:background 0.15s;">
+                    ${t('초록으로 바뀌면 클릭!','Wait for green, then click!')}
+                </div>`;
+            const box = document.getElementById('rbox');
+            let start = 0;
+            const wait = setTimeout(() => {
+                box.style.background = '#22c55e';
+                box.innerText = t('지금 클릭!!!', 'CLICK NOW!!!');
+                start = Date.now();
+            }, 1500 + Math.random() * 3000);
+            box.onclick = () => {
+                if (!start) {
+                    clearTimeout(wait);
+                    box.style.background = '#f59e0b'; box.onclick = null;
+                    box.innerText = t('너무 빨랐어요! 다시...', 'Too early! Retrying...');
+                    round--;
+                    setTimeout(nextRound, 1400);
+                    return;
+                }
+                const ms = Date.now() - start;
+                results.push(ms);
+                box.onclick = null;
+                if (results.length < ROUNDS) {
+                    box.style.background = '#6366f1';
+                    box.innerText = `${ms}ms! ${t('다음 라운드...', 'Next round...')}`;
+                    setTimeout(nextRound, 1100);
+                } else {
+                    showResult();
+                }
+            };
+        }
+
+        function showResult() {
+            const avg = Math.round(results.reduce((a,b)=>a+b,0)/results.length);
+            const best = Math.min(...results);
+            const grade = avg<180?'S':avg<250?'A':avg<350?'B':avg<500?'C':'D';
+            const gc = {S:'#facc15',A:'#4ade80',B:'#60a5fa',C:'#fb923c',D:'#f87171'}[grade];
+            container.innerHTML = `
+                <div style="text-align:center; width:100%;">
+                    <div style="font-size:4.5rem; font-weight:900; color:${gc}; line-height:1;">${grade}</div>
+                    <p style="color:var(--text-muted); margin:8px 0 16px; font-size:0.9rem;">
+                        ${t(`평균 ${avg}ms · 최고 ${best}ms`, `Avg ${avg}ms · Best ${best}ms`)}
+                    </p>
+                    <div style="display:flex; flex-direction:column; gap:5px; max-width:240px; margin:0 auto 16px;">
+                        ${results.map((r,i) => {
+                            const c = r<250?'#4ade80':r<400?'#facc15':'#f87171';
+                            return `<div style="display:flex; justify-content:space-between; padding:6px 12px;
+                                background:var(--card-bg); border-radius:8px; font-size:0.85rem; border:1px solid var(--border-color);">
+                                <span>${t(`라운드 ${i+1}`,`Round ${i+1}`)}</span>
+                                <strong style="color:${c};">${r}ms</strong></div>`;
+                        }).join('')}
+                    </div>
+                    <button class="calc-btn" style="max-width:160px; padding:12px;" onclick="startGame('reaction')">${t('다시 하기','Play Again')}</button>
+                </div>`;
+        }
+        nextRound();
     }
 
     // 6. Snake
@@ -551,60 +694,84 @@ document.addEventListener('DOMContentLoaded', () => {
         title.innerText = t("스네이크", "Snake");
         container.innerHTML = `
             <div style="text-align:center;">
-                <div style="margin-bottom:10px; font-size:0.85rem; color:var(--text-muted);">${t('점수','Score')}: <span id="snake-score">0</span></div>
-                <canvas id="snake" width="300" height="300" style="border-radius:10px;"></canvas>
-                <div style="margin-top:12px; display:grid; grid-template-columns:1fr 1fr 1fr; gap:6px; max-width:150px; margin-left:auto; margin-right:auto;">
-                    <div></div>
-                    <button id="s-up" class="calc-btn" style="padding:10px;">↑</button>
-                    <div></div>
+                <div style="display:flex; justify-content:center; gap:20px; margin-bottom:8px; font-size:0.85rem; color:var(--text-muted);">
+                    <span>${t('점수','Score')}: <strong id="snake-score" style="color:var(--accent-color);">0</strong></span>
+                    <span>${t('레벨','Lv')}: <strong id="snake-lv" style="color:#f59e0b;">1</strong></span>
+                </div>
+                <canvas id="snake" width="300" height="300" style="border-radius:10px; background:#111;"></canvas>
+                <div style="margin-top:10px; display:grid; grid-template-columns:repeat(3,1fr); gap:6px; max-width:150px; margin-left:auto; margin-right:auto;">
+                    <div></div><button id="s-up" class="calc-btn" style="padding:10px;">↑</button><div></div>
                     <button id="s-left" class="calc-btn" style="padding:10px;">←</button>
                     <div></div>
                     <button id="s-right" class="calc-btn" style="padding:10px;">→</button>
-                    <div></div>
-                    <button id="s-down" class="calc-btn" style="padding:10px;">↓</button>
-                    <div></div>
+                    <div></div><button id="s-down" class="calc-btn" style="padding:10px;">↓</button><div></div>
                 </div>
-                <p style="font-size:0.75rem; color:var(--text-muted); margin-top:8px;">${t('키보드 화살표 또는 버튼으로 조작','Use arrow keys or buttons to control')}</p>
-            </div>
-        `;
+                <p style="font-size:0.72rem; color:var(--text-muted); margin-top:6px;">${t('5점마다 속도 증가!','Speed up every 5 points!')}</p>
+            </div>`;
         const canvas = document.getElementById('snake');
         const ctx = canvas.getContext('2d');
-        let snake = [{x:10, y:10}]; let food = {x:15, y:15}; let dx = 1; let dy = 0; let snakeScore = 0;
+        let snake = [{x:10,y:10}], food = {x:15,y:15}, dx = 1, dy = 0, snakeScore = 0, level = 1;
+
         const move = (ndx, ndy) => {
-            if(ndx !== 0 && dx === 0) { dx=ndx; dy=0; }
-            if(ndy !== 0 && dy === 0) { dx=0; dy=ndy; }
+            if (ndx !== 0 && dx === 0) { dx=ndx; dy=0; }
+            if (ndy !== 0 && dy === 0) { dx=0; dy=ndy; }
         };
         document.onkeydown = e => {
-            if(e.keyCode===37) move(-1,0);
-            if(e.keyCode===38) move(0,-1);
-            if(e.keyCode===39) move(1,0);
-            if(e.keyCode===40) move(0,1);
+            if(e.keyCode===37){e.preventDefault();move(-1,0);}
+            if(e.keyCode===38){e.preventDefault();move(0,-1);}
+            if(e.keyCode===39){e.preventDefault();move(1,0);}
+            if(e.keyCode===40){e.preventDefault();move(0,1);}
         };
-        document.getElementById('s-up').onclick = () => move(0,-1);
-        document.getElementById('s-down').onclick = () => move(0,1);
-        document.getElementById('s-left').onclick = () => move(-1,0);
+        document.getElementById('s-up').onclick    = () => move(0,-1);
+        document.getElementById('s-down').onclick  = () => move(0,1);
+        document.getElementById('s-left').onclick  = () => move(-1,0);
         document.getElementById('s-right').onclick = () => move(1,0);
-        gameInterval = setInterval(() => {
+
+        function spawnFood() {
+            let pos;
+            do { pos = {x:Math.floor(Math.random()*20), y:Math.floor(Math.random()*20)}; }
+            while (snake.some(s=>s.x===pos.x&&s.y===pos.y));
+            return pos;
+        }
+
+        function tick() {
             const head = {x: snake[0].x + dx, y: snake[0].y + dy};
-            if(head.x<0 || head.x>=20 || head.y<0 || head.y>=20 || snake.some(s=>s.x===head.x&&s.y===head.y)) {
+            if (head.x<0||head.x>=20||head.y<0||head.y>=20||snake.some(s=>s.x===head.x&&s.y===head.y)) {
                 clearInterval(gameInterval);
-                ctx.fillStyle='rgba(0,0,0,0.6)'; ctx.fillRect(0,0,300,300);
-                ctx.fillStyle='white'; ctx.font='bold 24px sans-serif'; ctx.textAlign='center';
-                ctx.fillText(t('Game Over','Game Over'), 150, 140);
+                ctx.fillStyle='rgba(0,0,0,0.65)'; ctx.fillRect(0,0,300,300);
+                ctx.fillStyle='#fff'; ctx.font='bold 22px sans-serif'; ctx.textAlign='center';
+                ctx.fillText(t('Game Over','Game Over'), 150, 125);
                 ctx.font='16px sans-serif';
-                ctx.fillText(t('점수','Score') + ': ' + snakeScore, 150, 170);
+                ctx.fillText(`${t('점수','Score')}: ${snakeScore}  ${t('레벨','Lv')}: ${level}`, 150, 158);
                 return;
             }
             snake.unshift(head);
-            if(head.x === food.x && head.y === food.y) {
+            if (head.x===food.x && head.y===food.y) {
                 snakeScore++;
                 document.getElementById('snake-score').innerText = snakeScore;
-                food = {x: Math.floor(Math.random()*20), y: Math.floor(Math.random()*20)};
+                food = spawnFood();
+                const newLv = Math.floor(snakeScore/5) + 1;
+                if (newLv !== level) {
+                    level = newLv;
+                    document.getElementById('snake-lv').innerText = level;
+                    clearInterval(gameInterval);
+                    gameInterval = setInterval(tick, Math.max(45, 120 - (level-1)*12));
+                }
             } else snake.pop();
+
             ctx.fillStyle='#111'; ctx.fillRect(0,0,300,300);
-            ctx.fillStyle='#4ade80'; snake.forEach((s,i) => { ctx.fillStyle = i===0 ? '#22c55e' : '#4ade80'; ctx.fillRect(s.x*15, s.y*15, 13, 13); });
-            ctx.fillStyle='#f87171'; ctx.beginPath(); ctx.arc(food.x*15+7, food.y*15+7, 6, 0, Math.PI*2); ctx.fill();
-        }, 120);
+            // draw grid hint
+            ctx.strokeStyle='rgba(255,255,255,0.03)';
+            for(let i=0;i<=20;i++){ctx.beginPath();ctx.moveTo(i*15,0);ctx.lineTo(i*15,300);ctx.stroke();}
+            // food
+            ctx.fillStyle='#f87171'; ctx.beginPath(); ctx.arc(food.x*15+7,food.y*15+7,6,0,Math.PI*2); ctx.fill();
+            // snake
+            snake.forEach((s,i)=>{
+                ctx.fillStyle = i===0?'#22c55e':'#4ade80';
+                ctx.beginPath(); ctx.roundRect(s.x*15+1,s.y*15+1,12,12,3); ctx.fill();
+            });
+        }
+        gameInterval = setInterval(tick, 120);
     }
 
     // 7. Memory
@@ -649,7 +816,8 @@ document.addEventListener('DOMContentLoaded', () => {
                     first = null; locked = false;
                     if (matched === 8) {
                         const elapsed = ((Date.now() - startTime) / 1000).toFixed(1);
-                        setTimeout(() => alert(`🎉 ${t('완성!','Complete!')} ${tries}${t('번 시도',' tries')} · ${elapsed}${t('초','s')}`), 300);
+                        const stars = tries <= 10 ? 5 : tries <= 13 ? 4 : tries <= 16 ? 3 : tries <= 20 ? 2 : 1;
+                        setTimeout(() => alert(`🎉 ${t('완성!','Complete!')} ${'⭐'.repeat(stars)}\n${tries}${t('번 시도',' tries')} · ${elapsed}${t('초','s')}`), 300);
                     }
                 } else {
                     setTimeout(() => {
@@ -670,21 +838,45 @@ document.addEventListener('DOMContentLoaded', () => {
     // 8. Color
     function startColor() {
         title.innerText = t("색상 차이 찾기", "Spot the Color");
-        let score = 0;
+        let score = 0, colorTimer = null;
         function ask() {
+            if (colorTimer) clearInterval(colorTimer);
+            const timeSec = Math.max(2, 6 - Math.floor(score / 4));
+            let timeLeft = timeSec;
             container.innerHTML = `
-                <div style="text-align:center; margin-bottom:10px; font-size:0.9rem; color:var(--text-muted);">${t('점수','Score')}: <strong>${score}</strong> — ${t('레벨','Level')} ${score + 1}</div>
-                <div style="display:grid; grid-template-columns:repeat(3,1fr); gap:10px; width:300px;" id="g"></div>`;
+                <div style="text-align:center; margin-bottom:6px; font-size:0.85rem; color:var(--text-muted);">
+                    ${t('점수','Score')}: <strong style="color:var(--accent-color);">${score}</strong>
+                    &nbsp;·&nbsp; ${t('레벨','Level')} ${score+1}
+                    &nbsp;·&nbsp; <span id="ctimer" style="color:#f59e0b; font-weight:700;">${timeSec}s</span>
+                </div>
+                <div style="height:5px; background:var(--border-color); border-radius:3px; margin-bottom:10px; width:300px; max-width:100%;">
+                    <div id="cbar" style="height:100%; width:100%; background:#f59e0b; border-radius:3px; transition:width 0.08s linear;"></div>
+                </div>
+                <div style="display:grid; grid-template-columns:repeat(3,1fr); gap:8px; width:300px; max-width:100%;" id="g"></div>`;
             const g = document.getElementById('g');
-            const r = Math.floor(Math.random()*180); const gr = Math.floor(Math.random()*180); const b = Math.floor(Math.random()*180);
-            const diff = Math.max(15, 40 - score * 2); // diff stays >= 15, decreases as score rises
+            const r=Math.floor(Math.random()*180), gr=Math.floor(Math.random()*180), b=Math.floor(Math.random()*180);
+            const diff = Math.max(12, 42 - score * 2);
             const target = Math.floor(Math.random()*9);
-            for(let i=0; i<9; i++) {
+            for (let i=0; i<9; i++) {
                 const box = document.createElement('div');
-                box.style.cssText = `height:80px; border-radius:10px; cursor:pointer; background:rgb(${i===target?Math.min(r+diff,255):r},${i===target?Math.min(gr+diff,255):gr},${i===target?Math.min(b+diff,255):b})`;
-                box.onclick = () => { if(i===target) { score++; ask(); } else { alert(t('탈락! 점수: ','Game over! Score: ') + score); closeGame(); } };
+                box.style.cssText = `height:80px; border-radius:10px; cursor:pointer; transition:transform 0.1s;
+                    background:rgb(${i===target?Math.min(r+diff,255):r},${i===target?Math.min(gr+diff,255):gr},${i===target?Math.min(b+diff,255):b})`;
+                box.onmouseover = () => { box.style.transform = 'scale(1.04)'; };
+                box.onmouseout  = () => { box.style.transform = 'scale(1)'; };
+                box.onclick = () => {
+                    clearInterval(colorTimer);
+                    if (i===target) { score++; ask(); }
+                    else { alert(t('탈락! 점수: ','Game over! Score: ')+score); closeGame(); }
+                };
                 g.appendChild(box);
             }
+            colorTimer = setInterval(() => {
+                timeLeft -= 0.1;
+                const bar = document.getElementById('cbar'), te = document.getElementById('ctimer');
+                if (bar) bar.style.width = `${Math.max(0,(timeLeft/timeSec)*100)}%`;
+                if (te) te.innerText = Math.ceil(timeLeft)+'s';
+                if (timeLeft <= 0) { clearInterval(colorTimer); alert(t('시간 초과! 점수: ','Time out! Score: ')+score); closeGame(); }
+            }, 100);
         }
         ask();
     }
@@ -692,19 +884,72 @@ document.addEventListener('DOMContentLoaded', () => {
     // 9. Typing
     function startTyping() {
         title.innerText = t("타이핑 챌린지", "Typing Challenge");
-        const wordsKo = ['바나나','포도','치타','코끼리','컴퓨터','자바스크립트','웰니스','밸런스','건강','운동'];
-        const wordsEn = ['banana','grapes','cheetah','elephant','computer','javascript','wellness','balance','health','exercise'];
         const lang = localStorage.getItem('lang') || 'ko';
-        const words = lang === 'en' ? wordsEn : wordsKo;
-        let score = 0;
+        const poolKo = [
+            ['건강','운동','수면','식단','물'],
+            ['바나나','포도','치타','코끼리','컴퓨터'],
+            ['자바스크립트','웰니스','밸런스','비타민','미네랄'],
+            ['영양소','단백질','탄수화물','면역력','집중력']
+        ];
+        const poolEn = [
+            ['run','rest','diet','sleep','water'],
+            ['banana','grapes','cheetah','elephant','computer'],
+            ['wellness','balance','vitamin','mineral','protein'],
+            ['javascript','nutrition','immunity','exercise','endurance']
+        ];
+        const pool = lang === 'en' ? poolEn : poolKo;
+        let score = 0, totalChars = 0, startTime = Date.now(), typingTimer = null;
+
         function ask() {
-            const word = words[Math.floor(Math.random()*words.length)];
-            container.innerHTML = `<div style="text-align:center;"><h3>${t('점수','Score')}: ${score}</h3><h1 style="font-size:3rem; margin:20px 0;">${word}</h1><input id="in" style="padding:10px; font-size:1.5rem;"><button id="ok" class="calc-btn">${t('입력','Submit')}</button></div>`;
-            const input = document.getElementById('in');
+            if (typingTimer) clearInterval(typingTimer);
+            const tier = Math.min(Math.floor(score / 5), pool.length - 1);
+            const wordList = pool[tier];
+            const word = wordList[Math.floor(Math.random() * wordList.length)];
+            const timeSec = Math.max(4, 10 - score);
+            let timeLeft = timeSec;
+            const elapsed = ((Date.now() - startTime) / 60000);
+            const wpm = elapsed > 0 ? Math.round((score / elapsed)) : 0;
+
+            container.innerHTML = `
+                <div style="text-align:center; width:100%;">
+                    <div style="display:flex; justify-content:center; gap:20px; font-size:0.85rem; color:var(--text-muted); margin-bottom:6px;">
+                        <span>${t('점수','Score')}: <strong style="color:var(--accent-color);">${score}</strong></span>
+                        <span>WPM: <strong style="color:#10b981;">${wpm}</strong></span>
+                        <span id="ttime" style="color:#f59e0b; font-weight:700;">${timeSec}s</span>
+                    </div>
+                    <div style="height:5px; background:var(--border-color); border-radius:3px; margin-bottom:14px;">
+                        <div id="tbar" style="height:100%; width:100%; background:#f59e0b; border-radius:3px; transition:width 0.08s linear;"></div>
+                    </div>
+                    <div style="font-size:2.6rem; font-weight:900; letter-spacing:4px; margin:10px 0;
+                        color:var(--primary-color);">${word}</div>
+                    <input id="tin" style="padding:12px; font-size:1.4rem; text-align:center; width:200px; margin:8px 0;" autofocus placeholder="${t('여기에 입력...','type here...')}">
+                    <br>
+                    <button id="tok" class="calc-btn" style="max-width:140px; padding:10px; margin-top:6px;">${t('입력 (Enter)','Submit (Enter)')}</button>
+                </div>`;
+            const input = document.getElementById('tin');
             input.focus();
-            const check = () => { if(input.value === word) { score++; ask(); } else { alert(t('최종 점수: ','Final score: ') + score); closeGame(); } };
-            document.getElementById('ok').onclick = check;
+
+            // live character highlight
+            input.oninput = () => {
+                const val = input.value;
+                input.style.borderColor = word.startsWith(val) ? '#10b981' : '#ef4444';
+            };
+
+            const check = () => {
+                clearInterval(typingTimer);
+                if (input.value === word) { score++; totalChars += word.length; ask(); }
+                else { alert(t(`틀렸습니다! 정답: "${word}"\n점수: ${score}  WPM: ${wpm}`, `Wrong! Answer: "${word}"\nScore: ${score}  WPM: ${wpm}`)); closeGame(); }
+            };
+            document.getElementById('tok').onclick = check;
             input.onkeyup = e => { if(e.key==='Enter') check(); };
+
+            typingTimer = setInterval(() => {
+                timeLeft -= 0.1;
+                const bar = document.getElementById('tbar'), te = document.getElementById('ttime');
+                if (bar) bar.style.width = `${Math.max(0,(timeLeft/timeSec)*100)}%`;
+                if (te) te.innerText = Math.ceil(timeLeft)+'s';
+                if (timeLeft <= 0) { clearInterval(typingTimer); alert(t(`시간 초과! 점수: ${score}  WPM: ${wpm}`,`Time up! Score: ${score}  WPM: ${wpm}`)); closeGame(); }
+            }, 100);
         }
         ask();
     }
@@ -713,13 +958,48 @@ document.addEventListener('DOMContentLoaded', () => {
     function startNumber() {
         title.innerText = t("숫자 맞추기", "Number Guess");
         const target = Math.floor(Math.random()*100)+1;
-        container.innerHTML = `<div style="text-align:center;"><input type="number" id="n" placeholder="1~100" style="padding:10px;"><button id="go" class="calc-btn">Go</button><p id="h">${t('과연 숫자는?','What is the number?')}</p></div>`;
-        document.getElementById('go').onclick = () => {
-            const v = parseInt(document.getElementById('n').value);
-            const h = document.getElementById('h');
-            if(v === target) { alert(t('정답!','Correct!')); closeGame(); }
-            else if(v < target) h.innerText = 'Up!';
-            else h.innerText = 'Down!';
-        };
+        let tries = 0, lo = 1, hi = 100;
+
+        function render(hint, heatPct, heatColor) {
+            container.innerHTML = `
+                <div style="text-align:center; width:100%;">
+                    <p style="font-size:0.85rem; color:var(--text-muted); margin-bottom:4px;">
+                        ${t(`범위: ${lo} ~ ${hi}  시도: ${tries}회`, `Range: ${lo}–${hi}  Tries: ${tries}`)}
+                    </p>
+                    <div style="height:12px; background:var(--border-color); border-radius:6px; margin-bottom:14px; overflow:hidden;">
+                        <div style="height:100%; width:${heatPct}%; background:${heatColor}; border-radius:6px; transition:width 0.4s, background 0.4s;"></div>
+                    </div>
+                    <div id="hint-msg" style="font-size:1.3rem; font-weight:800; min-height:36px; margin-bottom:12px;
+                        color:${heatColor};">${hint}</div>
+                    <div style="display:flex; gap:8px; justify-content:center; align-items:center;">
+                        <input type="number" id="n" min="1" max="100" placeholder="1~100"
+                            style="padding:12px; font-size:1.3rem; width:110px; text-align:center;" autofocus>
+                        <button id="go" style="padding:12px 20px; background:var(--accent-color); color:white; border:none;
+                            border-radius:12px; font-size:1rem; font-weight:700; cursor:pointer;">Go</button>
+                    </div>
+                </div>`;
+            const input = document.getElementById('n');
+            input.focus();
+            const submit = () => {
+                const v = parseInt(input.value);
+                if (!v || v < 1 || v > 100) return;
+                tries++;
+                const dist = Math.abs(v - target);
+                const pct = Math.round((1 - dist/100) * 100);
+                const color = dist===0?'#facc15':dist<=5?'#f87171':dist<=15?'#fb923c':dist<=30?'#facc15':'#60a5fa';
+                if (v === target) {
+                    const grade = tries<=5?'S':tries<=8?'A':tries<=12?'B':tries<=18?'C':'D';
+                    const gc = {S:'#facc15',A:'#4ade80',B:'#60a5fa',C:'#fb923c',D:'#f87171'}[grade];
+                    setTimeout(() => alert(t(`🎉 정답! ${target} / ${tries}번 만에 등급: ${grade}`,`🎉 Correct! ${target} in ${tries} tries — Grade ${grade}`)), 50);
+                    closeGame();
+                    return;
+                }
+                if (v < target) { lo = Math.max(lo, v+1); render(t(`⬆ 더 높아요! (${v})`,`⬆ Higher! (${v})`), pct, color); }
+                else { hi = Math.min(hi, v-1); render(t(`⬇ 더 낮아요! (${v})`,`⬇ Lower! (${v})`), pct, color); }
+            };
+            document.getElementById('go').onclick = submit;
+            input.onkeyup = e => { if(e.key==='Enter') submit(); };
+        }
+        render(t('1~100 사이 숫자를 맞춰보세요!','Guess the number between 1 and 100!'), 50, '#60a5fa');
     }
 });
