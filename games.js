@@ -217,7 +217,7 @@ document.addEventListener('DOMContentLoaded', () => {
     function startSudoku() {
         title.innerText = t("정통 스도쿠", "Sudoku");
 
-        // ── board generation ──────────────────────────────────────────
+        // ── board generator (shared) ──────────────────────────────────
         function canPlace(board, pos, num) {
             const row = Math.floor(pos / 9), col = pos % 9;
             for (let c = 0; c < 9; c++) if (board[row * 9 + c] === num) return false;
@@ -227,112 +227,193 @@ document.addEventListener('DOMContentLoaded', () => {
                 if (board[(br + r) * 9 + (bc + c)] === num) return false;
             return true;
         }
-        function solve(board, pos = 0) {
+        function fillBoard(board, pos = 0) {
             if (pos === 81) return true;
-            if (board[pos] !== 0) return solve(board, pos + 1);
+            if (board[pos] !== 0) return fillBoard(board, pos + 1);
             for (const num of [1,2,3,4,5,6,7,8,9].sort(() => Math.random() - 0.5)) {
                 if (canPlace(board, pos, num)) {
                     board[pos] = num;
-                    if (solve(board, pos + 1)) return true;
+                    if (fillBoard(board, pos + 1)) return true;
                     board[pos] = 0;
                 }
             }
             return false;
         }
-        const solution = Array(81).fill(0);
-        solve(solution);
-        const puzzle = [...solution];
-        Array.from({length: 81}, (_, i) => i)
-            .sort(() => Math.random() - 0.5)
-            .slice(0, 46)
-            .forEach(i => { puzzle[i] = 0; });
 
-        // ── render ────────────────────────────────────────────────────
-        const cs = window.innerWidth <= 480 ? 30 : 34; // cell px size
-        const BOX  = '2.5px solid var(--primary-color)';
-        const THIN = '1px solid var(--border-color)';
+        // ── step 1: difficulty selection ──────────────────────────────
+        const diffLevels = [
+            { label: t('🟢 초급 (쉬움)', '🟢 Beginner'), remove: 35, hint: t('힌트 46개', '46 clues') },
+            { label: t('🟡 중급 (보통)', '🟡 Intermediate'), remove: 46, hint: t('힌트 35개', '35 clues') },
+            { label: t('🔴 고급 (어려움)', '🔴 Advanced'), remove: 54, hint: t('힌트 27개', '27 clues') },
+        ];
 
         container.innerHTML = `
-            <div style="overflow-x:auto; width:100%; text-align:center;">
-                <table id="s-tbl" style="border-collapse:collapse; border:2.5px solid var(--primary-color); margin:0 auto; table-layout:fixed;"></table>
-            </div>
-            <div id="s-pad" style="display:flex; gap:5px; justify-content:center; margin-top:12px; flex-wrap:wrap; max-width:360px;">
-                ${[1,2,3,4,5,6,7,8,9].map(n =>
-                    `<button data-n="${n}" style="width:${cs}px;height:${cs}px;padding:0;font-size:0.9rem;font-weight:700;background:var(--card-bg);border:2px solid var(--border-color);border-radius:8px;cursor:pointer;color:var(--text-main);">${n}</button>`
-                ).join('')}
-                <button data-n="0" style="width:${cs}px;height:${cs}px;padding:0;font-size:0.85rem;background:var(--card-bg);border:2px solid var(--border-color);border-radius:8px;cursor:pointer;color:#ef4444;">✕</button>
-            </div>
-            <p style="font-size:0.72rem;color:var(--text-muted);margin:6px 0 0;text-align:center;">${t('셀 선택 → 숫자 버튼 또는 키보드 입력','Select a cell → tap number or use keyboard')}</p>
-            <button class="calc-btn" style="margin-top:10px;max-width:160px;padding:10px 20px;" onclick="startGame('sudoku')">${t('새 게임','New Game')}</button>`;
+            <div style="text-align:center; padding:10px 0;">
+                <p style="font-size:1rem; font-weight:800; color:var(--primary-color); margin-bottom:20px;">
+                    ${t('난이도를 선택하세요', 'Select Difficulty')}
+                </p>
+                <div style="display:flex; flex-direction:column; gap:12px; max-width:220px; margin:0 auto;">
+                    ${diffLevels.map((d, i) => `
+                        <button id="sd-${i}" style="padding:14px 20px; background:var(--card-bg); border:2px solid var(--border-color);
+                            border-radius:16px; cursor:pointer; font-size:0.95rem; font-weight:700; color:var(--text-main);
+                            display:flex; justify-content:space-between; align-items:center; transition:0.2s;">
+                            <span>${d.label}</span>
+                            <span style="font-size:0.75rem; color:var(--text-muted);">${d.hint}</span>
+                        </button>`).join('')}
+                </div>
+            </div>`;
 
-        const cells = [];
-        let selIdx = -1;
-        const tbl = document.getElementById('s-tbl');
-
-        for (let r = 0; r < 9; r++) {
-            const tr = tbl.insertRow();
-            for (let c = 0; c < 9; c++) {
-                const idx = r * 9 + c;
-                const td = tr.insertCell();
-                const isFixed = puzzle[idx] !== 0;
-                td.style.cssText = [
-                    `width:${cs}px`, `height:${cs}px`,
-                    'text-align:center', 'vertical-align:middle',
-                    `font-size:${cs <= 30 ? '0.85' : '1'}rem`, 'font-weight:700',
-                    `cursor:${isFixed ? 'default' : 'pointer'}`,
-                    'border-top:none', 'border-left:none',
-                    `border-right:${(c === 2 || c === 5) ? BOX : (c === 8 ? 'none' : THIN)}`,
-                    `border-bottom:${(r === 2 || r === 5) ? BOX : (r === 8 ? 'none' : THIN)}`,
-                    `background:${isFixed ? 'var(--bg-color)' : 'var(--card-bg)'}`,
-                    `color:${isFixed ? 'var(--primary-color)' : 'var(--text-muted)'}`,
-                    'user-select:none', 'transition:background 0.15s'
-                ].join(';');
-                td.textContent = puzzle[idx] || '';
-                td.dataset.fixed = isFixed ? '1' : '0';
-                td.dataset.idx = idx;
-                cells.push(td);
-
-                if (!isFixed) {
-                    td.addEventListener('click', () => {
-                        if (selIdx >= 0 && cells[selIdx].dataset.fixed === '0')
-                            cells[selIdx].style.background = 'var(--card-bg)';
-                        selIdx = idx;
-                        td.style.background = 'rgba(99,102,241,0.18)';
-                    });
-                }
-            }
-        }
-
-        // ── input handler ─────────────────────────────────────────────
-        function inputNum(n) {
-            if (selIdx < 0 || cells[selIdx].dataset.fixed === '1') return;
-            const cell = cells[selIdx];
-            if (n === 0) {
-                cell.textContent = '';
-                cell.style.color = 'var(--text-muted)';
-            } else {
-                cell.textContent = n;
-                cell.style.color = n === solution[selIdx] ? '#10b981' : '#ef4444';
-                if (n === solution[selIdx]) checkWin();
-            }
-        }
-
-        function checkWin() {
-            const allDone = cells.every((td, i) =>
-                puzzle[i] !== 0 || parseInt(td.textContent) === solution[i]
-            );
-            if (allDone) setTimeout(() => alert(t('🎉 스도쿠 완성! 축하합니다!', '🎉 Sudoku Complete! Well done!')), 100);
-        }
-
-        document.getElementById('s-pad').querySelectorAll('[data-n]').forEach(btn => {
-            btn.addEventListener('click', () => inputNum(parseInt(btn.dataset.n)));
+        diffLevels.forEach((d, i) => {
+            document.getElementById(`sd-${i}`).addEventListener('click', () => buildBoard(d.remove));
         });
 
-        document.onkeydown = e => {
-            const k = parseInt(e.key);
-            if (k >= 1 && k <= 9) { e.preventDefault(); inputNum(k); }
-            else if (e.key === 'Backspace' || e.key === 'Delete' || e.key === '0') inputNum(0);
-        };
+        // ── step 2: build & render board ──────────────────────────────
+        function buildBoard(removeCount) {
+            const solution = Array(81).fill(0);
+            fillBoard(solution);
+            const puzzle = [...solution];
+            Array.from({length: 81}, (_, i) => i)
+                .sort(() => Math.random() - 0.5)
+                .slice(0, removeCount)
+                .forEach(i => { puzzle[i] = 0; });
+
+            const cs = window.innerWidth <= 480 ? 30 : 34;
+            const BOX  = '2.5px solid var(--primary-color)';
+            const THIN = '1px solid var(--border-color)';
+
+            container.innerHTML = `
+                <div style="overflow-x:auto; width:100%; text-align:center;">
+                    <table id="s-tbl" style="border-collapse:collapse; border:2.5px solid var(--primary-color); margin:0 auto; table-layout:fixed;"></table>
+                </div>
+                <div id="s-pad" style="display:flex; gap:5px; justify-content:center; margin-top:10px; flex-wrap:wrap; max-width:340px;">
+                    ${[1,2,3,4,5,6,7,8,9].map(n =>
+                        `<button data-n="${n}" style="width:${cs}px;height:${cs}px;padding:0;font-size:0.9rem;font-weight:700;
+                            background:var(--card-bg);border:2px solid var(--border-color);border-radius:8px;
+                            cursor:pointer;color:var(--text-main);">${n}</button>`
+                    ).join('')}
+                    <button data-n="0" style="width:${cs}px;height:${cs}px;padding:0;font-size:1rem;
+                        background:var(--card-bg);border:2px solid var(--border-color);border-radius:8px;
+                        cursor:pointer;color:var(--text-muted);">✕</button>
+                </div>
+                <p style="font-size:0.72rem;color:var(--text-muted);margin:5px 0 0;text-align:center;">
+                    ${t('셀 선택 → 숫자 입력 또는 키보드 1~9','Select cell → tap number or press 1–9')}
+                </p>
+                <div style="display:flex; gap:8px; margin-top:10px; justify-content:center; flex-wrap:wrap;">
+                    <button id="s-check" style="padding:10px 18px; background:#6366f1; color:white; border:none;
+                        border-radius:12px; font-size:0.85rem; font-weight:700; cursor:pointer;">
+                        ${t('정답 확인','Check Answers')}
+                    </button>
+                    <button onclick="startGame('sudoku')" style="padding:10px 18px; background:var(--card-bg);
+                        color:var(--text-main); border:2px solid var(--border-color); border-radius:12px;
+                        font-size:0.85rem; font-weight:700; cursor:pointer;">
+                        ${t('새 게임','New Game')}
+                    </button>
+                </div>`;
+
+            const cells = [];
+            let selIdx = -1;
+            let answered = false;
+            const tbl = document.getElementById('s-tbl');
+
+            for (let r = 0; r < 9; r++) {
+                const tr = tbl.insertRow();
+                for (let c = 0; c < 9; c++) {
+                    const idx = r * 9 + c;
+                    const td = tr.insertCell();
+                    const isFixed = puzzle[idx] !== 0;
+                    td.style.cssText = [
+                        `width:${cs}px`, `height:${cs}px`,
+                        'text-align:center', 'vertical-align:middle',
+                        `font-size:${cs <= 30 ? '0.85' : '1'}rem`, 'font-weight:700',
+                        `cursor:${isFixed ? 'default' : 'pointer'}`,
+                        'border-top:none', 'border-left:none',
+                        `border-right:${(c === 2 || c === 5) ? BOX : (c === 8 ? 'none' : THIN)}`,
+                        `border-bottom:${(r === 2 || r === 5) ? BOX : (r === 8 ? 'none' : THIN)}`,
+                        `background:${isFixed ? 'var(--bg-color)' : 'var(--card-bg)'}`,
+                        `color:${isFixed ? 'var(--primary-color)' : 'var(--text-muted)'}`,
+                        'user-select:none', 'transition:background 0.15s'
+                    ].join(';');
+                    td.textContent = puzzle[idx] || '';
+                    td.dataset.fixed = isFixed ? '1' : '0';
+                    cells.push(td);
+
+                    if (!isFixed) {
+                        td.addEventListener('click', () => {
+                            if (answered) return;
+                            if (selIdx >= 0 && cells[selIdx].dataset.fixed === '0')
+                                cells[selIdx].style.background = 'var(--card-bg)';
+                            selIdx = idx;
+                            td.style.background = 'rgba(99,102,241,0.18)';
+                        });
+                    }
+                }
+            }
+
+            // ── number input ──────────────────────────────────────────
+            function inputNum(n) {
+                if (answered || selIdx < 0 || cells[selIdx].dataset.fixed === '1') return;
+                const cell = cells[selIdx];
+                cell.textContent = n || '';
+                cell.style.color = 'var(--text-muted)';
+            }
+
+            document.getElementById('s-pad').querySelectorAll('[data-n]').forEach(btn => {
+                btn.addEventListener('click', () => inputNum(parseInt(btn.dataset.n)));
+            });
+
+            document.onkeydown = e => {
+                const k = parseInt(e.key);
+                if (k >= 1 && k <= 9) { e.preventDefault(); inputNum(k); }
+                else if (e.key === 'Backspace' || e.key === 'Delete') inputNum(0);
+            };
+
+            // ── answer check ──────────────────────────────────────────
+            document.getElementById('s-check').addEventListener('click', () => {
+                answered = true;
+                if (selIdx >= 0 && cells[selIdx].dataset.fixed === '0')
+                    cells[selIdx].style.background = 'var(--card-bg)';
+                selIdx = -1;
+                document.onkeydown = null;
+
+                let correct = 0, wrong = 0, empty = 0;
+                cells.forEach((td, i) => {
+                    if (puzzle[i] !== 0) return; // fixed cell, skip
+                    const entered = parseInt(td.textContent);
+                    if (!entered) {
+                        // empty — show correct answer in grey
+                        td.textContent = solution[i];
+                        td.style.color = '#94a3b8';
+                        td.style.background = 'rgba(148,163,184,0.12)';
+                        empty++;
+                    } else if (entered === solution[i]) {
+                        td.style.color = '#10b981';
+                        td.style.background = 'rgba(16,185,129,0.12)';
+                        correct++;
+                    } else {
+                        // wrong — show correct answer in red
+                        td.textContent = solution[i];
+                        td.style.color = '#ef4444';
+                        td.style.background = 'rgba(239,68,68,0.12)';
+                        wrong++;
+                    }
+                });
+
+                const checkBtn = document.getElementById('s-check');
+                checkBtn.disabled = true;
+                checkBtn.style.opacity = '0.5';
+
+                const total = correct + wrong + empty;
+                if (wrong === 0 && empty === 0) {
+                    setTimeout(() => alert(t(`🎉 완벽합니다! ${total}칸 전부 정답!`, `🎉 Perfect! All ${total} correct!`)), 100);
+                } else {
+                    const msg = t(
+                        `결과: ✅ ${correct}개 정답 / ❌ ${wrong}개 오답 / ⬜ ${empty}개 미입력`,
+                        `Result: ✅ ${correct} correct / ❌ ${wrong} wrong / ⬜ ${empty} empty`
+                    );
+                    setTimeout(() => alert(msg), 100);
+                }
+            });
+        }
     }
 
     // 3. Clicker
