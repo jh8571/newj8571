@@ -217,21 +217,21 @@ document.addEventListener('DOMContentLoaded', () => {
     function startSudoku() {
         title.innerText = t("정통 스도쿠", "Sudoku");
 
-        function isValid(board, pos, num) {
+        // ── board generation ──────────────────────────────────────────
+        function canPlace(board, pos, num) {
             const row = Math.floor(pos / 9), col = pos % 9;
             for (let c = 0; c < 9; c++) if (board[row * 9 + c] === num) return false;
             for (let r = 0; r < 9; r++) if (board[r * 9 + col] === num) return false;
             const br = Math.floor(row / 3) * 3, bc = Math.floor(col / 3) * 3;
-            for (let r = 0; r < 3; r++) for (let c = 0; c < 3; c++) if (board[(br + r) * 9 + (bc + c)] === num) return false;
+            for (let r = 0; r < 3; r++) for (let c = 0; c < 3; c++)
+                if (board[(br + r) * 9 + (bc + c)] === num) return false;
             return true;
         }
-
         function solve(board, pos = 0) {
             if (pos === 81) return true;
             if (board[pos] !== 0) return solve(board, pos + 1);
-            const nums = [1,2,3,4,5,6,7,8,9].sort(() => Math.random() - 0.5);
-            for (const num of nums) {
-                if (isValid(board, pos, num)) {
+            for (const num of [1,2,3,4,5,6,7,8,9].sort(() => Math.random() - 0.5)) {
+                if (canPlace(board, pos, num)) {
                     board[pos] = num;
                     if (solve(board, pos + 1)) return true;
                     board[pos] = 0;
@@ -239,40 +239,100 @@ document.addEventListener('DOMContentLoaded', () => {
             }
             return false;
         }
-
         const solution = Array(81).fill(0);
         solve(solution);
         const puzzle = [...solution];
-        const positions = Array.from({length: 81}, (_, i) => i).sort(() => Math.random() - 0.5);
-        for (let i = 0; i < 46; i++) puzzle[positions[i]] = 0;
+        Array.from({length: 81}, (_, i) => i)
+            .sort(() => Math.random() - 0.5)
+            .slice(0, 46)
+            .forEach(i => { puzzle[i] = 0; });
+
+        // ── render ────────────────────────────────────────────────────
+        const cs = window.innerWidth <= 480 ? 30 : 34; // cell px size
+        const BOX  = '2.5px solid var(--primary-color)';
+        const THIN = '1px solid var(--border-color)';
 
         container.innerHTML = `
-            <div class="sudoku-grid" id="sudoku"></div>
-            <div style="display:flex; gap:10px; margin-top:15px; justify-content:center; flex-wrap:wrap;">
-                <button class="calc-btn" onclick="startGame('sudoku')">${t('새 게임','New Game')}</button>
-            </div>`;
-        const grid = document.getElementById('sudoku');
+            <div style="overflow-x:auto; width:100%; text-align:center;">
+                <table id="s-tbl" style="border-collapse:collapse; border:2.5px solid var(--primary-color); margin:0 auto; table-layout:fixed;"></table>
+            </div>
+            <div id="s-pad" style="display:flex; gap:5px; justify-content:center; margin-top:12px; flex-wrap:wrap; max-width:360px;">
+                ${[1,2,3,4,5,6,7,8,9].map(n =>
+                    `<button data-n="${n}" style="width:${cs}px;height:${cs}px;padding:0;font-size:0.9rem;font-weight:700;background:var(--card-bg);border:2px solid var(--border-color);border-radius:8px;cursor:pointer;color:var(--text-main);">${n}</button>`
+                ).join('')}
+                <button data-n="0" style="width:${cs}px;height:${cs}px;padding:0;font-size:0.85rem;background:var(--card-bg);border:2px solid var(--border-color);border-radius:8px;cursor:pointer;color:#ef4444;">✕</button>
+            </div>
+            <p style="font-size:0.72rem;color:var(--text-muted);margin:6px 0 0;text-align:center;">${t('셀 선택 → 숫자 버튼 또는 키보드 입력','Select a cell → tap number or use keyboard')}</p>
+            <button class="calc-btn" style="margin-top:10px;max-width:160px;padding:10px 20px;" onclick="startGame('sudoku')">${t('새 게임','New Game')}</button>`;
 
-        puzzle.forEach((val, i) => {
-            const cell = document.createElement('div');
-            cell.className = 'sudoku-cell' + (val !== 0 ? ' fixed' : '');
-            cell.innerText = val !== 0 ? val : '';
-            if (val === 0) {
-                cell.onclick = () => {
-                    let next = (parseInt(cell.innerText) || 0) + 1;
-                    if (next > 9) next = 0;
-                    cell.innerText = next || '';
-                    if (next === 0) {
-                        cell.style.color = '';
-                    } else if (next === solution[i]) {
-                        cell.style.color = 'var(--accent-color)';
-                    } else {
-                        cell.style.color = '#ef4444';
-                    }
-                };
+        const cells = [];
+        let selIdx = -1;
+        const tbl = document.getElementById('s-tbl');
+
+        for (let r = 0; r < 9; r++) {
+            const tr = tbl.insertRow();
+            for (let c = 0; c < 9; c++) {
+                const idx = r * 9 + c;
+                const td = tr.insertCell();
+                const isFixed = puzzle[idx] !== 0;
+                td.style.cssText = [
+                    `width:${cs}px`, `height:${cs}px`,
+                    'text-align:center', 'vertical-align:middle',
+                    `font-size:${cs <= 30 ? '0.85' : '1'}rem`, 'font-weight:700',
+                    `cursor:${isFixed ? 'default' : 'pointer'}`,
+                    'border-top:none', 'border-left:none',
+                    `border-right:${(c === 2 || c === 5) ? BOX : (c === 8 ? 'none' : THIN)}`,
+                    `border-bottom:${(r === 2 || r === 5) ? BOX : (r === 8 ? 'none' : THIN)}`,
+                    `background:${isFixed ? 'var(--bg-color)' : 'var(--card-bg)'}`,
+                    `color:${isFixed ? 'var(--primary-color)' : 'var(--text-muted)'}`,
+                    'user-select:none', 'transition:background 0.15s'
+                ].join(';');
+                td.textContent = puzzle[idx] || '';
+                td.dataset.fixed = isFixed ? '1' : '0';
+                td.dataset.idx = idx;
+                cells.push(td);
+
+                if (!isFixed) {
+                    td.addEventListener('click', () => {
+                        if (selIdx >= 0 && cells[selIdx].dataset.fixed === '0')
+                            cells[selIdx].style.background = 'var(--card-bg)';
+                        selIdx = idx;
+                        td.style.background = 'rgba(99,102,241,0.18)';
+                    });
+                }
             }
-            grid.appendChild(cell);
+        }
+
+        // ── input handler ─────────────────────────────────────────────
+        function inputNum(n) {
+            if (selIdx < 0 || cells[selIdx].dataset.fixed === '1') return;
+            const cell = cells[selIdx];
+            if (n === 0) {
+                cell.textContent = '';
+                cell.style.color = 'var(--text-muted)';
+            } else {
+                cell.textContent = n;
+                cell.style.color = n === solution[selIdx] ? '#10b981' : '#ef4444';
+                if (n === solution[selIdx]) checkWin();
+            }
+        }
+
+        function checkWin() {
+            const allDone = cells.every((td, i) =>
+                puzzle[i] !== 0 || parseInt(td.textContent) === solution[i]
+            );
+            if (allDone) setTimeout(() => alert(t('🎉 스도쿠 완성! 축하합니다!', '🎉 Sudoku Complete! Well done!')), 100);
+        }
+
+        document.getElementById('s-pad').querySelectorAll('[data-n]').forEach(btn => {
+            btn.addEventListener('click', () => inputNum(parseInt(btn.dataset.n)));
         });
+
+        document.onkeydown = e => {
+            const k = parseInt(e.key);
+            if (k >= 1 && k <= 9) { e.preventDefault(); inputNum(k); }
+            else if (e.key === 'Backspace' || e.key === 'Delete' || e.key === '0') inputNum(0);
+        };
     }
 
     // 3. Clicker
