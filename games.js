@@ -36,6 +36,89 @@ document.addEventListener('DOMContentLoaded', () => {
         container.innerHTML = '';
     };
 
+    // ── Shared result screen with SNS share ───────────────────────
+    function showGameResult(gameKey, heading, stats) {
+        if (gameInterval) { clearInterval(gameInterval); cancelAnimationFrame(gameInterval); }
+        document.onkeydown = null;
+
+        const emojiMap = {tetris:'🟦',sudoku:'🔢',clicker:'👆',math:'🔢',reaction:'⚡',
+                          snake:'🐍',memory:'🃏',color:'🎨',typing:'⌨️',number:'🎯'};
+        const emoji = emojiMap[gameKey] || '🎮';
+        const gameNameMap = {tetris:t('테트리스','Tetris'),sudoku:t('스도쿠','Sudoku'),
+            clicker:t('클릭커','Clicker'),math:t('암산왕','Mental Math'),
+            reaction:t('반응속도','Reaction Speed'),snake:t('스네이크','Snake'),
+            memory:t('기억력 카드','Memory Cards'),color:t('색상 찾기','Spot the Color'),
+            typing:t('타이핑','Typing'),number:t('숫자 맞추기','Number Guess')};
+
+        const shareLines = [
+            `${emoji} VitalRest — ${gameNameMap[gameKey]}`,
+            ...stats.map(s => `${s.label}: ${s.value}`),
+            t('도전해보세요!','Can you beat this?')
+        ];
+        const shareText = shareLines.join('\n');
+        const shareURL  = 'https://newj8571.pages.dev/games.html';
+
+        container.innerHTML = `
+            <div style="width:100%; text-align:center;">
+                <div style="background:var(--card-bg); border:1px solid var(--border-color);
+                    border-radius:20px; padding:24px 20px; max-width:320px; margin:0 auto;">
+                    <div style="font-size:1.25rem; font-weight:900; color:var(--primary-color); margin-bottom:16px;">
+                        ${heading}
+                    </div>
+                    <div style="display:flex; flex-direction:column; gap:0;">
+                        ${stats.map(s => `
+                            <div style="display:flex; justify-content:space-between; align-items:center;
+                                padding:9px 0; border-bottom:1px solid var(--border-color); font-size:0.9rem;">
+                                <span style="color:var(--text-muted);">${s.label}</span>
+                                <strong style="font-size:${s.big?'1.4':'0.95'}rem; color:${s.color||'var(--primary-color)'};">${s.value}</strong>
+                            </div>`).join('')}
+                    </div>
+                    <div style="display:flex; flex-direction:column; gap:8px; margin-top:18px;">
+                        <button id="rg-share" style="padding:12px; background:#6366f1; color:white; border:none;
+                            border-radius:12px; font-weight:700; cursor:pointer; font-size:0.9rem; display:flex;
+                            align-items:center; justify-content:center; gap:6px;">
+                            📤 ${t('결과 공유하기','Share My Result')}
+                        </button>
+                        <button id="rg-copy" style="padding:10px; background:var(--card-bg);
+                            border:2px solid var(--border-color); border-radius:12px; font-weight:700;
+                            cursor:pointer; font-size:0.82rem; color:var(--text-muted);">
+                            📋 ${t('텍스트 복사','Copy Text')}
+                        </button>
+                        <button id="rg-replay" style="padding:10px; background:var(--card-bg);
+                            border:2px solid var(--accent-color); border-radius:12px; font-weight:700;
+                            cursor:pointer; font-size:0.85rem; color:var(--accent-color);">
+                            🔄 ${t('다시 하기','Play Again')}
+                        </button>
+                        <button id="rg-close" style="padding:8px; background:transparent; border:none;
+                            font-size:0.8rem; color:var(--text-muted); cursor:pointer;">
+                            ${t('게임 닫기','Close')}
+                        </button>
+                    </div>
+                </div>
+            </div>`;
+
+        document.getElementById('rg-replay').onclick = () => window.startGame(gameKey);
+        document.getElementById('rg-close').onclick  = closeGame;
+
+        document.getElementById('rg-share').onclick = async () => {
+            try {
+                if (navigator.share) {
+                    await navigator.share({ title: `VitalRest — ${gameNameMap[gameKey]}`, text: shareText, url: shareURL });
+                } else {
+                    await navigator.clipboard.writeText(shareText + '\n' + shareURL);
+                    alert(t('클립보드에 복사됐습니다! SNS에 붙여넣기 해주세요.', 'Copied! Paste it on SNS.'));
+                }
+            } catch(e) { /* user cancelled */ }
+        };
+
+        document.getElementById('rg-copy').onclick = async () => {
+            try {
+                await navigator.clipboard.writeText(shareText + '\n' + shareURL);
+                document.getElementById('rg-copy').innerText = t('✅ 복사됨!','✅ Copied!');
+            } catch(e) {}
+        };
+    }
+
     const t = window.t;
 
     // 1. Tetris
@@ -175,11 +258,13 @@ document.addEventListener('DOMContentLoaded', () => {
             player.pos.x = (arena[0].length / 2 | 0) - (player.matrix[0].length / 2 | 0);
             canHold = true;
             if (collide(arena, player)) {
-                arena.forEach(row => row.fill(0));
-                player.score = 0;
-                holdMatrix = null;
-                drawHold();
-                updateScore();
+                const finalScore = player.score;
+                const lv = Math.floor(finalScore / 200) + 1;
+                showGameResult('tetris', t('🟦 테트리스 결과','🟦 Tetris Result'), [
+                    { label: t('최종 점수','Final Score'), value: finalScore, big: true, color: 'var(--accent-color)' },
+                    { label: t('레벨','Level'), value: `Lv.${lv}` },
+                    { label: t('클리어 라인 기여','Score/Line'), value: `${finalScore} pts` },
+                ]);
             }
         }
 
@@ -494,15 +579,17 @@ document.addEventListener('DOMContentLoaded', () => {
                 checkBtn.style.opacity = '0.5';
 
                 const total = correct + wrong + empty;
-                if (wrong === 0 && empty === 0) {
-                    setTimeout(() => alert(t(`🎉 완벽합니다! ${total}칸 전부 정답!`, `🎉 Perfect! All ${total} correct!`)), 100);
-                } else {
-                    const msg = t(
-                        `결과: ✅ ${correct}개 정답 / ❌ ${wrong}개 오답 / ⬜ ${empty}개 미입력`,
-                        `Result: ✅ ${correct} correct / ❌ ${wrong} wrong / ⬜ ${empty} empty`
-                    );
-                    setTimeout(() => alert(msg), 100);
-                }
+                const pct = Math.round((correct / total) * 100);
+                const grade = pct===100?'S':pct>=80?'A':pct>=60?'B':pct>=40?'C':'D';
+                const gc = {S:'#facc15',A:'#4ade80',B:'#60a5fa',C:'#fb923c',D:'#f87171'}[grade];
+                const diffName = removeCount<=35?t('초급','Easy'):removeCount<=46?t('중급','Medium'):t('고급','Hard');
+                setTimeout(() => showGameResult('sudoku', t('🔢 스도쿠 결과','🔢 Sudoku Result'), [
+                    { label: t('등급','Grade'), value: grade, big: true, color: gc },
+                    { label: t('난이도','Difficulty'), value: diffName },
+                    { label: t('정답','Correct'), value: `${correct}${t('칸','cells')}`, color: '#10b981' },
+                    { label: t('오답','Wrong'), value: `${wrong}${t('칸','cells')}`, color: '#ef4444' },
+                    { label: t('정답률','Accuracy'), value: `${pct}%` },
+                ]), 100);
             });
         }
     }
@@ -543,8 +630,12 @@ document.addEventListener('DOMContentLoaded', () => {
             if (time <= 0) {
                 clearInterval(gameInterval);
                 const stars = count < 20 ? 1 : count < 50 ? 2 : count < 80 ? 3 : count < 120 ? 4 : 5;
-                setTimeout(() => alert(t(`완료! 점수: ${count}점 ${'⭐'.repeat(stars)}`, `Done! ${count} pts ${'⭐'.repeat(stars)}`)), 50);
-                closeGame();
+                const starStr = '⭐'.repeat(stars) + '☆'.repeat(5 - stars);
+                showGameResult('clicker', t('👆 클릭커 결과','👆 Clicker Result'), [
+                    { label: t('총 점수','Total Score'), value: count, big: true, color: 'var(--accent-color)' },
+                    { label: t('최고 콤보','Best Combo'), value: `x${combo}` },
+                    { label: t('평가','Rating'), value: starStr, color: '#f59e0b' },
+                ]);
             }
         }, 1000);
     }
@@ -598,10 +689,20 @@ document.addEventListener('DOMContentLoaded', () => {
                     <button id="msub" class="calc-btn" style="max-width:160px; padding:12px; margin-top:8px;">${t('확인','Submit')}</button>
                 </div>`;
             document.getElementById('mans').focus();
+            const mathEnd = (reason) => {
+                clearInterval(mathTimer);
+                const tier = score<5?t('덧셈','Addition'):score<10?t('±','±'):score<20?t('사칙','×÷'):t('고난도','Expert');
+                showGameResult('math', t('🧮 암산왕 결과','🧮 Mental Math Result'), [
+                    { label: t('최종 점수','Final Score'), value: score, big: true, color: 'var(--accent-color)' },
+                    { label: t('도달 난이도','Level Reached'), value: tier },
+                    { label: t('종료 이유','Ended by'), value: reason, color: '#f87171' },
+                    { label: t('정답','Correct Answer'), value: q.ans, color: '#10b981' },
+                ]);
+            };
             const submit = () => {
                 clearInterval(mathTimer);
                 if (parseInt(document.getElementById('mans').value) === q.ans) { score++; ask(); }
-                else { alert(t(`틀렸습니다! 정답: ${q.ans} / 최종 점수: ${score}`,`Wrong! Answer: ${q.ans} / Score: ${score}`)); closeGame(); }
+                else mathEnd(t('오답','Wrong answer'));
             };
             document.getElementById('msub').onclick = submit;
             document.getElementById('mans').onkeyup = e => { if(e.key==='Enter') submit(); };
@@ -610,7 +711,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 const bar = document.getElementById('mbar'), te = document.getElementById('mt');
                 if (bar) bar.style.width = `${Math.max(0,(timeLeft/totalSec)*100)}%`;
                 if (te) te.innerText = Math.ceil(timeLeft)+'s';
-                if (timeLeft <= 0) { clearInterval(mathTimer); alert(t(`시간 초과! 정답: ${q.ans} / 점수: ${score}`,`Time up! Answer: ${q.ans} / Score: ${score}`)); closeGame(); }
+                if (timeLeft <= 0) mathEnd(t('시간 초과','Time out'));
             }, 100);
         }
         ask();
@@ -668,23 +769,16 @@ document.addEventListener('DOMContentLoaded', () => {
             const best = Math.min(...results);
             const grade = avg<180?'S':avg<250?'A':avg<350?'B':avg<500?'C':'D';
             const gc = {S:'#facc15',A:'#4ade80',B:'#60a5fa',C:'#fb923c',D:'#f87171'}[grade];
-            container.innerHTML = `
-                <div style="text-align:center; width:100%;">
-                    <div style="font-size:4.5rem; font-weight:900; color:${gc}; line-height:1;">${grade}</div>
-                    <p style="color:var(--text-muted); margin:8px 0 16px; font-size:0.9rem;">
-                        ${t(`평균 ${avg}ms · 최고 ${best}ms`, `Avg ${avg}ms · Best ${best}ms`)}
-                    </p>
-                    <div style="display:flex; flex-direction:column; gap:5px; max-width:240px; margin:0 auto 16px;">
-                        ${results.map((r,i) => {
-                            const c = r<250?'#4ade80':r<400?'#facc15':'#f87171';
-                            return `<div style="display:flex; justify-content:space-between; padding:6px 12px;
-                                background:var(--card-bg); border-radius:8px; font-size:0.85rem; border:1px solid var(--border-color);">
-                                <span>${t(`라운드 ${i+1}`,`Round ${i+1}`)}</span>
-                                <strong style="color:${c};">${r}ms</strong></div>`;
-                        }).join('')}
-                    </div>
-                    <button class="calc-btn" style="max-width:160px; padding:12px;" onclick="startGame('reaction')">${t('다시 하기','Play Again')}</button>
-                </div>`;
+            showGameResult('reaction', t('⚡ 반응속도 결과','⚡ Reaction Speed Result'), [
+                { label: t('등급','Grade'), value: grade, big: true, color: gc },
+                { label: t('평균 반응속도','Avg Reaction'), value: `${avg}ms` },
+                { label: t('최고 기록','Best'), value: `${best}ms`, color: '#10b981' },
+                ...results.map((r,i) => ({
+                    label: t(`라운드 ${i+1}`,`Round ${i+1}`),
+                    value: `${r}ms`,
+                    color: r<250?'#4ade80':r<400?'#facc15':'#f87171'
+                }))
+            ]);
         }
         nextRound();
     }
@@ -738,11 +832,12 @@ document.addEventListener('DOMContentLoaded', () => {
             const head = {x: snake[0].x + dx, y: snake[0].y + dy};
             if (head.x<0||head.x>=20||head.y<0||head.y>=20||snake.some(s=>s.x===head.x&&s.y===head.y)) {
                 clearInterval(gameInterval);
-                ctx.fillStyle='rgba(0,0,0,0.65)'; ctx.fillRect(0,0,300,300);
-                ctx.fillStyle='#fff'; ctx.font='bold 22px sans-serif'; ctx.textAlign='center';
-                ctx.fillText(t('Game Over','Game Over'), 150, 125);
-                ctx.font='16px sans-serif';
-                ctx.fillText(`${t('점수','Score')}: ${snakeScore}  ${t('레벨','Lv')}: ${level}`, 150, 158);
+                const snakeLen = snake.length;
+                showGameResult('snake', t('🐍 스네이크 결과','🐍 Snake Result'), [
+                    { label: t('점수','Score'), value: snakeScore, big: true, color: 'var(--accent-color)' },
+                    { label: t('레벨','Level'), value: `Lv.${level}` },
+                    { label: t('뱀 길이','Snake Length'), value: `${snakeLen}칸` },
+                ]);
                 return;
             }
             snake.unshift(head);
@@ -817,7 +912,12 @@ document.addEventListener('DOMContentLoaded', () => {
                     if (matched === 8) {
                         const elapsed = ((Date.now() - startTime) / 1000).toFixed(1);
                         const stars = tries <= 10 ? 5 : tries <= 13 ? 4 : tries <= 16 ? 3 : tries <= 20 ? 2 : 1;
-                        setTimeout(() => alert(`🎉 ${t('완성!','Complete!')} ${'⭐'.repeat(stars)}\n${tries}${t('번 시도',' tries')} · ${elapsed}${t('초','s')}`), 300);
+                        const starStr = '⭐'.repeat(stars) + '☆'.repeat(5-stars);
+                        setTimeout(() => showGameResult('memory', t('🃏 기억력 카드 완성!','🃏 Memory Cards Complete!'), [
+                            { label: t('평가','Rating'), value: starStr, big: true, color: '#f59e0b' },
+                            { label: t('시도 횟수','Tries'), value: `${tries}${t('번','×')}` },
+                            { label: t('완료 시간','Time'), value: `${elapsed}${t('초','s')}` },
+                        ]), 300);
                     }
                 } else {
                     setTimeout(() => {
@@ -866,7 +966,13 @@ document.addEventListener('DOMContentLoaded', () => {
                 box.onclick = () => {
                     clearInterval(colorTimer);
                     if (i===target) { score++; ask(); }
-                    else { alert(t('탈락! 점수: ','Game over! Score: ')+score); closeGame(); }
+                    else {
+                        showGameResult('color', t('🎨 색상 찾기 결과','🎨 Spot the Color Result'), [
+                            { label: t('점수','Score'), value: score, big: true, color: 'var(--accent-color)' },
+                            { label: t('도달 레벨','Level Reached'), value: `Lv.${score}` },
+                            { label: t('종료','Ended'), value: t('오선택','Wrong pick'), color: '#f87171' },
+                        ]);
+                    }
                 };
                 g.appendChild(box);
             }
@@ -875,7 +981,14 @@ document.addEventListener('DOMContentLoaded', () => {
                 const bar = document.getElementById('cbar'), te = document.getElementById('ctimer');
                 if (bar) bar.style.width = `${Math.max(0,(timeLeft/timeSec)*100)}%`;
                 if (te) te.innerText = Math.ceil(timeLeft)+'s';
-                if (timeLeft <= 0) { clearInterval(colorTimer); alert(t('시간 초과! 점수: ','Time out! Score: ')+score); closeGame(); }
+                if (timeLeft <= 0) {
+                    clearInterval(colorTimer);
+                    showGameResult('color', t('🎨 색상 찾기 결과','🎨 Spot the Color Result'), [
+                        { label: t('점수','Score'), value: score, big: true, color: 'var(--accent-color)' },
+                        { label: t('도달 레벨','Level Reached'), value: `Lv.${score}` },
+                        { label: t('종료','Ended'), value: t('시간 초과','Time out'), color: '#f59e0b' },
+                    ]);
+                }
             }, 100);
         }
         ask();
@@ -935,10 +1048,20 @@ document.addEventListener('DOMContentLoaded', () => {
                 input.style.borderColor = word.startsWith(val) ? '#10b981' : '#ef4444';
             };
 
+            const typingEnd = (reason) => {
+                clearInterval(typingTimer);
+                const tierName = ['입문','초급','중급','고급'][Math.min(Math.floor(score/5), 3)];
+                showGameResult('typing', t('⌨️ 타이핑 결과','⌨️ Typing Result'), [
+                    { label: t('점수','Score'), value: score, big: true, color: 'var(--accent-color)' },
+                    { label: 'WPM', value: wpm, color: '#10b981' },
+                    { label: t('난이도','Level'), value: t(tierName, ['Starter','Easy','Medium','Hard'][Math.min(Math.floor(score/5),3)]) },
+                    { label: t('종료 이유','Ended by'), value: reason, color: '#f87171' },
+                ]);
+            };
             const check = () => {
                 clearInterval(typingTimer);
                 if (input.value === word) { score++; totalChars += word.length; ask(); }
-                else { alert(t(`틀렸습니다! 정답: "${word}"\n점수: ${score}  WPM: ${wpm}`, `Wrong! Answer: "${word}"\nScore: ${score}  WPM: ${wpm}`)); closeGame(); }
+                else typingEnd(t(`오타 ("${word}")`, `Typo ("${word}")`));
             };
             document.getElementById('tok').onclick = check;
             input.onkeyup = e => { if(e.key==='Enter') check(); };
@@ -948,7 +1071,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 const bar = document.getElementById('tbar'), te = document.getElementById('ttime');
                 if (bar) bar.style.width = `${Math.max(0,(timeLeft/timeSec)*100)}%`;
                 if (te) te.innerText = Math.ceil(timeLeft)+'s';
-                if (timeLeft <= 0) { clearInterval(typingTimer); alert(t(`시간 초과! 점수: ${score}  WPM: ${wpm}`,`Time up! Score: ${score}  WPM: ${wpm}`)); closeGame(); }
+                if (timeLeft <= 0) typingEnd(t('시간 초과','Time out'));
             }, 100);
         }
         ask();
@@ -990,8 +1113,11 @@ document.addEventListener('DOMContentLoaded', () => {
                 if (v === target) {
                     const grade = tries<=5?'S':tries<=8?'A':tries<=12?'B':tries<=18?'C':'D';
                     const gc = {S:'#facc15',A:'#4ade80',B:'#60a5fa',C:'#fb923c',D:'#f87171'}[grade];
-                    setTimeout(() => alert(t(`🎉 정답! ${target} / ${tries}번 만에 등급: ${grade}`,`🎉 Correct! ${target} in ${tries} tries — Grade ${grade}`)), 50);
-                    closeGame();
+                    showGameResult('number', t('🎯 숫자 맞추기 결과','🎯 Number Guess Result'), [
+                        { label: t('등급','Grade'), value: grade, big: true, color: gc },
+                        { label: t('정답','Answer'), value: target, color: '#10b981' },
+                        { label: t('시도 횟수','Tries'), value: `${tries}${t('번','×')}` },
+                    ]);
                     return;
                 }
                 if (v < target) { lo = Math.max(lo, v+1); render(t(`⬆ 더 높아요! (${v})`,`⬆ Higher! (${v})`), pct, color); }
