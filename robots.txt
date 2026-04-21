@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://jh8571.github.io/newj8571/sitemap.xml
+Sitemap: https://newj8571.pages.dev/sitemap.xml
