@@ -39,7 +39,7 @@ document.addEventListener('DOMContentLoaded', () => {
         langBtn.innerText = lang === 'ko' ? 'EN' : 'KR';
         // Short text elements
         document.querySelectorAll('[data-ko]').forEach(el => {
-            el.innerText = lang === 'ko' ? el.getAttribute('data-ko') : (el.getAttribute('data-en') || el.getAttribute('data-ko'));
+            el.innerHTML = lang === 'ko' ? el.getAttribute('data-ko') : (el.getAttribute('data-en') || el.getAttribute('data-ko'));
         });
         // Input placeholders
         document.querySelectorAll('input[data-ko-ph]').forEach(el => {
