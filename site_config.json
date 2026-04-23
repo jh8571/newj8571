@@ -1,10 +1,10 @@
 {
   "site": {
-    "title": "VitalRest",
-    "tagline": "건강한 쉼표",
-    "description": "임상 데이터와 인공지능이 제안하는 프리미엄 웰니스 솔루션",
+    "title": "VitalGuide",
+    "tagline": "과학 기반 건강 가이드",
+    "description": "임상 데이터와 연구 기반의 영양 · 운동 · 웰니스 인사이트를 제공합니다.",
     "accent_color": "#6366f1",
-    "logo_text": "VitalRest"
+    "logo_text": "VitalGuide"
   },
   "nav": [
     {"id": "nutrition", "label_ko": "AI 맞춤영양", "label_en": "AI Nutrition", "href": "index.html", "enabled": true},
@@ -16,8 +16,8 @@
     {"id": "blog",      "label_ko": "건강가이드",   "label_en": "Health Blog",   "href": "blog.html",       "enabled": true}
   ],
   "footer": {
-    "copyright": "© 2026 VitalRest. 전인적 건강을 위한 고품격 가이드.",
-    "copyright_en": "© 2026 VitalRest. Premium Guide for Holistic Health.",
+    "copyright": "© 2026 VitalGuide. 전인적 건강을 위한 고품격 가이드.",
+    "copyright_en": "© 2026 VitalGuide. Premium Guide for Holistic Health.",
     "links": [
       {"label": "Privacy", "href": "privacy.html"},
       {"label": "Terms",   "href": "terms.html"},
