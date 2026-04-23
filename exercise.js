@@ -218,8 +218,8 @@ function renderExerciseReport(bmi, guide, program, color, height, weight, age) {
 
                 ${window.getShareUI ? window.getShareUI(
                     t(`내 BMI ${bmi} 맞춤 운동 처방`, `My BMI ${bmi} Custom Exercise Plan`),
-                    t(`VitalRest가 분석한 맞춤 운동 루틴은 [${program.title}]입니다. 함께 건강해져요!`,
-                      `VitalRest analyzed my custom workout routine: [${program.title}]. Let's get healthy together!`)
+                    t(`VitalGuide가 분석한 맞춤 운동 루틴은 [${program.title}]입니다. 함께 건강해져요!`,
+                      `VitalGuide analyzed my custom workout routine: [${program.title}]. Let's get healthy together!`)
                 ) : ''}
             </div>
         </div>

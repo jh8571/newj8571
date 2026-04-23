@@ -185,8 +185,8 @@ document.addEventListener('DOMContentLoaded', () => {
                         <button class="luxury-btn" style="max-width:280px; margin-top:0; margin-bottom:20px;" onclick="window.renderTarot()">${t('새로운 운세 보기','New Reading')}</button>
                         ${window.getShareUI ? window.getShareUI(
                             t('오늘의 타로 운세 3카드', "Today's 3-Card Tarot Reading"),
-                            t(`[${selectedCardsData.map(c => c.name.split('(')[0]).join(' · ')}] — VitalRest 타로에서 오늘의 운명을 읽었어요!`,
-                              `[${selectedCardsData.map(c => c.name.split('(')[0]).join(' · ')}] — I read my destiny with VitalRest Tarot!`)
+                            t(`[${selectedCardsData.map(c => c.name.split('(')[0]).join(' · ')}] — VitalGuide 타로에서 오늘의 운명을 읽었어요!`,
+                              `[${selectedCardsData.map(c => c.name.split('(')[0]).join(' · ')}] — I read my destiny with VitalGuide Tarot!`)
                         ) : ''}
                     </div>
                 </div>
@@ -439,8 +439,8 @@ document.addEventListener('DOMContentLoaded', () => {
                         <button class="luxury-btn" style="max-width:280px; margin-bottom:20px;" onclick="renderSaju()">${t('다시 분석하기','Analyze Again')}</button>
                         ${window.getShareUI ? window.getShareUI(
                             t('사주 정밀 분석 결과', 'Four Pillars Precision Analysis'),
-                            t(`${year}년생 ${zodiac ? zodiac.name + '띠' : ''} — VitalRest 사주 분석으로 운명의 흐름을 읽었어요!`,
-                              `Born in ${year} ${zodiac ? '(' + zodiac.name + ')' : ''} — I read my destiny with VitalRest Four Pillars Analysis!`)
+                            t(`${year}년생 ${zodiac ? zodiac.name + '띠' : ''} — VitalGuide 사주 분석으로 운명의 흐름을 읽었어요!`,
+                              `Born in ${year} ${zodiac ? '(' + zodiac.name + ')' : ''} — I read my destiny with VitalGuide Four Pillars Analysis!`)
                         ) : ''}
                     </div>
                 </div>

@@ -51,7 +51,7 @@ document.addEventListener('DOMContentLoaded', () => {
             typing:t('타이핑','Typing'),number:t('숫자 맞추기','Number Guess')};
 
         const shareLines = [
-            `${emoji} VitalRest — ${gameNameMap[gameKey]}`,
+            `${emoji} VitalGuide — ${gameNameMap[gameKey]}`,
             ...stats.map(s => `${s.label}: ${s.value}`),
             t('도전해보세요!','Can you beat this?')
         ];
@@ -103,7 +103,7 @@ document.addEventListener('DOMContentLoaded', () => {
         document.getElementById('rg-share').onclick = async () => {
             try {
                 if (navigator.share) {
-                    await navigator.share({ title: `VitalRest — ${gameNameMap[gameKey]}`, text: shareText, url: shareURL });
+                    await navigator.share({ title: `VitalGuide — ${gameNameMap[gameKey]}`, text: shareText, url: shareURL });
                 } else {
                     await navigator.clipboard.writeText(shareText + '\n' + shareURL);
                     alert(t('클립보드에 복사됐습니다! SNS에 붙여넣기 해주세요.', 'Copied! Paste it on SNS.'));

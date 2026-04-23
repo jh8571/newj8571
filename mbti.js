@@ -259,8 +259,8 @@ function showResult() {
             <button class="luxury-btn" onclick="location.reload()" style="margin-top:10px; margin-bottom:10px;">${t('테스트 다시하기','Retake Test')}</button>
             ${window.getShareUI ? window.getShareUI(
                 t(`나의 MBTI: ${mbti} ${d.emoji}`, `My MBTI: ${mbti} ${d.emoji}`),
-                t(`저는 ${d.title}(${mbti}) 유형입니다! VitalRest 정밀 MBTI 분석으로 당신의 유형도 확인해 보세요.`,
-                  `I got ${title_d} (${mbti})! Check your type with VitalRest's in-depth MBTI analysis.`)
+                t(`저는 ${d.title}(${mbti}) 유형입니다! VitalGuide 정밀 MBTI 분석으로 당신의 유형도 확인해 보세요.`,
+                  `I got ${title_d} (${mbti})! Check your type with VitalGuide's in-depth MBTI analysis.`)
             ) : ''}
         </div>
     `;

@@ -78,10 +78,10 @@ document.addEventListener('DOMContentLoaded', () => {
     window.shareResult = function (platform, title, text) {
         const lang = localStorage.getItem('lang') || 'ko';
         const url  = window.location.href;
-        const full = `${title} | VitalRest`;
+        const full = `${title} | VitalGuide`;
         const msg  = lang === 'ko'
-            ? `${text}\n지금 VitalRest에서 확인해 보세요!`
-            : `${text}\nCheck it out on VitalRest!`;
+            ? `${text}\n지금 VitalGuide에서 확인해 보세요!`
+            : `${text}\nCheck it out on VitalGuide!`;
         if (platform === 'kakao') {
             if (navigator.share) navigator.share({ title: full, text: msg, url }).catch(console.error);
             else alert(lang === 'ko'

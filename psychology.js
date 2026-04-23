@@ -325,7 +325,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     <button class="luxury-btn" onclick="location.reload()" style="margin-bottom:15px; max-width:300px;">${t('다른 테스트 하기','Try Another Test')}</button>
                     ${window.getShareUI ? window.getShareUI(
                         t(`${currentTest.title} 결과: ${level.label}`, `${currentTest.title} Result: ${level.label}`),
-                        t('VitalRest에서 제 마음의 건강 상태를 체크해봤어요. 당신도 한번 확인해보세요!', 'I checked my mental wellness on VitalRest. You should try it too!')
+                        t('VitalGuide에서 제 마음의 건강 상태를 체크해봤어요. 당신도 한번 확인해보세요!', 'I checked my mental wellness on VitalGuide. You should try it too!')
                     ) : ''}
                 </div>
             </div>

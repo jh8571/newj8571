@@ -371,7 +371,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
             <div style="padding:0 40px 40px;text-align:center;">
                 <button onclick="window.scrollTo({top:0,behavior:'smooth'})" class="luxury-btn" style="max-width:320px;margin:0 auto 16px;">🔄 ${t('조건 변경 후 재분석','Reanalyze with New Conditions')}</button>
-                ${window.getShareUI ? window.getShareUI(t('AI 맞춤 영양 리포트','AI Personalized Nutrition Report'), t('VitalRest에서 저에게 딱 맞는 프리미엄 영양 성분 조합을 찾았어요!','I found my perfect premium nutrition plan on VitalRest!')) : ''}
+                ${window.getShareUI ? window.getShareUI(t('AI 맞춤 영양 리포트','AI Personalized Nutrition Report'), t('VitalGuide에서 저에게 딱 맞는 프리미엄 영양 성분 조합을 찾았어요!','I found my perfect premium nutrition plan on VitalGuide!')) : ''}
             </div>
         </div>`;
     }
