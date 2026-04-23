@@ -118,20 +118,48 @@ async function applySiteConfig() {
 
         // 4-c. Nav rebuild
         const nav = document.querySelector('header nav');
-        if (!nav || !Array.isArray(cfg.nav)) return;
-
-        const currentFile = window.location.pathname.split('/').pop() || 'index.html';
-        const lang = localStorage.getItem('lang') || 'ko';
-
-        nav.innerHTML = cfg.nav
-            .filter(item => item.enabled !== false)
-            .map(item => {
-                const active = (currentFile === item.href ||
-                               (currentFile === '' && item.href === 'index.html')) ? ' class="active"' : '';
-                return `<a href="${item.href}"${active} data-ko="${item.label_ko}" data-en="${item.label_en}">${lang === 'ko' ? item.label_ko : item.label_en}</a>`;
-            }).join('');
-
+        if (nav && Array.isArray(cfg.nav)) {
+            const currentFile = window.location.pathname.split('/').pop() || 'index.html';
+            const lang = localStorage.getItem('lang') || 'ko';
+            nav.innerHTML = cfg.nav
+                .filter(item => item.enabled !== false)
+                .map(item => {
+                    const active = (currentFile === item.href ||
+                                   (currentFile === '' && item.href === 'index.html')) ? ' class="active"' : '';
+                    return `<a href="${item.href}"${active} data-ko="${item.label_ko}" data-en="${item.label_en}">${lang === 'ko' ? item.label_ko : item.label_en}</a>`;
+                }).join('');
+        }
     } catch (e) {
         // silent — fallback to hardcoded nav
+    }
+
+    // 4-d. Page hero texts from page_texts.json
+    try {
+        const pt = await fetch('/page_texts.json?_=' + Date.now());
+        if (!pt.ok) return;
+        const texts = await pt.json();
+
+        const file = window.location.pathname.split('/').pop().replace('.html', '') || 'index';
+        const page = texts[file];
+        if (!page) return;
+
+        const lang = localStorage.getItem('lang') || 'ko';
+        const hero = document.querySelector('.hero');
+        if (!hero) return;
+
+        const h2 = hero.querySelector('h2');
+        const p  = hero.querySelector('p');
+        if (h2) {
+            h2.setAttribute('data-ko', page.hero_h2_ko);
+            h2.setAttribute('data-en', page.hero_h2_en);
+            h2.innerHTML = lang === 'ko' ? page.hero_h2_ko : page.hero_h2_en;
+        }
+        if (p) {
+            p.setAttribute('data-ko', page.hero_p_ko);
+            p.setAttribute('data-en', page.hero_p_en);
+            p.innerHTML = lang === 'ko' ? page.hero_p_ko : page.hero_p_en;
+        }
+    } catch (e) {
+        // silent — fallback to hardcoded hero texts
     }
 }

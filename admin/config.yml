@@ -5,9 +5,9 @@ backend:
   client_id: Ov23li7Tw8njYyPckMxG
   base_url: https://sveltia-cms-auth.shokoku0701.workers.dev
 
-site_url: https://newj8571.pages.dev
-display_url: https://newj8571.pages.dev
-logo_url: https://newj8571.pages.dev/favicon.svg
+site_url: https://vi7al.com
+display_url: https://vi7al.com
+logo_url: https://vi7al.com/favicon.svg
 
 media_folder: "e1"
 public_folder: "/e1"
@@ -782,3 +782,109 @@ collections:
               - { name: "insuranceCode", label: "보험코드",    widget: "string", required: false }
               - { name: "storage",       label: "보관 방법",   widget: "string", required: false }
               - { name: "description",   label: "상세 설명",   widget: "text",   required: false }
+
+  # ⑧ 페이지 텍스트 (히어로 문구)
+  - name: "page_texts"
+    label: "페이지 텍스트 편집"
+    files:
+      - name: "page_texts"
+        label: "각 페이지 히어로 문구"
+        file: "page_texts.json"
+        format: json
+        fields:
+          - name: "index"
+            label: "홈 (index)"
+            widget: "object"
+            fields:
+              - { name: "hero_h2_ko", label: "제목 (한국어)", widget: "string" }
+              - { name: "hero_h2_en", label: "제목 (영어)",   widget: "string" }
+              - { name: "hero_p_ko",  label: "설명 (한국어)", widget: "text" }
+              - { name: "hero_p_en",  label: "설명 (영어)",   widget: "text" }
+          - name: "exercise"
+            label: "운동 가이드 (exercise)"
+            widget: "object"
+            fields:
+              - { name: "hero_h2_ko", label: "제목 (한국어)", widget: "string" }
+              - { name: "hero_h2_en", label: "제목 (영어)",   widget: "string" }
+              - { name: "hero_p_ko",  label: "설명 (한국어)", widget: "text" }
+              - { name: "hero_p_en",  label: "설명 (영어)",   widget: "text" }
+          - name: "psychology"
+            label: "심리 분석 (psychology)"
+            widget: "object"
+            fields:
+              - { name: "hero_h2_ko", label: "제목 (한국어)", widget: "string" }
+              - { name: "hero_h2_en", label: "제목 (영어)",   widget: "string" }
+              - { name: "hero_p_ko",  label: "설명 (한국어)", widget: "text" }
+              - { name: "hero_p_en",  label: "설명 (영어)",   widget: "text" }
+          - name: "mbti"
+            label: "MBTI 테스트 (mbti)"
+            widget: "object"
+            fields:
+              - { name: "hero_h2_ko", label: "제목 (한국어)", widget: "string" }
+              - { name: "hero_h2_en", label: "제목 (영어)",   widget: "string" }
+              - { name: "hero_p_ko",  label: "설명 (한국어)", widget: "text" }
+              - { name: "hero_p_en",  label: "설명 (영어)",   widget: "text" }
+          - name: "fortune"
+            label: "오늘의 운세 (fortune)"
+            widget: "object"
+            fields:
+              - { name: "hero_h2_ko", label: "제목 (한국어)", widget: "string" }
+              - { name: "hero_h2_en", label: "제목 (영어)",   widget: "string" }
+              - { name: "hero_p_ko",  label: "설명 (한국어)", widget: "text" }
+              - { name: "hero_p_en",  label: "설명 (영어)",   widget: "text" }
+          - name: "games"
+            label: "미니 게임 (games)"
+            widget: "object"
+            fields:
+              - { name: "hero_h2_ko", label: "제목 (한국어)", widget: "string" }
+              - { name: "hero_h2_en", label: "제목 (영어)",   widget: "string" }
+              - { name: "hero_p_ko",  label: "설명 (한국어)", widget: "text" }
+              - { name: "hero_p_en",  label: "설명 (영어)",   widget: "text" }
+          - name: "blog"
+            label: "건강 가이드 블로그 (blog)"
+            widget: "object"
+            fields:
+              - { name: "hero_h2_ko", label: "제목 (한국어)", widget: "string" }
+              - { name: "hero_h2_en", label: "제목 (영어)",   widget: "string" }
+              - { name: "hero_p_ko",  label: "설명 (한국어)", widget: "text" }
+              - { name: "hero_p_en",  label: "설명 (영어)",   widget: "text" }
+
+  # ⑨ 사이트 이미지 (파비콘 · OG 이미지)
+  - name: "site_assets"
+    label: "사이트 이미지 관리"
+    files:
+      - name: "site_images"
+        label: "OG 이미지 & 파비콘 안내"
+        file: "site_config.json"
+        format: json
+        fields:
+          - name: "site"
+            label: "사이트 기본 정보 (참고용)"
+            widget: "object"
+            fields:
+              - { name: "title",     label: "사이트 제목",  widget: "string" }
+              - { name: "logo_text", label: "로고 텍스트",  widget: "string" }
+              - name: "og_image"
+                label: "OG 이미지 (소셜 공유 썸네일 1200×630)"
+                widget: "image"
+                required: false
+                hint: "업로드 후 파일명을 og-image.png 로 저장하면 자동 반영됩니다."
+                media_folder: "/"
+                public_folder: "/"
+              - name: "favicon_note"
+                label: "파비콘 교체 방법"
+                widget: "text"
+                required: false
+                hint: "미디어 라이브러리에서 favicon.svg 파일을 직접 업로드·교체하세요. SVG 형식 권장 (32×32 기준)."
+
+  # ⑩ 미디어 라이브러리 (루트 — OG·파비콘 직접 업로드)
+  - name: "root_media"
+    label: "루트 이미지 업로드 (OG·파비콘)"
+    folder: "."
+    media_folder: "."
+    public_folder: "/"
+    create: true
+    label_singular: "파일"
+    extension: "png,svg,jpg,webp"
+    fields:
+      - { name: "title", label: "파일 설명", widget: "string", required: false }
