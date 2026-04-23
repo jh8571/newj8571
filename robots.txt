@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://newj8571.pages.dev/sitemap.xml
+Sitemap: https://vi7al.com/sitemap.xml
