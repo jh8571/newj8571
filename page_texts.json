@@ -40,5 +40,11 @@
     "hero_h2_en": "Wisdom for Better Life",
     "hero_p_ko": "과학적 근거와 임상 데이터를 바탕으로 한 신뢰할 수 있는 건강 가이드.",
     "hero_p_en": "Reliable health guides based on scientific evidence and clinical data."
+  },
+  "nutrient-quiz": {
+    "hero_h2_ko": "내 몸이 보내는 신호 — 영양소 결핍 자가진단",
+    "hero_h2_en": "Signals From Your Body — Nutrient Deficiency Self-Check",
+    "hero_p_ko": "5단계 설문으로 비타민D · 오메가3 · 마그네슘 등 7가지 핵심 영양소 결핍 위험을 분석하고 맞춤 가이드를 받아보세요.",
+    "hero_p_en": "Answer 5 steps to analyze your risk for 7 key nutrients and receive a personalized guide."
   }
 }

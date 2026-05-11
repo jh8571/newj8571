@@ -1,0 +1,731 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-P6CTZY2283"></script>
+    <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-P6CTZY2283');</script>
+    <meta name="google-adsense-account" content="ca-pub-9103697866666926">
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9103697866666926" crossorigin="anonymous"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>나에게 맞는 영양소 자가진단 퀴즈 — 5단계로 결핍 위험 분석 | VitalGuide</title>
+    <meta name="description" content="5단계 설문으로 비타민D·오메가3·마그네슘·B12·철분·아연·비타민C 등 7가지 영양소 결핍 위험을 분석하고 맞춤 식단·보충제 가이드를 받아보세요.">
+    <link rel="canonical" href="https://vi7al.com/nutrient-quiz.html">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://vi7al.com/nutrient-quiz.html">
+    <meta property="og:title" content="나에게 맞는 영양소 자가진단 퀴즈 — VitalGuide">
+    <meta property="og:description" content="5단계 설문으로 7가지 핵심 영양소 결핍 위험을 분석하고 맞춤 가이드를 받아보세요.">
+    <meta property="og:image" content="https://vi7al.com/og-image.png">
+    <meta property="og:site_name" content="VitalGuide">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="icon" href="favicon.svg" type="image/svg+xml">
+    <script type="application/ld+json">
+    {"@context":"https://schema.org","@type":"WebPage","name":"나에게 맞는 영양소 자가진단 퀴즈","description":"5단계 설문으로 비타민D, 오메가3, 마그네슘 등 7가지 영양소 결핍 위험을 분석합니다.","url":"https://vi7al.com/nutrient-quiz.html","publisher":{"@type":"Organization","name":"VitalGuide","url":"https://vi7al.com/"}}
+    </script>
+    <script type="application/ld+json">
+    {"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"영양소 결핍 자가진단 퀴즈는 얼마나 정확한가요?","acceptedAnswer":{"@type":"Answer","text":"이 퀴즈는 임상 연구와 영양학 가이드라인을 바탕으로 설계된 위험 요인 분석 도구입니다. 실제 혈액 검사를 대체할 수 없으며, 결핍 가능성이 높은 영양소를 파악하고 식단·생활 습관 개선 방향을 안내하는 목적으로 활용하세요."}},{"@type":"Question","name":"얼마나 자주 퀴즈를 받아야 하나요?","acceptedAnswer":{"@type":"Answer","text":"생활 습관이나 식단이 크게 바뀌거나 계절이 바뀔 때마다(특히 겨울철 전후) 재검사를 권장합니다. 일반적으로 2~3개월에 한 번이 적당합니다."}},{"@type":"Question","name":"퀴즈 결과가 위험 수준이라면 어떻게 해야 하나요?","acceptedAnswer":{"@type":"Answer","text":"퀴즈 결과는 위험 요인 분석이므로 실제 결핍 여부는 혈액 검사로 확인해야 합니다. 결과를 참고해 식단을 개선하고, 필요하다면 의사나 영양사와 상담해 보충제 복용 여부를 결정하세요."}}]}
+    </script>
+    <style>
+        .quiz-wrap { max-width: 780px; margin: 0 auto; }
+        .quiz-progress-track { background: var(--border-color); border-radius: 99px; height: 8px; margin: 10px 0 36px; overflow: hidden; }
+        .quiz-progress-fill { height: 100%; background: var(--primary-color); border-radius: 99px; transition: width 0.4s ease; }
+        .quiz-step { display: none; }
+        .quiz-step.active { display: block; animation: qfade 0.3s ease; }
+        @keyframes qfade { from { opacity:0; transform:translateY(12px); } to { opacity:1; transform:translateY(0); } }
+        .step-label { font-size: 0.8rem; color: var(--text-muted); font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; margin-bottom: 8px; }
+        .step-title { font-size: 1.45rem; font-weight: 900; margin-bottom: 6px; line-height: 1.4; }
+        .step-sub { font-size: 0.9rem; color: var(--text-muted); margin-bottom: 24px; }
+        .opt-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 12px; margin-bottom: 8px; }
+        .opt-card {
+            background: var(--card-bg); border: 2px solid var(--border-color);
+            border-radius: 16px; padding: 16px 18px; cursor: pointer;
+            transition: all 0.2s; display: flex; align-items: center; gap: 12px;
+            font-size: 0.92rem; font-weight: 600; line-height: 1.4;
+        }
+        .opt-card:hover { border-color: var(--primary-color); transform: translateY(-2px); }
+        .opt-card.sel { border-color: var(--primary-color); background: color-mix(in srgb, var(--primary-color) 10%, transparent); }
+        .opt-card .oi { font-size: 1.5rem; flex-shrink: 0; }
+        .chip-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(210px, 1fr)); gap: 10px; margin-bottom: 8px; }
+        .chip {
+            background: var(--card-bg); border: 2px solid var(--border-color);
+            border-radius: 12px; padding: 13px 15px; cursor: pointer;
+            transition: all 0.2s; display: flex; align-items: center; gap: 10px;
+            font-size: 0.88rem; font-weight: 600;
+        }
+        .chip:hover { transform: scale(1.02); }
+        .chip.sel-red { border-color: #ef4444; background: rgba(239,68,68,0.08); }
+        .chip.sel-green { border-color: #10b981; background: rgba(16,185,129,0.08); }
+        .qbtn-row { display: flex; gap: 12px; margin-top: 28px; }
+        .qbtn-primary { flex:1; padding: 15px; background: var(--primary-color); color: white; border: none; border-radius: 14px; font-size: 1rem; font-weight: 800; cursor: pointer; transition: opacity 0.2s; }
+        .qbtn-primary:hover { opacity: 0.88; }
+        .qbtn-back { padding: 15px 22px; background: transparent; color: var(--text-muted); border: 2px solid var(--border-color); border-radius: 14px; font-size: 1rem; font-weight: 700; cursor: pointer; }
+        /* Results */
+        #quiz-results { display: none; }
+        .res-card { background: var(--card-bg); border-radius: 20px; padding: 26px 30px; margin-bottom: 18px; border: 1px solid var(--border-color); display: flex; gap: 20px; flex-wrap: wrap; }
+        .res-icon { width: 54px; height: 54px; border-radius: 14px; display: flex; align-items: center; justify-content: center; font-size: 1.7rem; flex-shrink: 0; }
+        .risk-badge { display: inline-block; padding: 3px 12px; border-radius: 99px; font-size: 0.76rem; font-weight: 800; margin-left: 10px; vertical-align: middle; }
+        .rb-low { background:rgba(16,185,129,0.15); color:#059669; }
+        .rb-med { background:rgba(245,158,11,0.15); color:#d97706; }
+        .rb-high { background:rgba(239,68,68,0.15); color:#dc2626; }
+        .rb-vhi { background:rgba(239,68,68,0.25); color:#b91c1c; }
+        .foods-list { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 10px; }
+        .food-tag { background: var(--bg-color); border: 1px solid var(--border-color); border-radius: 99px; padding: 4px 12px; font-size: 0.8rem; color: var(--text-muted); }
+        /* Education sections */
+        .edu-block { background: var(--card-bg); border-radius: 20px; padding: 36px 40px; margin: 50px 0 30px; border: 1px solid var(--border-color); }
+        .edu-block h2 { font-size: 1.4rem; font-weight: 900; margin-bottom: 18px; }
+        .nutrient-row { border-left: 4px solid var(--primary-color); padding: 18px 22px; margin: 18px 0; background: var(--bg-color); border-radius: 0 12px 12px 0; }
+        .nutrient-row h3 { font-size: 1.05rem; font-weight: 800; margin-bottom: 8px; }
+        .stat-box { background: linear-gradient(135deg, color-mix(in srgb, var(--primary-color) 8%, transparent), transparent); border: 1px solid color-mix(in srgb, var(--primary-color) 20%, transparent); border-radius: 16px; padding: 20px 24px; margin: 20px 0; }
+        @media (max-width: 600px) { .edu-block { padding: 24px 20px; } .res-card { padding: 20px; } }
+    </style>
+</head>
+<body data-lang="ko">
+    <header>
+        <div class="container header-flex">
+            <a href="index.html" class="logo">VitalGuide</a>
+            <div class="controls-bar">
+                <button id="lang-toggle" class="control-btn">EN</button>
+                <button id="theme-toggle" class="control-btn"><i class="fas fa-moon"></i></button>
+            </div>
+        </div>
+        <nav>
+            <a href="index.html" data-ko="AI 맞춤영양" data-en="AI Nutrition">AI 맞춤영양</a>
+            <a href="exercise.html" data-ko="운동가이드" data-en="Exercise">운동가이드</a>
+            <a href="psychology.html" data-ko="심리분석" data-en="Psychology">심리분석</a>
+            <a href="mbti.html" data-ko="MBTI 테스트" data-en="MBTI Test">MBTI 테스트</a>
+            <a href="fortune.html" data-ko="오늘의운세" data-en="Daily Fortune">오늘의운세</a>
+            <a href="nutrient-quiz.html" class="active" data-ko="영양소 퀴즈" data-en="Nutrient Quiz">영양소 퀴즈</a>
+            <a href="blog.html" data-ko="건강가이드" data-en="Health Blog">건강가이드</a>
+        </nav>
+    </header>
+
+    <main class="container">
+        <section class="hero">
+            <h2 data-ko="내 몸이 보내는 신호 — 영양소 결핍 자가진단" data-en="Signals From Your Body — Nutrient Deficiency Self-Check">내 몸이 보내는 신호 — 영양소 결핍 자가진단</h2>
+            <p data-ko="5단계 설문으로 비타민D · 오메가3 · 마그네슘 등 7가지 핵심 영양소 결핍 위험을 분석하고 맞춤 가이드를 받아보세요." data-en="Answer 5 steps to analyze your risk for 7 key nutrients — Vitamin D, Omega-3, Magnesium and more.">5단계 설문으로 비타민D · 오메가3 · 마그네슘 등 7가지 핵심 영양소 결핍 위험을 분석하고 맞춤 가이드를 받아보세요.</p>
+        </section>
+
+        <!-- ===== QUIZ BOX ===== -->
+        <div class="luxury-report-card quiz-wrap" style="padding: 40px; margin-bottom: 20px;">
+
+            <!-- Progress -->
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:6px;">
+                <span id="step-counter" style="font-size:0.82rem; font-weight:700; color:var(--text-muted);">STEP 1 / 5</span>
+                <span id="step-pct" style="font-size:0.82rem; font-weight:700; color:var(--primary-color);">20%</span>
+            </div>
+            <div class="quiz-progress-track"><div class="quiz-progress-fill" id="qprogress" style="width:20%"></div></div>
+
+            <!-- ── STEP 1: Profile ── -->
+            <div class="quiz-step active" id="step-1">
+                <div class="step-label">STEP 1 — 기본 정보</div>
+                <div class="step-title">연령대와 성별을 알려주세요</div>
+                <div class="step-sub">영양소 필요량은 나이·성별에 따라 크게 달라집니다.</div>
+
+                <p style="font-weight:800; margin-bottom:12px; font-size:0.9rem; color:var(--text-muted);">연령대</p>
+                <div class="opt-grid" id="age-opts">
+                    <div class="opt-card" data-val="teen" onclick="selectOne('age','teen',this)"><span class="oi">🌱</span><span>10대</span></div>
+                    <div class="opt-card" data-val="young" onclick="selectOne('age','young',this)"><span class="oi">⚡</span><span>20~30대</span></div>
+                    <div class="opt-card" data-val="middle" onclick="selectOne('age','middle',this)"><span class="oi">💪</span><span>40~50대</span></div>
+                    <div class="opt-card" data-val="senior" onclick="selectOne('age','senior',this)"><span class="oi">🌿</span><span>60대 이상</span></div>
+                </div>
+
+                <p style="font-weight:800; margin:20px 0 12px; font-size:0.9rem; color:var(--text-muted);">성별</p>
+                <div class="opt-grid" id="gender-opts">
+                    <div class="opt-card" data-val="male" onclick="selectOne('gender','male',this)"><span class="oi">👨</span><span>남성</span></div>
+                    <div class="opt-card" data-val="female" onclick="selectOne('gender','female',this)"><span class="oi">👩</span><span>여성</span></div>
+                </div>
+
+                <div class="qbtn-row">
+                    <button class="qbtn-primary" onclick="goStep(2)">다음 단계 →</button>
+                </div>
+            </div>
+
+            <!-- ── STEP 2: Habits ── -->
+            <div class="quiz-step" id="step-2">
+                <div class="step-label">STEP 2 — 생활 습관</div>
+                <div class="step-title">현재 실천하고 있는 항목을 모두 선택하세요</div>
+                <div class="step-sub">선택하지 않은 항목은 결핍 위험 요인으로 분석됩니다.</div>
+                <div class="chip-grid" id="habits-opts">
+                    <div class="chip" data-val="sunlight" onclick="toggleChip('habits','sunlight',this,'sel-green')"><span class="oi">☀️</span>하루 20분 이상 야외 햇빛</div>
+                    <div class="chip" data-val="fish" onclick="toggleChip('habits','fish',this,'sel-green')"><span class="oi">🐟</span>주 2회 이상 생선 섭취</div>
+                    <div class="chip" data-val="vegetables" onclick="toggleChip('habits','vegetables',this,'sel-green')"><span class="oi">🥗</span>하루 채소 5종 이상</div>
+                    <div class="chip" data-val="dairy" onclick="toggleChip('habits','dairy',this,'sel-green')"><span class="oi">🥛</span>매일 유제품 섭취</div>
+                    <div class="chip" data-val="redmeat" onclick="toggleChip('habits','redmeat',this,'sel-green')"><span class="oi">🥩</span>주 3회 이상 육류 섭취</div>
+                    <div class="chip" data-val="exercise" onclick="toggleChip('habits','exercise',this,'sel-green')"><span class="oi">🏃</span>주 3회 이상 규칙적 운동</div>
+                </div>
+                <div class="qbtn-row">
+                    <button class="qbtn-back" onclick="goStep(1)">← 이전</button>
+                    <button class="qbtn-primary" onclick="goStep(3)">다음 단계 →</button>
+                </div>
+            </div>
+
+            <!-- ── STEP 3: Symptoms ── -->
+            <div class="quiz-step" id="step-3">
+                <div class="step-label">STEP 3 — 현재 증상</div>
+                <div class="step-title">최근 3개월간 겪고 있는 증상을 모두 선택하세요</div>
+                <div class="step-sub">없으면 선택하지 않아도 됩니다.</div>
+                <div class="chip-grid" id="symptoms-opts">
+                    <div class="chip" data-val="fatigue" onclick="toggleChip('symptoms','fatigue',this,'sel-red')"><span class="oi">😴</span>자주 피로하거나 무기력함</div>
+                    <div class="chip" data-val="bone" onclick="toggleChip('symptoms','bone',this,'sel-red')"><span class="oi">🦴</span>뼈·관절이 쑤시거나 아픔</div>
+                    <div class="chip" data-val="illness" onclick="toggleChip('symptoms','illness',this,'sel-red')"><span class="oi">🤧</span>감기·감염이 잦음</div>
+                    <div class="chip" data-val="mood" onclick="toggleChip('symptoms','mood',this,'sel-red')"><span class="oi">😔</span>기분이 자주 우울하거나 불안함</div>
+                    <div class="chip" data-val="brainfog" onclick="toggleChip('symptoms','brainfog',this,'sel-red')"><span class="oi">🧠</span>집중력 저하·기억력 감퇴</div>
+                    <div class="chip" data-val="cramps" onclick="toggleChip('symptoms','cramps',this,'sel-red')"><span class="oi">💪</span>근육 경련·다리 저림</div>
+                    <div class="chip" data-val="hairloss" onclick="toggleChip('symptoms','hairloss',this,'sel-red')"><span class="oi">💇</span>탈모가 심해짐</div>
+                    <div class="chip" data-val="sleep_bad" onclick="toggleChip('symptoms','sleep_bad',this,'sel-red')"><span class="oi">🌙</span>잠들기 어렵거나 수면 질 나쁨</div>
+                    <div class="chip" data-val="dryskin" onclick="toggleChip('symptoms','dryskin',this,'sel-red')"><span class="oi">🩺</span>피부 건조·거칠어짐</div>
+                    <div class="chip" data-val="heartpalp" onclick="toggleChip('symptoms','heartpalp',this,'sel-red')"><span class="oi">💓</span>심장 두근거림·쉽게 숨참</div>
+                </div>
+                <div class="qbtn-row">
+                    <button class="qbtn-back" onclick="goStep(2)">← 이전</button>
+                    <button class="qbtn-primary" onclick="goStep(4)">다음 단계 →</button>
+                </div>
+            </div>
+
+            <!-- ── STEP 4: Diet ── -->
+            <div class="quiz-step" id="step-4">
+                <div class="step-label">STEP 4 — 식단 유형</div>
+                <div class="step-title">평소 식사 패턴과 가장 가까운 것은?</div>
+                <div class="step-sub">하나만 선택해 주세요.</div>
+                <div class="opt-grid" id="diet-opts" style="grid-template-columns:1fr 1fr;">
+                    <div class="opt-card" data-val="balanced" onclick="selectOne('diet','balanced',this)"><span class="oi">🍽️</span><span>육류·해산물 포함 균형 식단</span></div>
+                    <div class="opt-card" data-val="vegetarian" onclick="selectOne('diet','vegetarian',this)"><span class="oi">🥗</span><span>채식 위주 (유제품·계란 포함)</span></div>
+                    <div class="opt-card" data-val="vegan" onclick="selectOne('diet','vegan',this)"><span class="oi">🌱</span><span>완전 채식 (비건)</span></div>
+                    <div class="opt-card" data-val="junkfood" onclick="selectOne('diet','junkfood',this)"><span class="oi">🍔</span><span>패스트푸드·가공식품 위주</span></div>
+                    <div class="opt-card" data-val="irregular" onclick="selectOne('diet','irregular',this)"><span class="oi">⏰</span><span>불규칙한 식사 (자주 결식)</span></div>
+                </div>
+                <div class="qbtn-row">
+                    <button class="qbtn-back" onclick="goStep(3)">← 이전</button>
+                    <button class="qbtn-primary" onclick="goStep(5)">다음 단계 →</button>
+                </div>
+            </div>
+
+            <!-- ── STEP 5: Stress, Sleep, Conditions ── -->
+            <div class="quiz-step" id="step-5">
+                <div class="step-label">STEP 5 — 건강 상태</div>
+                <div class="step-title">스트레스·수면·특수 상황을 알려주세요</div>
+                <div class="step-sub">해당하는 항목을 모두 선택해 주세요.</div>
+
+                <p style="font-weight:800; margin-bottom:12px; font-size:0.9rem; color:var(--text-muted);">스트레스 수준</p>
+                <div class="opt-grid" id="stress-opts" style="grid-template-columns:repeat(4,1fr);">
+                    <div class="opt-card" data-val="low" onclick="selectOne('stress','low',this)"><span class="oi">😊</span><span>낮음</span></div>
+                    <div class="opt-card" data-val="med" onclick="selectOne('stress','med',this)"><span class="oi">😐</span><span>보통</span></div>
+                    <div class="opt-card" data-val="high" onclick="selectOne('stress','high',this)"><span class="oi">😤</span><span>높음</span></div>
+                    <div class="opt-card" data-val="very_high" onclick="selectOne('stress','very_high',this)"><span class="oi">😰</span><span>매우 높음</span></div>
+                </div>
+
+                <p style="font-weight:800; margin:20px 0 12px; font-size:0.9rem; color:var(--text-muted);">평균 수면 상태</p>
+                <div class="opt-grid" id="sleep-opts" style="grid-template-columns:1fr 1fr 1fr;">
+                    <div class="opt-card" data-val="good" onclick="selectOne('sleep','good',this)"><span class="oi">😴</span><span>7시간 이상, 숙면</span></div>
+                    <div class="opt-card" data-val="ok" onclick="selectOne('sleep','ok',this)"><span class="oi">🛌</span><span>6~7시간, 보통</span></div>
+                    <div class="opt-card" data-val="poor" onclick="selectOne('sleep','poor',this)"><span class="oi">😵</span><span>6시간 미만 또는 자주 깸</span></div>
+                </div>
+
+                <p style="font-weight:800; margin:20px 0 12px; font-size:0.9rem; color:var(--text-muted);">특수 상황 (복수 선택)</p>
+                <div class="chip-grid" id="conditions-opts">
+                    <div class="chip" data-val="pregnant" onclick="toggleChip('conditions','pregnant',this,'sel-green')"><span class="oi">🤰</span>임신 중 또는 수유 중</div>
+                    <div class="chip" data-val="over50" onclick="toggleChip('conditions','over50',this,'sel-green')"><span class="oi">👴</span>50대 이상</div>
+                    <div class="chip" data-val="indoor" onclick="toggleChip('conditions','indoor',this,'sel-green')"><span class="oi">🏢</span>실내 근무 (햇빛 거의 없음)</div>
+                    <div class="chip" data-val="digestive" onclick="toggleChip('conditions','digestive',this,'sel-green')"><span class="oi">🫀</span>위장·흡수 장애</div>
+                    <div class="chip" data-val="chronic" onclick="toggleChip('conditions','chronic',this,'sel-green')"><span class="oi">💊</span>만성 질환 보유</div>
+                </div>
+
+                <div class="qbtn-row">
+                    <button class="qbtn-back" onclick="goStep(4)">← 이전</button>
+                    <button class="qbtn-primary" onclick="showResults()">분석 결과 보기 →</button>
+                </div>
+            </div>
+
+        </div><!-- /quiz box -->
+
+        <!-- ===== RESULTS ===== -->
+        <div id="quiz-results" style="max-width:780px; margin:0 auto;">
+            <div class="luxury-report-card" style="padding:36px 40px; margin-bottom:20px;">
+                <div class="report-badge" style="margin-bottom:16px;">분석 완료</div>
+                <h2 id="results-title" style="font-size:1.6rem; font-weight:900; margin-bottom:8px;">나의 영양소 결핍 위험 분석</h2>
+                <p id="results-sub" style="color:var(--text-muted); font-size:0.9rem; margin-bottom:0;"></p>
+            </div>
+
+            <div id="results-cards"></div>
+
+            <div class="luxury-report-card" style="padding:30px 36px; margin-bottom:20px; text-align:center;">
+                <h3 style="font-size:1.1rem; font-weight:900; margin-bottom:12px;">정확한 확인은 혈액 검사로</h3>
+                <p style="color:var(--text-muted); font-size:0.9rem; line-height:1.8; margin-bottom:16px;">이 퀴즈는 위험 요인 분석 도구입니다. 결핍 여부를 확정하려면 혈액 검사(25(OH)D, 페리틴, B12, 마그네슘 등)를 받으세요. 병원 방문 시 퀴즈 결과를 보여주면 도움이 됩니다.</p>
+                <div id="retake-msg" style="font-size:0.82rem; color:var(--text-muted); margin-bottom:18px;"></div>
+                <button onclick="retakeQuiz()" style="background:transparent; color:var(--primary-color); border:2px solid var(--primary-color); border-radius:12px; padding:12px 28px; font-weight:800; cursor:pointer; margin-right:10px;">다시 검사하기</button>
+                <a href="blog.html" class="luxury-btn" style="display:inline-block; text-decoration:none; padding:12px 28px; font-size:0.95rem;">건강가이드 보기</a>
+            </div>
+        </div>
+
+        <!-- ===== EDUCATIONAL CONTENT (always visible, indexed by Google) ===== -->
+        <div class="lang-ko" style="max-width:780px; margin:0 auto;">
+
+            <div class="edu-block">
+                <h2>왜 현대인은 영양소 결핍에 취약할까?</h2>
+                <p style="line-height:1.9; color:var(--text-muted); margin-bottom:16px;">
+                    식품이 풍부한 현대에도 영양소 결핍이 증가하는 이유는 무엇일까요? 전문가들은 크게 세 가지를 지목합니다.
+                </p>
+                <div class="stat-box">
+                    <strong style="color:var(--primary-color);">한국 성인 영양소 현황 (질병관리청, 2023)</strong>
+                    <ul style="line-height:2.2; color:var(--text-muted); margin:12px 0 0; padding-left:18px; font-size:0.92rem;">
+                        <li>비타민D 부족 (20ng/mL 미만): 성인의 <strong style="color:var(--text-main);">72.4%</strong></li>
+                        <li>마그네슘 권장량 미달: 성인의 약 <strong style="color:var(--text-main);">70%</strong></li>
+                        <li>오메가-3 적정 섭취 달성: <strong style="color:var(--text-main);">30%</strong> 미만</li>
+                        <li>채식인·비건의 비타민B12 결핍률: <strong style="color:var(--text-main);">50~80%</strong></li>
+                    </ul>
+                </div>
+                <p style="line-height:1.9; color:var(--text-muted); margin-bottom:16px;">
+                    <strong>① 식품의 영양 밀도 하락:</strong> 현대 농업의 토양 고갈로 인해 50년 전 대비 채소·과일의 마그네슘 함량이 약 80% 감소했다는 연구 결과가 있습니다. 겉으로는 충분히 먹어도 실제 흡수되는 영양소는 줄어들었습니다.
+                </p>
+                <p style="line-height:1.9; color:var(--text-muted); margin-bottom:16px;">
+                    <strong>② 실내 중심의 생활 방식:</strong> 하루 대부분을 실내에서 보내는 현대인은 자외선 B(UVB)를 통한 비타민D 자연 합성이 어렵습니다. 서울 위도(37°N)에서 11월~3월은 UVB 자체가 지표면에 도달하지 않습니다.
+                </p>
+                <p style="line-height:1.9; color:var(--text-muted);">
+                    <strong>③ 만성 스트레스와 가공식품:</strong> 스트레스는 마그네슘과 비타민C를 빠르게 소모시킵니다. 가공식품과 인스턴트 위주의 식단은 미량 영양소가 거의 없으며, 흡수를 방해하는 식품 첨가물을 다량 포함합니다.
+                </p>
+            </div>
+
+            <div class="edu-block">
+                <h2>7가지 핵심 영양소 — 결핍 신호와 위험군 가이드</h2>
+
+                <div class="nutrient-row" style="border-color:#f59e0b;">
+                    <h3>☀️ 비타민 D — "햇빛 호르몬"의 역할</h3>
+                    <p style="line-height:1.85; color:var(--text-muted); font-size:0.93rem; margin-bottom:10px;">
+                        비타민D는 단순 비타민이 아니라 호르몬처럼 작용해 200개 이상의 유전자 발현을 조절합니다. 뼈 건강(칼슘 흡수), 면역세포(T세포·대식세포) 활성화, 세로토닌·도파민 합성에 관여합니다.
+                    </p>
+                    <p style="color:var(--text-muted); font-size:0.88rem; line-height:1.8;">
+                        <strong>결핍 신호:</strong> 만성 피로, 뼈·허리 통증, 잦은 감기, 우울감, 근육 약화, 탈모 악화<br>
+                        <strong>위험군:</strong> 실내 근무자, 노인, 임산부, 피부색이 짙은 경우, 겨울철<br>
+                        <strong>목표 혈중 수치:</strong> 25(OH)D 30~60 ng/mL
+                    </p>
+                    <a href="article-vitaminD.html" style="font-size:0.85rem; color:var(--primary-color); font-weight:700; text-decoration:none; margin-top:8px; display:inline-block;">비타민D 완전 가이드 읽기 →</a>
+                </div>
+
+                <div class="nutrient-row" style="border-color:#0ea5e9;">
+                    <h3>🐟 오메가-3 — 뇌·심장·항염의 핵심 지방산</h3>
+                    <p style="line-height:1.85; color:var(--text-muted); font-size:0.93rem; margin-bottom:10px;">
+                        EPA와 DHA로 구성된 오메가-3는 뇌 신경세포막의 핵심 성분이며, 중성지방 감소와 혈관 염증 억제에 직접적으로 관여합니다. 체내에서 합성할 수 없어 반드시 식품이나 보충제로 섭취해야 합니다.
+                    </p>
+                    <p style="color:var(--text-muted); font-size:0.88rem; line-height:1.8;">
+                        <strong>결핍 신호:</strong> 피부 건조·뾰루지, 집중력 저하, 기억력 감퇴, 우울감, 관절 뻣뻣함<br>
+                        <strong>위험군:</strong> 생선을 거의 안 먹는 사람, 채식인·비건, 임산부·수유부<br>
+                        <strong>권장 섭취량:</strong> EPA+DHA 합계 1,000~2,000mg/일
+                    </p>
+                    <a href="article-omega3.html" style="font-size:0.85rem; color:var(--primary-color); font-weight:700; text-decoration:none; margin-top:8px; display:inline-block;">오메가-3 완전 가이드 읽기 →</a>
+                </div>
+
+                <div class="nutrient-row" style="border-color:#8b5cf6;">
+                    <h3>💪 마그네슘 — 현대인 최다 결핍 미네랄</h3>
+                    <p style="line-height:1.85; color:var(--text-muted); font-size:0.93rem; margin-bottom:10px;">
+                        마그네슘은 체내 300가지 이상의 효소 반응에 관여합니다. 근육 이완, ATP 에너지 생산, 인슐린 신호, 신경 전달, 수면 조절에 필수적입니다. 스트레스를 받으면 소변으로 마그네슘이 급속히 배출되기 때문에 현대인에게 특히 결핍되기 쉽습니다.
+                    </p>
+                    <p style="color:var(--text-muted); font-size:0.88rem; line-height:1.8;">
+                        <strong>결핍 신호:</strong> 근육 경련·다리 저림, 수면 장애, 만성 피로, 두통, 변비, 불안·과민<br>
+                        <strong>위험군:</strong> 만성 스트레스, 당뇨, 과음, 이뇨제 복용자, 가공식품 위주 식단<br>
+                        <strong>권장 보충제:</strong> 마그네슘 글리시네이트 또는 말레이트 200~400mg/일 (저녁)
+                    </p>
+                    <a href="article-magnesium.html" style="font-size:0.85rem; color:var(--primary-color); font-weight:700; text-decoration:none; margin-top:8px; display:inline-block;">마그네슘 완전 가이드 읽기 →</a>
+                </div>
+
+                <div class="nutrient-row" style="border-color:#ec4899;">
+                    <h3>🧠 비타민 B12 — 신경계와 혈액의 핵심</h3>
+                    <p style="line-height:1.85; color:var(--text-muted); font-size:0.93rem; margin-bottom:10px;">
+                        비타민B12는 신경세포 미엘린 수초 합성, 적혈구 생성, DNA 합성에 필수입니다. 특히 채식·비건 식단에서는 식물성 식품에 활성형 B12가 없어 반드시 보충이 필요합니다. 위장의 내인자(Intrinsic Factor)가 부족해도 흡수 장애가 생깁니다.
+                    </p>
+                    <p style="color:var(--text-muted); font-size:0.88rem; line-height:1.8;">
+                        <strong>결핍 신호:</strong> 극심한 피로, 집중력 저하, 손발 저림·감각 이상, 기억력 감퇴, 빈혈<br>
+                        <strong>위험군:</strong> 채식인·비건, 50세 이상 (위산 감소), 위장 질환자, 메포르민 복용자<br>
+                        <strong>권장 보충제:</strong> 메틸코발라민 500~1,000mcg/일 (설하 흡수형 권장)
+                    </p>
+                    <a href="article-vitaminb12.html" style="font-size:0.85rem; color:var(--primary-color); font-weight:700; text-decoration:none; margin-top:8px; display:inline-block;">비타민B12 완전 가이드 읽기 →</a>
+                </div>
+
+                <div class="nutrient-row" style="border-color:#ef4444;">
+                    <h3>❤️ 철분 — 산소 운반과 에너지의 원천</h3>
+                    <p style="line-height:1.85; color:var(--text-muted); font-size:0.93rem; margin-bottom:10px;">
+                        철분은 헤모글로빈의 핵심 성분으로, 세포에 산소를 운반하고 미토콘드리아 에너지 생산에 관여합니다. 가임기 여성은 월경으로 매달 철분을 잃기 때문에 가장 결핍 위험이 높은 그룹입니다. 비타민C와 함께 섭취하면 흡수율이 최대 3배까지 높아집니다.
+                    </p>
+                    <p style="color:var(--text-muted); font-size:0.88rem; line-height:1.8;">
+                        <strong>결핍 신호:</strong> 심한 피로·무기력, 창백한 안색, 숨가쁨, 두통, 탈모, 차가운 손발<br>
+                        <strong>위험군:</strong> 가임기 여성, 채식인·비건, 임산부, 헌혈 정기 시행자<br>
+                        <strong>주의:</strong> 철분 보충은 반드시 혈액 검사(페리틴) 후 의사와 상담하여 결정
+                    </p>
+                </div>
+
+                <div class="nutrient-row" style="border-color:#10b981;">
+                    <h3>🛡️ 아연 — 면역력과 상처 치유의 수호자</h3>
+                    <p style="line-height:1.85; color:var(--text-muted); font-size:0.93rem; margin-bottom:10px;">
+                        아연은 200가지 이상의 효소 기능에 필수적이며, 면역세포(NK세포, T세포) 활성화, 상처 치유, 미각·후각 기능, 테스토스테론 합성에 관여합니다. 채식 식단에서는 피틴산이 아연 흡수를 방해하므로 결핍 위험이 높습니다.
+                    </p>
+                    <p style="color:var(--text-muted); font-size:0.88rem; line-height:1.8;">
+                        <strong>결핍 신호:</strong> 잦은 감기·감염, 상처 치유 지연, 미각·후각 이상, 탈모, 피부 트러블<br>
+                        <strong>위험군:</strong> 채식인·비건, 노인, 위장 질환자, 과음자<br>
+                        <strong>권장 보충제:</strong> 아연 피콜리네이트 또는 아세테이트 8~11mg/일
+                    </p>
+                </div>
+
+                <div class="nutrient-row" style="border-color:#f97316;">
+                    <h3>🍊 비타민 C — 항산화와 콜라겐 합성의 기초</h3>
+                    <p style="line-height:1.85; color:var(--text-muted); font-size:0.93rem; margin-bottom:10px;">
+                        비타민C는 가장 강력한 수용성 항산화제 중 하나로, 콜라겐 합성, 철분 흡수 촉진, 면역세포 기능 강화에 필수적입니다. 스트레스 호르몬(코르티솔) 합성 시 비타민C가 대량 소모되므로 스트레스가 많은 현대인은 더 많이 필요합니다.
+                    </p>
+                    <p style="color:var(--text-muted); font-size:0.88rem; line-height:1.8;">
+                        <strong>결핍 신호:</strong> 피로, 피부 거칠어짐, 잇몸 출혈, 상처 치유 지연, 면역력 저하<br>
+                        <strong>위험군:</strong> 흡연자, 채소·과일 섭취 부족, 만성 스트레스, 노인<br>
+                        <strong>권장 보충제:</strong> 비타민C 500~1,000mg/일 (산성에 민감하면 완충형)
+                    </p>
+                </div>
+            </div>
+
+            <div class="edu-block">
+                <h2>자가진단 결과, 어떻게 활용할까?</h2>
+                <p style="line-height:1.9; color:var(--text-muted); margin-bottom:20px;">
+                    이 퀴즈의 결과는 "위험 요인 분석"입니다. 즉, 당신의 생활 습관과 증상을 기반으로 결핍 가능성이 높은 영양소를 식별하는 것이지, 실제 혈중 농도를 측정하는 것이 아닙니다. 결과를 올바르게 활용하는 3단계를 따라보세요.
+                </p>
+                <div style="display:grid; gap:16px;">
+                    <div style="background:var(--bg-color); border-radius:16px; padding:22px 26px; display:flex; gap:18px; align-items:flex-start;">
+                        <div style="width:40px; height:40px; background:var(--primary-color); border-radius:10px; display:flex; align-items:center; justify-content:center; color:white; font-weight:900; font-size:1.1rem; flex-shrink:0;">1</div>
+                        <div>
+                            <h4 style="margin:0 0 6px; font-size:1rem;">식단부터 바꾸기</h4>
+                            <p style="color:var(--text-muted); font-size:0.9rem; line-height:1.8; margin:0;">결핍 위험이 나온 영양소를 식품으로 보충하는 것이 가장 안전한 첫 단계입니다. 예를 들어 비타민D 위험이 있다면 연어를 주 2회 이상, 오메가-3 위험이 있다면 등 푸른 생선과 호두를 늘리세요.</p>
+                        </div>
+                    </div>
+                    <div style="background:var(--bg-color); border-radius:16px; padding:22px 26px; display:flex; gap:18px; align-items:flex-start;">
+                        <div style="width:40px; height:40px; background:#f59e0b; border-radius:10px; display:flex; align-items:center; justify-content:center; color:white; font-weight:900; font-size:1.1rem; flex-shrink:0;">2</div>
+                        <div>
+                            <h4 style="margin:0 0 6px; font-size:1rem;">혈액 검사로 확인</h4>
+                            <p style="color:var(--text-muted); font-size:0.9rem; line-height:1.8; margin:0;">"주의" 이상 결과가 나온 영양소는 혈액 검사로 실제 수치를 확인하세요. 비타민D는 25(OH)D, 철분은 페리틴, B12는 혈청 B12, 마그네슘은 적혈구 마그네슘 검사를 요청하세요. 건강검진 시 추가 항목으로 요청 가능합니다.</p>
+                        </div>
+                    </div>
+                    <div style="background:var(--bg-color); border-radius:16px; padding:22px 26px; display:flex; gap:18px; align-items:flex-start;">
+                        <div style="width:40px; height:40px; background:#10b981; border-radius:10px; display:flex; align-items:center; justify-content:center; color:white; font-weight:900; font-size:1.1rem; flex-shrink:0;">3</div>
+                        <div>
+                            <h4 style="margin:0 0 6px; font-size:1rem;">2~3개월 후 재검사</h4>
+                            <p style="color:var(--text-muted); font-size:0.9rem; line-height:1.8; margin:0;">식단과 보충제를 시작한 후 8~12주 뒤에 이 퀴즈를 다시 해보세요. 증상 변화와 함께 결핍 위험 점수가 낮아지는 것을 확인할 수 있습니다. 계절 변화 때마다(특히 겨울 전후) 재검사를 권장합니다.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div style="background:linear-gradient(135deg,#fefce8,#fef9c3); border-radius:16px; padding:22px 28px; margin-top:24px;">
+                    <h4 style="color:#92400e; margin:0 0 10px; font-size:1rem;"><i class="fas fa-exclamation-triangle" style="margin-right:8px;"></i>즉시 병원을 찾아야 하는 경우</h4>
+                    <ul style="color:#78350f; line-height:2; font-size:0.9rem; padding-left:18px; margin:0;">
+                        <li>극심한 피로가 수 주 이상 지속되고 일상생활이 어려운 경우</li>
+                        <li>손발이 지속적으로 저리거나 감각 이상이 있는 경우</li>
+                        <li>심장이 불규칙하게 두근거리거나 숨이 자주 차는 경우</li>
+                        <li>창백한 안색과 함께 숨가쁨, 어지러움이 동반된 경우</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- FAQ -->
+            <div class="edu-block">
+                <h2>자주 묻는 질문 (FAQ)</h2>
+                <div style="border: 1px solid var(--border-color); border-radius: 20px; padding: 8px 28px;">
+                    <div style="border-bottom:1px solid var(--border-color); padding:20px 0;">
+                        <h4 style="font-size:1rem; font-weight:800; margin-bottom:10px;">Q. 이 퀴즈는 의학적으로 신뢰할 수 있나요?</h4>
+                        <p style="color:var(--text-muted); font-size:0.9rem; line-height:1.85; padding-left:16px; margin:0;">A. 이 퀴즈는 발표된 영양학 및 임상 연구(WHO, 미국 국립보건원 NIH, 질병관리청 등의 가이드라인)를 바탕으로 위험 요인을 가중치로 환산한 분석 도구입니다. 의사의 진단이나 혈액 검사를 대체할 수 없으며, 어디에서 어떤 영양소가 부족할 가능성이 높은지 방향을 잡는 데 활용하세요.</p>
+                    </div>
+                    <div style="border-bottom:1px solid var(--border-color); padding:20px 0;">
+                        <h4 style="font-size:1rem; font-weight:800; margin-bottom:10px;">Q. 퀴즈 결과가 "위험 높음"이라도 실제 결핍이 아닐 수 있나요?</h4>
+                        <p style="color:var(--text-muted); font-size:0.9rem; line-height:1.85; padding-left:16px; margin:0;">A. 네, 맞습니다. 퀴즈는 생활 습관과 증상을 기반으로 한 위험 요인 분석이므로, 실제 혈중 수치가 정상일 수도 있습니다. 반대로, 퀴즈 결과가 "양호"여도 특정 이유로 결핍이 생길 수 있습니다. 정확한 판단은 반드시 혈액 검사로 해야 합니다.</p>
+                    </div>
+                    <div style="border-bottom:1px solid var(--border-color); padding:20px 0;">
+                        <h4 style="font-size:1rem; font-weight:800; margin-bottom:10px;">Q. 보충제를 여러 개 동시에 복용해도 되나요?</h4>
+                        <p style="color:var(--text-muted); font-size:0.9rem; line-height:1.85; padding-left:16px; margin:0;">A. 대부분의 경우 일반 권장 용량이라면 복수 보충제 복용이 가능합니다. 다만, 영양소 간 상호작용이 있습니다. 비타민D는 마그네슘·K2와 함께, 철분은 비타민C와 함께, 아연은 구리와 균형을 맞춰 복용하는 것이 좋습니다. 기존에 복용 중인 약이 있다면 반드시 의사나 약사와 상담하세요.</p>
+                    </div>
+                    <div style="padding:20px 0;">
+                        <h4 style="font-size:1rem; font-weight:800; margin-bottom:10px;">Q. 영양제 보충제는 얼마나 먹어야 효과가 나나요?</h4>
+                        <p style="color:var(--text-muted); font-size:0.9rem; line-height:1.85; padding-left:16px; margin:0;">A. 영양소별로 다릅니다. 마그네슘과 비타민C는 비교적 빠르게(2~4주) 효과를 느낄 수 있습니다. 비타민D는 혈중 수치가 목표 범위에 도달하는 데 8~12주가 걸립니다. 비타민B12 결핍으로 인한 신경 증상은 개선까지 6개월 이상이 필요할 수 있습니다. 꾸준한 복용이 핵심입니다.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- References -->
+            <div style="margin:0 0 60px;">
+                <h3 style="font-size:1rem; font-weight:800; margin-bottom:14px; color:var(--text-muted);">참고 문헌</h3>
+                <ol style="font-size:0.82rem; color:var(--text-muted); line-height:1.9; padding-left:18px;">
+                    <li style="margin-bottom:8px;">질병관리청. 국민건강영양조사 영양소 섭취 현황 보고서. 2023.</li>
+                    <li style="margin-bottom:8px;">Holick MF. Vitamin D Deficiency. <em>N Engl J Med.</em> 2007;357(3):266-281.</li>
+                    <li style="margin-bottom:8px;">DiNicolantonio JJ et al. Subclinical magnesium deficiency. <em>Open Heart.</em> 2018;5(1).</li>
+                    <li style="margin-bottom:8px;">Calder PC. Omega-3 fatty acids and inflammatory processes. <em>Nutrients.</em> 2010;2(3):355-374.</li>
+                    <li style="margin-bottom:8px;">Green R. Vitamin B12 deficiency from the perspective of a practicing hematologist. <em>Blood.</em> 2017;129(19):2603-2611.</li>
+                    <li>WHO. Nutritional anaemias: tools for effective prevention and control. 2017.</li>
+                </ol>
+                <p style="font-size:0.82rem; color:var(--text-muted); margin-top:16px; padding-top:16px; border-top:1px solid var(--border-color);">
+                    <strong>면책 고지:</strong> 이 페이지의 내용은 교육·정보 제공 목적이며 의료 진단이나 처방을 대신하지 않습니다. 건강 관련 결정은 반드시 의사, 약사, 영양사와 상담 후 내리시기 바랍니다.
+                </p>
+            </div>
+        </div><!-- /lang-ko -->
+
+        <div class="lang-en" style="display:none; max-width:780px; margin:0 auto;">
+            <div class="edu-block">
+                <h2>Why Are Modern People So Prone to Nutrient Deficiencies?</h2>
+                <p style="line-height:1.9; color:var(--text-muted); margin-bottom:16px;">Despite abundant food supply, nutrient deficiencies are on the rise. Experts point to three key causes: declining nutrient density in modern crops, indoor-centric lifestyles blocking vitamin D synthesis, and chronic stress rapidly depleting magnesium and vitamin C. In Korea, 72.4% of adults are vitamin D deficient, and roughly 70% fall short of the magnesium daily recommendation.</p>
+            </div>
+            <div class="edu-block" style="margin-bottom:60px;">
+                <h2>Frequently Asked Questions</h2>
+                <div style="border:1px solid var(--border-color); border-radius:20px; padding:8px 28px;">
+                    <div style="border-bottom:1px solid var(--border-color); padding:20px 0;">
+                        <h4 style="font-size:1rem; font-weight:800; margin-bottom:10px;">Q. How accurate is this quiz?</h4>
+                        <p style="color:var(--text-muted); font-size:0.9rem; line-height:1.85; padding-left:16px; margin:0;">A. This quiz is a risk-factor analysis tool based on published nutritional guidelines (WHO, NIH, KDCA). It cannot replace a blood test or medical diagnosis, but it helps you identify which nutrients may need attention and guides dietary improvements.</p>
+                    </div>
+                    <div style="padding:20px 0;">
+                        <h4 style="font-size:1rem; font-weight:800; margin-bottom:10px;">Q. How often should I retake this quiz?</h4>
+                        <p style="color:var(--text-muted); font-size:0.9rem; line-height:1.85; padding-left:16px; margin:0;">A. We recommend retaking the quiz every 2–3 months, or whenever your lifestyle or diet changes significantly — especially at seasonal transitions (e.g., entering winter when vitamin D synthesis drops).</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2026 VitalGuide. 전인적 건강을 위한 고품격 가이드.</p>
+            <div style="margin-top:20px; display:flex; justify-content:center; gap:20px; font-size:0.8rem; flex-wrap:wrap;">
+                <a href="about.html#editorial" style="color:var(--text-muted); text-decoration:none;">편집 원칙</a>
+                <a href="privacy.html" style="color:var(--text-muted); text-decoration:none;">Privacy</a>
+                <a href="terms.html" style="color:var(--text-muted); text-decoration:none;">Terms</a>
+                <a href="about.html" style="color:var(--text-muted); text-decoration:none;">About</a>
+                <a href="contact.html" style="color:var(--text-muted); text-decoration:none;">Contact</a>
+            </div>
+        </div>
+    </footer>
+
+    <script src="theme.js"></script>
+    <script src="cookie-consent.js"></script>
+    <script>
+    // ===== QUIZ STATE =====
+    const qState = {
+        age: '', gender: '', diet: '', stress: '', sleep: '',
+        habits: new Set(), symptoms: new Set(), conditions: new Set()
+    };
+
+    function selectOne(field, val, el) {
+        qState[field] = val;
+        const parent = el.closest('.opt-grid') || el.parentNode;
+        parent.querySelectorAll('.opt-card').forEach(c => c.classList.remove('sel'));
+        el.classList.add('sel');
+    }
+
+    function toggleChip(field, val, el, selClass) {
+        if (qState[field].has(val)) {
+            qState[field].delete(val);
+            el.classList.remove(selClass);
+        } else {
+            qState[field].add(val);
+            el.classList.add(selClass);
+        }
+    }
+
+    function goStep(n) {
+        document.querySelectorAll('.quiz-step').forEach(s => s.classList.remove('active'));
+        document.getElementById('step-' + n).classList.add('active');
+        const pct = (n / 5) * 100;
+        document.getElementById('qprogress').style.width = pct + '%';
+        document.getElementById('step-counter').textContent = 'STEP ' + n + ' / 5';
+        document.getElementById('step-pct').textContent = Math.round(pct) + '%';
+        window.scrollTo({ top: document.querySelector('.quiz-wrap').offsetTop - 100, behavior: 'smooth' });
+    }
+
+    // ===== SCORING =====
+    const NUTRIENT_META = {
+        vitaminD: {
+            name:'비타민 D', nameEn:'Vitamin D', emoji:'☀️', color:'#f59e0b',
+            article:'article-vitaminD.html',
+            desc:'뼈 건강, 면역력, 기분 조절의 핵심 호르몬형 비타민',
+            foods:['연어·고등어·청어','자외선 노출 버섯','계란 노른자','비타민D 강화 우유'],
+            suppl:'비타민D3 1,000~2,000 IU/일 (지방 식사 후)',
+        },
+        omega3: {
+            name:'오메가-3', nameEn:'Omega-3', emoji:'🐟', color:'#0ea5e9',
+            article:'article-omega3.html',
+            desc:'뇌 기능, 심혈관 건강, 항염 작용의 필수 지방산',
+            foods:['연어·고등어·청어·참치','아마씨·치아씨드','호두','들기름'],
+            suppl:'EPA+DHA 합계 1,000~2,000mg/일',
+        },
+        magnesium: {
+            name:'마그네슘', nameEn:'Magnesium', emoji:'💪', color:'#8b5cf6',
+            article:'article-magnesium.html',
+            desc:'300가지 이상 효소 반응에 관여하는 현대인 최다 결핍 미네랄',
+            foods:['아몬드·견과류','시금치·케일','검은콩·두부','바나나·아보카도'],
+            suppl:'마그네슘 글리시네이트 또는 말레이트 200~400mg/일 (저녁)',
+        },
+        b12: {
+            name:'비타민 B12', nameEn:'Vitamin B12', emoji:'🧠', color:'#ec4899',
+            article:'article-vitaminb12.html',
+            desc:'신경 기능과 적혈구 생성에 필수, 채식인에게 특히 중요',
+            foods:['소고기·돼지고기·닭고기','연어·참치·조개류','계란·유제품','B12 강화 식품'],
+            suppl:'메틸코발라민 500~1,000mcg/일 (설하 흡수형 권장)',
+        },
+        iron: {
+            name:'철분', nameEn:'Iron', emoji:'❤️', color:'#ef4444',
+            article:null,
+            desc:'산소 운반 및 에너지 생성의 핵심 미네랄, 여성에게 특히 중요',
+            foods:['소고기·닭 가슴살','시금치·케일','렌틸콩·두부','조개류·굴'],
+            suppl:'철분 보충은 혈액 검사(페리틴) 후 의사 상담 필수',
+        },
+        zinc: {
+            name:'아연', nameEn:'Zinc', emoji:'🛡️', color:'#10b981',
+            article:null,
+            desc:'면역력, 상처 치유, 미각·후각 기능에 핵심인 미네랄',
+            foods:['굴 (최고 함량)','소고기·돼지고기','호박씨·참깨','캐슈너트'],
+            suppl:'아연 피콜리네이트 또는 아세테이트 8~11mg/일',
+        },
+        vitaminC: {
+            name:'비타민 C', nameEn:'Vitamin C', emoji:'🍊', color:'#f97316',
+            article:null,
+            desc:'항산화 작용, 콜라겐 합성, 면역력의 핵심 수용성 비타민',
+            foods:['빨강 파프리카','브로콜리·케일','딸기·키위','오렌지·레몬'],
+            suppl:'비타민C 500~1,000mg/일 (산성에 민감하면 완충형)',
+        }
+    };
+
+    function calcScores() {
+        const s = { vitaminD:0, omega3:0, magnesium:0, b12:0, iron:0, zinc:0, vitaminC:0 };
+        const { age, gender, habits, symptoms, diet, stress, sleep, conditions } = qState;
+
+        if (age === 'senior') { s.vitaminD+=2; s.b12+=2; s.magnesium+=1; }
+        else if (age === 'middle') { s.vitaminD+=1; }
+        if (gender === 'female') { s.iron+=3; }
+
+        if (!habits.has('sunlight')) s.vitaminD += 4;
+        if (!habits.has('fish'))     { s.omega3+=4; s.b12+=1; }
+        if (!habits.has('vegetables')){ s.vitaminC+=3; s.iron+=1; }
+        if (!habits.has('dairy'))    s.vitaminD+=1;
+        if (!habits.has('redmeat')) { s.iron+=2; s.b12+=1; }
+        if (!habits.has('exercise')) s.magnesium+=1;
+
+        if (symptoms.has('fatigue'))   { s.vitaminD+=2; s.b12+=2; s.iron+=2; s.magnesium+=1; }
+        if (symptoms.has('bone'))      { s.vitaminD+=3; s.magnesium+=1; }
+        if (symptoms.has('illness'))   { s.vitaminD+=2; s.zinc+=3; s.vitaminC+=2; }
+        if (symptoms.has('mood'))      { s.vitaminD+=2; s.omega3+=2; s.magnesium+=2; }
+        if (symptoms.has('brainfog'))  { s.omega3+=3; s.b12+=2; s.iron+=1; }
+        if (symptoms.has('cramps'))    { s.magnesium+=4; s.vitaminD+=1; }
+        if (symptoms.has('hairloss'))  { s.vitaminD+=2; s.iron+=2; s.zinc+=2; }
+        if (symptoms.has('sleep_bad')) { s.magnesium+=4; s.vitaminD+=1; }
+        if (symptoms.has('dryskin'))   { s.omega3+=3; s.vitaminC+=2; }
+        if (symptoms.has('heartpalp')) { s.magnesium+=2; s.iron+=1; }
+
+        if (diet === 'vegan')      { s.b12+=4; s.iron+=3; s.omega3+=3; s.zinc+=2; }
+        else if (diet==='vegetarian'){ s.b12+=2; s.iron+=2; s.omega3+=2; }
+        else if (diet==='junkfood') { s.magnesium+=3; s.vitaminC+=3; s.omega3+=2; }
+        else if (diet==='irregular'){ s.magnesium+=2; s.vitaminC+=2; s.b12+=1; }
+
+        if (stress==='high')      { s.magnesium+=3; s.vitaminC+=2; }
+        else if (stress==='very_high'){ s.magnesium+=5; s.vitaminC+=3; s.b12+=1; }
+
+        if (sleep==='poor') { s.magnesium+=3; s.vitaminD+=1; }
+
+        if (conditions.has('pregnant')){ s.iron+=4; s.b12+=2; s.vitaminD+=2; s.magnesium+=2; }
+        if (conditions.has('over50'))  { s.vitaminD+=3; s.b12+=2; s.magnesium+=1; }
+        if (conditions.has('indoor'))  { s.vitaminD+=5; }
+        if (conditions.has('digestive')){ s.b12+=3; s.iron+=2; s.magnesium+=1; }
+        if (conditions.has('chronic')) { s.vitaminD+=2; s.magnesium+=1; }
+
+        return s;
+    }
+
+    function riskLevel(score) {
+        if (score >= 10) return { label:'위험 높음', cls:'rb-vhi' };
+        if (score >= 7)  return { label:'주의 필요', cls:'rb-high' };
+        if (score >= 4)  return { label:'관심 필요', cls:'rb-med' };
+        return { label:'비교적 양호', cls:'rb-low' };
+    }
+
+    function riskMsg(score, meta) {
+        if (score >= 10) return `<strong style="color:#b91c1c">${meta.name} 결핍 위험이 매우 높습니다.</strong> 즉시 혈액 검사와 전문가 상담을 권합니다.`;
+        if (score >= 7)  return `<strong style="color:#dc2626">${meta.name} 부족이 의심됩니다.</strong> 혈액 검사로 수치를 확인하고, 식단과 보충제를 검토하세요.`;
+        if (score >= 4)  return `${meta.name}이 다소 부족할 수 있습니다. 아래 식품 섭취를 늘리고 생활 습관을 개선해 보세요.`;
+        return `${meta.name} 상태는 비교적 양호합니다. 현재 식단과 습관을 유지하세요.`;
+    }
+
+    function showResults() {
+        const scores = calcScores();
+        const sorted = Object.entries(scores).sort(([,a],[,b]) => b-a);
+        const top = sorted.filter(([,v]) => v >= 4).slice(0, 4);
+        const total = Object.values(scores).reduce((a,b) => a+b, 0);
+
+        // Hide quiz, show results
+        document.querySelector('.luxury-report-card.quiz-wrap').style.display = 'none';
+        const resultsEl = document.getElementById('quiz-results');
+        resultsEl.style.display = 'block';
+
+        document.getElementById('results-sub').textContent =
+            `분석된 위험 요인 합계: ${total}점 · 주의가 필요한 영양소: ${top.length}가지`;
+
+        const cardsEl = document.getElementById('results-cards');
+        if (top.length === 0) {
+            cardsEl.innerHTML = `<div class="luxury-report-card" style="padding:30px; text-align:center;">
+                <div style="font-size:3rem; margin-bottom:12px;">🎉</div>
+                <h3 style="font-size:1.2rem; font-weight:900; margin-bottom:8px;">전반적으로 양호한 상태입니다!</h3>
+                <p style="color:var(--text-muted); font-size:0.9rem; line-height:1.8;">현재 식단과 생활 습관을 잘 유지하고 계십니다. 계절이 바뀔 때마다 재검사를 권장합니다.</p>
+            </div>`;
+        } else {
+            cardsEl.innerHTML = top.map(([key, score]) => {
+                const meta = NUTRIENT_META[key];
+                const risk = riskLevel(score);
+                const msg  = riskMsg(score, meta);
+                const foodsHtml = meta.foods.map(f => `<span class="food-tag">${f}</span>`).join('');
+                const articleLink = meta.article
+                    ? `<a href="${meta.article}" style="font-size:0.85rem; color:var(--primary-color); font-weight:700; text-decoration:none; margin-top:12px; display:inline-block;">상세 가이드 읽기 →</a>`
+                    : '';
+                return `<div class="res-card">
+                    <div class="res-icon" style="background:${meta.color}22;">${meta.emoji}</div>
+                    <div style="flex:1; min-width:200px;">
+                        <div style="display:flex; align-items:center; flex-wrap:wrap; gap:8px; margin-bottom:8px;">
+                            <strong style="font-size:1.05rem;">${meta.name}</strong>
+                            <span class="risk-badge ${risk.cls}">${risk.label}</span>
+                        </div>
+                        <p style="color:var(--text-muted); font-size:0.83rem; margin-bottom:10px;">${meta.desc}</p>
+                        <p style="font-size:0.9rem; line-height:1.75; margin-bottom:12px;">${msg}</p>
+                        <div style="margin-bottom:10px;">
+                            <strong style="font-size:0.82rem; color:var(--text-muted);">추천 식품</strong>
+                            <div class="foods-list">${foodsHtml}</div>
+                        </div>
+                        <div style="background:var(--bg-color); border-radius:10px; padding:10px 14px; font-size:0.82rem; color:var(--text-muted);">
+                            <strong>보충제 가이드:</strong> ${meta.suppl}
+                        </div>
+                        ${articleLink}
+                    </div>
+                </div>`;
+            }).join('');
+        }
+
+        // Save to localStorage
+        const now = new Date();
+        localStorage.setItem('nq_last', now.toISOString());
+        localStorage.setItem('nq_score', JSON.stringify(scores));
+
+        document.getElementById('retake-msg').textContent =
+            '검사일: ' + now.toLocaleDateString('ko-KR') + ' · 2~3개월 후 재검사를 권장합니다.';
+
+        resultsEl.scrollIntoView({ behavior:'smooth', block:'start' });
+    }
+
+    function retakeQuiz() {
+        // Reset state
+        Object.assign(qState, { age:'', gender:'', diet:'', stress:'', sleep:'' });
+        qState.habits.clear(); qState.symptoms.clear(); qState.conditions.clear();
+        document.querySelectorAll('.opt-card, .chip').forEach(el => el.classList.remove('sel','sel-red','sel-green'));
+        document.getElementById('quiz-results').style.display = 'none';
+        document.querySelector('.luxury-report-card.quiz-wrap').style.display = 'block';
+        goStep(1);
+    }
+
+    // Check last quiz date on load
+    document.addEventListener('DOMContentLoaded', () => {
+        const last = localStorage.getItem('nq_last');
+        if (last) {
+            const days = Math.floor((Date.now() - new Date(last)) / 86400000);
+            if (days > 0) {
+                const notice = document.createElement('div');
+                notice.style.cssText = 'max-width:780px;margin:0 auto 16px;padding:14px 20px;background:var(--card-bg);border-radius:14px;border:1px solid var(--border-color);font-size:0.88rem;color:var(--text-muted);text-align:center;';
+                notice.innerHTML = `<i class="fas fa-clock-rotate-left" style="margin-right:6px;"></i>마지막 검사: <strong>${days}일 전</strong> · 습관이나 식단이 바뀌었다면 다시 검사해 보세요!`;
+                document.querySelector('.quiz-wrap').insertAdjacentElement('beforebegin', notice);
+            }
+        }
+    });
+    </script>
+</body>
+</html>
