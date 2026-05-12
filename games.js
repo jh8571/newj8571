@@ -26,7 +26,7 @@ document.addEventListener('DOMContentLoaded', () => {
             case 'flappy': startFlappy(); break;
             case 'minesweeper': startMinesweeper(); break;
             case 'breakout': startBreakout(); break;
-            case 'wordle': startWordle(); break;
+            case 'whack': startWhackMole(); break;
         }
     };
 
@@ -48,7 +48,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         const emojiMap = {tetris:'🟦',sudoku:'🔢',clicker:'👆',math:'🔢',reaction:'⚡',
                           snake:'🐍',memory:'🃏',color:'🎨',typing:'⌨️',number:'🎯',
-                          '2048':'🎲',flappy:'🐦',minesweeper:'💣',breakout:'🧱',wordle:'🟩'};
+                          '2048':'🎲',flappy:'🐦',minesweeper:'💣',breakout:'🧱',whack:'🔨'};
         const emoji = emojiMap[gameKey] || '🎮';
         const gameNameMap = {tetris:t('테트리스','Tetris'),sudoku:t('스도쿠','Sudoku'),
             clicker:t('클릭커','Clicker'),math:t('암산왕','Mental Math'),
@@ -57,7 +57,7 @@ document.addEventListener('DOMContentLoaded', () => {
             typing:t('타이핑','Typing'),number:t('숫자 맞추기','Number Guess'),
             '2048':t('2048','2048'),flappy:t('플래피버드','Flappy Bird'),
             minesweeper:t('지뢰찾기','Minesweeper'),breakout:t('블록 깨기','Breakout'),
-            wordle:t('워들','Wordle')};
+            whack:t('두더지 잡기','Whack-a-Mole')};
 
         const shareLines = [
             `${emoji} VitalGuide — ${gameNameMap[gameKey]}`,
@@ -1434,7 +1434,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 let pt=null;
                 const flag=()=>{ if(rev[i]||dead||won) return; flagged[i]=!flagged[i]; render(); };
                 el.addEventListener('contextmenu',e=>{e.preventDefault();flag();});
-                el.addEventListener('mousedown',e=>{if(e.button===2){flag();return;} pt=setTimeout(()=>{flag();pt=null;},500);});
+                el.addEventListener('mousedown',e=>{ if(e.button!==0) return; pt=setTimeout(()=>{flag();pt=null;},500); });
                 el.addEventListener('mouseup',()=>{ if(pt){clearTimeout(pt);pt=null;} });
                 el.addEventListener('touchstart',()=>{ pt=setTimeout(()=>{flag();pt=null;},500); },{passive:true});
                 el.addEventListener('touchend',()=>{ if(pt!==null){clearTimeout(pt);pt=null;click();} });
@@ -1545,116 +1545,81 @@ document.addEventListener('DOMContentLoaded', () => {
         gameInterval=requestAnimationFrame(loop);
     }
 
-    // ── 15. Wordle ───────────────────────────────────────────────────
-    function startWordle() {
-        title.innerText = t('워들 — 단어 추론','Wordle');
-        const WORDS = ['BRAIN','HEART','SLEEP','LIVER','SPINE','NERVE','BLOOD','SWEAT','JOINT',
-            'FIBER','OMEGA','BOOST','SUGAR','WATER','RELAX','DETOX','LYMPH','FLORA','SCALE',
-            'PULSE','BONES','CELLS','GLAND','VEINS','TOXIN','SWEAT','TRIAL','PLATE','STORM',
-            'CROWN','FLAME','GRAPE','HORSE','KNIFE','LEMON','MOUSE','PIANO','QUEEN','RIVER',
-            'STONE','TIGER','UNITY','VOICE','WHEEL','YOUTH','ZEBRA','BREAD','CHAIR','DANCE'];
-        const FIVE = [...new Set(WORDS.filter(w=>w.length===5))];
-        const answer = FIVE[Math.floor(Math.random()*FIVE.length)];
-        let guesses=[], cur='', over=false;
-        const MAX=6;
+    // ── 15. Whack-a-Mole ─────────────────────────────────────────────
+    function startWhackMole() {
+        title.innerText = t('두더지 잡기','Whack-a-Mole');
+        let score=0, timeLeft=30, running=true, spawnTid=null;
+        const active=Array(9).fill(false);
 
-        function getStates(guess) {
-            const st=Array(5).fill('absent'), used=Array(5).fill(false);
-            for(let i=0;i<5;i++) if(guess[i]===answer[i]){st[i]='correct';used[i]=true;}
-            for(let i=0;i<5;i++){
-                if(st[i]==='correct') continue;
-                for(let j=0;j<5;j++) if(!used[j]&&guess[i]===answer[j]){st[i]='present';used[j]=true;break;}
-            }
-            return st;
-        }
-
-        function render() {
-            for(let gi=0;gi<MAX;gi++){
-                const row=document.querySelectorAll(`.wr${gi} .wc`);
-                const g=guesses[gi]||'';
-                row.forEach((cell,ci)=>{
-                    const letter = gi<guesses.length ? g[ci]||'' : (gi===guesses.length ? cur[ci]||'' : '');
-                    cell.textContent=letter;
-                    cell.style.transform=letter?'scale(1.06)':'scale(1)';
-                    cell.style.borderColor=letter&&gi>=guesses.length?'var(--primary-color)':'var(--border-color)';
-                    if(gi<guesses.length){
-                        const st=getStates(g)[ci];
-                        cell.style.background=st==='correct'?'#6aaa64':st==='present'?'#c9b458':'#787c7e';
-                        cell.style.color='white'; cell.style.borderColor='transparent';
-                    } else { cell.style.background=''; cell.style.color='var(--text-main)'; }
-                });
-            }
-            // keyboard
-            const allSt={};
-            guesses.forEach(g=>{ getStates(g).forEach((st,i)=>{
-                const ch=g[i]; const rank={correct:3,present:2,absent:1};
-                if(!allSt[ch]||rank[st]>rank[allSt[ch]]) allSt[ch]=st;
-            });});
-            document.querySelectorAll('.wkey').forEach(k=>{
-                const st=allSt[k.dataset.k];
-                k.style.background=st==='correct'?'#6aaa64':st==='present'?'#c9b458':st==='absent'?'#787c7e':'var(--card-bg)';
-                k.style.color=st?'white':'var(--text-main)';
-            });
-        }
-
-        function submit() {
-            if(cur.length!==5) return;
-            guesses.push(cur);
-            const won=cur===answer; cur='';
-            render();
-            if(won||guesses.length===MAX){
-                over=true; document.onkeydown=null;
-                const g=won?(guesses.length===1?'S':guesses.length<=2?'A':guesses.length<=4?'B':'C'):'F';
-                const gc={S:'#facc15',A:'#4ade80',B:'#60a5fa',C:'#fb923c',F:'#f87171'}[g];
-                setTimeout(()=>showGameResult('wordle',won?t('🟩 정답!','🟩 You got it!'):`❌ ${answer}`,[
-                    {label:t('등급','Grade'),value:g,big:true,color:gc},
-                    {label:t('정답 단어','Word'),value:answer,color:'#6aaa64'},
-                    {label:won?t('시도','Tries'):t('결과','Result'),value:won?`${guesses.length}/${MAX}`:t('실패','Failed'),color:won?'var(--accent-color)':'#f87171'},
-                ]),500);
-            }
-        }
-
-        const ROWS_KEY=[['Q','W','E','R','T','Y','U','I','O','P'],['A','S','D','F','G','H','J','K','L'],['↵','Z','X','C','V','B','N','M','⌫']];
         container.innerHTML = `
-            <style>@keyframes wshake{0%,100%{transform:translateX(0)}20%{transform:translateX(-4px)}60%{transform:translateX(4px)}}</style>
-            <div style="text-align:center;width:100%;max-width:330px;margin:0 auto;">
-                <div id="wmsg" style="height:20px;font-size:0.8rem;color:#ef4444;font-weight:700;margin-bottom:4px;"></div>
-                <div style="display:flex;flex-direction:column;gap:5px;margin-bottom:10px;">
-                    ${Array.from({length:MAX},(_,i)=>`<div class="wr${i}" style="display:flex;gap:5px;justify-content:center;">
-                        ${Array(5).fill(0).map(()=>`<div class="wc" style="width:50px;height:50px;border:2px solid var(--border-color);
-                            display:flex;align-items:center;justify-content:center;font-size:1.45rem;font-weight:900;
-                            border-radius:6px;transition:transform 0.1s,background 0.25s;color:var(--text-main);"></div>`).join('')}
-                    </div>`).join('')}
+            <div style="text-align:center;width:100%;">
+                <div style="display:flex;justify-content:center;gap:30px;margin-bottom:14px;font-size:0.95rem;">
+                    <span>⏱ <strong id="wmt" style="color:#f59e0b;">30</strong>s</span>
+                    <span>${t('점수','Score')}: <strong id="wms" style="color:var(--accent-color);">0</strong></span>
                 </div>
-                <div style="display:flex;flex-direction:column;gap:5px;align-items:center;">
-                    ${ROWS_KEY.map(row=>`<div style="display:flex;gap:4px;">
-                        ${row.map(k=>`<button class="wkey" data-k="${k}" style="min-width:${k.length>1?'42px':'30px'};height:40px;
-                            padding:0 2px;background:var(--card-bg);border:1px solid var(--border-color);border-radius:5px;
-                            font-size:${k.length>1?'0.65':'0.82'}rem;font-weight:700;cursor:pointer;
-                            color:var(--text-main);transition:background 0.2s;">${k}</button>`).join('')}
-                    </div>`).join('')}
-                </div>
-                <p style="font-size:0.7rem;color:var(--text-muted);margin-top:8px;">${t('🟩 정확한 위치 · 🟨 다른 위치 · ⬜ 없음','🟩 Correct · 🟨 Wrong spot · ⬜ Not in word')}</p>
+                <div id="wmg" style="display:grid;grid-template-columns:repeat(3,1fr);gap:14px;max-width:280px;margin:0 auto;padding:10px;
+                    background:var(--bg-color);border-radius:20px;"></div>
+                <p style="font-size:0.8rem;color:var(--text-muted);margin-top:12px;font-weight:700;">
+                    ${t('🐹 두더지가 나오면 빠르게 클릭!','🐹 Click the moles as fast as you can!')}</p>
             </div>`;
 
-        document.querySelectorAll('.wkey').forEach(k=>{
-            k.onclick=()=>{
-                if(over) return;
-                const ch=k.dataset.k;
-                if(ch==='⌫') cur=cur.slice(0,-1);
-                else if(ch==='↵') submit();
-                else if(cur.length<5) cur+=ch;
-                render();
+        const grid=document.getElementById('wmg');
+        const items=[];
+
+        for(let i=0;i<9;i++){
+            const wrap=document.createElement('div');
+            wrap.style.cssText='position:relative;height:82px;background:#78553a;border-radius:50% 50% 45% 45%;overflow:hidden;cursor:pointer;box-shadow:inset 0 5px 12px rgba(0,0,0,0.45),0 4px 0 #5a3d26;';
+            const mole=document.createElement('div');
+            mole.style.cssText='position:absolute;bottom:-90px;left:50%;transform:translateX(-50%);width:64px;height:64px;border-radius:50% 50% 45% 45%;display:flex;align-items:center;justify-content:center;font-size:2.4rem;transition:bottom 0.13s ease-out;user-select:none;pointer-events:none;';
+            mole.textContent='🐹';
+            wrap.appendChild(mole);
+
+            const hit=()=>{
+                if(!active[i]||!running) return;
+                active[i]=false; mole.style.bottom='-90px';
+                score+=10;
+                const se=document.getElementById('wms'); if(se) se.innerText=score;
+                mole.textContent='⭐'; wrap.style.background='#4ade8066';
+                setTimeout(()=>{ mole.textContent='🐹'; wrap.style.background='#78553a'; },180);
             };
-        });
-        document.onkeydown=e=>{
-            if(over) return;
-            if(e.key==='Enter') submit();
-            else if(e.key==='Backspace') { e.preventDefault(); cur=cur.slice(0,-1); }
-            else if(/^[A-Za-z]$/.test(e.key)&&cur.length<5) cur+=e.key.toUpperCase();
-            render();
-        };
-        render();
+            wrap.addEventListener('click', hit);
+            wrap.addEventListener('touchstart', e=>{ e.preventDefault(); hit(); }, {passive:false});
+            grid.appendChild(wrap);
+            items.push({wrap, mole});
+        }
+
+        function popUp(i){
+            if(active[i]||!running) return;
+            active[i]=true; items[i].mole.style.bottom='5px';
+            setTimeout(()=>{
+                if(active[i]){ active[i]=false; items[i].mole.style.bottom='-90px'; }
+            }, 900+Math.random()*600);
+        }
+
+        function spawn(){
+            if(!document.getElementById('wmt')){ running=false; return; }
+            const free=active.map((v,j)=>v?-1:j).filter(j=>j>=0);
+            if(free.length>0) popUp(free[Math.floor(Math.random()*free.length)]);
+            if(running) spawnTid=setTimeout(spawn, 520+Math.random()*430);
+        }
+
+        spawn();
+
+        gameInterval=setInterval(()=>{
+            timeLeft--;
+            const te=document.getElementById('wmt'); if(te) te.innerText=timeLeft;
+            if(timeLeft<=0){
+                running=false; clearInterval(gameInterval); clearTimeout(spawnTid);
+                active.fill(false); items.forEach(({mole})=>mole.style.bottom='-90px');
+                const grade=score<50?'D':score<100?'C':score<160?'B':score<220?'A':'S';
+                const gc={S:'#facc15',A:'#4ade80',B:'#60a5fa',C:'#fb923c',D:'#f87171'}[grade];
+                showGameResult('whack',t('🔨 두더지 잡기 결과','🔨 Whack-a-Mole Result'),[
+                    {label:t('등급','Grade'),value:grade,big:true,color:gc},
+                    {label:t('최종 점수','Final Score'),value:score,color:'var(--accent-color)'},
+                    {label:t('잡은 두더지','Moles hit'),value:score/10+t('마리','')},
+                ]);
+            }
+        },1000);
     }
 
 });
