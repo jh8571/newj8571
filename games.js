@@ -338,7 +338,9 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
         function updateScore() {
-            document.getElementById('score').innerText = player.score;
+            const scoreEl = document.getElementById('score');
+            if (!scoreEl) return;
+            scoreEl.innerText = player.score;
             const lv = Math.floor(player.score / 200) + 1;
             const lvEl = document.getElementById('tetris-level');
             if (lvEl) lvEl.innerText = `Lv.${lv}`;
@@ -552,6 +554,11 @@ document.addEventListener('DOMContentLoaded', () => {
                 document.onkeydown = null;
 
                 let correct = 0, wrong = 0, empty = 0;
+                // Build full board for rule-based validation (accepts any valid solution)
+                const board = Array(81).fill(0);
+                cells.forEach((td, i) => {
+                    board[i] = puzzle[i] !== 0 ? puzzle[i] : (parseInt(td.textContent) || 0);
+                });
                 cells.forEach((td, i) => {
                     if (puzzle[i] !== 0) return; // fixed cell, skip
                     const entered = parseInt(td.textContent);
@@ -561,16 +568,22 @@ document.addEventListener('DOMContentLoaded', () => {
                         td.style.color = '#94a3b8';
                         td.style.background = 'rgba(148,163,184,0.12)';
                         empty++;
-                    } else if (entered === solution[i]) {
-                        td.style.color = '#10b981';
-                        td.style.background = 'rgba(16,185,129,0.12)';
-                        correct++;
                     } else {
-                        // wrong — show correct answer in red
-                        td.textContent = solution[i];
-                        td.style.color = '#ef4444';
-                        td.style.background = 'rgba(239,68,68,0.12)';
-                        wrong++;
+                        // validate against Sudoku rules, not just one specific solution
+                        board[i] = 0;
+                        const valid = canPlace(board, i, entered);
+                        board[i] = entered;
+                        if (valid) {
+                            td.style.color = '#10b981';
+                            td.style.background = 'rgba(16,185,129,0.12)';
+                            correct++;
+                        } else {
+                            // wrong — show correct answer in red
+                            td.textContent = solution[i];
+                            td.style.color = '#ef4444';
+                            td.style.background = 'rgba(239,68,68,0.12)';
+                            wrong++;
+                        }
                     }
                 });
 
@@ -597,7 +610,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // 3. Clicker
     function startClicker() {
         title.innerText = t("클릭커 마스터", "Clicker Master");
-        let count = 0, time = 10, combo = 1, lastClick = 0;
+        let count = 0, time = 10, combo = 1, maxCombo = 1, lastClick = 0;
         container.innerHTML = `
             <div style="text-align:center; width:100%;">
                 <div style="display:flex; justify-content:center; gap:24px; margin-bottom:10px; font-size:0.9rem;">
@@ -616,6 +629,7 @@ document.addEventListener('DOMContentLoaded', () => {
             if (time <= 0) return;
             const now = Date.now();
             combo = (now - lastClick < 350) ? Math.min(combo + 1, 5) : 1;
+            if (combo > maxCombo) maxCombo = combo;
             lastClick = now;
             count += combo;
             document.getElementById('cc').innerText = count;
@@ -633,7 +647,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 const starStr = '⭐'.repeat(stars) + '☆'.repeat(5 - stars);
                 showGameResult('clicker', t('👆 클릭커 결과','👆 Clicker Result'), [
                     { label: t('총 점수','Total Score'), value: count, big: true, color: 'var(--accent-color)' },
-                    { label: t('최고 콤보','Best Combo'), value: `x${combo}` },
+                    { label: t('최고 콤보','Best Combo'), value: `x${maxCombo}` },
                     { label: t('평가','Rating'), value: starStr, color: '#f59e0b' },
                 ]);
             }
@@ -706,7 +720,7 @@ document.addEventListener('DOMContentLoaded', () => {
             };
             document.getElementById('msub').onclick = submit;
             document.getElementById('mans').onkeyup = e => { if(e.key==='Enter') submit(); };
-            mathTimer = setInterval(() => {
+            gameInterval = mathTimer = setInterval(() => {
                 timeLeft -= 0.1;
                 const bar = document.getElementById('mbar'), te = document.getElementById('mt');
                 if (bar) bar.style.width = `${Math.max(0,(timeLeft/totalSec)*100)}%`;
@@ -976,7 +990,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 };
                 g.appendChild(box);
             }
-            colorTimer = setInterval(() => {
+            gameInterval = colorTimer = setInterval(() => {
                 timeLeft -= 0.1;
                 const bar = document.getElementById('cbar'), te = document.getElementById('ctimer');
                 if (bar) bar.style.width = `${Math.max(0,(timeLeft/timeSec)*100)}%`;
@@ -1066,7 +1080,7 @@ document.addEventListener('DOMContentLoaded', () => {
             document.getElementById('tok').onclick = check;
             input.onkeyup = e => { if(e.key==='Enter') check(); };
 
-            typingTimer = setInterval(() => {
+            gameInterval = typingTimer = setInterval(() => {
                 timeLeft -= 0.1;
                 const bar = document.getElementById('tbar'), te = document.getElementById('ttime');
                 if (bar) bar.style.width = `${Math.max(0,(timeLeft/timeSec)*100)}%`;
