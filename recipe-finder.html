@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-P6CTZY2283"></script>
+    <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-P6CTZY2283');</script>
+    <meta name="google-adsense-account" content="ca-pub-9103697866666926">
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9103697866666926" crossorigin="anonymous"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>냉장고 파먹기 레시피 — 재료로 요리 찾기 | VitalGuide</title>
+    <meta name="description" content="가진 재료를 선택하면 만들 수 있는 건강 레시피를 즉시 찾아드립니다. 닭가슴살·달걀·채소 등 재료 선택 → 레시피 자동 추천.">
+    <link rel="canonical" href="https://vi7al.com/recipe-finder.html">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://vi7al.com/recipe-finder.html">
+    <meta property="og:title" content="냉장고 파먹기 레시피 — VitalGuide">
+    <meta property="og:description" content="재료를 선택하면 만들 수 있는 건강 레시피를 즉시 추천해드립니다">
+    <meta property="og:image" content="https://vi7al.com/og-image.png">
+    <meta property="og:site_name" content="VitalGuide">
+    <meta name="twitter:card" content="summary_large_image">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="icon" href="favicon.svg" type="image/svg+xml">
+    <style>
+        .rf-wrap { max-width: 880px; margin: 0 auto; }
+
+        .ing-section-title {
+            font-size: 0.8rem; font-weight: 800; color: var(--text-muted);
+            letter-spacing: 0.06em; text-transform: uppercase; margin: 24px 0 12px;
+        }
+        .ing-grid { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 8px; }
+        .ing-chip {
+            background: var(--card-bg); border: 2px solid var(--border-color);
+            border-radius: 12px; padding: 10px 16px; cursor: pointer;
+            font-size: 0.85rem; font-weight: 700; transition: all 0.2s;
+            display: flex; align-items: center; gap: 7px; color: var(--text-main);
+        }
+        .ing-chip:hover { border-color: var(--accent-color); transform: translateY(-2px); }
+        .ing-chip.selected {
+            border-color: var(--accent-color);
+            background: color-mix(in srgb, var(--accent-color) 12%, transparent);
+            color: var(--accent-color);
+        }
+
+        .selected-bar {
+            background: var(--card-bg); border: 1px solid var(--border-color);
+            border-radius: 16px; padding: 16px 20px; margin: 24px 0;
+            min-height: 58px; display: flex; align-items: center; gap: 10px; flex-wrap: wrap;
+        }
+        .sel-label { font-size: 0.8rem; font-weight: 700; color: var(--text-muted); flex-shrink: 0; }
+        .sel-tag {
+            background: color-mix(in srgb, var(--accent-color) 15%, transparent);
+            border: 1px solid var(--accent-color); border-radius: 99px;
+            padding: 4px 12px; font-size: 0.8rem; font-weight: 700;
+            color: var(--accent-color); display: flex; align-items: center; gap: 5px;
+        }
+        .sel-tag button { background: none; border: none; cursor: pointer; color: inherit; font-size: 0.9rem; padding: 0; line-height: 1; }
+        .sel-none { font-size: 0.85rem; color: var(--text-muted); }
+
+        .find-btn {
+            width: 100%; padding: 18px; background: var(--primary-color); color: white;
+            border: none; border-radius: 16px; font-size: 1rem; font-weight: 800;
+            cursor: pointer; transition: opacity 0.2s; margin-bottom: 40px;
+        }
+        .find-btn:hover { opacity: 0.85; }
+        .find-btn:disabled { opacity: 0.4; cursor: default; }
+        [data-theme='dark'] .find-btn { background: var(--accent-color); color: var(--primary-color); }
+
+        .recipe-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 20px; }
+        .recipe-card {
+            background: var(--card-bg); border: 1px solid var(--border-color);
+            border-radius: 20px; overflow: hidden; transition: transform 0.2s, box-shadow 0.2s;
+            text-decoration: none; color: var(--text-main); display: block;
+        }
+        .recipe-card:hover { transform: translateY(-4px); box-shadow: 0 16px 48px rgba(0,0,0,0.1); }
+        .recipe-img { width: 100%; height: 180px; object-fit: cover; display: block; background: var(--border-color); }
+        .recipe-body { padding: 16px 18px; }
+        .recipe-title { font-size: 0.92rem; font-weight: 800; line-height: 1.4; margin-bottom: 10px; }
+        .recipe-stats { display: flex; gap: 10px; flex-wrap: wrap; }
+        .rst { font-size: 0.77rem; font-weight: 700; padding: 3px 10px; border-radius: 99px; }
+        .rst-used { background: rgba(16,185,129,0.12); color: #059669; }
+        .rst-miss { background: rgba(239,68,68,0.1); color: #dc2626; }
+        .recipe-view {
+            display: block; margin: 10px 18px 16px; padding: 9px;
+            background: var(--border-color); border-radius: 10px;
+            font-size: 0.8rem; font-weight: 700; text-align: center;
+            color: var(--text-muted); text-decoration: none; transition: background 0.2s;
+        }
+        .recipe-view:hover { background: color-mix(in srgb, var(--accent-color) 15%, transparent); color: var(--accent-color); }
+
+        .rf-status { text-align: center; padding: 70px 0; color: var(--text-muted); }
+        .rf-status .icon { font-size: 2.8rem; margin-bottom: 16px; }
+        .data-credit { text-align: center; font-size: 0.78rem; color: var(--text-muted); margin-top: 36px; padding-bottom: 20px; }
+    </style>
+</head>
+<body data-lang="ko">
+    <header>
+        <div class="container header-flex">
+            <a href="index.html" class="logo">VitalGuide</a>
+            <div class="controls-bar">
+                <button id="lang-toggle" class="control-btn">EN</button>
+                <button id="theme-toggle" class="control-btn"><i class="fas fa-moon"></i></button>
+            </div>
+        </div>
+        <nav>
+            <a href="index.html" data-ko="AI 맞춤영양" data-en="AI Nutrition">AI 맞춤영양</a>
+            <a href="exercise.html" data-ko="운동가이드" data-en="Exercise">운동가이드</a>
+            <a href="psychology.html" data-ko="심리분석" data-en="Psychology">심리분석</a>
+            <a href="mbti.html" data-ko="MBTI 테스트" data-en="MBTI Test">MBTI 테스트</a>
+            <a href="fortune.html" data-ko="오늘의운세" data-en="Daily Fortune">오늘의운세</a>
+            <a href="games.html" data-ko="미니게임" data-en="Mini Games">미니게임</a>
+            <a href="blog.html" data-ko="건강가이드" data-en="Health Blog">건강가이드</a>
+        </nav>
+    </header>
+
+    <main class="container">
+        <section class="hero">
+            <h2 data-ko="냉장고 파먹기 레시피" data-en="Fridge Recipe Finder">냉장고 파먹기 레시피</h2>
+            <p data-ko="가진 재료를 선택하면 만들 수 있는 건강 레시피를 찾아드립니다" data-en="Select ingredients you have and find matching healthy recipes">가진 재료를 선택하면 만들 수 있는 건강 레시피를 찾아드립니다</p>
+        </section>
+
+        <div class="rf-wrap">
+            <p class="ing-section-title">🥩 단백질</p>
+            <div class="ing-grid" id="grid-protein"></div>
+
+            <p class="ing-section-title">🥦 채소 · 과일</p>
+            <div class="ing-grid" id="grid-veggie"></div>
+
+            <p class="ing-section-title">🍚 탄수화물 · 기타</p>
+            <div class="ing-grid" id="grid-carb"></div>
+
+            <div class="selected-bar">
+                <span class="sel-label">선택된 재료</span>
+                <div id="sel-tags"><span class="sel-none">재료를 선택해주세요</span></div>
+            </div>
+
+            <button class="find-btn" id="find-btn" onclick="findRecipes()" disabled>
+                🍳 레시피 찾기
+            </button>
+
+            <div id="recipe-results">
+                <div class="rf-status">
+                    <div class="icon">🍽️</div>
+                    <p>재료를 하나 이상 선택하고 레시피 찾기를 눌러보세요</p>
+                </div>
+            </div>
+
+            <p class="data-credit">
+                레시피 데이터: <strong>Spoonacular Food API</strong> — 360,000+ 글로벌 레시피 데이터베이스
+            </p>
+        </div>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2026 VitalGuide. 전인적 건강을 위한 고품격 가이드.</p>
+            <div style="margin-top:20px;display:flex;justify-content:center;gap:20px;font-size:0.8rem;flex-wrap:wrap;">
+                <a href="about.html#editorial" style="color:var(--text-muted);text-decoration:none;">편집 원칙</a>
+                <a href="privacy.html" style="color:var(--text-muted);text-decoration:none;">Privacy</a>
+                <a href="terms.html" style="color:var(--text-muted);text-decoration:none;">Terms</a>
+                <a href="about.html" style="color:var(--text-muted);text-decoration:none;">About</a>
+                <a href="contact.html" style="color:var(--text-muted);text-decoration:none;">Contact</a>
+            </div>
+        </div>
+    </footer>
+
+    <script src="theme.js"></script>
+    <script>
+    const SPOON_KEY = 'aaf5a24046374105b773c86c9287592d';
+
+    const INGREDIENT_GROUPS = {
+        protein: [
+            { ko: '🍗 닭가슴살', en: 'chicken breast' },
+            { ko: '🥩 소고기', en: 'beef' },
+            { ko: '🐷 돼지고기', en: 'pork' },
+            { ko: '🐟 연어', en: 'salmon' },
+            { ko: '🦐 새우', en: 'shrimp' },
+            { ko: '🥚 달걀', en: 'egg' },
+            { ko: '🫘 두부', en: 'tofu' },
+            { ko: '🫙 그릭요거트', en: 'greek yogurt' },
+            { ko: '🥛 우유', en: 'milk' },
+            { ko: '🐟 참치캔', en: 'tuna' },
+        ],
+        veggie: [
+            { ko: '🥦 브로콜리', en: 'broccoli' },
+            { ko: '🌿 시금치', en: 'spinach' },
+            { ko: '🧅 양파', en: 'onion' },
+            { ko: '🧄 마늘', en: 'garlic' },
+            { ko: '🍅 토마토', en: 'tomato' },
+            { ko: '🫑 파프리카', en: 'bell pepper' },
+            { ko: '🥕 당근', en: 'carrot' },
+            { ko: '🥒 오이', en: 'cucumber' },
+            { ko: '🍄 버섯', en: 'mushroom' },
+            { ko: '🥑 아보카도', en: 'avocado' },
+            { ko: '🫛 완두콩', en: 'peas' },
+            { ko: '🫚 올리브오일', en: 'olive oil' },
+        ],
+        carb: [
+            { ko: '🍚 현미', en: 'brown rice' },
+            { ko: '🍝 파스타', en: 'pasta' },
+            { ko: '🥔 감자', en: 'potato' },
+            { ko: '🍠 고구마', en: 'sweet potato' },
+            { ko: '🌾 오트밀', en: 'oats' },
+            { ko: '🫙 통조림 콩', en: 'canned beans' },
+            { ko: '🍋 레몬', en: 'lemon' },
+            { ko: '🧈 버터', en: 'butter' },
+        ],
+    };
+
+    const selected = new Map();
+
+    function renderGroups() {
+        ['protein', 'veggie', 'carb'].forEach(g => {
+            const el = document.getElementById(`grid-${g}`);
+            el.innerHTML = INGREDIENT_GROUPS[g].map(ing => `
+                <div class="ing-chip" id="chip-${ing.en.replace(/\s/g,'_')}" onclick="toggle('${ing.en}','${ing.ko}')">
+                    ${ing.ko}
+                </div>`).join('');
+        });
+    }
+
+    function toggle(en, ko) {
+        if (selected.has(en)) {
+            selected.delete(en);
+            document.getElementById('chip-' + en.replace(/\s/g,'_'))?.classList.remove('selected');
+        } else {
+            selected.set(en, ko);
+            document.getElementById('chip-' + en.replace(/\s/g,'_'))?.classList.add('selected');
+        }
+        updateSelBar();
+    }
+
+    function updateSelBar() {
+        const el = document.getElementById('sel-tags');
+        const btn = document.getElementById('find-btn');
+        if (selected.size === 0) {
+            el.innerHTML = '<span class="sel-none">재료를 선택해주세요</span>';
+            btn.disabled = true;
+        } else {
+            el.innerHTML = [...selected.entries()].map(([en, ko]) =>
+                `<span class="sel-tag">${ko} <button onclick="toggle('${en}','${ko}')">✕</button></span>`
+            ).join('');
+            btn.disabled = false;
+        }
+    }
+
+    async function findRecipes() {
+        if (selected.size === 0) return;
+        const ingredients = [...selected.keys()].join(',');
+        const el = document.getElementById('recipe-results');
+        el.innerHTML = '<div class="rf-status"><div class="icon">⏳</div><p>레시피 검색 중...</p></div>';
+
+        try {
+            const url = `https://api.spoonacular.com/recipes/findByIngredients?ingredients=${encodeURIComponent(ingredients)}&number=12&ranking=2&ignorePantry=true&apiKey=${SPOON_KEY}`;
+            const res = await fetch(url);
+            if (!res.ok) {
+                const err = await res.json().catch(() => ({}));
+                if (res.status === 402) throw new Error('quota');
+                throw new Error(res.status);
+            }
+            const data = await res.json();
+
+            if (!data || data.length === 0) {
+                el.innerHTML = '<div class="rf-status"><div class="icon">😅</div><p>선택한 재료로 찾을 수 있는 레시피가 없습니다.<br>재료를 더 추가해보세요.</p></div>';
+                return;
+            }
+            renderRecipes(data);
+        } catch (e) {
+            const msg = e.message === 'quota'
+                ? '오늘의 API 요청 한도에 도달했습니다. 내일 다시 시도해주세요.'
+                : '오류가 발생했습니다. 잠시 후 다시 시도해주세요.';
+            el.innerHTML = `<div class="rf-status"><div class="icon">⚠️</div><p>${msg}</p></div>`;
+        }
+    }
+
+    function renderRecipes(recipes) {
+        const el = document.getElementById('recipe-results');
+        const slug = t => t.toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'');
+
+        const cards = recipes.map(r => {
+            const url = `https://spoonacular.com/recipes/${slug(r.title)}-${r.id}`;
+            return `
+            <a class="recipe-card" href="${url}" target="_blank" rel="noopener">
+                <img class="recipe-img" src="${r.image}" alt="${r.title}" loading="lazy" onerror="this.style.display='none'">
+                <div class="recipe-body">
+                    <div class="recipe-title">${r.title}</div>
+                    <div class="recipe-stats">
+                        <span class="rst rst-used">✓ 보유재료 ${r.usedIngredientCount}개</span>
+                        ${r.missedIngredientCount > 0 ? `<span class="rst rst-miss">+ 필요재료 ${r.missedIngredientCount}개</span>` : '<span class="rst rst-used">완벽 매칭 🎉</span>'}
+                    </div>
+                </div>
+                <span class="recipe-view">전체 레시피 보기 →</span>
+            </a>`;
+        }).join('');
+
+        el.innerHTML = `<div class="recipe-grid">${cards}</div>`;
+    }
+
+    renderGroups();
+    </script>
+    <script src="cookie-consent.js"></script>
+</body>
+</html>

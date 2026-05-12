@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-P6CTZY2283"></script>
+    <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-P6CTZY2283');</script>
+    <meta name="google-adsense-account" content="ca-pub-9103697866666926">
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9103697866666926" crossorigin="anonymous"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>운동 DB 검색 — 부위별 운동 목록 | VitalGuide</title>
+    <meta name="description" content="가슴·등·어깨·팔·다리·복근 등 부위별 운동 동작을 검색하세요. wger 운동 데이터베이스 기반 상세 설명 제공.">
+    <link rel="canonical" href="https://vi7al.com/workout-db.html">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://vi7al.com/workout-db.html">
+    <meta property="og:title" content="부위별 운동 DB 검색 — VitalGuide">
+    <meta property="og:description" content="가슴·등·어깨·팔·다리·복근 부위별 운동 동작과 상세 설명을 검색하세요">
+    <meta property="og:image" content="https://vi7al.com/og-image.png">
+    <meta property="og:site_name" content="VitalGuide">
+    <meta name="twitter:card" content="summary_large_image">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="icon" href="favicon.svg" type="image/svg+xml">
+    <style>
+        .wd-wrap { max-width: 880px; margin: 0 auto; }
+
+        .cat-tabs { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 32px; justify-content: center; }
+        .cat-tab {
+            background: var(--card-bg); border: 2px solid var(--border-color);
+            border-radius: 14px; padding: 12px 22px; cursor: pointer;
+            font-size: 0.9rem; font-weight: 700; transition: all 0.2s; color: var(--text-muted);
+            display: flex; align-items: center; gap: 8px;
+        }
+        .cat-tab:hover { border-color: var(--accent-color); color: var(--accent-color); transform: translateY(-2px); }
+        .cat-tab.active { border-color: var(--accent-color); background: color-mix(in srgb, var(--accent-color) 10%, transparent); color: var(--accent-color); }
+
+        .search-row { position: relative; margin-bottom: 28px; }
+        .search-row input {
+            width: 100%; padding: 15px 130px 15px 22px; font-size: 0.95rem;
+            border-radius: 50px; border: 2px solid var(--border-color);
+            background: var(--card-bg); color: var(--text-main); outline: none; transition: border-color 0.2s;
+        }
+        .search-row input:focus { border-color: var(--accent-color); }
+        .search-row input::placeholder { color: var(--text-muted); }
+        .search-row button {
+            position: absolute; right: 8px; top: 50%; transform: translateY(-50%);
+            padding: 9px 24px; background: var(--primary-color); color: white;
+            border: none; border-radius: 40px; font-weight: 800; cursor: pointer; font-size: 0.85rem;
+        }
+        [data-theme='dark'] .search-row button { background: var(--accent-color); color: var(--primary-color); }
+
+        .ex-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 18px; }
+        .ex-card {
+            background: var(--card-bg); border: 1px solid var(--border-color);
+            border-radius: 20px; padding: 22px; transition: transform 0.2s, box-shadow 0.2s;
+        }
+        .ex-card:hover { transform: translateY(-3px); box-shadow: 0 12px 40px rgba(0,0,0,0.08); }
+        .ex-name { font-size: 0.97rem; font-weight: 900; margin-bottom: 10px; color: var(--text-main); }
+        .ex-tags { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 12px; }
+        .ex-tag { font-size: 0.75rem; font-weight: 700; padding: 3px 10px; border-radius: 99px; }
+        .tag-muscle { background: rgba(59,130,246,0.12); color: #2563eb; }
+        .tag-equip { background: rgba(245,158,11,0.12); color: #d97706; }
+        .ex-desc {
+            font-size: 0.82rem; color: var(--text-muted); line-height: 1.7;
+            display: -webkit-box; -webkit-line-clamp: 4; -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+        .ex-more-btn {
+            margin-top: 10px; font-size: 0.8rem; font-weight: 700; color: var(--accent-color);
+            background: none; border: none; cursor: pointer; padding: 0;
+        }
+
+        .wd-status { text-align: center; padding: 70px 0; color: var(--text-muted); }
+        .wd-status .icon { font-size: 2.8rem; margin-bottom: 16px; }
+        .load-more-wrap { text-align: center; margin-top: 32px; }
+        .load-more-btn {
+            padding: 13px 40px; background: var(--border-color); color: var(--text-main);
+            border: none; border-radius: 14px; font-weight: 800; cursor: pointer; font-size: 0.9rem;
+            transition: background 0.2s;
+        }
+        .load-more-btn:hover { background: color-mix(in srgb, var(--accent-color) 15%, transparent); color: var(--accent-color); }
+        .data-credit { text-align: center; font-size: 0.78rem; color: var(--text-muted); margin-top: 36px; padding-bottom: 20px; }
+        .result-count { text-align: center; font-size: 0.82rem; color: var(--text-muted); margin-bottom: 20px; font-weight: 600; }
+    </style>
+</head>
+<body data-lang="ko">
+    <header>
+        <div class="container header-flex">
+            <a href="index.html" class="logo">VitalGuide</a>
+            <div class="controls-bar">
+                <button id="lang-toggle" class="control-btn">EN</button>
+                <button id="theme-toggle" class="control-btn"><i class="fas fa-moon"></i></button>
+            </div>
+        </div>
+        <nav>
+            <a href="index.html" data-ko="AI 맞춤영양" data-en="AI Nutrition">AI 맞춤영양</a>
+            <a href="exercise.html" class="active" data-ko="운동가이드" data-en="Exercise">운동가이드</a>
+            <a href="psychology.html" data-ko="심리분석" data-en="Psychology">심리분석</a>
+            <a href="mbti.html" data-ko="MBTI 테스트" data-en="MBTI Test">MBTI 테스트</a>
+            <a href="fortune.html" data-ko="오늘의운세" data-en="Daily Fortune">오늘의운세</a>
+            <a href="games.html" data-ko="미니게임" data-en="Mini Games">미니게임</a>
+            <a href="blog.html" data-ko="건강가이드" data-en="Health Blog">건강가이드</a>
+        </nav>
+    </header>
+
+    <main class="container">
+        <section class="hero">
+            <h2 data-ko="부위별 운동 DB" data-en="Exercise Database">부위별 운동 DB</h2>
+            <p data-ko="가슴 · 등 · 어깨 · 팔 · 다리 · 복근 — 부위를 선택하면 운동 목록과 상세 설명을 제공합니다" data-en="Chest · Back · Shoulders · Arms · Legs · Abs — Select a muscle group to explore exercises">가슴 · 등 · 어깨 · 팔 · 다리 · 복근 — 부위를 선택하면 운동 목록과 상세 설명을 제공합니다</p>
+        </section>
+
+        <div class="wd-wrap">
+            <div class="cat-tabs" id="cat-tabs"></div>
+
+            <div class="search-row">
+                <input type="text" id="ex-search" placeholder="운동 이름으로 검색 (예: squat, push up, deadlift)" autocomplete="off">
+                <button onclick="filterByName()">검색</button>
+            </div>
+
+            <div id="ex-count"></div>
+            <div id="ex-results">
+                <div class="wd-status">
+                    <div class="icon">💪</div>
+                    <p>위에서 운동 부위를 선택하세요</p>
+                </div>
+            </div>
+            <div id="load-more-wrap"></div>
+
+            <p class="data-credit">
+                운동 데이터: <strong>wger Workout Manager API</strong> (wger.de) — 오픈소스 운동 데이터베이스
+            </p>
+        </div>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2026 VitalGuide. 전인적 건강을 위한 고품격 가이드.</p>
+            <div style="margin-top:20px;display:flex;justify-content:center;gap:20px;font-size:0.8rem;flex-wrap:wrap;">
+                <a href="about.html#editorial" style="color:var(--text-muted);text-decoration:none;">편집 원칙</a>
+                <a href="privacy.html" style="color:var(--text-muted);text-decoration:none;">Privacy</a>
+                <a href="terms.html" style="color:var(--text-muted);text-decoration:none;">Terms</a>
+                <a href="about.html" style="color:var(--text-muted);text-decoration:none;">About</a>
+                <a href="contact.html" style="color:var(--text-muted);text-decoration:none;">Contact</a>
+            </div>
+        </div>
+    </footer>
+
+    <script src="theme.js"></script>
+    <script>
+    const CATEGORIES = [
+        { id: 11, ko: '가슴', icon: '🫀' },
+        { id: 12, ko: '등', icon: '🏋️' },
+        { id: 13, ko: '어깨', icon: '💪' },
+        { id: 8,  ko: '팔', icon: '🦾' },
+        { id: 9,  ko: '다리', icon: '🦵' },
+        { id: 10, ko: '복근', icon: '🔥' },
+        { id: 14, ko: '종아리', icon: '🏃' },
+    ];
+
+    let allExercises = [];
+    let currentCatId = null;
+    let nextUrl = null;
+
+    function buildTabs() {
+        const el = document.getElementById('cat-tabs');
+        el.innerHTML = CATEGORIES.map(c =>
+            `<button class="cat-tab" id="tab-${c.id}" onclick="loadCategory(${c.id})">
+                ${c.icon} ${c.ko}
+            </button>`
+        ).join('');
+    }
+
+    async function loadCategory(catId) {
+        currentCatId = catId;
+        allExercises = [];
+        nextUrl = null;
+
+        CATEGORIES.forEach(c => {
+            document.getElementById('tab-' + c.id)?.classList.toggle('active', c.id === catId);
+        });
+        document.getElementById('ex-search').value = '';
+
+        const el = document.getElementById('ex-results');
+        el.innerHTML = '<div class="wd-status"><div class="icon">⏳</div><p>운동 목록 불러오는 중...</p></div>';
+        document.getElementById('load-more-wrap').innerHTML = '';
+        document.getElementById('ex-count').innerHTML = '';
+
+        await fetchExercises(`https://wger.de/api/v2/exerciseinfo/?format=json&language=2&category=${catId}&limit=20`);
+    }
+
+    async function fetchExercises(url) {
+        try {
+            const res = await fetch(url);
+            if (!res.ok) throw new Error(res.status);
+            const data = await res.json();
+
+            const valid = (data.results || []).filter(ex => {
+                const t = getTranslation(ex);
+                return t && t.name;
+            });
+
+            allExercises = allExercises.concat(valid);
+            nextUrl = data.next || null;
+
+            renderExercises(allExercises);
+        } catch {
+            document.getElementById('ex-results').innerHTML =
+                '<div class="wd-status"><div class="icon">⚠️</div><p>데이터를 불러올 수 없습니다. 잠시 후 다시 시도해주세요.</p></div>';
+        }
+    }
+
+    function getTranslation(ex) {
+        if (!ex.translations) return null;
+        return ex.translations.find(t => t.language === 2) || ex.translations[0] || null;
+    }
+
+    function stripHtml(html) {
+        if (!html) return '';
+        return html.replace(/<[^>]+>/g, '').replace(/\s+/g, ' ').trim();
+    }
+
+    function renderExercises(exList) {
+        const nameFilter = document.getElementById('ex-search').value.trim().toLowerCase();
+        const filtered = nameFilter
+            ? exList.filter(ex => {
+                const t = getTranslation(ex);
+                return t && t.name.toLowerCase().includes(nameFilter);
+              })
+            : exList;
+
+        const count = document.getElementById('ex-count');
+        count.innerHTML = filtered.length > 0
+            ? `<p class="result-count">${filtered.length}개 운동 표시</p>`
+            : '';
+
+        if (filtered.length === 0) {
+            document.getElementById('ex-results').innerHTML =
+                '<div class="wd-status"><div class="icon">😅</div><p>검색 결과가 없습니다.</p></div>';
+            document.getElementById('load-more-wrap').innerHTML = '';
+            return;
+        }
+
+        const cards = filtered.map(ex => {
+            const t = getTranslation(ex);
+            const name = t?.name || '알 수 없음';
+            const desc = stripHtml(t?.description || '');
+            const muscles = (ex.muscles || []).map(m => `<span class="ex-tag tag-muscle">${m.name_en || m.name}</span>`).join('');
+            const equips = (ex.equipment || []).map(e => `<span class="ex-tag tag-equip">${e.name}</span>`).join('');
+
+            return `<div class="ex-card">
+                <div class="ex-name">${name}</div>
+                <div class="ex-tags">${muscles}${equips}</div>
+                ${desc ? `<div class="ex-desc" id="desc-${ex.id}">${desc}</div>
+                    ${desc.length > 200 ? `<button class="ex-more-btn" onclick="expandDesc(${ex.id}, this)">더 보기 ▾</button>` : ''}`
+                    : '<p style="font-size:0.82rem;color:var(--text-muted);">설명 없음</p>'}
+            </div>`;
+        }).join('');
+
+        document.getElementById('ex-results').innerHTML = `<div class="ex-grid">${cards}</div>`;
+
+        const lmWrap = document.getElementById('load-more-wrap');
+        lmWrap.innerHTML = nextUrl && !nameFilter
+            ? `<button class="load-more-btn" onclick="loadMore()">더 보기 (20개 추가)</button>`
+            : '';
+    }
+
+    function expandDesc(id, btn) {
+        const el = document.getElementById('desc-' + id);
+        if (el) {
+            el.style.webkitLineClamp = 'unset';
+            el.style.overflow = 'visible';
+        }
+        btn.remove();
+    }
+
+    async function loadMore() {
+        if (!nextUrl) return;
+        document.getElementById('load-more-wrap').innerHTML =
+            '<button class="load-more-btn" disabled>불러오는 중...</button>';
+        await fetchExercises(nextUrl);
+    }
+
+    function filterByName() {
+        if (allExercises.length > 0) renderExercises(allExercises);
+    }
+
+    document.getElementById('ex-search').addEventListener('keydown', e => {
+        if (e.key === 'Enter') filterByName();
+    });
+
+    buildTabs();
+    </script>
+    <script src="cookie-consent.js"></script>
+</body>
+</html>

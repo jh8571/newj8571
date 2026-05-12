@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-P6CTZY2283"></script>
+    <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-P6CTZY2283');</script>
+    <meta name="google-adsense-account" content="ca-pub-9103697866666926">
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9103697866666926" crossorigin="anonymous"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>식품 영양성분 검색기 — USDA 280만+ 식품 데이터 | VitalGuide</title>
+    <meta name="description" content="USDA 공식 식품 데이터베이스로 280만 개 이상의 식품 칼로리, 단백질, 탄수화물, 지방, 식이섬유, 나트륨을 즉시 확인하세요.">
+    <link rel="canonical" href="https://vi7al.com/food-search.html">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://vi7al.com/food-search.html">
+    <meta property="og:title" content="식품 영양성분 검색기 — VitalGuide">
+    <meta property="og:description" content="USDA 공식 데이터 · 280만+ 식품 칼로리·영양소 즉시 검색">
+    <meta property="og:image" content="https://vi7al.com/og-image.png">
+    <meta property="og:site_name" content="VitalGuide">
+    <meta name="twitter:card" content="summary_large_image">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="icon" href="favicon.svg" type="image/svg+xml">
+    <style>
+        .fs-wrap { max-width: 880px; margin: 0 auto; }
+        .search-row { position: relative; margin-bottom: 20px; }
+        .search-row input {
+            width: 100%; padding: 18px 130px 18px 26px; font-size: 1rem;
+            border-radius: 50px; border: 2px solid var(--border-color);
+            background: var(--card-bg); color: var(--text-main);
+            outline: none; transition: border-color 0.2s;
+        }
+        .search-row input:focus { border-color: var(--accent-color); }
+        .search-row input::placeholder { color: var(--text-muted); }
+        .search-row button {
+            position: absolute; right: 8px; top: 50%; transform: translateY(-50%);
+            padding: 10px 28px; background: var(--primary-color); color: white;
+            border: none; border-radius: 40px; font-weight: 800; cursor: pointer; font-size: 0.9rem;
+            transition: opacity 0.2s;
+        }
+        .search-row button:hover { opacity: 0.85; }
+        [data-theme='dark'] .search-row button { background: var(--accent-color); color: var(--primary-color); }
+
+        .quick-tags { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 36px; }
+        .qtag {
+            background: var(--card-bg); border: 1.5px solid var(--border-color);
+            border-radius: 99px; padding: 7px 16px; font-size: 0.83rem;
+            font-weight: 600; cursor: pointer; transition: all 0.2s; color: var(--text-muted);
+        }
+        .qtag:hover { border-color: var(--accent-color); color: var(--accent-color); background: color-mix(in srgb, var(--accent-color) 8%, transparent); }
+
+        .food-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 18px; }
+        .food-card {
+            background: var(--card-bg); border: 1px solid var(--border-color);
+            border-radius: 20px; padding: 22px;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        .food-card:hover { transform: translateY(-3px); box-shadow: 0 12px 40px rgba(0,0,0,0.08); }
+        .food-name { font-size: 0.9rem; font-weight: 800; margin-bottom: 4px; line-height: 1.45; color: var(--text-main); }
+        .food-meta { font-size: 0.76rem; color: var(--text-muted); margin-bottom: 14px; }
+        .kcal-badge {
+            display: inline-block;
+            background: linear-gradient(135deg, #f59e0b, #ef4444);
+            color: white; border-radius: 99px; padding: 4px 14px;
+            font-size: 0.82rem; font-weight: 800; margin-bottom: 16px;
+        }
+        .nbar-list { display: flex; flex-direction: column; gap: 9px; }
+        .nbar { display: flex; align-items: center; gap: 8px; font-size: 0.79rem; }
+        .nbar-label { width: 56px; color: var(--text-muted); font-weight: 600; flex-shrink: 0; }
+        .nbar-track { flex: 1; height: 6px; background: var(--border-color); border-radius: 99px; overflow: hidden; }
+        .nbar-fill { height: 100%; border-radius: 99px; }
+        .nbar-val { width: 46px; text-align: right; font-weight: 700; color: var(--text-main); }
+
+        .fs-status { text-align: center; padding: 70px 0; color: var(--text-muted); }
+        .fs-status .icon { font-size: 2.8rem; margin-bottom: 16px; }
+        .fs-status p { font-size: 0.95rem; line-height: 1.7; }
+        .data-credit { text-align: center; font-size: 0.78rem; color: var(--text-muted); margin-top: 36px; padding-bottom: 20px; }
+        .result-count { font-size: 0.82rem; color: var(--text-muted); margin-bottom: 16px; font-weight: 600; }
+    </style>
+</head>
+<body data-lang="ko">
+    <header>
+        <div class="container header-flex">
+            <a href="index.html" class="logo">VitalGuide</a>
+            <div class="controls-bar">
+                <button id="lang-toggle" class="control-btn">EN</button>
+                <button id="theme-toggle" class="control-btn"><i class="fas fa-moon"></i></button>
+            </div>
+        </div>
+        <nav>
+            <a href="index.html" data-ko="AI 맞춤영양" data-en="AI Nutrition">AI 맞춤영양</a>
+            <a href="exercise.html" data-ko="운동가이드" data-en="Exercise">운동가이드</a>
+            <a href="psychology.html" data-ko="심리분석" data-en="Psychology">심리분석</a>
+            <a href="mbti.html" data-ko="MBTI 테스트" data-en="MBTI Test">MBTI 테스트</a>
+            <a href="fortune.html" data-ko="오늘의운세" data-en="Daily Fortune">오늘의운세</a>
+            <a href="games.html" data-ko="미니게임" data-en="Mini Games">미니게임</a>
+            <a href="blog.html" data-ko="건강가이드" data-en="Health Blog">건강가이드</a>
+        </nav>
+    </header>
+
+    <main class="container">
+        <section class="hero">
+            <h2 data-ko="식품 영양성분 검색기" data-en="Food Nutrition Search">식품 영양성분 검색기</h2>
+            <p data-ko="USDA 공식 데이터베이스 · 280만+ 식품 칼로리·영양소 즉시 분석" data-en="USDA Official Database · 2.8M+ Foods Instantly Analyzed">USDA 공식 데이터베이스 · 280만+ 식품 칼로리·영양소 즉시 분석</p>
+        </section>
+
+        <div class="fs-wrap">
+            <div class="search-row">
+                <input type="text" id="food-input"
+                    placeholder="식품명 입력 (예: salmon, chicken breast, broccoli)"
+                    autocomplete="off" spellcheck="false">
+                <button onclick="searchFood()" data-ko="검색" data-en="Search">검색</button>
+            </div>
+
+            <div class="quick-tags">
+                <span class="qtag" onclick="quickSearch('chicken breast')">🍗 닭가슴살</span>
+                <span class="qtag" onclick="quickSearch('salmon')">🐟 연어</span>
+                <span class="qtag" onclick="quickSearch('egg whole')">🥚 달걀</span>
+                <span class="qtag" onclick="quickSearch('broccoli')">🥦 브로콜리</span>
+                <span class="qtag" onclick="quickSearch('sweet potato')">🍠 고구마</span>
+                <span class="qtag" onclick="quickSearch('avocado')">🥑 아보카도</span>
+                <span class="qtag" onclick="quickSearch('brown rice cooked')">🍚 현미</span>
+                <span class="qtag" onclick="quickSearch('almond')">🥜 아몬드</span>
+                <span class="qtag" onclick="quickSearch('banana')">🍌 바나나</span>
+                <span class="qtag" onclick="quickSearch('tofu firm')">🫘 두부</span>
+                <span class="qtag" onclick="quickSearch('beef ground')">🥩 소고기</span>
+                <span class="qtag" onclick="quickSearch('blueberry')">🫐 블루베리</span>
+                <span class="qtag" onclick="quickSearch('spinach')">🌿 시금치</span>
+                <span class="qtag" onclick="quickSearch('oats')">🌾 오트밀</span>
+                <span class="qtag" onclick="quickSearch('greek yogurt')">🥛 그릭요거트</span>
+            </div>
+
+            <div id="food-results">
+                <div class="fs-status">
+                    <div class="icon">🔍</div>
+                    <p data-ko="식품명을 입력하거나 위 태그를 눌러보세요<br><small style='font-size:0.82rem;opacity:0.7;'>영문 검색 시 더 정확한 결과를 얻을 수 있습니다</small>"
+                       data-en="Type a food name or tap a quick tag above<br><small style='font-size:0.82rem;opacity:0.7;'>English search gives more precise results</small>">
+                        식품명을 입력하거나 위 태그를 눌러보세요<br>
+                        <small style="font-size:0.82rem;opacity:0.7;">영문 검색 시 더 정확한 결과를 얻을 수 있습니다</small>
+                    </p>
+                </div>
+            </div>
+
+            <p class="data-credit">
+                데이터 출처: <strong>USDA FoodData Central</strong> (fdc.nal.usda.gov) — 미국 농무부 공식 식품 영양 데이터베이스
+            </p>
+        </div>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2026 VitalGuide. 전인적 건강을 위한 고품격 가이드.</p>
+            <div style="margin-top:20px;display:flex;justify-content:center;gap:20px;font-size:0.8rem;flex-wrap:wrap;">
+                <a href="about.html#editorial" style="color:var(--text-muted);text-decoration:none;">편집 원칙</a>
+                <a href="privacy.html" style="color:var(--text-muted);text-decoration:none;">Privacy</a>
+                <a href="terms.html" style="color:var(--text-muted);text-decoration:none;">Terms</a>
+                <a href="about.html" style="color:var(--text-muted);text-decoration:none;">About</a>
+                <a href="contact.html" style="color:var(--text-muted);text-decoration:none;">Contact</a>
+            </div>
+        </div>
+    </footer>
+
+    <script src="theme.js"></script>
+    <script>
+    const USDA_KEY = 'Tk7U33ttVQEwhccZN2Whm6d8Cd6Ec06OCHyG4Utq';
+
+    const NUTRIENTS = [
+        { id: 1003, label: '단백질', color: '#3b82f6', max: 40, unit: 'g' },
+        { id: 1005, label: '탄수화물', color: '#f59e0b', max: 80, unit: 'g' },
+        { id: 1004, label: '지방', color: '#ef4444', max: 35, unit: 'g' },
+        { id: 1079, label: '식이섬유', color: '#10b981', max: 15, unit: 'g' },
+        { id: 1093, label: '나트륨', color: '#8b5cf6', max: 800, unit: 'mg' },
+    ];
+
+    function quickSearch(q) {
+        document.getElementById('food-input').value = q;
+        searchFood();
+    }
+
+    document.getElementById('food-input').addEventListener('keydown', e => {
+        if (e.key === 'Enter') searchFood();
+    });
+
+    async function searchFood() {
+        const query = document.getElementById('food-input').value.trim();
+        if (!query) return;
+
+        const el = document.getElementById('food-results');
+        el.innerHTML = '<div class="fs-status"><div class="icon">⏳</div><p>검색 중...</p></div>';
+
+        try {
+            const url = `https://api.nal.usda.gov/fdc/v1/foods/search?query=${encodeURIComponent(query)}&pageSize=9&api_key=${USDA_KEY}`;
+            const res = await fetch(url);
+            if (!res.ok) throw new Error(res.status);
+            const data = await res.json();
+
+            if (!data.foods || data.foods.length === 0) {
+                el.innerHTML = '<div class="fs-status"><div class="icon">😅</div><p>검색 결과가 없습니다.<br><small>영문으로 다시 시도해보세요</small></p></div>';
+                return;
+            }
+            renderFoods(data.foods.slice(0, 9), data.totalHits);
+        } catch {
+            el.innerHTML = '<div class="fs-status"><div class="icon">⚠️</div><p>오류가 발생했습니다. 잠시 후 다시 시도해주세요.</p></div>';
+        }
+    }
+
+    function getVal(food, id) {
+        if (!food.foodNutrients) return null;
+        const n = food.foodNutrients.find(f => f.nutrientId === id);
+        return n ? n.value : null;
+    }
+
+    function renderFoods(foods, total) {
+        const el = document.getElementById('food-results');
+
+        const cards = foods.map(food => {
+            const kcal = getVal(food, 1008);
+            const name = food.description || '';
+            const brand = food.brandOwner || '';
+            const dataType = food.dataType || '';
+
+            const bars = NUTRIENTS.map(n => {
+                const val = getVal(food, n.id);
+                if (val === null || val === undefined) return '';
+                const pct = Math.min(100, (val / n.max) * 100);
+                const disp = n.unit === 'g' ? (val % 1 === 0 ? val : val.toFixed(1)) + 'g'
+                                             : Math.round(val) + 'mg';
+                return `<div class="nbar">
+                    <span class="nbar-label">${n.label}</span>
+                    <div class="nbar-track"><div class="nbar-fill" style="width:${pct}%;background:${n.color};"></div></div>
+                    <span class="nbar-val">${disp}</span>
+                </div>`;
+            }).join('');
+
+            return `<div class="food-card">
+                <div class="food-name">${name}</div>
+                <div class="food-meta">${brand || dataType} &nbsp;·&nbsp; 100g 기준</div>
+                ${kcal !== null ? `<div class="kcal-badge">🔥 ${Math.round(kcal)} kcal</div>` : ''}
+                <div class="nbar-list">${bars || '<span style="font-size:0.8rem;color:var(--text-muted);">영양 데이터 없음</span>'}</div>
+            </div>`;
+        }).join('');
+
+        el.innerHTML = `
+            <p class="result-count">총 ${total?.toLocaleString() || foods.length}개 결과 중 상위 ${foods.length}개 표시</p>
+            <div class="food-grid">${cards}</div>`;
+    }
+    </script>
+    <script src="cookie-consent.js"></script>
+</body>
+</html>
