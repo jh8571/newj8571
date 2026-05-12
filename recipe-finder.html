@@ -119,42 +119,40 @@
         </section>
 
         <div class="rf-wrap">
-            <p class="ing-section-title">🥩 단백질</p>
+            <p class="ing-section-title" data-ko="🥩 단백질" data-en="🥩 Protein">🥩 단백질</p>
             <div class="ing-grid" id="grid-protein"></div>
 
-            <p class="ing-section-title">🥦 채소 · 과일</p>
+            <p class="ing-section-title" data-ko="🥦 채소 · 과일" data-en="🥦 Vegetables & Fruits">🥦 채소 · 과일</p>
             <div class="ing-grid" id="grid-veggie"></div>
 
-            <p class="ing-section-title">🍚 탄수화물 · 기타</p>
+            <p class="ing-section-title" data-ko="🍚 탄수화물 · 기타" data-en="🍚 Carbs & Others">🍚 탄수화물 · 기타</p>
             <div class="ing-grid" id="grid-carb"></div>
 
             <div class="selected-bar">
-                <span class="sel-label">선택된 재료</span>
-                <div id="sel-tags"><span class="sel-none">재료를 선택해주세요</span></div>
+                <span class="sel-label" data-ko="선택된 재료" data-en="Selected Ingredients">선택된 재료</span>
+                <div id="sel-tags"></div>
             </div>
 
-            <button class="find-btn" id="find-btn" onclick="findRecipes()" disabled>
+            <button class="find-btn" id="find-btn" onclick="findRecipes()" disabled
+                data-ko="🍳 레시피 찾기" data-en="🍳 Find Recipes">
                 🍳 레시피 찾기
             </button>
 
-            <div id="recipe-results">
-                <div class="rf-status">
-                    <div class="icon">🍽️</div>
-                    <p>재료를 하나 이상 선택하고 레시피 찾기를 눌러보세요</p>
-                </div>
-            </div>
+            <div id="recipe-results"></div>
 
             <p class="data-credit">
-                레시피 데이터: <strong>Spoonacular Food API</strong> — 360,000+ 글로벌 레시피 데이터베이스
+                <span data-ko="레시피 데이터:" data-en="Recipe data:">레시피 데이터:</span>
+                <strong>Spoonacular Food API</strong>
+                — <span data-ko="360,000+ 글로벌 레시피 데이터베이스" data-en="360,000+ global recipe database">360,000+ 글로벌 레시피 데이터베이스</span>
             </p>
         </div>
     </main>
 
     <footer>
         <div class="container">
-            <p>&copy; 2026 VitalGuide. 전인적 건강을 위한 고품격 가이드.</p>
+            <p data-ko="&copy; 2026 VitalGuide. 전인적 건강을 위한 고품격 가이드." data-en="&copy; 2026 VitalGuide. Premium Guide for Holistic Health.">&copy; 2026 VitalGuide. 전인적 건강을 위한 고품격 가이드.</p>
             <div style="margin-top:20px;display:flex;justify-content:center;gap:20px;font-size:0.8rem;flex-wrap:wrap;">
-                <a href="about.html#editorial" style="color:var(--text-muted);text-decoration:none;">편집 원칙</a>
+                <a href="about.html#editorial" style="color:var(--text-muted);text-decoration:none;" data-ko="편집 원칙" data-en="Editorial">편집 원칙</a>
                 <a href="privacy.html" style="color:var(--text-muted);text-decoration:none;">Privacy</a>
                 <a href="terms.html" style="color:var(--text-muted);text-decoration:none;">Terms</a>
                 <a href="about.html" style="color:var(--text-muted);text-decoration:none;">About</a>
@@ -169,112 +167,136 @@
 
     const INGREDIENT_GROUPS = {
         protein: [
-            { ko: '🍗 닭가슴살', en: 'chicken breast' },
-            { ko: '🥩 소고기', en: 'beef' },
-            { ko: '🐷 돼지고기', en: 'pork' },
-            { ko: '🐟 연어', en: 'salmon' },
-            { ko: '🦐 새우', en: 'shrimp' },
-            { ko: '🥚 달걀', en: 'egg' },
-            { ko: '🫘 두부', en: 'tofu' },
-            { ko: '🫙 그릭요거트', en: 'greek yogurt' },
-            { ko: '🥛 우유', en: 'milk' },
-            { ko: '🐟 참치캔', en: 'tuna' },
+            { ko: '🍗 닭가슴살', en: '🍗 Chicken Breast', api: 'chicken breast' },
+            { ko: '🥩 소고기',   en: '🥩 Beef',           api: 'beef' },
+            { ko: '🐷 돼지고기', en: '🐷 Pork',           api: 'pork' },
+            { ko: '🐟 연어',     en: '🐟 Salmon',         api: 'salmon' },
+            { ko: '🦐 새우',     en: '🦐 Shrimp',         api: 'shrimp' },
+            { ko: '🥚 달걀',     en: '🥚 Egg',            api: 'egg' },
+            { ko: '🫘 두부',     en: '🫘 Tofu',           api: 'tofu' },
+            { ko: '🫙 그릭요거트', en: '🫙 Greek Yogurt', api: 'greek yogurt' },
+            { ko: '🥛 우유',     en: '🥛 Milk',           api: 'milk' },
+            { ko: '🐟 참치캔',   en: '🐟 Canned Tuna',    api: 'tuna' },
         ],
         veggie: [
-            { ko: '🥦 브로콜리', en: 'broccoli' },
-            { ko: '🌿 시금치', en: 'spinach' },
-            { ko: '🧅 양파', en: 'onion' },
-            { ko: '🧄 마늘', en: 'garlic' },
-            { ko: '🍅 토마토', en: 'tomato' },
-            { ko: '🫑 파프리카', en: 'bell pepper' },
-            { ko: '🥕 당근', en: 'carrot' },
-            { ko: '🥒 오이', en: 'cucumber' },
-            { ko: '🍄 버섯', en: 'mushroom' },
-            { ko: '🥑 아보카도', en: 'avocado' },
-            { ko: '🫛 완두콩', en: 'peas' },
-            { ko: '🫚 올리브오일', en: 'olive oil' },
+            { ko: '🥦 브로콜리', en: '🥦 Broccoli',       api: 'broccoli' },
+            { ko: '🌿 시금치',   en: '🌿 Spinach',        api: 'spinach' },
+            { ko: '🧅 양파',     en: '🧅 Onion',          api: 'onion' },
+            { ko: '🧄 마늘',     en: '🧄 Garlic',         api: 'garlic' },
+            { ko: '🍅 토마토',   en: '🍅 Tomato',         api: 'tomato' },
+            { ko: '🫑 파프리카', en: '🫑 Bell Pepper',    api: 'bell pepper' },
+            { ko: '🥕 당근',     en: '🥕 Carrot',         api: 'carrot' },
+            { ko: '🥒 오이',     en: '🥒 Cucumber',       api: 'cucumber' },
+            { ko: '🍄 버섯',     en: '🍄 Mushroom',       api: 'mushroom' },
+            { ko: '🥑 아보카도', en: '🥑 Avocado',        api: 'avocado' },
+            { ko: '🫛 완두콩',   en: '🫛 Peas',           api: 'peas' },
+            { ko: '🫚 올리브오일', en: '🫚 Olive Oil',    api: 'olive oil' },
         ],
         carb: [
-            { ko: '🍚 현미', en: 'brown rice' },
-            { ko: '🍝 파스타', en: 'pasta' },
-            { ko: '🥔 감자', en: 'potato' },
-            { ko: '🍠 고구마', en: 'sweet potato' },
-            { ko: '🌾 오트밀', en: 'oats' },
-            { ko: '🫙 통조림 콩', en: 'canned beans' },
-            { ko: '🍋 레몬', en: 'lemon' },
-            { ko: '🧈 버터', en: 'butter' },
+            { ko: '🍚 현미',     en: '🍚 Brown Rice',     api: 'brown rice' },
+            { ko: '🍝 파스타',   en: '🍝 Pasta',          api: 'pasta' },
+            { ko: '🥔 감자',     en: '🥔 Potato',         api: 'potato' },
+            { ko: '🍠 고구마',   en: '🍠 Sweet Potato',   api: 'sweet potato' },
+            { ko: '🌾 오트밀',   en: '🌾 Oats',           api: 'oats' },
+            { ko: '🫙 통조림콩', en: '🫙 Canned Beans',   api: 'canned beans' },
+            { ko: '🍋 레몬',     en: '🍋 Lemon',          api: 'lemon' },
+            { ko: '🧈 버터',     en: '🧈 Butter',         api: 'butter' },
         ],
     };
 
+    // en → { ko, en, api }
     const selected = new Map();
 
     function renderGroups() {
+        const lang = localStorage.getItem('lang') || 'ko';
         ['protein', 'veggie', 'carb'].forEach(g => {
             const el = document.getElementById(`grid-${g}`);
-            el.innerHTML = INGREDIENT_GROUPS[g].map(ing => `
-                <div class="ing-chip" id="chip-${ing.en.replace(/\s/g,'_')}" onclick="toggle('${ing.en}','${ing.ko}')">
-                    ${ing.ko}
-                </div>`).join('');
+            el.innerHTML = INGREDIENT_GROUPS[g].map(ing => {
+                const label = lang === 'ko' ? ing.ko : ing.en;
+                const id = 'chip-' + ing.api.replace(/\s/g, '_');
+                return `<div class="ing-chip" id="${id}" onclick="toggle('${ing.api}')">${label}</div>`;
+            }).join('');
+        });
+        // re-apply selected state
+        selected.forEach((_, api) => {
+            document.getElementById('chip-' + api.replace(/\s/g, '_'))?.classList.add('selected');
         });
     }
 
-    function toggle(en, ko) {
-        if (selected.has(en)) {
-            selected.delete(en);
-            document.getElementById('chip-' + en.replace(/\s/g,'_'))?.classList.remove('selected');
+    function toggle(api) {
+        // find ingredient data
+        let ing = null;
+        for (const group of Object.values(INGREDIENT_GROUPS)) {
+            ing = group.find(i => i.api === api);
+            if (ing) break;
+        }
+        if (!ing) return;
+
+        if (selected.has(api)) {
+            selected.delete(api);
+            document.getElementById('chip-' + api.replace(/\s/g, '_'))?.classList.remove('selected');
         } else {
-            selected.set(en, ko);
-            document.getElementById('chip-' + en.replace(/\s/g,'_'))?.classList.add('selected');
+            selected.set(api, ing);
+            document.getElementById('chip-' + api.replace(/\s/g, '_'))?.classList.add('selected');
         }
         updateSelBar();
     }
 
     function updateSelBar() {
+        const t = window.t;
+        const lang = localStorage.getItem('lang') || 'ko';
         const el = document.getElementById('sel-tags');
         const btn = document.getElementById('find-btn');
+
         if (selected.size === 0) {
-            el.innerHTML = '<span class="sel-none">재료를 선택해주세요</span>';
+            el.innerHTML = `<span class="sel-none">${t('재료를 선택해주세요', 'Please select ingredients')}</span>`;
             btn.disabled = true;
         } else {
-            el.innerHTML = [...selected.entries()].map(([en, ko]) =>
-                `<span class="sel-tag">${ko} <button onclick="toggle('${en}','${ko}')">✕</button></span>`
-            ).join('');
+            el.innerHTML = [...selected.entries()].map(([api, ing]) => {
+                const label = lang === 'ko' ? ing.ko : ing.en;
+                return `<span class="sel-tag">${label} <button onclick="toggle('${api}')">✕</button></span>`;
+            }).join('');
             btn.disabled = false;
         }
     }
 
     async function findRecipes() {
+        const t = window.t;
         if (selected.size === 0) return;
         const ingredients = [...selected.keys()].join(',');
         const el = document.getElementById('recipe-results');
-        el.innerHTML = '<div class="rf-status"><div class="icon">⏳</div><p>레시피 검색 중...</p></div>';
+        el.innerHTML = `<div class="rf-status"><div class="icon">⏳</div><p>${t('레시피 검색 중...', 'Searching for recipes...')}</p></div>`;
 
         try {
             const url = `https://api.spoonacular.com/recipes/findByIngredients?ingredients=${encodeURIComponent(ingredients)}&number=12&ranking=2&ignorePantry=true&apiKey=${SPOON_KEY}`;
             const res = await fetch(url);
             if (!res.ok) {
-                const err = await res.json().catch(() => ({}));
                 if (res.status === 402) throw new Error('quota');
                 throw new Error(res.status);
             }
             const data = await res.json();
 
             if (!data || data.length === 0) {
-                el.innerHTML = '<div class="rf-status"><div class="icon">😅</div><p>선택한 재료로 찾을 수 있는 레시피가 없습니다.<br>재료를 더 추가해보세요.</p></div>';
+                el.innerHTML = `<div class="rf-status"><div class="icon">😅</div><p>${t('선택한 재료로 찾을 수 있는 레시피가 없습니다.<br>재료를 더 추가해보세요.', 'No recipes found with the selected ingredients.<br>Try adding more ingredients.')}</p></div>`;
                 return;
             }
             renderRecipes(data);
         } catch (e) {
             const msg = e.message === 'quota'
-                ? '오늘의 API 요청 한도에 도달했습니다. 내일 다시 시도해주세요.'
-                : '오류가 발생했습니다. 잠시 후 다시 시도해주세요.';
+                ? t('오늘의 API 요청 한도에 도달했습니다. 내일 다시 시도해주세요.', 'Daily API quota reached. Please try again tomorrow.')
+                : t('오류가 발생했습니다. 잠시 후 다시 시도해주세요.', 'An error occurred. Please try again later.');
             el.innerHTML = `<div class="rf-status"><div class="icon">⚠️</div><p>${msg}</p></div>`;
         }
     }
 
     function renderRecipes(recipes) {
+        const t = window.t;
         const el = document.getElementById('recipe-results');
-        const slug = t => t.toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'');
+        const slug = title => title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
+        const viewLabel  = t('전체 레시피 보기 →', 'View Full Recipe →');
+        const usedLabel  = (n) => t(`✓ 보유재료 ${n}개`, `✓ ${n} used`);
+        const missLabel  = (n) => t(`+ 필요재료 ${n}개`, `+ ${n} missing`);
+        const perfectLabel = t('완벽 매칭 🎉', 'Perfect Match 🎉');
 
         const cards = recipes.map(r => {
             const url = `https://spoonacular.com/recipes/${slug(r.title)}-${r.id}`;
@@ -284,18 +306,22 @@
                 <div class="recipe-body">
                     <div class="recipe-title">${r.title}</div>
                     <div class="recipe-stats">
-                        <span class="rst rst-used">✓ 보유재료 ${r.usedIngredientCount}개</span>
-                        ${r.missedIngredientCount > 0 ? `<span class="rst rst-miss">+ 필요재료 ${r.missedIngredientCount}개</span>` : '<span class="rst rst-used">완벽 매칭 🎉</span>'}
+                        <span class="rst rst-used">${usedLabel(r.usedIngredientCount)}</span>
+                        ${r.missedIngredientCount > 0
+                            ? `<span class="rst rst-miss">${missLabel(r.missedIngredientCount)}</span>`
+                            : `<span class="rst rst-used">${perfectLabel}</span>`}
                     </div>
                 </div>
-                <span class="recipe-view">전체 레시피 보기 →</span>
+                <span class="recipe-view">${viewLabel}</span>
             </a>`;
         }).join('');
 
         el.innerHTML = `<div class="recipe-grid">${cards}</div>`;
     }
 
+    // Initialize
     renderGroups();
+    updateSelBar();
     </script>
     <script src="cookie-consent.js"></script>
 </body>

@@ -65,7 +65,7 @@
         }
         .nbar-list { display: flex; flex-direction: column; gap: 9px; }
         .nbar { display: flex; align-items: center; gap: 8px; font-size: 0.79rem; }
-        .nbar-label { width: 56px; color: var(--text-muted); font-weight: 600; flex-shrink: 0; }
+        .nbar-label { width: 60px; color: var(--text-muted); font-weight: 600; flex-shrink: 0; }
         .nbar-track { flex: 1; height: 6px; background: var(--border-color); border-radius: 99px; overflow: hidden; }
         .nbar-fill { height: 100%; border-radius: 99px; }
         .nbar-val { width: 46px; text-align: right; font-weight: 700; color: var(--text-main); }
@@ -106,51 +106,54 @@
         <div class="fs-wrap">
             <div class="search-row">
                 <input type="text" id="food-input"
+                    data-ko-ph="식품명 입력 (예: salmon, chicken breast, broccoli)"
+                    data-en-ph="Enter food name (e.g. salmon, chicken breast, broccoli)"
                     placeholder="식품명 입력 (예: salmon, chicken breast, broccoli)"
                     autocomplete="off" spellcheck="false">
                 <button onclick="searchFood()" data-ko="검색" data-en="Search">검색</button>
             </div>
 
             <div class="quick-tags">
-                <span class="qtag" onclick="quickSearch('chicken breast')">🍗 닭가슴살</span>
-                <span class="qtag" onclick="quickSearch('salmon')">🐟 연어</span>
-                <span class="qtag" onclick="quickSearch('egg whole')">🥚 달걀</span>
-                <span class="qtag" onclick="quickSearch('broccoli')">🥦 브로콜리</span>
-                <span class="qtag" onclick="quickSearch('sweet potato')">🍠 고구마</span>
-                <span class="qtag" onclick="quickSearch('avocado')">🥑 아보카도</span>
-                <span class="qtag" onclick="quickSearch('brown rice cooked')">🍚 현미</span>
-                <span class="qtag" onclick="quickSearch('almond')">🥜 아몬드</span>
-                <span class="qtag" onclick="quickSearch('banana')">🍌 바나나</span>
-                <span class="qtag" onclick="quickSearch('tofu firm')">🫘 두부</span>
-                <span class="qtag" onclick="quickSearch('beef ground')">🥩 소고기</span>
-                <span class="qtag" onclick="quickSearch('blueberry')">🫐 블루베리</span>
-                <span class="qtag" onclick="quickSearch('spinach')">🌿 시금치</span>
-                <span class="qtag" onclick="quickSearch('oats')">🌾 오트밀</span>
-                <span class="qtag" onclick="quickSearch('greek yogurt')">🥛 그릭요거트</span>
+                <span class="qtag" onclick="quickSearch('chicken breast')" data-ko="🍗 닭가슴살" data-en="🍗 Chicken Breast">🍗 닭가슴살</span>
+                <span class="qtag" onclick="quickSearch('salmon')" data-ko="🐟 연어" data-en="🐟 Salmon">🐟 연어</span>
+                <span class="qtag" onclick="quickSearch('egg whole')" data-ko="🥚 달걀" data-en="🥚 Egg">🥚 달걀</span>
+                <span class="qtag" onclick="quickSearch('broccoli')" data-ko="🥦 브로콜리" data-en="🥦 Broccoli">🥦 브로콜리</span>
+                <span class="qtag" onclick="quickSearch('sweet potato')" data-ko="🍠 고구마" data-en="🍠 Sweet Potato">🍠 고구마</span>
+                <span class="qtag" onclick="quickSearch('avocado')" data-ko="🥑 아보카도" data-en="🥑 Avocado">🥑 아보카도</span>
+                <span class="qtag" onclick="quickSearch('brown rice cooked')" data-ko="🍚 현미" data-en="🍚 Brown Rice">🍚 현미</span>
+                <span class="qtag" onclick="quickSearch('almond')" data-ko="🥜 아몬드" data-en="🥜 Almond">🥜 아몬드</span>
+                <span class="qtag" onclick="quickSearch('banana')" data-ko="🍌 바나나" data-en="🍌 Banana">🍌 바나나</span>
+                <span class="qtag" onclick="quickSearch('tofu firm')" data-ko="🫘 두부" data-en="🫘 Tofu">🫘 두부</span>
+                <span class="qtag" onclick="quickSearch('beef ground')" data-ko="🥩 소고기" data-en="🥩 Beef">🥩 소고기</span>
+                <span class="qtag" onclick="quickSearch('blueberry')" data-ko="🫐 블루베리" data-en="🫐 Blueberry">🫐 블루베리</span>
+                <span class="qtag" onclick="quickSearch('spinach')" data-ko="🌿 시금치" data-en="🌿 Spinach">🌿 시금치</span>
+                <span class="qtag" onclick="quickSearch('oats')" data-ko="🌾 오트밀" data-en="🌾 Oats">🌾 오트밀</span>
+                <span class="qtag" onclick="quickSearch('greek yogurt')" data-ko="🥛 그릭요거트" data-en="🥛 Greek Yogurt">🥛 그릭요거트</span>
             </div>
 
             <div id="food-results">
                 <div class="fs-status">
                     <div class="icon">🔍</div>
-                    <p data-ko="식품명을 입력하거나 위 태그를 눌러보세요<br><small style='font-size:0.82rem;opacity:0.7;'>영문 검색 시 더 정확한 결과를 얻을 수 있습니다</small>"
-                       data-en="Type a food name or tap a quick tag above<br><small style='font-size:0.82rem;opacity:0.7;'>English search gives more precise results</small>">
-                        식품명을 입력하거나 위 태그를 눌러보세요<br>
-                        <small style="font-size:0.82rem;opacity:0.7;">영문 검색 시 더 정확한 결과를 얻을 수 있습니다</small>
+                    <p>
+                        <span data-ko="식품명을 입력하거나 위 태그를 눌러보세요" data-en="Type a food name or tap a quick tag above">식품명을 입력하거나 위 태그를 눌러보세요</span><br>
+                        <small style="font-size:0.82rem;opacity:0.7;" data-ko="영문 검색 시 더 정확한 결과를 얻을 수 있습니다" data-en="English search gives more precise results">영문 검색 시 더 정확한 결과를 얻을 수 있습니다</small>
                     </p>
                 </div>
             </div>
 
             <p class="data-credit">
-                데이터 출처: <strong>USDA FoodData Central</strong> (fdc.nal.usda.gov) — 미국 농무부 공식 식품 영양 데이터베이스
+                <span data-ko="데이터 출처:" data-en="Data source:">데이터 출처:</span>
+                <strong>USDA FoodData Central</strong> (fdc.nal.usda.gov)
+                — <span data-ko="미국 농무부 공식 식품 영양 데이터베이스" data-en="Official USDA Food Nutrition Database">미국 농무부 공식 식품 영양 데이터베이스</span>
             </p>
         </div>
     </main>
 
     <footer>
         <div class="container">
-            <p>&copy; 2026 VitalGuide. 전인적 건강을 위한 고품격 가이드.</p>
+            <p data-ko="&copy; 2026 VitalGuide. 전인적 건강을 위한 고품격 가이드." data-en="&copy; 2026 VitalGuide. Premium Guide for Holistic Health.">&copy; 2026 VitalGuide. 전인적 건강을 위한 고품격 가이드.</p>
             <div style="margin-top:20px;display:flex;justify-content:center;gap:20px;font-size:0.8rem;flex-wrap:wrap;">
-                <a href="about.html#editorial" style="color:var(--text-muted);text-decoration:none;">편집 원칙</a>
+                <a href="about.html#editorial" style="color:var(--text-muted);text-decoration:none;" data-ko="편집 원칙" data-en="Editorial">편집 원칙</a>
                 <a href="privacy.html" style="color:var(--text-muted);text-decoration:none;">Privacy</a>
                 <a href="terms.html" style="color:var(--text-muted);text-decoration:none;">Terms</a>
                 <a href="about.html" style="color:var(--text-muted);text-decoration:none;">About</a>
@@ -164,11 +167,11 @@
     const USDA_KEY = 'Tk7U33ttVQEwhccZN2Whm6d8Cd6Ec06OCHyG4Utq';
 
     const NUTRIENTS = [
-        { id: 1003, label: '단백질', color: '#3b82f6', max: 40, unit: 'g' },
-        { id: 1005, label: '탄수화물', color: '#f59e0b', max: 80, unit: 'g' },
-        { id: 1004, label: '지방', color: '#ef4444', max: 35, unit: 'g' },
-        { id: 1079, label: '식이섬유', color: '#10b981', max: 15, unit: 'g' },
-        { id: 1093, label: '나트륨', color: '#8b5cf6', max: 800, unit: 'mg' },
+        { id: 1003, ko: '단백질', en: 'Protein',   color: '#3b82f6', max: 40,  unit: 'g'  },
+        { id: 1005, ko: '탄수화물', en: 'Carbs',   color: '#f59e0b', max: 80,  unit: 'g'  },
+        { id: 1004, ko: '지방',   en: 'Fat',       color: '#ef4444', max: 35,  unit: 'g'  },
+        { id: 1079, ko: '식이섬유', en: 'Fiber',   color: '#10b981', max: 15,  unit: 'g'  },
+        { id: 1093, ko: '나트륨', en: 'Sodium',    color: '#8b5cf6', max: 800, unit: 'mg' },
     ];
 
     function quickSearch(q) {
@@ -181,11 +184,12 @@
     });
 
     async function searchFood() {
+        const t = window.t;
         const query = document.getElementById('food-input').value.trim();
         if (!query) return;
 
         const el = document.getElementById('food-results');
-        el.innerHTML = '<div class="fs-status"><div class="icon">⏳</div><p>검색 중...</p></div>';
+        el.innerHTML = `<div class="fs-status"><div class="icon">⏳</div><p>${t('검색 중...', 'Searching...')}</p></div>`;
 
         try {
             const url = `https://api.nal.usda.gov/fdc/v1/foods/search?query=${encodeURIComponent(query)}&pageSize=9&api_key=${USDA_KEY}`;
@@ -194,12 +198,12 @@
             const data = await res.json();
 
             if (!data.foods || data.foods.length === 0) {
-                el.innerHTML = '<div class="fs-status"><div class="icon">😅</div><p>검색 결과가 없습니다.<br><small>영문으로 다시 시도해보세요</small></p></div>';
+                el.innerHTML = `<div class="fs-status"><div class="icon">😅</div><p>${t('검색 결과가 없습니다.<br><small>영문으로 다시 시도해보세요</small>', 'No results found.<br><small>Try searching in English</small>')}</p></div>`;
                 return;
             }
             renderFoods(data.foods.slice(0, 9), data.totalHits);
         } catch {
-            el.innerHTML = '<div class="fs-status"><div class="icon">⚠️</div><p>오류가 발생했습니다. 잠시 후 다시 시도해주세요.</p></div>';
+            el.innerHTML = `<div class="fs-status"><div class="icon">⚠️</div><p>${t('오류가 발생했습니다. 잠시 후 다시 시도해주세요.', 'An error occurred. Please try again later.')}</p></div>`;
         }
     }
 
@@ -210,22 +214,26 @@
     }
 
     function renderFoods(foods, total) {
+        const t = window.t;
         const el = document.getElementById('food-results');
+        const per100 = t('100g 기준', 'per 100g');
+        const noData = t('영양 데이터 없음', 'No nutrition data');
 
         const cards = foods.map(food => {
-            const kcal = getVal(food, 1008);
-            const name = food.description || '';
-            const brand = food.brandOwner || '';
-            const dataType = food.dataType || '';
+            const kcal  = getVal(food, 1008);
+            const name  = food.description || '';
+            const brand = food.brandOwner || food.dataType || '';
 
             const bars = NUTRIENTS.map(n => {
                 const val = getVal(food, n.id);
                 if (val === null || val === undefined) return '';
-                const pct = Math.min(100, (val / n.max) * 100);
-                const disp = n.unit === 'g' ? (val % 1 === 0 ? val : val.toFixed(1)) + 'g'
-                                             : Math.round(val) + 'mg';
+                const pct  = Math.min(100, (val / n.max) * 100);
+                const disp = n.unit === 'g'
+                    ? (val % 1 === 0 ? val : val.toFixed(1)) + 'g'
+                    : Math.round(val) + 'mg';
+                const label = t(n.ko, n.en);
                 return `<div class="nbar">
-                    <span class="nbar-label">${n.label}</span>
+                    <span class="nbar-label">${label}</span>
                     <div class="nbar-track"><div class="nbar-fill" style="width:${pct}%;background:${n.color};"></div></div>
                     <span class="nbar-val">${disp}</span>
                 </div>`;
@@ -233,15 +241,18 @@
 
             return `<div class="food-card">
                 <div class="food-name">${name}</div>
-                <div class="food-meta">${brand || dataType} &nbsp;·&nbsp; 100g 기준</div>
+                <div class="food-meta">${brand} &nbsp;·&nbsp; ${per100}</div>
                 ${kcal !== null ? `<div class="kcal-badge">🔥 ${Math.round(kcal)} kcal</div>` : ''}
-                <div class="nbar-list">${bars || '<span style="font-size:0.8rem;color:var(--text-muted);">영양 데이터 없음</span>'}</div>
+                <div class="nbar-list">${bars || `<span style="font-size:0.8rem;color:var(--text-muted);">${noData}</span>`}</div>
             </div>`;
         }).join('');
 
-        el.innerHTML = `
-            <p class="result-count">총 ${total?.toLocaleString() || foods.length}개 결과 중 상위 ${foods.length}개 표시</p>
-            <div class="food-grid">${cards}</div>`;
+        const countLabel = t(
+            `총 ${total?.toLocaleString() || foods.length}개 결과 중 상위 ${foods.length}개 표시`,
+            `Showing top ${foods.length} of ${total?.toLocaleString() || foods.length} results`
+        );
+
+        el.innerHTML = `<p class="result-count">${countLabel}</p><div class="food-grid">${cards}</div>`;
     }
     </script>
     <script src="cookie-consent.js"></script>

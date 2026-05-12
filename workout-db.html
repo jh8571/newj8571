@@ -7,7 +7,7 @@
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9103697866666926" crossorigin="anonymous"></script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>운동 DB 검색 — 부위별 운동 목록 | VitalGuide</title>
+    <title>부위별 운동 DB 검색 — 가슴·등·어깨·다리·복근 | VitalGuide</title>
     <meta name="description" content="가슴·등·어깨·팔·다리·복근 등 부위별 운동 동작을 검색하세요. wger 운동 데이터베이스 기반 상세 설명 제공.">
     <link rel="canonical" href="https://vi7al.com/workout-db.html">
     <meta property="og:type" content="website">
@@ -58,7 +58,7 @@
         .ex-tags { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 12px; }
         .ex-tag { font-size: 0.75rem; font-weight: 700; padding: 3px 10px; border-radius: 99px; }
         .tag-muscle { background: rgba(59,130,246,0.12); color: #2563eb; }
-        .tag-equip { background: rgba(245,158,11,0.12); color: #d97706; }
+        .tag-equip  { background: rgba(245,158,11,0.12);  color: #d97706; }
         .ex-desc {
             font-size: 0.82rem; color: var(--text-muted); line-height: 1.7;
             display: -webkit-box; -webkit-line-clamp: 4; -webkit-box-orient: vertical;
@@ -112,30 +112,36 @@
             <div class="cat-tabs" id="cat-tabs"></div>
 
             <div class="search-row">
-                <input type="text" id="ex-search" placeholder="운동 이름으로 검색 (예: squat, push up, deadlift)" autocomplete="off">
-                <button onclick="filterByName()">검색</button>
+                <input type="text" id="ex-search"
+                    data-ko-ph="운동 이름으로 검색 (예: squat, push up, deadlift)"
+                    data-en-ph="Search by exercise name (e.g. squat, push up, deadlift)"
+                    placeholder="운동 이름으로 검색 (예: squat, push up, deadlift)"
+                    autocomplete="off">
+                <button onclick="filterByName()" data-ko="검색" data-en="Search">검색</button>
             </div>
 
             <div id="ex-count"></div>
             <div id="ex-results">
                 <div class="wd-status">
                     <div class="icon">💪</div>
-                    <p>위에서 운동 부위를 선택하세요</p>
+                    <p data-ko="위에서 운동 부위를 선택하세요" data-en="Select a muscle group above">위에서 운동 부위를 선택하세요</p>
                 </div>
             </div>
-            <div id="load-more-wrap"></div>
+            <div class="load-more-wrap" id="load-more-wrap"></div>
 
             <p class="data-credit">
-                운동 데이터: <strong>wger Workout Manager API</strong> (wger.de) — 오픈소스 운동 데이터베이스
+                <span data-ko="운동 데이터:" data-en="Exercise data:">운동 데이터:</span>
+                <strong>wger Workout Manager API</strong> (wger.de)
+                — <span data-ko="오픈소스 운동 데이터베이스" data-en="Open-source exercise database">오픈소스 운동 데이터베이스</span>
             </p>
         </div>
     </main>
 
     <footer>
         <div class="container">
-            <p>&copy; 2026 VitalGuide. 전인적 건강을 위한 고품격 가이드.</p>
+            <p data-ko="&copy; 2026 VitalGuide. 전인적 건강을 위한 고품격 가이드." data-en="&copy; 2026 VitalGuide. Premium Guide for Holistic Health.">&copy; 2026 VitalGuide. 전인적 건강을 위한 고품격 가이드.</p>
             <div style="margin-top:20px;display:flex;justify-content:center;gap:20px;font-size:0.8rem;flex-wrap:wrap;">
-                <a href="about.html#editorial" style="color:var(--text-muted);text-decoration:none;">편집 원칙</a>
+                <a href="about.html#editorial" style="color:var(--text-muted);text-decoration:none;" data-ko="편집 원칙" data-en="Editorial">편집 원칙</a>
                 <a href="privacy.html" style="color:var(--text-muted);text-decoration:none;">Privacy</a>
                 <a href="terms.html" style="color:var(--text-muted);text-decoration:none;">Terms</a>
                 <a href="about.html" style="color:var(--text-muted);text-decoration:none;">About</a>
@@ -147,40 +153,44 @@
     <script src="theme.js"></script>
     <script>
     const CATEGORIES = [
-        { id: 11, ko: '가슴', icon: '🫀' },
-        { id: 12, ko: '등', icon: '🏋️' },
-        { id: 13, ko: '어깨', icon: '💪' },
-        { id: 8,  ko: '팔', icon: '🦾' },
-        { id: 9,  ko: '다리', icon: '🦵' },
-        { id: 10, ko: '복근', icon: '🔥' },
-        { id: 14, ko: '종아리', icon: '🏃' },
+        { id: 11, ko: '가슴',   en: 'Chest',      icon: '🫀' },
+        { id: 12, ko: '등',     en: 'Back',        icon: '🏋️' },
+        { id: 13, ko: '어깨',   en: 'Shoulders',   icon: '💪' },
+        { id: 8,  ko: '팔',     en: 'Arms',        icon: '🦾' },
+        { id: 9,  ko: '다리',   en: 'Legs',        icon: '🦵' },
+        { id: 10, ko: '복근',   en: 'Abs',         icon: '🔥' },
+        { id: 14, ko: '종아리', en: 'Calves',      icon: '🏃' },
     ];
 
     let allExercises = [];
     let currentCatId = null;
-    let nextUrl = null;
+    let nextUrl      = null;
 
     function buildTabs() {
-        const el = document.getElementById('cat-tabs');
-        el.innerHTML = CATEGORIES.map(c =>
-            `<button class="cat-tab" id="tab-${c.id}" onclick="loadCategory(${c.id})">
-                ${c.icon} ${c.ko}
-            </button>`
-        ).join('');
+        const t    = window.t;
+        const lang = localStorage.getItem('lang') || 'ko';
+        const el   = document.getElementById('cat-tabs');
+        el.innerHTML = CATEGORIES.map(c => {
+            const label = lang === 'ko' ? c.ko : c.en;
+            return `<button class="cat-tab" id="tab-${c.id}" onclick="loadCategory(${c.id})">
+                ${c.icon} ${label}
+            </button>`;
+        }).join('');
     }
 
     async function loadCategory(catId) {
-        currentCatId = catId;
-        allExercises = [];
-        nextUrl = null;
+        const t = window.t;
+        currentCatId  = catId;
+        allExercises  = [];
+        nextUrl       = null;
 
-        CATEGORIES.forEach(c => {
-            document.getElementById('tab-' + c.id)?.classList.toggle('active', c.id === catId);
-        });
+        CATEGORIES.forEach(c =>
+            document.getElementById('tab-' + c.id)?.classList.toggle('active', c.id === catId)
+        );
         document.getElementById('ex-search').value = '';
 
         const el = document.getElementById('ex-results');
-        el.innerHTML = '<div class="wd-status"><div class="icon">⏳</div><p>운동 목록 불러오는 중...</p></div>';
+        el.innerHTML = `<div class="wd-status"><div class="icon">⏳</div><p>${t('운동 목록 불러오는 중...', 'Loading exercises...')}</p></div>`;
         document.getElementById('load-more-wrap').innerHTML = '';
         document.getElementById('ex-count').innerHTML = '';
 
@@ -188,29 +198,29 @@
     }
 
     async function fetchExercises(url) {
+        const t = window.t;
         try {
             const res = await fetch(url);
             if (!res.ok) throw new Error(res.status);
             const data = await res.json();
 
             const valid = (data.results || []).filter(ex => {
-                const t = getTranslation(ex);
-                return t && t.name;
+                const tr = getTranslation(ex);
+                return tr && tr.name;
             });
 
             allExercises = allExercises.concat(valid);
             nextUrl = data.next || null;
-
             renderExercises(allExercises);
         } catch {
             document.getElementById('ex-results').innerHTML =
-                '<div class="wd-status"><div class="icon">⚠️</div><p>데이터를 불러올 수 없습니다. 잠시 후 다시 시도해주세요.</p></div>';
+                `<div class="wd-status"><div class="icon">⚠️</div><p>${t('데이터를 불러올 수 없습니다. 잠시 후 다시 시도해주세요.', 'Could not load data. Please try again later.')}</p></div>`;
         }
     }
 
     function getTranslation(ex) {
         if (!ex.translations) return null;
-        return ex.translations.find(t => t.language === 2) || ex.translations[0] || null;
+        return ex.translations.find(tr => tr.language === 2) || ex.translations[0] || null;
     }
 
     function stripHtml(html) {
@@ -219,63 +229,69 @@
     }
 
     function renderExercises(exList) {
+        const t          = window.t;
         const nameFilter = document.getElementById('ex-search').value.trim().toLowerCase();
-        const filtered = nameFilter
+        const filtered   = nameFilter
             ? exList.filter(ex => {
-                const t = getTranslation(ex);
-                return t && t.name.toLowerCase().includes(nameFilter);
+                const tr = getTranslation(ex);
+                return tr && tr.name.toLowerCase().includes(nameFilter);
               })
             : exList;
 
-        const count = document.getElementById('ex-count');
-        count.innerHTML = filtered.length > 0
-            ? `<p class="result-count">${filtered.length}개 운동 표시</p>`
+        const countEl = document.getElementById('ex-count');
+        countEl.innerHTML = filtered.length > 0
+            ? `<p class="result-count">${t(`${filtered.length}개 운동 표시`, `${filtered.length} exercises`)}</p>`
             : '';
 
         if (filtered.length === 0) {
             document.getElementById('ex-results').innerHTML =
-                '<div class="wd-status"><div class="icon">😅</div><p>검색 결과가 없습니다.</p></div>';
+                `<div class="wd-status"><div class="icon">😅</div><p>${t('검색 결과가 없습니다.', 'No results found.')}</p></div>`;
             document.getElementById('load-more-wrap').innerHTML = '';
             return;
         }
 
+        const noDescLabel  = t('설명 없음', 'No description');
+        const showMoreLabel = t('더 보기 ▾', 'Show more ▾');
+
         const cards = filtered.map(ex => {
-            const t = getTranslation(ex);
-            const name = t?.name || '알 수 없음';
-            const desc = stripHtml(t?.description || '');
-            const muscles = (ex.muscles || []).map(m => `<span class="ex-tag tag-muscle">${m.name_en || m.name}</span>`).join('');
-            const equips = (ex.equipment || []).map(e => `<span class="ex-tag tag-equip">${e.name}</span>`).join('');
+            const tr      = getTranslation(ex);
+            const name    = tr?.name || '–';
+            const desc    = stripHtml(tr?.description || '');
+            const muscles = (ex.muscles || []).map(m =>
+                `<span class="ex-tag tag-muscle">${m.name_en || m.name}</span>`
+            ).join('');
+            const equips  = (ex.equipment || []).map(e =>
+                `<span class="ex-tag tag-equip">${e.name}</span>`
+            ).join('');
 
             return `<div class="ex-card">
                 <div class="ex-name">${name}</div>
                 <div class="ex-tags">${muscles}${equips}</div>
-                ${desc ? `<div class="ex-desc" id="desc-${ex.id}">${desc}</div>
-                    ${desc.length > 200 ? `<button class="ex-more-btn" onclick="expandDesc(${ex.id}, this)">더 보기 ▾</button>` : ''}`
-                    : '<p style="font-size:0.82rem;color:var(--text-muted);">설명 없음</p>'}
+                ${desc
+                    ? `<div class="ex-desc" id="desc-${ex.id}">${desc}</div>
+                       ${desc.length > 200 ? `<button class="ex-more-btn" onclick="expandDesc(${ex.id},this)">${showMoreLabel}</button>` : ''}`
+                    : `<p style="font-size:0.82rem;color:var(--text-muted);">${noDescLabel}</p>`}
             </div>`;
         }).join('');
 
         document.getElementById('ex-results').innerHTML = `<div class="ex-grid">${cards}</div>`;
 
-        const lmWrap = document.getElementById('load-more-wrap');
-        lmWrap.innerHTML = nextUrl && !nameFilter
-            ? `<button class="load-more-btn" onclick="loadMore()">더 보기 (20개 추가)</button>`
+        document.getElementById('load-more-wrap').innerHTML = nextUrl && !nameFilter
+            ? `<button class="load-more-btn" onclick="loadMore()">${t('더 보기 (20개 추가)', 'Load more (20 more)')}</button>`
             : '';
     }
 
     function expandDesc(id, btn) {
         const el = document.getElementById('desc-' + id);
-        if (el) {
-            el.style.webkitLineClamp = 'unset';
-            el.style.overflow = 'visible';
-        }
+        if (el) { el.style.webkitLineClamp = 'unset'; el.style.overflow = 'visible'; }
         btn.remove();
     }
 
     async function loadMore() {
+        const t = window.t;
         if (!nextUrl) return;
         document.getElementById('load-more-wrap').innerHTML =
-            '<button class="load-more-btn" disabled>불러오는 중...</button>';
+            `<button class="load-more-btn" disabled>${t('불러오는 중...', 'Loading...')}</button>`;
         await fetchExercises(nextUrl);
     }
 
