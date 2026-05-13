@@ -56,18 +56,19 @@
             .q-text { font-size: 1.15rem; }
         }
 
-        /* Toast */
-        #share-toast {
-            position: fixed; bottom: 28px; left: 50%; transform: translateX(-50%) translateY(0);
-            background: #1e293b; color: white;
-            padding: 14px 24px; border-radius: 14px; font-size: 0.9rem; font-weight: 700;
-            z-index: 9999; box-shadow: 0 8px 30px rgba(0,0,0,0.25);
-            white-space: nowrap; max-width: 90vw; overflow: hidden; text-overflow: ellipsis;
-            animation: toastIn 0.3s ease;
+        /* 친구 공유 결과 배너 */
+        .shared-banner {
+            background: linear-gradient(135deg, color-mix(in srgb, var(--accent-color) 12%, transparent), transparent);
+            border: 1px solid color-mix(in srgb, var(--accent-color) 30%, transparent);
+            border-radius: 18px; padding: 16px 20px; margin-bottom: 20px;
+            display: flex; align-items: center; gap: 14px; flex-wrap: wrap;
         }
-        #share-toast.hide { animation: toastOut 0.3s ease forwards; }
-        @keyframes toastIn  { from { opacity:0; transform:translateX(-50%) translateY(16px); } to { opacity:1; transform:translateX(-50%) translateY(0); } }
-        @keyframes toastOut { from { opacity:1; transform:translateX(-50%) translateY(0); }   to { opacity:0; transform:translateX(-50%) translateY(10px); } }
+        .shared-banner .sb-text { flex: 1; min-width: 180px; font-size: 0.9rem; color: var(--text-muted); line-height: 1.6; }
+        .shared-banner .sb-btn {
+            padding: 10px 20px; background: var(--primary-color); color: white;
+            border: none; border-radius: 12px; font-size: 0.85rem; font-weight: 800;
+            cursor: pointer; white-space: nowrap; flex-shrink: 0;
+        }
 
         /* Result */
         #result-section { display: none; animation: qslide 0.5s ease; }
@@ -92,14 +93,6 @@
         .tip-box { border-radius: 16px; padding: 18px 20px; margin-bottom: 24px; }
         .tip-box .tip-label { font-size: 0.75rem; font-weight: 800; letter-spacing: 0.07em; text-transform: uppercase; margin-bottom: 8px; }
         .tip-box p { font-size: 0.9rem; line-height: 1.8; margin: 0; }
-
-        .share-btn {
-            width: 100%; padding: 16px; border: 2px solid var(--border-color); border-radius: 16px;
-            background: var(--card-bg); font-size: 0.95rem; font-weight: 800;
-            cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 10px;
-            transition: all 0.2s; color: var(--text-main); margin-bottom: 12px;
-        }
-        .share-btn:hover { border-color: var(--accent-color); transform: translateY(-1px); }
 
         .retry-btn {
             width: 100%; padding: 14px; background: transparent; border: 2px solid var(--border-color);
@@ -355,12 +348,9 @@
                     <p id="res-tip"></p>
                 </div>
 
-                <!-- Share -->
-                <button class="share-btn" onclick="shareResult()">
-                    <i class="fas fa-share-alt"></i>
-                    <span data-ko="결과 공유하기" data-en="Share My Result">결과 공유하기</span>
-                </button>
-                <button class="retry-btn" onclick="restartTest()">
+                <!-- Share (MBTI와 동일 UI — theme.js getShareUI 주입) -->
+                <div id="share-ui-wrap"></div>
+                <button class="retry-btn" onclick="restartTest()" style="margin-top:12px;">
                     <i class="fas fa-redo" style="margin-right:6px;"></i>
                     <span data-ko="다시 테스트하기" data-en="Retake Test">다시 테스트하기</span>
                 </button>
@@ -591,81 +581,61 @@
             </a>`
         ).join('');
 
+        // URL에 결과 유형 삽입 → 친구가 공유받은 링크 열면 결과 바로 표시
+        history.replaceState({}, '', '?result=' + winner);
+
+        // MBTI와 동일한 공유 UI 주입 (theme.js getShareUI)
+        const isKo2 = document.body.getAttribute('data-lang') !== 'en';
+        const shareTitle = isKo2
+            ? `나의 건강 유형: ${t.emoji} ${t.name}`
+            : `My Health Type: ${t.emoji} ${t.nameEn}`;
+        const shareText = isKo2
+            ? `저는 ${t.emoji} ${t.name}입니다! "${t.tagline}" VitalGuide 건강 유형 테스트로 당신의 유형도 확인해 보세요.`
+            : `I got ${t.emoji} ${t.nameEn}! "${t.taglineEn}" Check your health type on VitalGuide!`;
+
+        const shareWrap = document.getElementById('share-ui-wrap');
+        shareWrap.innerHTML = window.getShareUI ? window.getShareUI(shareTitle, shareText) : '';
+
         document.getElementById('result-section').style.display = 'block';
         document.getElementById('result-section').scrollIntoView({ behavior:'smooth', block:'start' });
         window._resultType = winner;
     }
 
+    // ── URL 파라미터로 공유받은 결과 자동 표시 ─────────────────
+    function checkSharedResult() {
+        const param = new URLSearchParams(window.location.search).get('result');
+        if (!param || !TYPES[param]) return;
+
+        const isKo = document.body.getAttribute('data-lang') !== 'en';
+        const t = TYPES[param];
+
+        // 친구 공유 배너 추가
+        const banner = document.createElement('div');
+        banner.className = 'shared-banner';
+        banner.innerHTML = `
+            <div style="font-size:2rem; flex-shrink:0;">${t.emoji}</div>
+            <div class="sb-text">
+                <strong>${isKo ? '친구가 공유한 건강 유형 결과예요!' : 'A friend shared their health type result!'}</strong><br>
+                ${isKo ? `친구의 유형은 <strong>${t.name}</strong>입니다. 나도 테스트해볼까요?` : `Their type is <strong>${t.nameEn}</strong>. Want to find yours?`}
+            </div>
+            <button class="sb-btn" onclick="restartTest()">
+                ${isKo ? '나도 테스트하기 →' : 'Take the Test →'}
+            </button>`;
+
+        // 결과 섹션 맨 위에 배너 삽입
+        const resSection = document.getElementById('result-section');
+        resSection.insertBefore(banner, resSection.firstChild);
+
+        // 결과 바로 표시 (퀴즈 없이)
+        scores[param] = 999;
+        document.getElementById('intro-section').style.display = 'none';
+        showResult();
+    }
+
     function showTypeDetail(key) {
         const isKo = document.body.getAttribute('data-lang') !== 'en';
-        const t = TYPES[key];
-        alert(`${t.emoji} ${isKo ? t.name : t.nameEn}\n\n${isKo ? t.desc : t.descEn}\n\n💡 ${isKo ? t.tip : t.tipEn}`);
-    }
-
-    function shareResult() {
-        const isKo = document.body.getAttribute('data-lang') !== 'en';
-        const t = TYPES[window._resultType || 'lion'];
-        const url = 'https://vi7al.com/health-type-test.html';
-        const shareTitle = isKo ? '나의 건강 유형 테스트 | VitalGuide' : 'My Health Type Test | VitalGuide';
-        const shareText = isKo
-            ? `나의 건강 유형은 ${t.emoji} ${t.name}!\n"${t.tagline}"\n\n내 유형 알아보기 → ${url}`
-            : `My health type is ${t.emoji} ${t.nameEn}!\n"${t.taglineEn}"\n\nFind yours → ${url}`;
-
-        if (navigator.share) {
-            navigator.share({ title: shareTitle, text: shareText, url })
-                .catch(err => {
-                    // 사용자가 취소한 경우(AbortError)는 아무것도 안 함, 그 외는 클립보드로 폴백
-                    if (err && err.name !== 'AbortError') copyToClipboard(shareText, isKo);
-                });
-        } else {
-            copyToClipboard(shareText, isKo);
-        }
-    }
-
-    function copyToClipboard(text, isKo) {
-        const successMsg = isKo ? '✅ 복사됐어요! 친구에게 공유해보세요 😊' : '✅ Copied! Share with friends 😊';
-        const failMsg   = isKo ? '🔗 vi7al.com/health-type-test.html' : '🔗 vi7al.com/health-type-test.html';
-
-        // 1순위: Clipboard API
-        if (navigator.clipboard && navigator.clipboard.writeText) {
-            navigator.clipboard.writeText(text)
-                .then(() => showToast(successMsg))
-                .catch(() => execCopy(text, successMsg, failMsg));
-        } else {
-            execCopy(text, successMsg, failMsg);
-        }
-    }
-
-    function execCopy(text, successMsg, failMsg) {
-        // 2순위: textarea + execCommand (IE11 포함 전 브라우저 호환)
-        const el = document.createElement('textarea');
-        el.value = text;
-        el.setAttribute('readonly', '');
-        el.style.cssText = 'position:fixed;top:-9999px;left:-9999px;opacity:0;';
-        document.body.appendChild(el);
-        el.focus();
-        el.select();
-        try {
-            const ok = document.execCommand('copy');
-            showToast(ok ? successMsg : failMsg, ok ? 3000 : 5000);
-        } catch {
-            showToast(failMsg, 5000);
-        } finally {
-            document.body.removeChild(el);
-        }
-    }
-
-    function showToast(msg, duration = 3000) {
-        const existing = document.getElementById('share-toast');
-        if (existing) existing.remove();
-        const toast = document.createElement('div');
-        toast.id = 'share-toast';
-        toast.textContent = msg;
-        document.body.appendChild(toast);
-        setTimeout(() => {
-            toast.classList.add('hide');
-            setTimeout(() => toast.remove(), 320);
-        }, duration);
+        const ot = TYPES[key];
+        alert(`${ot.emoji} ${isKo ? ot.name : ot.nameEn}\n\n${isKo ? ot.desc : ot.descEn}\n\n💡 ${isKo ? ot.tip : ot.tipEn}`);
     }
 
     function restartTest() {
@@ -674,11 +644,19 @@
             b.classList.remove('chosen');
             b.style.pointerEvents = '';
         });
+        // 공유 배너 제거 (친구 결과로 들어온 경우)
+        const banner = document.querySelector('.shared-banner');
+        if (banner) banner.remove();
+        // URL 파라미터 초기화
+        history.replaceState({}, '', window.location.pathname);
         document.getElementById('result-section').style.display = 'none';
-        document.getElementById('quiz-section').style.display = 'block';
-        showQ(1);
+        document.getElementById('intro-section').style.display = 'block';
+        document.getElementById('quiz-section').style.display = 'none';
         window.scrollTo({ top: 0, behavior: 'smooth' });
     }
+
+    // 페이지 로드 시 공유 URL 감지
+    document.addEventListener('DOMContentLoaded', checkSharedResult);
     </script>
 </body>
 </html>
