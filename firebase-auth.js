@@ -185,7 +185,7 @@ function _showInAppGuidePopup(lang) {
 }
 
 // ── Kakao Auth ─────────────────────────────────────────────────────────────
-const KAKAO_APP_KEY = 'YOUR_KAKAO_JS_APP_KEY'; // ← developers.kakao.com에서 발급한 JavaScript 키
+const KAKAO_APP_KEY = 'aab8c65bef75cf69f10357ebaf3a03e8';
 
 function loadKakaoSDK() {
   return new Promise(resolve => {
