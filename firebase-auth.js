@@ -129,7 +129,51 @@ function isMobile() {
   return /Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
 }
 
+function isInAppBrowser() {
+  const ua = navigator.userAgent;
+  return /FBAN|FBAV|Instagram|Line|KAKAOTALK|KakaoTalk|NaverApp|Twitter|Snapchat|WeChat|MicroMessenger/.test(ua)
+    || (ua.includes('Android') && ua.includes('; wv)'))
+    || (ua.includes('iPhone') && !ua.includes('Safari') && !ua.includes('CriOS') && !ua.includes('FxiOS'));
+}
+
+export function showInAppBrowserGuide() {
+  const lang = localStorage.getItem('lang') || 'ko';
+  const existing = document.getElementById('vg-inapp-guide');
+  if (existing) return;
+
+  const overlay = document.createElement('div');
+  overlay.id = 'vg-inapp-guide';
+  overlay.style.cssText = `position:fixed;inset:0;background:rgba(0,0,0,0.6);z-index:100001;
+    display:flex;align-items:flex-end;justify-content:center;padding:20px;backdrop-filter:blur(4px);`;
+
+  overlay.innerHTML = `
+    <div style="background:var(--card-bg);border-radius:24px 24px 20px 20px;padding:32px 28px;
+      width:100%;max-width:480px;box-shadow:0 -10px 40px rgba(0,0,0,0.3);text-align:center;">
+      <div style="font-size:2.5rem;margin-bottom:12px;">🌐</div>
+      <h3 style="font-size:1.1rem;font-weight:900;margin-bottom:10px;">
+        ${lang==='ko' ? '외부 브라우저에서 열어주세요' : 'Open in External Browser'}
+      </h3>
+      <p style="font-size:0.85rem;color:var(--text-muted);line-height:1.7;margin-bottom:20px;">
+        ${lang==='ko'
+          ? '카카오톡·인스타그램 등 앱 내 브라우저에서는<br>구글 로그인이 차단됩니다.<br><br>우측 하단 <strong>⋯ 메뉴 → Chrome(또는 Safari)으로 열기</strong>를 선택해주세요.'
+          : 'Google Sign-In is blocked inside in-app browsers.<br><br>Tap the <strong>⋯ menu → Open in Chrome (or Safari)</strong>.'}
+      </p>
+      <button onclick="document.getElementById('vg-inapp-guide').remove()"
+        style="width:100%;padding:14px;background:var(--primary-color);color:white;border:none;
+          border-radius:14px;font-size:0.95rem;font-weight:800;cursor:pointer;">
+        ${lang==='ko' ? '확인' : 'OK'}
+      </button>
+    </div>`;
+
+  document.body.appendChild(overlay);
+  overlay.addEventListener('click', e => { if (e.target === overlay) overlay.remove(); });
+}
+
 export async function signInGoogle() {
+  if (isInAppBrowser()) {
+    showInAppBrowserGuide();
+    return;
+  }
   const provider = new GoogleAuthProvider();
   try {
     if (isMobile()) {
