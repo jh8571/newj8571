@@ -1,0 +1,623 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-P6CTZY2283"></script>
+    <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-P6CTZY2283');</script>
+    <meta name="google-adsense-account" content="ca-pub-9103697866666926">
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9103697866666926" crossorigin="anonymous"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>나의 건강 유형 테스트 — 6가지 건강 성격 유형 | VitalGuide</title>
+    <meta name="description" content="12가지 질문으로 나의 건강 생활 유형을 알아보세요. 철벽 자기관리형부터 만성피로 생존형까지, 내 건강 습관의 진짜 모습을 확인하고 맞춤 건강 조언을 받아보세요.">
+    <link rel="canonical" href="https://vi7al.com/health-type-test.html">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://vi7al.com/health-type-test.html">
+    <meta property="og:title" content="나의 건강 유형 테스트 — 당신은 어떤 건강 유형인가요?">
+    <meta property="og:description" content="12문항으로 알아보는 나의 건강 성격 유형. 철벽 자기관리형? 만성피로 생존형? 지금 바로 확인해보세요.">
+    <meta property="og:image" content="https://vi7al.com/og-image.png">
+    <meta property="og:site_name" content="VitalGuide">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="icon" href="favicon.svg" type="image/svg+xml">
+    <script type="application/ld+json">
+    {"@context":"https://schema.org","@type":"WebPage","name":"나의 건강 유형 테스트","description":"12가지 질문으로 나의 건강 생활 유형을 분석하는 자가진단 테스트입니다.","url":"https://vi7al.com/health-type-test.html","publisher":{"@type":"Organization","name":"VitalGuide","url":"https://vi7al.com/"}}
+    </script>
+    <style>
+        .test-wrap { max-width: 720px; margin: 0 auto; }
+
+        /* Progress */
+        .progress-track { background: var(--border-color); border-radius: 99px; height: 6px; margin-bottom: 8px; overflow: hidden; }
+        .progress-fill { height: 100%; background: linear-gradient(to right, var(--accent-color), #818cf8); border-radius: 99px; transition: width 0.4s ease; }
+        .progress-label { font-size: 0.78rem; font-weight: 700; color: var(--text-muted); text-align: right; margin-bottom: 28px; }
+
+        /* Question step */
+        .q-step { display: none; }
+        .q-step.active { display: block; animation: qslide 0.35s ease; }
+        @keyframes qslide { from { opacity:0; transform:translateY(14px); } to { opacity:1; transform:translateY(0); } }
+
+        .q-num-badge { display: inline-block; background: color-mix(in srgb, var(--primary-color) 8%, transparent); color: var(--primary-color); border: 1px solid color-mix(in srgb, var(--primary-color) 20%, transparent); font-size: 0.75rem; font-weight: 800; padding: 4px 12px; border-radius: 99px; letter-spacing: 0.05em; margin-bottom: 14px; }
+        .q-text { font-size: 1.35rem; font-weight: 900; line-height: 1.45; margin-bottom: 26px; word-break: keep-all; }
+
+        /* Options */
+        .options-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+        .opt {
+            padding: 16px 18px; border: 2px solid var(--border-color); border-radius: 18px;
+            background: var(--card-bg); color: var(--text-muted); font-size: 0.9rem;
+            font-weight: 600; cursor: pointer; transition: all 0.18s;
+            text-align: left; display: flex; align-items: flex-start; gap: 12px;
+            line-height: 1.5; word-break: keep-all;
+        }
+        .opt:hover { border-color: var(--accent-color); transform: translateY(-2px); background: color-mix(in srgb, var(--accent-color) 5%, var(--card-bg)); }
+        .opt.chosen { border-color: var(--primary-color); background: color-mix(in srgb, var(--primary-color) 8%, var(--card-bg)); color: var(--text-main); }
+        .opt-emoji { font-size: 1.5rem; flex-shrink: 0; line-height: 1.3; }
+
+        @media (max-width: 520px) {
+            .options-grid { grid-template-columns: 1fr; }
+            .q-text { font-size: 1.15rem; }
+        }
+
+        /* Result */
+        #result-section { display: none; animation: qslide 0.5s ease; }
+
+        .result-hero {
+            border-radius: 28px; padding: 44px 40px; text-align: center; margin-bottom: 24px;
+            border: 1px solid var(--border-color);
+        }
+        .result-emoji { font-size: 5rem; line-height: 1; margin-bottom: 16px; }
+        .result-type-badge { display: inline-block; font-size: 0.75rem; font-weight: 800; padding: 5px 14px; border-radius: 99px; letter-spacing: 0.05em; margin-bottom: 14px; }
+        .result-name { font-size: 2rem; font-weight: 900; line-height: 1.3; margin-bottom: 8px; }
+        .result-tagline { font-size: 1rem; font-weight: 600; color: var(--text-muted); margin-bottom: 22px; }
+        .result-desc { font-size: 0.92rem; color: var(--text-muted); line-height: 1.85; max-width: 520px; margin: 0 auto; }
+
+        .detail-card { background: var(--card-bg); border: 1px solid var(--border-color); border-radius: 20px; padding: 26px 28px; margin-bottom: 14px; }
+        .detail-card h3 { font-size: 0.82rem; font-weight: 800; letter-spacing: 0.07em; text-transform: uppercase; margin-bottom: 14px; }
+        .detail-list { list-style: none; padding: 0; margin: 0; }
+        .detail-list li { display: flex; align-items: flex-start; gap: 10px; font-size: 0.9rem; color: var(--text-muted); line-height: 1.7; margin-bottom: 8px; }
+        .detail-list li:last-child { margin-bottom: 0; }
+        .dl-icon { flex-shrink: 0; margin-top: 2px; }
+
+        .tip-box { border-radius: 16px; padding: 18px 20px; margin-bottom: 24px; }
+        .tip-box .tip-label { font-size: 0.75rem; font-weight: 800; letter-spacing: 0.07em; text-transform: uppercase; margin-bottom: 8px; }
+        .tip-box p { font-size: 0.9rem; line-height: 1.8; margin: 0; }
+
+        .share-btn {
+            width: 100%; padding: 16px; border: 2px solid var(--border-color); border-radius: 16px;
+            background: var(--card-bg); font-size: 0.95rem; font-weight: 800;
+            cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 10px;
+            transition: all 0.2s; color: var(--text-main); margin-bottom: 12px;
+        }
+        .share-btn:hover { border-color: var(--accent-color); transform: translateY(-1px); }
+
+        .retry-btn {
+            width: 100%; padding: 14px; background: transparent; border: 2px solid var(--border-color);
+            border-radius: 16px; font-size: 0.9rem; font-weight: 700; cursor: pointer;
+            color: var(--text-muted); transition: 0.2s; margin-bottom: 30px;
+        }
+        .retry-btn:hover { border-color: var(--text-muted); }
+
+        .other-types { display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 10px; margin-bottom: 30px; }
+        .other-type-card { background: var(--card-bg); border: 1px solid var(--border-color); border-radius: 14px; padding: 14px; text-align: center; cursor: pointer; transition: transform 0.2s; }
+        .other-type-card:hover { transform: translateY(-2px); }
+        .otc-emoji { font-size: 1.8rem; }
+        .otc-name { font-size: 0.78rem; font-weight: 800; margin-top: 6px; line-height: 1.4; }
+    </style>
+</head>
+<body data-lang="ko">
+    <header>
+        <div class="container header-flex">
+            <a href="index.html" class="logo">VitalGuide</a>
+            <div class="controls-bar">
+                <button id="lang-toggle" class="control-btn">EN</button>
+                <button id="theme-toggle" class="control-btn"><i class="fas fa-moon"></i></button>
+            </div>
+        </div>
+        <nav>
+            <a href="index.html" data-ko="AI 맞춤영양" data-en="AI Nutrition">AI 맞춤영양</a>
+            <a href="exercise.html" data-ko="운동가이드" data-en="Exercise">운동가이드</a>
+            <a href="psychology.html" data-ko="심리분석" data-en="Psychology">심리분석</a>
+            <a href="mbti.html" data-ko="MBTI 테스트" data-en="MBTI Test">MBTI 테스트</a>
+            <a href="fortune.html" data-ko="오늘의운세" data-en="Daily Fortune">오늘의운세</a>
+            <a href="games.html" data-ko="미니게임" data-en="Mini Games">미니게임</a>
+            <a href="blog.html" data-ko="건강가이드" data-en="Health Blog">건강가이드</a>
+        </nav>
+    </header>
+
+    <main class="container" style="padding-bottom: 60px;">
+        <div class="test-wrap">
+
+            <!-- Intro -->
+            <section class="hero" style="padding: 60px 0 32px;" id="intro-section">
+                <h2 style="font-size:2.2rem;" data-ko="나의 건강 유형은?" data-en="What's Your Health Type?">나의 건강 유형은?</h2>
+                <p style="margin-bottom:28px;" data-ko="12가지 질문으로 알아보는 나의 건강 생활 패턴. 6가지 유형 중 당신은 어디에 속하나요?" data-en="12 questions to reveal your health lifestyle pattern. Which of the 6 types are you?">12가지 질문으로 알아보는 나의 건강 생활 패턴. 6가지 유형 중 당신은 어디에 속하나요?</p>
+
+                <!-- Type preview -->
+                <div style="display:grid; grid-template-columns:repeat(3,1fr); gap:10px; max-width:480px; margin:0 auto 32px;">
+                    <div style="background:var(--card-bg); border:1px solid var(--border-color); border-radius:14px; padding:14px 10px; text-align:center;">
+                        <div style="font-size:1.8rem;">🦁</div>
+                        <div style="font-size:0.72rem; font-weight:800; margin-top:6px; line-height:1.4;" data-ko="철벽 자기관리형" data-en="Iron Self-Manager">철벽 자기관리형</div>
+                    </div>
+                    <div style="background:var(--card-bg); border:1px solid var(--border-color); border-radius:14px; padding:14px 10px; text-align:center;">
+                        <div style="font-size:1.8rem;">🌿</div>
+                        <div style="font-size:0.72rem; font-weight:800; margin-top:6px; line-height:1.4;" data-ko="자연주의 힐링형" data-en="Nature Healing Type">자연주의 힐링형</div>
+                    </div>
+                    <div style="background:var(--card-bg); border:1px solid var(--border-color); border-radius:14px; padding:14px 10px; text-align:center;">
+                        <div style="font-size:1.8rem;">🦊</div>
+                        <div style="font-size:0.72rem; font-weight:800; margin-top:6px; line-height:1.4;" data-ko="의지충만 반복형" data-en="Motivated Repeater">의지충만 반복형</div>
+                    </div>
+                    <div style="background:var(--card-bg); border:1px solid var(--border-color); border-radius:14px; padding:14px 10px; text-align:center;">
+                        <div style="font-size:1.8rem;">🐌</div>
+                        <div style="font-size:0.72rem; font-weight:800; margin-top:6px; line-height:1.4;" data-ko="만성피로 생존형" data-en="Chronic Fatigue Survivor">만성피로 생존형</div>
+                    </div>
+                    <div style="background:var(--card-bg); border:1px solid var(--border-color); border-radius:14px; padding:14px 10px; text-align:center;">
+                        <div style="font-size:1.8rem;">🐻</div>
+                        <div style="font-size:0.72rem; font-weight:800; margin-top:6px; line-height:1.4;" data-ko="자유분방 무관심형" data-en="Free-Spirit Type">자유분방 무관심형</div>
+                    </div>
+                    <div style="background:var(--card-bg); border:1px solid var(--border-color); border-radius:14px; padding:14px 10px; text-align:center;">
+                        <div style="font-size:1.8rem;">🦉</div>
+                        <div style="font-size:0.72rem; font-weight:800; margin-top:6px; line-height:1.4;" data-ko="정보형 비실천형" data-en="Knowledge Non-Doer">정보형 비실천형</div>
+                    </div>
+                </div>
+
+                <button onclick="startTest()" style="padding:16px 40px; background:var(--primary-color); color:white; border:none; border-radius:16px; font-size:1.05rem; font-weight:900; cursor:pointer; transition:opacity 0.2s;" onmouseover="this.style.opacity='0.85'" onmouseout="this.style.opacity='1'">
+                    <i class="fas fa-heartbeat" style="margin-right:8px;"></i>
+                    <span data-ko="테스트 시작하기 →" data-en="Start Test →">테스트 시작하기 →</span>
+                </button>
+                <p style="font-size:0.78rem; color:var(--text-muted); margin-top:12px;" data-ko="총 12문항 · 약 2분 소요 · 무료" data-en="12 questions · ~2 min · Free">총 12문항 · 약 2분 소요 · 무료</p>
+            </section>
+
+            <!-- Quiz -->
+            <div id="quiz-section" style="display:none; padding-top:40px;">
+                <div class="progress-track"><div class="progress-fill" id="prog-fill" style="width:0%;"></div></div>
+                <div class="progress-label" id="prog-label">0 / 12</div>
+
+                <!-- Q1: lion / leaf / snail / bear -->
+                <div class="q-step" id="q1">
+                    <div class="q-num-badge" data-ko="Q 1 / 12" data-en="Q 1 / 12">Q 1 / 12</div>
+                    <div class="q-text" data-ko="아침에 눈을 뜨면 가장 먼저 하는 행동은?" data-en="What's the first thing you do when you wake up?">아침에 눈을 뜨면 가장 먼저 하는 행동은?</div>
+                    <div class="options-grid">
+                        <button class="opt" onclick="pick(1,'lion',this)"><span class="opt-emoji">🏃</span><span data-ko="정해진 루틴대로 바로 움직인다" data-en="Follow my routine immediately">정해진 루틴대로 바로 움직인다</span></button>
+                        <button class="opt" onclick="pick(1,'leaf',this)"><span class="opt-emoji">🌿</span><span data-ko="천천히 명상하거나 따뜻한 차를 마신다" data-en="Meditate or enjoy a warm drink">천천히 명상하거나 따뜻한 차를 마신다</span></button>
+                        <button class="opt" onclick="pick(1,'snail',this)"><span class="opt-emoji">😩</span><span data-ko="알람을 몇 번 끄고 최대한 더 잔다" data-en="Hit snooze multiple times">알람을 몇 번 끄고 최대한 더 잔다</span></button>
+                        <button class="opt" onclick="pick(1,'bear',this)"><span class="opt-emoji">📱</span><span data-ko="침대에서 스마트폰을 한참 본다" data-en="Scroll my phone in bed">침대에서 스마트폰을 한참 본다</span></button>
+                    </div>
+                </div>
+
+                <!-- Q2: lion / leaf / fox / owl -->
+                <div class="q-step" id="q2">
+                    <div class="q-num-badge">Q 2 / 12</div>
+                    <div class="q-text" data-ko="운동에 대한 솔직한 내 모습은?" data-en="Be honest — what's your relationship with exercise?">운동에 대한 솔직한 내 모습은?</div>
+                    <div class="options-grid">
+                        <button class="opt" onclick="pick(2,'lion',this)"><span class="opt-emoji">💪</span><span data-ko="주 4회 이상, 루틴대로 빠짐없이 한다" data-en="4+ times/week, never miss">주 4회 이상, 루틴대로 빠짐없이 한다</span></button>
+                        <button class="opt" onclick="pick(2,'leaf',this)"><span class="opt-emoji">🧘</span><span data-ko="요가·필라테스·걷기 같은 부드러운 활동을 즐긴다" data-en="Enjoy yoga, pilates, or walking">요가·필라테스·걷기 같은 부드러운 활동을 즐긴다</span></button>
+                        <button class="opt" onclick="pick(2,'fox',this)"><span class="opt-emoji">🔥</span><span data-ko="시작은 잘하는데 오래가지 못한다" data-en="Start strong but can't sustain it">시작은 잘하는데 오래가지 못한다</span></button>
+                        <button class="opt" onclick="pick(2,'owl',this)"><span class="opt-emoji">📹</span><span data-ko="운동 유튜브는 많이 봤다, 직접 하기가 어렵다" data-en="Watch lots of workout videos but rarely do them">운동 유튜브는 많이 봤다, 직접 하기가 어렵다</span></button>
+                    </div>
+                </div>
+
+                <!-- Q3: leaf / snail / bear / owl -->
+                <div class="q-step" id="q3">
+                    <div class="q-num-badge">Q 3 / 12</div>
+                    <div class="q-text" data-ko="음식 앞에서 나를 가장 잘 표현한 것은?" data-en="Which best describes you around food?">음식 앞에서 나를 가장 잘 표현한 것은?</div>
+                    <div class="options-grid">
+                        <button class="opt" onclick="pick(3,'leaf',this)"><span class="opt-emoji">🌱</span><span data-ko="가능하면 자연식·건강식을 선택한다" data-en="Choose natural/healthy options when possible">가능하면 자연식·건강식을 선택한다</span></button>
+                        <button class="opt" onclick="pick(3,'snail',this)"><span class="opt-emoji">😤</span><span data-ko="너무 바빠서 편의점·배달로 때운다" data-en="Too busy — convenience store or delivery">너무 바빠서 편의점·배달로 때운다</span></button>
+                        <button class="opt" onclick="pick(3,'bear',this)"><span class="opt-emoji">🍕</span><span data-ko="먹고 싶은 거 먹는다. 건강은 나중에" data-en="Eat what I want. Health can wait">먹고 싶은 거 먹는다. 건강은 나중에</span></button>
+                        <button class="opt" onclick="pick(3,'owl',this)"><span class="opt-emoji">📖</span><span data-ko="영양 정보는 많이 아는데 실천이 어렵다" data-en="Know lots of nutrition facts but hard to apply">영양 정보는 많이 아는데 실천이 어렵다</span></button>
+                    </div>
+                </div>
+
+                <!-- Q4: lion / leaf / fox / snail -->
+                <div class="q-step" id="q4">
+                    <div class="q-num-badge">Q 4 / 12</div>
+                    <div class="q-text" data-ko="스트레스를 받으면 나는?" data-en="When you're stressed, you...?">스트레스를 받으면 나는?</div>
+                    <div class="options-grid">
+                        <button class="opt" onclick="pick(4,'lion',this)"><span class="opt-emoji">🏋️</span><span data-ko="운동으로 즉시 해소한다" data-en="Exercise to release it immediately">운동으로 즉시 해소한다</span></button>
+                        <button class="opt" onclick="pick(4,'leaf',this)"><span class="opt-emoji">🧖</span><span data-ko="명상·산책·입욕으로 몸을 이완한다" data-en="Meditate, walk, or take a bath">명상·산책·입욕으로 몸을 이완한다</span></button>
+                        <button class="opt" onclick="pick(4,'fox',this)"><span class="opt-emoji">🍰</span><span data-ko="맛있는 걸 먹으며 위안을 삼는다" data-en="Find comfort in eating something good">맛있는 걸 먹으며 위안을 삼는다</span></button>
+                        <button class="opt" onclick="pick(4,'snail',this)"><span class="opt-emoji">🛌</span><span data-ko="그냥 자버리거나 멍하니 버틴다" data-en="Just sleep it off or zone out">그냥 자버리거나 멍하니 버틴다</span></button>
+                    </div>
+                </div>
+
+                <!-- Q5: lion / leaf / bear / owl -->
+                <div class="q-step" id="q5">
+                    <div class="q-num-badge">Q 5 / 12</div>
+                    <div class="q-text" data-ko="건강 관련 영상이나 글을 접하면?" data-en="When you come across health content...?">건강 관련 영상이나 글을 접하면?</div>
+                    <div class="options-grid">
+                        <button class="opt" onclick="pick(5,'lion',this)"><span class="opt-emoji">✅</span><span data-ko="이미 실천 중이라 공감하며 본다" data-en="Nod along — I already do these things">이미 실천 중이라 공감하며 본다</span></button>
+                        <button class="opt" onclick="pick(5,'leaf',this)"><span class="opt-emoji">💚</span><span data-ko="마음에 닿는 것만 천천히 삶에 녹인다" data-en="Absorb only what resonates, slowly">마음에 닿는 것만 천천히 삶에 녹인다</span></button>
+                        <button class="opt" onclick="pick(5,'bear',this)"><span class="opt-emoji">😐</span><span data-ko="나와 거리가 먼 이야기 같다" data-en="Feels like it's for someone else">나와 거리가 먼 이야기 같다</span></button>
+                        <button class="opt" onclick="pick(5,'owl',this)"><span class="opt-emoji">📌</span><span data-ko="흥미롭게 보는데 막상 실천은 어렵다" data-en="Find it interesting but hard to act on">흥미롭게 보는데 막상 실천은 어렵다</span></button>
+                    </div>
+                </div>
+
+                <!-- Q6: fox / snail / bear / owl -->
+                <div class="q-step" id="q6">
+                    <div class="q-num-badge">Q 6 / 12</div>
+                    <div class="q-text" data-ko="나의 수면 패턴은?" data-en="How would you describe your sleep pattern?">나의 수면 패턴은?</div>
+                    <div class="options-grid">
+                        <button class="opt" onclick="pick(6,'fox',this)"><span class="opt-emoji">🔄</span><span data-ko="피곤할 때 몰아서 자고 아닐 때는 못 잔다" data-en="Binge sleep when exhausted, otherwise restless">피곤할 때 몰아서 자고 아닐 때는 못 잔다</span></button>
+                        <button class="opt" onclick="pick(6,'snail',this)"><span class="opt-emoji">😰</span><span data-ko="자야 하는데 잠이 안 오거나 자도 피곤하다" data-en="Can't sleep or wake up still tired">자야 하는데 잠이 안 오거나 자도 피곤하다</span></button>
+                        <button class="opt" onclick="pick(6,'bear',this)"><span class="opt-emoji">🌙</span><span data-ko="새벽까지 있다가 늦게 일어나는 편이다" data-en="Stay up late, wake up late">새벽까지 있다가 늦게 일어나는 편이다</span></button>
+                        <button class="opt" onclick="pick(6,'owl',this)"><span class="opt-emoji">📊</span><span data-ko="수면이 중요한 건 아는데 지키기 어렵다" data-en="Know sleep matters but struggle to prioritize it">수면이 중요한 건 아는데 지키기 어렵다</span></button>
+                    </div>
+                </div>
+
+                <!-- Q7: lion / fox / snail / owl -->
+                <div class="q-step" id="q7">
+                    <div class="q-num-badge">Q 7 / 12</div>
+                    <div class="q-text" data-ko="건강 결심이나 다이어트 패턴은?" data-en="What's your pattern with health resolutions?">건강 결심이나 다이어트 패턴은?</div>
+                    <div class="options-grid">
+                        <button class="opt" onclick="pick(7,'lion',this)"><span class="opt-emoji">📆</span><span data-ko="꾸준히 관리 중이라 새 결심이 필요 없다" data-en="Consistently managed — no new resolutions needed">꾸준히 관리 중이라 새 결심이 필요 없다</span></button>
+                        <button class="opt" onclick="pick(7,'fox',this)"><span class="opt-emoji">🔁</span><span data-ko="자주 시작하지만 결국 요요·반복이다" data-en="Start often but end up yo-yoing">자주 시작하지만 결국 요요·반복이다</span></button>
+                        <button class="opt" onclick="pick(7,'snail',this)"><span class="opt-emoji">😮‍💨</span><span data-ko="하고 싶은데 너무 지쳐서 엄두가 안 난다" data-en="Want to but too exhausted to even start">하고 싶은데 너무 지쳐서 엄두가 안 난다</span></button>
+                        <button class="opt" onclick="pick(7,'owl',this)"><span class="opt-emoji">💭</span><span data-ko="완벽한 계획을 세우다 정작 실행을 못 한다" data-en="Plan perfectly but never execute">완벽한 계획을 세우다 정작 실행을 못 한다</span></button>
+                    </div>
+                </div>
+
+                <!-- Q8: lion / leaf / snail / bear -->
+                <div class="q-step" id="q8">
+                    <div class="q-num-badge">Q 8 / 12</div>
+                    <div class="q-text" data-ko="몸에서 피로 신호가 오면?" data-en="When your body signals fatigue...?">몸에서 피로 신호가 오면?</div>
+                    <div class="options-grid">
+                        <button class="opt" onclick="pick(8,'lion',this)"><span class="opt-emoji">🛠️</span><span data-ko="회복 루틴을 즉시 강화한다" data-en="Immediately reinforce my recovery routine">회복 루틴을 즉시 강화한다</span></button>
+                        <button class="opt" onclick="pick(8,'leaf',this)"><span class="opt-emoji">🌿</span><span data-ko="자연 회복을 믿고 충분히 쉰다" data-en="Trust natural recovery and rest fully">자연 회복을 믿고 충분히 쉰다</span></button>
+                        <button class="opt" onclick="pick(8,'snail',this)"><span class="opt-emoji">☕</span><span data-ko="커피 한 잔 더 마시고 버텨본다" data-en="Grab another coffee and push through">커피 한 잔 더 마시고 버텨본다</span></button>
+                        <button class="opt" onclick="pick(8,'bear',this)"><span class="opt-emoji">🤷</span><span data-ko="별로 신경 안 쓴다, 원래 이런 편이라고 생각한다" data-en="Don't think about it — assume it's normal">별로 신경 안 쓴다, 원래 이런 편이라고 생각한다</span></button>
+                    </div>
+                </div>
+
+                <!-- Q9: fox / snail / bear / owl -->
+                <div class="q-step" id="q9">
+                    <div class="q-num-badge">Q 9 / 12</div>
+                    <div class="q-text" data-ko="건강 앱이나 도구를 사용하는 편인가요?" data-en="Do you use health apps or tools?">건강 앱이나 도구를 사용하는 편인가요?</div>
+                    <div class="options-grid">
+                        <button class="opt" onclick="pick(9,'fox',this)"><span class="opt-emoji">📲</span><span data-ko="새 다이어트·운동 앱은 꼭 깔아본다" data-en="Always download new diet or fitness apps">새 다이어트·운동 앱은 꼭 깔아본다</span></button>
+                        <button class="opt" onclick="pick(9,'snail',this)"><span class="opt-emoji">😴</span><span data-ko="깔았다가 귀찮아서 금방 안 쓴다" data-en="Download then abandon quickly">깔았다가 귀찮아서 금방 안 쓴다</span></button>
+                        <button class="opt" onclick="pick(9,'bear',this)"><span class="opt-emoji">🙅</span><span data-ko="딱히 없다. 필요성을 못 느낀다" data-en="None — don't feel the need">딱히 없다. 필요성을 못 느낀다</span></button>
+                        <button class="opt" onclick="pick(9,'owl',this)"><span class="opt-emoji">📚</span><span data-ko="건강 앱·책은 많은데 루틴이 안 잡혔다" data-en="Have plenty of apps and books but no routine">건강 앱·책은 많은데 루틴이 안 잡혔다</span></button>
+                    </div>
+                </div>
+
+                <!-- Q10: lion / fox / snail / bear -->
+                <div class="q-step" id="q10">
+                    <div class="q-num-badge">Q 10 / 12</div>
+                    <div class="q-text" data-ko="지금 건강 목표가 있나요?" data-en="Do you currently have a health goal?">지금 건강 목표가 있나요?</div>
+                    <div class="options-grid">
+                        <button class="opt" onclick="pick(10,'lion',this)"><span class="opt-emoji">🎯</span><span data-ko="구체적인 목표가 있고 진행 중이다" data-en="Yes — specific goal, actively working on it">구체적인 목표가 있고 진행 중이다</span></button>
+                        <button class="opt" onclick="pick(10,'fox',this)"><span class="opt-emoji">⚖️</span><span data-ko="일단 살부터 빼야지… 매번 그 생각이다" data-en="Lose weight first… same thought every time">일단 살부터 빼야지… 매번 그 생각이다</span></button>
+                        <button class="opt" onclick="pick(10,'snail',this)"><span class="opt-emoji">😮‍💨</span><span data-ko="있긴 한데 너무 지쳐서 엄두를 못 낸다" data-en="Have goals but too drained to pursue them">있긴 한데 너무 지쳐서 엄두를 못 낸다</span></button>
+                        <button class="opt" onclick="pick(10,'bear',this)"><span class="opt-emoji">🤷</span><span data-ko="딱히 없다. 그냥 사는 거지" data-en="Not really. Just living life">딱히 없다. 그냥 사는 거지</span></button>
+                    </div>
+                </div>
+
+                <!-- Q11: lion / leaf / fox / owl -->
+                <div class="q-step" id="q11">
+                    <div class="q-num-badge">Q 11 / 12</div>
+                    <div class="q-text" data-ko="친구가 '같이 운동할래?' 하면?" data-en="A friend asks 'Want to work out together?'">친구가 '같이 운동할래?' 하면?</div>
+                    <div class="options-grid">
+                        <button class="opt" onclick="pick(11,'lion',this)"><span class="opt-emoji">💪</span><span data-ko="당연하지! 오늘 루틴에 맞으면 바로 간다" data-en="Of course! Fits my schedule, let's go">당연하지! 오늘 루틴에 맞으면 바로 간다</span></button>
+                        <button class="opt" onclick="pick(11,'leaf',this)"><span class="opt-emoji">🚶</span><span data-ko="헬스보다 같이 산책이나 가볍게 하자" data-en="Skip the gym — how about a nice walk instead?">헬스보다 같이 산책이나 가볍게 하자</span></button>
+                        <button class="opt" onclick="pick(11,'fox',this)"><span class="opt-emoji">📅</span><span data-ko="'좋아!'라고 했다가 당일에 취소한다" data-en="Say 'yes!' then cancel on the day">좋아!'라고 했다가 당일에 취소한다</span></button>
+                        <button class="opt" onclick="pick(11,'owl',this)"><span class="opt-emoji">🤔</span><span data-ko="가야 한다는 건 아는데 선뜻 못 나가겠다" data-en="Know I should go but can't quite bring myself to">가야 한다는 건 아는데 선뜻 못 나가겠다</span></button>
+                    </div>
+                </div>
+
+                <!-- Q12: leaf / fox / bear / owl -->
+                <div class="q-step" id="q12">
+                    <div class="q-num-badge">Q 12 / 12</div>
+                    <div class="q-text" data-ko="지금 내 건강 상태를 솔직하게 표현하면?" data-en="If you were honest about your health right now...?">지금 내 건강 상태를 솔직하게 표현하면?</div>
+                    <div class="options-grid">
+                        <button class="opt" onclick="pick(12,'leaf',this)"><span class="opt-emoji">🌱</span><span data-ko="체력은 좀 부족하지만 마음은 편하고 여유롭다" data-en="Low energy but mentally peaceful and calm">체력은 좀 부족하지만 마음은 편하고 여유롭다</span></button>
+                        <button class="opt" onclick="pick(12,'fox',this)"><span class="opt-emoji">😅</span><span data-ko="관리를 했다 안 했다 반복, 들쭉날쭉이다" data-en="Up and down — inconsistent management">관리를 했다 안 했다 반복, 들쭉날쭉이다</span></button>
+                        <button class="opt" onclick="pick(12,'bear',this)"><span class="opt-emoji">😶</span><span data-ko="신경 안 쓰고 살았다. 그냥 이런가보다" data-en="Haven't thought about it. This is just how it is">신경 안 쓰고 살았다. 그냥 이런가보다</span></button>
+                        <button class="opt" onclick="pick(12,'owl',this)"><span class="opt-emoji">😟</span><span data-ko="슬슬 걱정되는데 어디서 시작해야 할지 모른다" data-en="Getting worried but don't know where to start">슬슬 걱정되는데 어디서 시작해야 할지 모른다</span></button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Result -->
+            <div id="result-section" style="padding-top:40px;">
+
+                <div class="result-hero" id="res-hero">
+                    <div class="result-emoji" id="res-emoji"></div>
+                    <div class="result-type-badge" id="res-badge"></div>
+                    <div class="result-name" id="res-name"></div>
+                    <div class="result-tagline" id="res-tagline"></div>
+                    <div class="result-desc" id="res-desc"></div>
+                </div>
+
+                <div style="display:grid; grid-template-columns:1fr 1fr; gap:14px; margin-bottom:14px;" id="strength-warn-grid">
+                    <div class="detail-card">
+                        <h3 style="color:#10b981;" data-ko="✅ 강점" data-en="✅ Strengths">✅ 강점</h3>
+                        <ul class="detail-list" id="res-strengths"></ul>
+                    </div>
+                    <div class="detail-card">
+                        <h3 style="color:#f59e0b;" data-ko="⚠️ 주의할 점" data-en="⚠️ Watch Out">⚠️ 주의할 점</h3>
+                        <ul class="detail-list" id="res-warnings"></ul>
+                    </div>
+                </div>
+
+                <div class="tip-box" id="res-tip-box">
+                    <div class="tip-label" data-ko="💡 맞춤 건강 조언" data-en="💡 Personalized Health Tip">💡 맞춤 건강 조언</div>
+                    <p id="res-tip"></p>
+                </div>
+
+                <!-- Share -->
+                <button class="share-btn" onclick="shareResult()">
+                    <i class="fas fa-share-alt"></i>
+                    <span data-ko="결과 공유하기" data-en="Share My Result">결과 공유하기</span>
+                </button>
+                <button class="retry-btn" onclick="restartTest()">
+                    <i class="fas fa-redo" style="margin-right:6px;"></i>
+                    <span data-ko="다시 테스트하기" data-en="Retake Test">다시 테스트하기</span>
+                </button>
+
+                <!-- Other types -->
+                <div style="font-size:0.75rem; font-weight:800; color:var(--text-muted); letter-spacing:0.06em; text-transform:uppercase; margin-bottom:14px;" data-ko="다른 유형 살펴보기" data-en="Explore Other Types">다른 유형 살펴보기</div>
+                <div class="other-types" id="other-types-grid"></div>
+
+                <!-- Related content -->
+                <div style="font-size:0.75rem; font-weight:800; color:var(--text-muted); letter-spacing:0.06em; text-transform:uppercase; margin-bottom:14px; margin-top:30px;" data-ko="맞춤 추천 콘텐츠" data-en="Recommended for You">맞춤 추천 콘텐츠</div>
+                <div id="res-links" style="display:grid; grid-template-columns:repeat(auto-fill,minmax(230px,1fr)); gap:12px; margin-bottom:40px;"></div>
+            </div>
+
+        </div>
+    </main>
+
+    <footer style="text-align:center; padding:40px 24px; border-top:1px solid var(--border-color); color:var(--text-muted); font-size:0.85rem;">
+        <p>© 2026 VitalGuide &nbsp;|&nbsp; <a href="privacy.html" style="color:inherit;text-decoration:none;">Privacy</a> &nbsp;|&nbsp; <a href="terms.html" style="color:inherit;text-decoration:none;">Terms</a></p>
+    </footer>
+
+    <script src="theme.js"></script>
+    <script src="main.js"></script>
+    <script>
+    // ── Data ─────────────────────────────────────────────────
+    const TYPES = {
+        lion: {
+            emoji: '🦁', color: '#f59e0b', bg: '#fffbeb',
+            name: '철벽 자기관리형', nameEn: 'Iron Self-Manager',
+            tagline: '건강이 삶의 기반인 당신', taglineEn: 'Health is the foundation of your life',
+            desc: '루틴이 흔들리면 하루가 불안할 정도로 자기관리가 철저한 타입입니다. 운동·수면·식단이 체계적으로 정리되어 있고, 주변에서 "어떻게 그렇게 꾸준해?"라는 말을 자주 듣습니다. 높은 에너지와 집중력이 강점이며, 건강이 단순한 목표가 아닌 삶의 방식으로 자리 잡았습니다.',
+            descEn: 'Your routine is the backbone of your day — disrupting it makes you uneasy. Exercise, sleep, and diet are systematically managed, and people often ask how you stay so consistent. High energy and sharp focus are your hallmarks. Health isn\'t just a goal for you — it\'s a way of life.',
+            strengths: ['높은 에너지와 일관된 컨디션 유지', '강한 면역력과 집중력', '건강 루틴을 통한 자기효능감'],
+            strengthsEn: ['Consistent high energy levels', 'Strong immunity and sharp focus', 'Deep self-efficacy through healthy routines'],
+            warnings: ['완벽주의로 인한 번아웃 위험', '루틴 이탈 시 과도한 자책', '유연성 부족으로 즐거움을 놓칠 수 있음'],
+            warningsEn: ['Perfectionism can lead to burnout', 'Harsh self-criticism when the routine breaks', 'May miss spontaneous joy due to rigidity'],
+            tip: '일주일에 하루는 의도적인 "자유일"을 두세요. 루틴을 쉬는 것도 루틴의 일부입니다. 완벽한 자기관리자도 회복과 유연성이 필요합니다.',
+            tipEn: 'Schedule one intentional "free day" per week. Rest is part of the routine too. Even the most disciplined people need recovery and flexibility.',
+            links: [
+                { href: 'bmi-calculator.html', emoji: '⚖️', title: 'BMI·칼로리 계산기', titleEn: 'BMI & Calorie Calculator', sub: 'TDEE 목표 칼로리 정밀 계산', subEn: 'Precise TDEE and calorie targets' },
+                { href: 'article-protein.html', emoji: '💪', title: '단백질 완전 가이드', titleEn: 'Complete Protein Guide', sub: '근육 보호·최적 섭취량', subEn: 'Muscle protection & optimal intake' },
+                { href: 'running-calculator.html', emoji: '🏃', title: '런닝 페이스 계산기', titleEn: 'Running Pace Calculator', sub: '레이스 완주 예측·트레이닝 존', subEn: 'Race prediction & training zones' },
+            ]
+        },
+        leaf: {
+            emoji: '🌿', color: '#10b981', bg: '#f0fdf4',
+            name: '자연주의 힐링형', nameEn: 'Nature Healing Type',
+            tagline: '나만의 속도로 건강을 가꾸는 당신', taglineEn: 'Growing healthy at your own natural pace',
+            desc: '빠른 속도보다 지속 가능한 삶의 리듬을 중시합니다. 명상, 산책, 자연식 등 몸이 보내는 신호에 귀 기울이며 살아갑니다. 스트레스 지수가 낮고 마음의 안정감이 뛰어나지만, 체계적인 근력 운동은 다소 부족할 수 있습니다.',
+            descEn: 'You value a sustainable life rhythm over speed. You live by listening to your body\'s signals through meditation, walking, and natural foods. Your stress levels are low and your mind is calm, but you may lack structured strength training.',
+            strengths: ['낮은 만성 스트레스 지수', '높은 마음의 안정감과 직관', '지속 가능한 건강 습관 형성'],
+            strengthsEn: ['Low chronic stress levels', 'High mental peace and intuition', 'Sustainable health habits that last'],
+            warnings: ['체계적 운동 부족으로 근감소 위험', '명확한 목표 없이 막연하게 흐를 수 있음', '근거 기반 영양보다 감으로 판단하는 경우 있음'],
+            warningsEn: ['Risk of muscle loss from lack of structured exercise', 'May drift without clear goals', 'May rely on intuition over evidence-based nutrition'],
+            tip: '주 2~3회 30분 가벼운 근력 운동을 힐링 루틴에 추가해보세요. 마음의 안정이라는 강점에 신체 강도를 더하면 완벽한 밸런스가 됩니다.',
+            tipEn: 'Add 2–3 sessions of 30-min light strength training to your healing routine. Combining your mental peace with physical strength creates perfect balance.',
+            links: [
+                { href: 'article-sleep.html', emoji: '🌙', title: '수면 질 개선 가이드', titleEn: 'Sleep Quality Guide', sub: '일주기 리듬·수면 영양소', subEn: 'Circadian rhythm & sleep nutrients' },
+                { href: 'article-microbiome.html', emoji: '🦠', title: '장 건강·마이크로바이옴', titleEn: 'Gut Health & Microbiome', sub: '자연주의 건강의 핵심', subEn: 'Core of natural health' },
+                { href: 'biological-age.html', emoji: '🧬', title: '생체나이 계산기', titleEn: 'Biological Age Calculator', sub: '생활습관 8가지 분석', subEn: '8 lifestyle factor analysis' },
+            ]
+        },
+        fox: {
+            emoji: '🦊', color: '#f97316', bg: '#fff7ed',
+            name: '의지충만 반복형', nameEn: 'Motivated Repeater',
+            tagline: '"이번엔 진짜야"를 매번 진심으로 말하는 당신', taglineEn: 'You mean it every time you say "this time for real"',
+            desc: '건강을 위한 의지와 열정만큼은 누구에게도 뒤지지 않습니다. 다이어트 앱, 헬스장, 유행 식단을 모두 시도해봤고 처음엔 항상 잘 됩니다. 다만 지속성이 약하고 작심삼일 후 자책하는 패턴이 반복됩니다. 의지의 문제가 아니라 전략의 문제입니다.',
+            descEn: 'Your willpower and enthusiasm for health are second to none. You\'ve tried every app, gym, and trendy diet — and they always start well. But sustainability is the challenge, with guilt following the inevitable stops. This isn\'t a willpower problem — it\'s a strategy problem.',
+            strengths: ['높은 건강 의지와 변화 열망', '새로운 것을 빠르게 시도하는 실행력', '건강 트렌드에 대한 높은 관심과 지식'],
+            strengthsEn: ['Strong health motivation and desire for change', 'Quick action on new approaches', 'High awareness of health trends'],
+            warnings: ['요요 반복으로 인한 대사 저하 위험', '음식에 대한 죄책감 사이클', '"전부 아니면 전무" 사고 패턴'],
+            warningsEn: ['Metabolic slowdown from yo-yo cycles', 'Food guilt cycle', '"All or nothing" thinking pattern'],
+            tip: '완벽한 계획 대신 "딱 1가지 습관"만 선택하세요. 오늘부터 매일 물 2L 마시기, 그것만. 작고 지속 가능한 변화가 큰 변화를 이깁니다.',
+            tipEn: 'Instead of a perfect plan, pick just ONE habit. Starting today: drink 2L of water daily — that\'s it. Small, sustainable changes beat big plans every time.',
+            links: [
+                { href: 'article-intermittent-fasting.html', emoji: '⏱️', title: '간헐적 단식 가이드', titleEn: 'Intermittent Fasting Guide', sub: '지속 가능한 식이 전략', subEn: 'Sustainable dietary strategy' },
+                { href: 'article-blood-sugar.html', emoji: '🩸', title: '혈당 조절 완전 가이드', titleEn: 'Blood Sugar Control Guide', sub: '요요의 원인인 인슐린 저항성', subEn: 'Insulin resistance — the yo-yo cause' },
+                { href: 'bmi-calculator.html', emoji: '⚖️', title: 'BMI·칼로리 계산기', titleEn: 'BMI & Calorie Calculator', sub: '과학적 목표 칼로리 설정', subEn: 'Science-based calorie targets' },
+            ]
+        },
+        snail: {
+            emoji: '🐌', color: '#6366f1', bg: '#eef2ff',
+            name: '만성피로 생존형', nameEn: 'Chronic Fatigue Survivor',
+            tagline: '오늘도 버텨낸 당신, 충분히 대단해요', taglineEn: 'Making it through another day — that\'s already remarkable',
+            desc: '몸은 늘 무겁고 피곤하며, 건강해지고 싶은 마음은 있지만 엄두가 나지 않습니다. 스트레스와 피로가 만성적으로 누적된 상태이며, 자신을 돌볼 에너지조차 부족한 느낌입니다. 지금 이 테스트를 하고 있다는 것 자체가 변화를 원한다는 신호입니다.',
+            descEn: 'Your body feels heavy and tired. You want to be healthier but can\'t find the energy to start. Stress and fatigue have accumulated chronically, leaving little room to care for yourself. The fact that you\'re taking this test is already a signal that you want change.',
+            strengths: ['높은 공감 능력과 타인에 대한 배려', '힘든 상황을 버텨온 강한 생존력', '변화에 대한 내면의 의지'],
+            strengthsEn: ['Deep empathy and care for others', 'Resilience from surviving difficult periods', 'Inner desire for change'],
+            warnings: ['만성 염증과 코르티솔 과다 위험', '수면 부채 누적으로 면역력 저하', '자기 돌봄 우선순위 최하위'],
+            warningsEn: ['Chronic inflammation and elevated cortisol risk', 'Immune decline from accumulated sleep debt', 'Self-care ranked last in priorities'],
+            tip: '지금 당장 운동·식단 걱정 마세요. 딱 하나만: 오늘 밤 30분 더 일찍 자보세요. 수면 7시간 확보가 다른 모든 변화의 토대입니다.',
+            tipEn: 'Don\'t worry about exercise or diet right now. Just one thing: go to bed 30 minutes earlier tonight. 7 hours of sleep is the foundation for every other change.',
+            links: [
+                { href: 'article-cortisol.html', emoji: '😤', title: '코르티솔 관리 가이드', titleEn: 'Cortisol Management', sub: '만성 스트레스의 원인과 해결', subEn: 'The cause and cure of chronic stress' },
+                { href: 'article-magnesium.html', emoji: '⚡', title: '마그네슘 완전 가이드', titleEn: 'Magnesium Complete Guide', sub: '피로·불면·불안의 숨은 원인', subEn: 'Hidden cause of fatigue & insomnia' },
+                { href: 'article-sleep.html', emoji: '🌙', title: '수면 질 개선 가이드', titleEn: 'Sleep Quality Guide', sub: '과학적 숙면 방법 10가지', subEn: '10 science-backed sleep tips' },
+            ]
+        },
+        bear: {
+            emoji: '🐻', color: '#8b5cf6', bg: '#f5f3ff',
+            name: '자유분방 무관심형', nameEn: 'Free-Spirit Type',
+            tagline: '오늘을 즐기는 데는 누구에게도 안 지는 당신', taglineEn: 'Nobody enjoys the present moment better than you',
+            desc: '건강 걱정보다 지금의 즐거움이 우선인 타입입니다. 몸이 크게 아프지 않으면 굳이 신경 쓰지 않고, 의외로 스트레스가 적고 긍정적인 경우가 많습니다. 다만 나이가 들수록 그동안의 무관심이 건강 문제로 쌓여 나타날 수 있어 지금부터 조금씩 준비가 필요합니다.',
+            descEn: 'You prioritize today\'s enjoyment over health worries. Unless something is seriously wrong, you don\'t stress about it — and you\'re often surprisingly relaxed and positive. But years of inattention can accumulate into health issues as you age. A little preparation now goes a long way.',
+            strengths: ['낮은 건강 불안 지수, 긍정적 태도', '스트레스 없이 지금을 즐기는 능력', '변화 시 빠른 동기 전환 가능성'],
+            strengthsEn: ['Low health anxiety and positive attitude', 'Ability to enjoy the present stress-free', 'Can shift motivation quickly when ready'],
+            warnings: ['건강 문제 발견 시 이미 진행이 많이 됐을 위험', '정기 검진 미루는 경향', '생활 습관병(당뇨·고혈압) 초기 신호 놓칠 수 있음'],
+            warningsEn: ['Issues may be advanced by the time discovered', 'Tendency to postpone check-ups', 'May miss early signs of lifestyle diseases'],
+            tip: '크게 바꾸지 않아도 됩니다. 엘리베이터 대신 계단, 물 하루 1.5L, 주 1회 30분 걷기. 이 3가지만으로도 10년 뒤 몸이 달라집니다.',
+            tipEn: 'No major changes needed. Use the stairs, drink 1.5L of water daily, walk 30 min once a week. Just these 3 things change your body 10 years from now.',
+            links: [
+                { href: 'biological-age.html', emoji: '🧬', title: '생체나이 계산기', titleEn: 'Biological Age Calculator', sub: '지금 내 생체나이는 몇 살?', subEn: 'How old is your body really?' },
+                { href: 'article-vitaminD.html', emoji: '☀️', title: '비타민D 완전 가이드', titleEn: 'Vitamin D Complete Guide', sub: '한국인 72%가 결핍', subEn: '72% of Koreans are deficient' },
+                { href: 'nutrient-quiz.html', emoji: '🧪', title: '영양소 결핍 자가진단', titleEn: 'Nutrient Deficiency Quiz', sub: '내 몸의 빈 곳 찾기', subEn: 'Find your nutritional gaps' },
+            ]
+        },
+        owl: {
+            emoji: '🦉', color: '#0ea5e9', bg: '#f0f9ff',
+            name: '정보형 비실천형', nameEn: 'Knowledge Non-Doer',
+            tagline: '"아는 것"과 "하는 것"이 다르다는 걸 아는 당신', taglineEn: 'You know the gap between knowing and doing — intimately',
+            desc: '건강 지식으로는 전문가 수준입니다. 단백질 섭취량, 수면 사이클, 인슐린 저항성까지 꿰고 있습니다. 하지만 "완벽한 조건이 갖춰지면 시작하겠다"는 생각이 발목을 잡습니다. 문제는 완벽한 조건은 오지 않는다는 것, 그리고 당신도 이미 알고 있다는 것입니다.',
+            descEn: 'You have expert-level health knowledge — protein targets, sleep cycles, insulin resistance, all of it. But "I\'ll start when conditions are perfect" keeps holding you back. The issue is that perfect conditions never come. And deep down, you already know this.',
+            strengths: ['풍부한 건강 지식과 높은 이해도', '건강에 대한 진지한 관심', '변화할 준비가 되어 있는 인식 수준'],
+            strengthsEn: ['Rich health knowledge and high understanding', 'Genuine interest in health', 'Awareness level ready for change'],
+            warnings: ['분석 마비(Analysis Paralysis)로 실천 지연', '"완벽한 시작"을 기다리다 시간이 지남', '지식과 행동 사이의 큰 간극'],
+            warningsEn: ['Delayed action from analysis paralysis', 'Time passing while waiting for the "perfect start"', 'Large gap between knowledge and behavior'],
+            tip: '오늘 딱 5분만 행동하세요. 완벽한 식단이 아니어도 됩니다. 물 한 잔, 계단 한 층, 스트레칭 1분. 시작 자체가 완벽한 계획보다 100배 가치 있습니다.',
+            tipEn: 'Take action for just 5 minutes today. It doesn\'t need to be a perfect diet. One glass of water, one flight of stairs, one minute of stretching. Starting is worth 100× more than any perfect plan.',
+            links: [
+                { href: 'nutrient-quiz.html', emoji: '🧪', title: '영양소 결핍 자가진단', titleEn: 'Nutrient Deficiency Quiz', sub: '5단계 맞춤 분석', subEn: '5-step personalized analysis' },
+                { href: 'article-supplements-time.html', emoji: '💊', title: '영양제 복용 시간 가이드', titleEn: 'Supplement Timing Guide', sub: '지식을 실천으로 연결', subEn: 'Bridge knowledge to action' },
+                { href: 'article-intermittent-fasting.html', emoji: '⏱️', title: '간헐적 단식 가이드', titleEn: 'Intermittent Fasting Guide', sub: '가장 쉬운 시작점', subEn: 'The easiest starting point' },
+            ]
+        }
+    };
+
+    const ALL_TYPE_KEYS = ['lion','leaf','fox','snail','bear','owl'];
+
+    // ── State ─────────────────────────────────────────────────
+    let scores = { lion:0, leaf:0, fox:0, snail:0, bear:0, owl:0 };
+    let currentQ = 0;
+
+    function startTest() {
+        document.getElementById('intro-section').style.display = 'none';
+        document.getElementById('quiz-section').style.display = 'block';
+        showQ(1);
+    }
+
+    function showQ(n) {
+        document.querySelectorAll('.q-step').forEach(el => el.classList.remove('active'));
+        const el = document.getElementById('q' + n);
+        if (el) { el.classList.add('active'); currentQ = n; updateProgress(n); }
+    }
+
+    function updateProgress(n) {
+        const pct = ((n - 1) / 12) * 100;
+        document.getElementById('prog-fill').style.width = pct + '%';
+        document.getElementById('prog-label').textContent = (n - 1) + ' / 12';
+    }
+
+    function pick(qNum, type, btn) {
+        btn.classList.add('chosen');
+        btn.parentElement.querySelectorAll('.opt').forEach(b => b.style.pointerEvents = 'none');
+        scores[type]++;
+        setTimeout(() => {
+            if (qNum < 12) { showQ(qNum + 1); }
+            else { showResult(); }
+        }, 340);
+    }
+
+    function showResult() {
+        document.getElementById('prog-fill').style.width = '100%';
+        document.getElementById('prog-label').textContent = '12 / 12';
+        document.getElementById('quiz-section').style.display = 'none';
+
+        const winner = Object.entries(scores).sort((a,b) => b[1]-a[1])[0][0];
+        const t = TYPES[winner];
+        const isKo = document.body.getAttribute('data-lang') !== 'en';
+
+        // Hero
+        const hero = document.getElementById('res-hero');
+        hero.style.background = t.bg;
+        hero.style.borderColor = t.color + '44';
+        document.getElementById('res-emoji').textContent = t.emoji;
+
+        const badge = document.getElementById('res-badge');
+        badge.textContent = isKo ? '건강 유형' : 'Health Type';
+        badge.style.background = t.color + '22';
+        badge.style.color = t.color;
+
+        document.getElementById('res-name').textContent = isKo ? t.name : t.nameEn;
+        document.getElementById('res-tagline').textContent = isKo ? t.tagline : t.taglineEn;
+        document.getElementById('res-desc').textContent = isKo ? t.desc : t.descEn;
+
+        // Strengths & Warnings
+        const strList = document.getElementById('res-strengths');
+        strList.innerHTML = (isKo ? t.strengths : t.strengthsEn).map(s =>
+            `<li><span class="dl-icon">✅</span><span>${s}</span></li>`
+        ).join('');
+
+        const warnList = document.getElementById('res-warnings');
+        warnList.innerHTML = (isKo ? t.warnings : t.warningsEn).map(w =>
+            `<li><span class="dl-icon">⚠️</span><span>${w}</span></li>`
+        ).join('');
+
+        // Tip
+        const tipBox = document.getElementById('res-tip-box');
+        tipBox.style.background = t.color + '12';
+        tipBox.style.border = '1px solid ' + t.color + '33';
+        tipBox.querySelector('.tip-label').style.color = t.color;
+        document.getElementById('res-tip').textContent = isKo ? t.tip : t.tipEn;
+
+        // Other types
+        const grid = document.getElementById('other-types-grid');
+        grid.innerHTML = ALL_TYPE_KEYS.filter(k => k !== winner).map(k => {
+            const ot = TYPES[k];
+            return `<div class="other-type-card" onclick="showTypeDetail('${k}')">
+                <div class="otc-emoji">${ot.emoji}</div>
+                <div class="otc-name">${isKo ? ot.name : ot.nameEn}</div>
+            </div>`;
+        }).join('');
+
+        // Recommended links
+        const linksEl = document.getElementById('res-links');
+        linksEl.innerHTML = t.links.map(l =>
+            `<a href="${l.href}" style="text-decoration:none; background:var(--card-bg); border:1px solid var(--border-color); border-radius:14px; padding:16px 18px; display:flex; gap:12px; align-items:center; transition:transform 0.2s;" onmouseover="this.style.transform='translateY(-2px)'" onmouseout="this.style.transform=''">
+                <span style="font-size:1.7rem;">${l.emoji}</span>
+                <div><strong style="font-size:0.86rem; display:block; margin-bottom:3px;">${isKo ? l.title : l.titleEn}</strong><span style="font-size:0.76rem; color:var(--text-muted);">${isKo ? l.sub : l.subEn}</span></div>
+            </a>`
+        ).join('');
+
+        document.getElementById('result-section').style.display = 'block';
+        document.getElementById('result-section').scrollIntoView({ behavior:'smooth', block:'start' });
+        window._resultType = winner;
+    }
+
+    function showTypeDetail(key) {
+        const isKo = document.body.getAttribute('data-lang') !== 'en';
+        const t = TYPES[key];
+        alert(`${t.emoji} ${isKo ? t.name : t.nameEn}\n\n${isKo ? t.desc : t.descEn}\n\n💡 ${isKo ? t.tip : t.tipEn}`);
+    }
+
+    function shareResult() {
+        const isKo = document.body.getAttribute('data-lang') !== 'en';
+        const t = TYPES[window._resultType || 'lion'];
+        const text = isKo
+            ? `나의 건강 유형은 ${t.emoji} ${t.name}!\n"${t.tagline}"\n\n내 건강 유형 알아보기 → https://vi7al.com/health-type-test.html`
+            : `My health type is ${t.emoji} ${t.nameEn}!\n"${t.taglineEn}"\n\nFind yours → https://vi7al.com/health-type-test.html`;
+
+        if (navigator.share) {
+            navigator.share({ title: isKo ? '나의 건강 유형 테스트' : 'My Health Type Test', text }).catch(() => {});
+        } else {
+            navigator.clipboard.writeText(text).then(() => {
+                alert(isKo ? '결과가 클립보드에 복사됐습니다! 친구에게 공유해보세요.' : 'Copied to clipboard! Share with friends.');
+            }).catch(() => {
+                alert(isKo ? '공유 URL: https://vi7al.com/health-type-test.html' : 'Share URL: https://vi7al.com/health-type-test.html');
+            });
+        }
+    }
+
+    function restartTest() {
+        scores = { lion:0, leaf:0, fox:0, snail:0, bear:0, owl:0 };
+        document.querySelectorAll('.opt').forEach(b => {
+            b.classList.remove('chosen');
+            b.style.pointerEvents = '';
+        });
+        document.getElementById('result-section').style.display = 'none';
+        document.getElementById('quiz-section').style.display = 'block';
+        showQ(1);
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+    </script>
+</body>
+</html>
