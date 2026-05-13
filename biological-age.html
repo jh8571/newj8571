@@ -24,28 +24,52 @@
     </script>
     <style>
         .bio-wrap { max-width: 780px; margin: 0 auto; }
+
+        /* Question card */
         .q-card {
             background: var(--card-bg); border: 1px solid var(--border-color);
-            border-radius: 24px; padding: 28px 30px; margin-bottom: 20px;
+            border-radius: 24px; padding: 28px 30px; margin-bottom: 16px;
         }
-        .q-title { font-size: 1rem; font-weight: 800; margin-bottom: 16px; line-height: 1.5; }
-        .q-title span { display: inline-block; background: var(--primary-color); color: white; width: 26px; height: 26px; border-radius: 50%; font-size: 0.78rem; text-align: center; line-height: 26px; margin-right: 10px; flex-shrink: 0; }
-        .opt-row { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 10px; }
+        .q-title {
+            display: flex; align-items: flex-start; gap: 12px;
+            font-size: 1rem; font-weight: 800; margin-bottom: 18px; line-height: 1.5;
+        }
+        /* ★ 번호 뱃지만 동그라미 스타일 – 클래스로 한정 */
+        .q-num {
+            display: inline-flex; align-items: center; justify-content: center;
+            background: var(--primary-color); color: white;
+            min-width: 26px; height: 26px; border-radius: 50%;
+            font-size: 0.78rem; font-weight: 900; flex-shrink: 0; margin-top: 1px;
+        }
+        .q-title-text { flex: 1; color: var(--text-main); }
+
+        /* Option buttons */
+        .opt-row {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 10px;
+        }
         .opt-btn {
-            padding: 12px 14px; border: 2px solid var(--border-color); border-radius: 14px;
-            background: var(--card-bg); color: var(--text-muted); font-size: 0.86rem;
-            font-weight: 700; cursor: pointer; transition: all 0.2s; text-align: left;
-            display: flex; align-items: center; gap: 8px;
+            padding: 13px 14px; border: 2px solid var(--border-color); border-radius: 14px;
+            background: var(--card-bg); color: var(--text-muted); font-size: 0.88rem;
+            font-weight: 700; cursor: pointer; transition: all 0.2s;
+            text-align: left; display: flex; align-items: center; gap: 10px;
+            line-height: 1.4; word-break: keep-all;
         }
         .opt-btn:hover { border-color: var(--accent-color); transform: translateY(-1px); }
         .opt-btn.sel { border-color: var(--primary-color); background: rgba(56,189,248,0.08); color: var(--text-main); }
-        .opt-btn .oi { font-size: 1.3rem; flex-shrink: 0; }
+        .opt-btn .oi { font-size: 1.4rem; flex-shrink: 0; }
+
+        /* Submit button */
         #submit-btn {
             width: 100%; padding: 18px; background: var(--primary-color); color: white;
-            border: none; border-radius: 16px; font-size: 1.1rem; font-weight: 900;
-            cursor: pointer; transition: opacity 0.2s; margin-top: 8px;
+            border: none; border-radius: 16px; font-size: 1.05rem; font-weight: 900;
+            cursor: pointer; transition: opacity 0.2s; margin-top: 10px;
+            display: flex; align-items: center; justify-content: center; gap: 10px;
         }
         #submit-btn:hover { opacity: 0.85; }
+
+        /* Result */
         #result-section { display: none; animation: fadeIn 0.5s ease; }
         @keyframes fadeIn { from { opacity:0; transform:translateY(20px); } to { opacity:1; transform:translateY(0); } }
         .bio-age-display {
@@ -58,9 +82,9 @@
         .age-box .age-num { font-size: 4rem; font-weight: 900; line-height: 1; }
         .age-separator { font-size: 2rem; color: var(--border-color); font-weight: 300; }
         .diff-badge { display: inline-block; padding: 8px 24px; border-radius: 99px; font-size: 1.1rem; font-weight: 900; margin-top: 20px; }
-        .area-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 14px; margin-bottom: 30px; }
+        .area-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(210px, 1fr)); gap: 14px; margin-bottom: 30px; }
         .area-card { background: var(--card-bg); border: 1px solid var(--border-color); border-radius: 18px; padding: 20px; }
-        .area-card .area-name { font-size: 0.82rem; font-weight: 700; color: var(--text-muted); margin-bottom: 8px; }
+        .area-card .area-name { font-size: 0.85rem; font-weight: 700; color: var(--text-muted); margin-bottom: 8px; }
         .area-card .area-score-bar { height: 8px; border-radius: 99px; background: var(--border-color); margin-bottom: 8px; overflow: hidden; }
         .area-card .area-score-fill { height: 100%; border-radius: 99px; transition: width 0.8s ease; }
         .area-card .area-tip { font-size: 0.82rem; color: var(--text-muted); line-height: 1.6; }
@@ -68,7 +92,13 @@
         .advice-icon { font-size: 2rem; flex-shrink: 0; }
         .advice-card h3 { font-size: 0.95rem; font-weight: 800; margin-bottom: 6px; }
         .advice-card p { font-size: 0.86rem; color: var(--text-muted); line-height: 1.7; margin: 0; }
-        @media (max-width: 600px) { .bio-age-display { padding: 32px 20px; } .age-compare { gap: 20px; } }
+
+        @media (max-width: 500px) {
+            .opt-row { grid-template-columns: 1fr; }
+            .q-card { padding: 22px 18px; }
+            .bio-age-display { padding: 32px 20px; }
+            .age-compare { gap: 20px; }
+        }
     </style>
 </head>
 <body data-lang="ko">
@@ -113,7 +143,7 @@
 
                 <!-- Q0: Real age -->
                 <div class="q-card">
-                    <div class="q-title"><span>0</span> <span data-ko="실제 나이를 입력하세요" data-en="Enter your actual age">실제 나이를 입력하세요</span></div>
+                    <div class="q-title"><span class="q-num">0</span><span class="q-title-text" data-ko="실제 나이를 입력하세요" data-en="Enter your actual age">실제 나이를 입력하세요</span></div>
                     <div style="display:flex; gap:12px; align-items:center;">
                         <input type="number" id="real-age" placeholder="30" min="10" max="99" style="padding:14px 18px; border:2px solid var(--border-color); border-radius:14px; font-size:1.1rem; font-weight:700; background:var(--card-bg); color:var(--text-main); width:140px; outline:none;" onfocus="this.style.borderColor='var(--accent-color)'" onblur="this.style.borderColor='var(--border-color)'">
                         <span style="color:var(--text-muted); font-weight:700;" data-ko="세" data-en="years old">세</span>
@@ -122,7 +152,7 @@
 
                 <!-- Q1: Sleep -->
                 <div class="q-card">
-                    <div class="q-title"><span>1</span> <span data-ko="평균 수면 시간은 얼마나 되나요?" data-en="How many hours do you sleep on average?">평균 수면 시간은 얼마나 되나요?</span></div>
+                    <div class="q-title"><span class="q-num">1</span><span class="q-title-text" data-ko="평균 수면 시간은 얼마나 되나요?" data-en="How many hours do you sleep on average?">평균 수면 시간은 얼마나 되나요?</span></div>
                     <div class="opt-row" id="q1">
                         <button class="opt-btn" data-q="1" data-val="-3" onclick="selectOpt(this)"><span class="oi">😰</span><span data-ko="5시간 미만" data-en="Less than 5h">5시간 미만</span></button>
                         <button class="opt-btn" data-q="1" data-val="-1" onclick="selectOpt(this)"><span class="oi">😴</span><span data-ko="5~6시간" data-en="5–6h">5~6시간</span></button>
@@ -133,7 +163,7 @@
 
                 <!-- Q2: Exercise -->
                 <div class="q-card">
-                    <div class="q-title"><span>2</span> <span data-ko="일주일에 운동하는 횟수는?" data-en="How often do you exercise per week?">일주일에 운동하는 횟수는?</span></div>
+                    <div class="q-title"><span class="q-num">2</span><span class="q-title-text" data-ko="일주일에 운동하는 횟수는?" data-en="How often do you exercise per week?">일주일에 운동하는 횟수는?</span></div>
                     <div class="opt-row" id="q2">
                         <button class="opt-btn" data-q="2" data-val="-4" onclick="selectOpt(this)"><span class="oi">🛋️</span><span data-ko="거의 안 함" data-en="Rarely">거의 안 함</span></button>
                         <button class="opt-btn" data-q="2" data-val="0" onclick="selectOpt(this)"><span class="oi">🚶</span><span data-ko="주 1~2회" data-en="1–2×/week">주 1~2회</span></button>
@@ -144,7 +174,7 @@
 
                 <!-- Q3: Diet quality -->
                 <div class="q-card">
-                    <div class="q-title"><span>3</span> <span data-ko="식단의 질은 어느 정도인가요?" data-en="How would you rate your diet quality?">식단의 질은 어느 정도인가요?</span></div>
+                    <div class="q-title"><span class="q-num">3</span><span class="q-title-text" data-ko="식단의 질은 어느 정도인가요?" data-en="How would you rate your diet quality?">식단의 질은 어느 정도인가요?</span></div>
                     <div class="opt-row" id="q3">
                         <button class="opt-btn" data-q="3" data-val="-4" onclick="selectOpt(this)"><span class="oi">🍔</span><span data-ko="패스트푸드·배달 위주" data-en="Mostly fast food">패스트푸드·배달 위주</span></button>
                         <button class="opt-btn" data-q="3" data-val="-1" onclick="selectOpt(this)"><span class="oi">🍜</span><span data-ko="대체로 편의식" data-en="Mostly processed">대체로 편의식</span></button>
@@ -155,7 +185,7 @@
 
                 <!-- Q4: Stress -->
                 <div class="q-card">
-                    <div class="q-title"><span>4</span> <span data-ko="평소 스트레스 수준은?" data-en="What is your usual stress level?">평소 스트레스 수준은?</span></div>
+                    <div class="q-title"><span class="q-num">4</span><span class="q-title-text" data-ko="평소 스트레스 수준은?" data-en="What is your usual stress level?">평소 스트레스 수준은?</span></div>
                     <div class="opt-row" id="q4">
                         <button class="opt-btn" data-q="4" data-val="-4" onclick="selectOpt(this)"><span class="oi">😤</span><span data-ko="항상 극심한 스트레스" data-en="Always intense">항상 극심한 스트레스</span></button>
                         <button class="opt-btn" data-q="4" data-val="-2" onclick="selectOpt(this)"><span class="oi">😟</span><span data-ko="자주 스트레스 받음" data-en="Often stressed">자주 스트레스 받음</span></button>
@@ -166,7 +196,7 @@
 
                 <!-- Q5: Smoking -->
                 <div class="q-card">
-                    <div class="q-title"><span>5</span> <span data-ko="흡연 여부는?" data-en="Do you smoke?">흡연 여부는?</span></div>
+                    <div class="q-title"><span class="q-num">5</span><span class="q-title-text" data-ko="흡연 여부는?" data-en="Do you smoke?">흡연 여부는?</span></div>
                     <div class="opt-row" id="q5">
                         <button class="opt-btn" data-q="5" data-val="-6" onclick="selectOpt(this)"><span class="oi">🚬</span><span data-ko="현재 흡연 중" data-en="Current smoker">현재 흡연 중</span></button>
                         <button class="opt-btn" data-q="5" data-val="-2" onclick="selectOpt(this)"><span class="oi">🚭</span><span data-ko="금연 1~5년" data-en="Quit 1–5yr ago">금연 1~5년</span></button>
@@ -177,7 +207,7 @@
 
                 <!-- Q6: Alcohol -->
                 <div class="q-card">
-                    <div class="q-title"><span>6</span> <span data-ko="음주 습관은?" data-en="How do you drink alcohol?">음주 습관은?</span></div>
+                    <div class="q-title"><span class="q-num">6</span><span class="q-title-text" data-ko="음주 습관은?" data-en="How do you drink alcohol?">음주 습관은?</span></div>
                     <div class="opt-row" id="q6">
                         <button class="opt-btn" data-q="6" data-val="-4" onclick="selectOpt(this)"><span class="oi">🍺</span><span data-ko="매일 또는 과음" data-en="Daily or heavy">매일 또는 과음</span></button>
                         <button class="opt-btn" data-q="6" data-val="-1" onclick="selectOpt(this)"><span class="oi">🍷</span><span data-ko="주 2~3회" data-en="2–3×/week">주 2~3회</span></button>
@@ -188,7 +218,7 @@
 
                 <!-- Q7: Water -->
                 <div class="q-card">
-                    <div class="q-title"><span>7</span> <span data-ko="하루 물 섭취량은?" data-en="How much water do you drink daily?">하루 물 섭취량은?</span></div>
+                    <div class="q-title"><span class="q-num">7</span><span class="q-title-text" data-ko="하루 물 섭취량은?" data-en="How much water do you drink daily?">하루 물 섭취량은?</span></div>
                     <div class="opt-row" id="q7">
                         <button class="opt-btn" data-q="7" data-val="-2" onclick="selectOpt(this)"><span class="oi">🏜️</span><span data-ko="1L 미만" data-en="Less than 1L">1L 미만</span></button>
                         <button class="opt-btn" data-q="7" data-val="0" onclick="selectOpt(this)"><span class="oi">🥤</span><span data-ko="1~1.5L" data-en="1–1.5L">1~1.5L</span></button>
@@ -199,7 +229,7 @@
 
                 <!-- Q8: Social/mind -->
                 <div class="q-card">
-                    <div class="q-title"><span>8</span> <span data-ko="사회적 연결과 정서 건강은?" data-en="How is your social connection & emotional health?">사회적 연결과 정서 건강은?</span></div>
+                    <div class="q-title"><span class="q-num">8</span><span class="q-title-text" data-ko="사회적 연결과 정서 건강은?" data-en="How is your social connection & emotional health?">사회적 연결과 정서 건강은?</span></div>
                     <div class="opt-row" id="q8">
                         <button class="opt-btn" data-q="8" data-val="-3" onclick="selectOpt(this)"><span class="oi">😶</span><span data-ko="고립감, 외로움 자주 느낌" data-en="Often isolated">고립감, 외로움 자주 느낌</span></button>
                         <button class="opt-btn" data-q="8" data-val="0" onclick="selectOpt(this)"><span class="oi">🤝</span><span data-ko="보통 수준" data-en="Average">보통 수준</span></button>
