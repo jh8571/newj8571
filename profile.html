@@ -85,13 +85,23 @@
     <script type="module">
         import { onUserChange, signOutUser, getLevelInfo } from './firebase-auth.js';
 
-        const LEVELS = [
-            { level:1, name:'🌱 웰니스 입문자',   nameEn:'🌱 Wellness Beginner', minXP:0    },
-            { level:2, name:'🔍 건강 탐험가',      nameEn:'🔍 Health Explorer',   minXP:100  },
-            { level:3, name:'💪 건강 실천가',      nameEn:'💪 Health Achiever',   minXP:300  },
-            { level:4, name:'🧬 웰니스 전문가',    nameEn:'🧬 Wellness Expert',   minXP:700  },
-            { level:5, name:'🏆 VitalGuide 마스터',nameEn:'🏆 VitalGuide Master', minXP:1500 },
+        // 100레벨 시스템 (firebase-auth.js와 동일한 로직)
+        const TIERS = [
+            { min:  1, max: 10,  icon:'🌱', ko:'새싹',          en:'Sprout'   },
+            { min: 11, max: 20,  icon:'🌿', ko:'성장',          en:'Growth'   },
+            { min: 21, max: 30,  icon:'💧', ko:'활력 충전',     en:'Hydrated' },
+            { min: 31, max: 40,  icon:'☀️', ko:'건강 루틴',     en:'Routine'  },
+            { min: 41, max: 50,  icon:'⚡', ko:'에너지',        en:'Energy'   },
+            { min: 51, max: 60,  icon:'🔥', ko:'열정',          en:'Passion'  },
+            { min: 61, max: 70,  icon:'💪', ko:'건강 전사',     en:'Warrior'  },
+            { min: 71, max: 80,  icon:'🧬', ko:'웰니스 전문가', en:'Expert'   },
+            { min: 81, max: 90,  icon:'🌟', ko:'빛나는 건강인', en:'Radiant'  },
+            { min: 91, max: 99,  icon:'🏆', ko:'웰니스 챔피언', en:'Champion' },
+            { min:100, max:100,  icon:'👑', ko:'VitalGuide 레전드', en:'VitalGuide Legend' },
         ];
+        function levelThreshold(n) { return n <= 1 ? 0 : Math.round(Math.pow(n-1, 1.8) * 20); }
+        function levelFromXP(xp) { let lv=1; for(let n=2;n<=100;n++){if(xp>=levelThreshold(n))lv=n;else break;} return lv; }
+        function getTierLocal(lv) { return TIERS.find(t=>lv>=t.min&&lv<=t.max)||TIERS[0]; }
 
         const RESULT_LABELS = {
             mbti:             { icon:'🧠', ko:'MBTI 유형',       en:'MBTI Type' },
@@ -121,9 +131,15 @@
         function renderProfile(user, data) {
             const lang = localStorage.getItem('lang') || 'ko';
             const isKo = lang !== 'en';
-            const xp   = data.xp || 0;
-            const lvInfo = getLevelInfo(xp);
-            const nextXP = lvInfo.next ? lvInfo.next.minXP : xp;
+            const xp     = data.xp || 0;
+            const level  = levelFromXP(xp);
+            const tier   = getTierLocal(level);
+            const curXP  = levelThreshold(level);
+            const nextXP = level < 100 ? levelThreshold(level + 1) : null;
+            const lvPct  = nextXP ? Math.round(((xp - curXP) / (nextXP - curXP)) * 100) : 100;
+            const lvName   = level === 100 ? tier.ko : `${tier.ko} Lv.${level}`;
+            const lvNameEn = level === 100 ? tier.en : `${tier.en} Lv.${level}`;
+            const lvInfo = { level, tier, name: `${tier.icon} ${lvName}`, nameEn: `${tier.icon} ${lvNameEn}`, xp, curXP, nextXP, pct: lvPct };
             const results = data.results || {};
             const games  = data.gameScores || {};
             const log    = (data.activityLog || []).slice().reverse().slice(0, 15);
@@ -154,14 +170,14 @@
                 <div style="background:var(--card-bg);border:1px solid var(--border-color);border-radius:20px;padding:24px 28px;margin-bottom:20px;">
                     <div style="display:flex;justify-content:space-between;align-items:baseline;margin-bottom:8px;">
                         <span style="font-weight:900;font-size:1rem;">${xp.toLocaleString()} XP</span>
-                        <span style="font-size:0.8rem;color:var(--text-muted);">${lvInfo.next ? `${isKo ? '다음 레벨까지' : 'Next level'} ${(nextXP - xp).toLocaleString()} XP` : (isKo ? '최고 레벨 달성! 🏆' : 'Max Level! 🏆')}</span>
+                        <span style="font-size:0.8rem;color:var(--text-muted);">${lvInfo.nextXP ? `${isKo ? '다음 레벨까지' : 'Next level'} ${((nextXP||xp) - xp).toLocaleString()} XP` : (isKo ? '최고 레벨 달성! 🏆' : 'Max Level! 🏆')}</span>
                     </div>
                     <div class="xp-bar-wrap">
                         <div class="xp-bar-fill" style="width:${lvInfo.pct}%;"></div>
                     </div>
                     <div style="display:flex;justify-content:space-between;font-size:0.72rem;color:var(--text-muted);">
                         <span>Lv.${lvInfo.level} — ${isKo ? lvInfo.name : lvInfo.nameEn}</span>
-                        ${lvInfo.next ? `<span>Lv.${lvInfo.level+1} — ${isKo ? lvInfo.next.name : lvInfo.next.nameEn}</span>` : ''}
+                        ${nextXP ? `<span>Lv.${level+1} — ${isKo ? getTierLocal(level+1).ko : getTierLocal(level+1).en} Lv.${level+1}</span>` : ''}
                     </div>
                 </div>
 

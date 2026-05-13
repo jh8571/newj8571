@@ -23,34 +23,53 @@ const auth = getAuth(app);
 const db   = getFirestore(app);
 
 // ── Level System ───────────────────────────────────────────────────────────
-const LEVELS = [
-  { level: 1, name: '🌱 웰니스 입문자', nameEn: '🌱 Wellness Beginner', minXP: 0    },
-  { level: 2, name: '🔍 건강 탐험가',   nameEn: '🔍 Health Explorer',   minXP: 100  },
-  { level: 3, name: '💪 건강 실천가',   nameEn: '💪 Health Achiever',   minXP: 300  },
-  { level: 4, name: '🧬 웰니스 전문가', nameEn: '🧬 Wellness Expert',   minXP: 700  },
-  { level: 5, name: '🏆 VitalGuide 마스터', nameEn: '🏆 VitalGuide Master', minXP: 1500 },
+// 10개 티어 (각 10레벨, 마지막 Lv.100은 단독)
+const TIERS = [
+  { min:  1, max: 10,  icon:'🌱', ko:'새싹',          en:'Sprout'   },
+  { min: 11, max: 20,  icon:'🌿', ko:'성장',          en:'Growth'   },
+  { min: 21, max: 30,  icon:'💧', ko:'활력 충전',     en:'Hydrated' },
+  { min: 31, max: 40,  icon:'☀️', ko:'건강 루틴',     en:'Routine'  },
+  { min: 41, max: 50,  icon:'⚡', ko:'에너지',        en:'Energy'   },
+  { min: 51, max: 60,  icon:'🔥', ko:'열정',          en:'Passion'  },
+  { min: 61, max: 70,  icon:'💪', ko:'건강 전사',     en:'Warrior'  },
+  { min: 71, max: 80,  icon:'🧬', ko:'웰니스 전문가', en:'Expert'   },
+  { min: 81, max: 90,  icon:'🌟', ko:'빛나는 건강인', en:'Radiant'  },
+  { min: 91, max: 99,  icon:'🏆', ko:'웰니스 챔피언', en:'Champion' },
+  { min:100, max:100,  icon:'👑', ko:'VitalGuide 레전드', en:'VitalGuide Legend' },
 ];
 
-const XP_REWARDS = {
-  mbti:             { xp: 50,  label: 'MBTI 테스트 완료' },
-  healthType:       { xp: 50,  label: '건강 유형 테스트 완료' },
-  psychology:       { xp: 30,  label: '심리 분석 완료' },
-  bmiCalculator:    { xp: 20,  label: 'BMI 계산기 사용' },
-  runningCalculator:{ xp: 20,  label: '런닝 계산기 사용' },
-  biologicalAge:    { xp: 30,  label: '생체나이 계산기 완료' },
-  exercise:         { xp: 20,  label: '운동가이드 사용' },
-  gameScore:        { xp: 50,  label: '게임 최고점 갱신' },
-  nutrientQuiz:     { xp: 30,  label: '영양소 퀴즈 완료' },
-  intermittentFast: { xp: 20,  label: '간헐적 단식 가이드 읽기' },
-};
+// 레벨 n의 누적 XP 임계값
+function levelThreshold(n) {
+  if (n <= 1) return 0;
+  return Math.round(Math.pow(n - 1, 1.8) * 20);
+}
+
+// XP → 레벨
+function levelFromXP(xp) {
+  let lv = 1;
+  for (let n = 2; n <= 100; n++) {
+    if (xp >= levelThreshold(n)) lv = n;
+    else break;
+  }
+  return lv;
+}
+
+function getTier(lv) {
+  return TIERS.find(t => lv >= t.min && lv <= t.max) || TIERS[0];
+}
 
 export function getLevelInfo(xp) {
-  let info = LEVELS[0];
-  for (const l of LEVELS) { if (xp >= l.minXP) info = l; }
-  const next = LEVELS.find(l => l.minXP > xp);
-  const pct  = next ? Math.round(((xp - info.minXP) / (next.minXP - info.minXP)) * 100) : 100;
-  return { ...info, xp, next, pct };
+  const level  = levelFromXP(xp);
+  const tier   = getTier(level);
+  const curXP  = levelThreshold(level);
+  const nextXP = level < 100 ? levelThreshold(level + 1) : null;
+  const pct    = nextXP ? Math.round(((xp - curXP) / (nextXP - curXP)) * 100) : 100;
+  const name   = level === 100 ? `${tier.icon} ${tier.ko}` : `${tier.icon} ${tier.ko} Lv.${level}`;
+  const nameEn = level === 100 ? `${tier.icon} ${tier.en}` : `${tier.icon} ${tier.en} Lv.${level}`;
+  return { level, tier, name, nameEn, xp, curXP, nextXP, pct };
 }
+
+export { levelThreshold, getTier, TIERS };
 
 // ── Firestore helpers ──────────────────────────────────────────────────────
 async function getUserDoc(uid) {
@@ -138,7 +157,7 @@ export async function awardXP(activityKey, extraData = {}) {
 
   const data = snap.data();
   const newXP    = (data.xp || 0) + reward.xp;
-  const newLevel = LEVELS.filter(l => l.minXP <= newXP).pop()?.level || 1;
+  const newLevel = levelFromXP(newXP);
 
   const logEntry = {
     type:  activityKey,
@@ -199,9 +218,10 @@ function showXPToast(xp, label) {
 }
 
 function showLevelUpToast(level) {
-  const l = LEVELS.find(x => x.level === level);
+  const tier = getTier(level);
   const lang = localStorage.getItem('lang') || 'ko';
-  toast(`🎉 레벨업! ${lang === 'ko' ? l.name : l.nameEn}`, '#f59e0b', 4000);
+  const lvName = level === 100 ? (lang==='ko'?tier.ko:tier.en) : `${lang==='ko'?tier.ko:tier.en} Lv.${level}`;
+  toast(`🎉 레벨업! ${tier.icon} ${lvName}`, '#f59e0b', 4000);
 }
 
 function toast(msg, color = '#0f172a', duration = 3000) {
