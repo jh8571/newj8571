@@ -145,6 +145,17 @@ export async function signOutUser() {
   await signOut(auth);
 }
 
+// ── XP 보상표 ──────────────────────────────────────────────────────────────
+const XP_REWARDS = {
+  gameScore:         { xp: 30, label: '🎮 게임 신기록 달성' },
+  mbti:              { xp: 20, label: '🧠 MBTI 테스트 완료' },
+  psychology:        { xp: 20, label: '🔬 심리 테스트 완료' },
+  healthType:        { xp: 20, label: '💪 건강 유형 테스트 완료' },
+  biologicalAge:     { xp: 15, label: '🧬 생체나이 계산 완료' },
+  bmiCalculator:     { xp: 15, label: '⚖️ BMI 계산 완료' },
+  runningCalculator: { xp: 15, label: '🏃 런닝 계산 완료' },
+};
+
 // ── XP & record saving ─────────────────────────────────────────────────────
 export async function awardXP(activityKey, extraData = {}) {
   if (!_currentUser) return;
