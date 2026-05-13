@@ -1,0 +1,536 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-P6CTZY2283"></script>
+    <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-P6CTZY2283');</script>
+    <meta name="google-adsense-account" content="ca-pub-9103697866666926">
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9103697866666926" crossorigin="anonymous"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BMI·기초대사량·TDEE 계산기 — 체중·칼로리 한번에 | VitalGuide</title>
+    <meta name="description" content="키·체중·나이·활동량을 입력하면 BMI, 기초대사량(BMR), 일일 칼로리 필요량(TDEE)을 즉시 계산해드립니다. 체중 감량·유지·증량 목표별 칼로리 가이드 포함.">
+    <link rel="canonical" href="https://vi7al.com/bmi-calculator.html">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://vi7al.com/bmi-calculator.html">
+    <meta property="og:title" content="BMI·기초대사량·TDEE 계산기 | VitalGuide">
+    <meta property="og:description" content="키·체중·나이·활동량 입력 → BMI, 기초대사량, 일일 칼로리 즉시 계산. 목표별 칼로리 가이드 포함.">
+    <meta property="og:image" content="https://vi7al.com/og-image.png">
+    <meta property="og:site_name" content="VitalGuide">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="icon" href="favicon.svg" type="image/svg+xml">
+    <script type="application/ld+json">
+    {"@context":"https://schema.org","@type":"WebPage","name":"BMI·기초대사량·TDEE 계산기","description":"키·체중·나이·활동량을 입력하면 BMI, 기초대사량(BMR), 일일 칼로리 필요량(TDEE)을 즉시 계산합니다.","url":"https://vi7al.com/bmi-calculator.html","publisher":{"@type":"Organization","name":"VitalGuide","url":"https://vi7al.com/"}}
+    </script>
+    <script type="application/ld+json">
+    {"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"BMI란 무엇인가요?","acceptedAnswer":{"@type":"Answer","text":"BMI(체질량지수)는 체중(kg)을 키(m)의 제곱으로 나눈 값입니다. 18.5 미만은 저체중, 18.5~22.9는 정상, 23~24.9는 과체중, 25 이상은 비만으로 분류됩니다(아시아·한국 기준)."}},{"@type":"Question","name":"기초대사량(BMR)과 TDEE의 차이는?","acceptedAnswer":{"@type":"Answer","text":"BMR(기초대사량)은 완전히 쉬고 있을 때 생명 유지를 위해 소비하는 최소 칼로리입니다. TDEE(일일 총 칼로리 소모량)는 BMR에 활동량을 곱한 값으로 실제 생활에서 하루 동안 소모하는 전체 칼로리입니다."}},{"@type":"Question","name":"체중 감량을 위해 얼마나 칼로리를 줄여야 하나요?","acceptedAnswer":{"@type":"Answer","text":"체지방 1kg을 감량하려면 약 7,700kcal의 적자가 필요합니다. 주당 0.5kg 감량 목표라면 하루 약 550kcal를 TDEE보다 적게 섭취하면 됩니다. 과도한 제한(TDEE의 25% 이상 감소)은 근손실과 기초대사량 저하를 초래합니다."}},{"@type":"Question","name":"BMI가 정상이어도 건강에 문제가 있을 수 있나요?","acceptedAnswer":{"@type":"Answer","text":"네. BMI는 체지방률을 직접 측정하지 않아 근육량이 많은 사람은 정상 체지방임에도 BMI가 높게 나올 수 있고, 반대로 BMI가 정상이어도 복부 내장지방이 많으면 대사 위험이 높을 수 있습니다. 허리둘레(남 90cm, 여 85cm 초과 시 복부비만 기준)를 함께 확인하세요."}}]}
+    </script>
+    <style>
+        .calc-wrap { max-width: 800px; margin: 0 auto; }
+        .input-group { margin-bottom: 22px; }
+        .input-group label { display: block; font-size: 0.88rem; font-weight: 700; color: var(--text-muted); margin-bottom: 8px; letter-spacing: 0.04em; }
+        .input-row { display: flex; gap: 12px; }
+        .calc-input {
+            width: 100%; padding: 14px 18px; border: 2px solid var(--border-color);
+            border-radius: 14px; font-size: 1rem; font-weight: 600;
+            background: var(--card-bg); color: var(--text-main);
+            transition: border-color 0.2s; outline: none;
+        }
+        .calc-input:focus { border-color: var(--accent-color); }
+        .unit-label { display: flex; align-items: center; padding: 0 14px; background: var(--border-color); border-radius: 10px; font-size: 0.85rem; font-weight: 700; color: var(--text-muted); white-space: nowrap; }
+        .gender-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+        .gender-btn {
+            padding: 14px; border: 2px solid var(--border-color); border-radius: 14px;
+            background: var(--card-bg); color: var(--text-muted); font-size: 0.95rem;
+            font-weight: 700; cursor: pointer; transition: all 0.2s; display: flex;
+            align-items: center; justify-content: center; gap: 8px;
+        }
+        .gender-btn:hover { border-color: var(--accent-color); }
+        .gender-btn.active { border-color: var(--accent-color); background: rgba(56,189,248,0.08); color: var(--text-main); }
+        .activity-grid { display: grid; grid-template-columns: 1fr; gap: 10px; }
+        .activity-btn {
+            padding: 14px 18px; border: 2px solid var(--border-color); border-radius: 14px;
+            background: var(--card-bg); color: var(--text-muted); font-size: 0.88rem;
+            font-weight: 600; cursor: pointer; transition: all 0.2s; text-align: left;
+        }
+        .activity-btn:hover { border-color: var(--accent-color); }
+        .activity-btn.active { border-color: var(--accent-color); background: rgba(56,189,248,0.08); color: var(--text-main); }
+        .activity-btn strong { display: block; font-size: 0.95rem; margin-bottom: 3px; }
+        #calc-btn {
+            width: 100%; padding: 18px; background: var(--primary-color); color: white;
+            border: none; border-radius: 16px; font-size: 1.1rem; font-weight: 900;
+            cursor: pointer; transition: opacity 0.2s; margin-top: 8px;
+        }
+        #calc-btn:hover { opacity: 0.85; }
+        #results { display: none; animation: slideUp 0.4s ease; }
+        @keyframes slideUp { from { opacity:0; transform:translateY(16px); } to { opacity:1; transform:translateY(0); } }
+        .result-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 16px; margin-bottom: 24px; }
+        .result-card {
+            background: var(--card-bg); border: 1px solid var(--border-color);
+            border-radius: 20px; padding: 24px 20px; text-align: center;
+        }
+        .result-card .r-label { font-size: 0.78rem; font-weight: 700; color: var(--text-muted); letter-spacing: 0.06em; text-transform: uppercase; margin-bottom: 10px; }
+        .result-card .r-value { font-size: 2.2rem; font-weight: 900; line-height: 1; margin-bottom: 6px; }
+        .result-card .r-sub { font-size: 0.82rem; color: var(--text-muted); }
+        .bmi-gauge { width: 100%; height: 12px; border-radius: 99px; background: linear-gradient(to right, #60a5fa 0%, #34d399 25%, #fbbf24 50%, #f87171 75%, #ef4444 100%); margin: 12px 0; position: relative; }
+        .bmi-marker { position: absolute; top: -4px; width: 20px; height: 20px; border-radius: 50%; background: white; border: 3px solid var(--primary-color); transform: translateX(-50%); transition: left 0.6s ease; }
+        .calorie-table { width: 100%; border-collapse: collapse; border-radius: 16px; overflow: hidden; }
+        .calorie-table th { background: var(--primary-color); color: white; padding: 14px 16px; font-size: 0.85rem; text-align: left; }
+        .calorie-table td { padding: 14px 16px; border-bottom: 1px solid var(--border-color); font-size: 0.9rem; }
+        .calorie-table tr:last-child td { border-bottom: none; }
+        .calorie-table tr:nth-child(even) td { background: var(--bg-color); }
+        .goal-tag { display: inline-block; padding: 3px 10px; border-radius: 99px; font-size: 0.76rem; font-weight: 800; }
+        .tag-lose { background: rgba(59,130,246,0.12); color: #2563eb; }
+        .tag-maintain { background: rgba(16,185,129,0.12); color: #059669; }
+        .tag-gain { background: rgba(245,158,11,0.12); color: #d97706; }
+        .edu-section { background: var(--card-bg); border: 1px solid var(--border-color); border-radius: 24px; padding: 36px; margin: 40px 0; }
+        .edu-section h2 { font-size: 1.3rem; font-weight: 900; margin-bottom: 20px; }
+        .tip-row { border-left: 4px solid var(--accent-color); padding: 14px 18px; margin: 14px 0; background: var(--bg-color); border-radius: 0 12px 12px 0; }
+        .tip-row h3 { font-size: 0.95rem; font-weight: 800; margin-bottom: 6px; }
+        .tip-row p { font-size: 0.88rem; color: var(--text-muted); line-height: 1.7; margin: 0; }
+        @media (max-width: 600px) { .edu-section { padding: 24px 18px; } }
+    </style>
+</head>
+<body data-lang="ko">
+    <header>
+        <div class="container header-flex">
+            <a href="index.html" class="logo">VitalGuide</a>
+            <div class="controls-bar">
+                <button id="lang-toggle" class="control-btn">EN</button>
+                <button id="theme-toggle" class="control-btn"><i class="fas fa-moon"></i></button>
+            </div>
+        </div>
+        <nav>
+            <a href="index.html" data-ko="AI 맞춤영양" data-en="AI Nutrition">AI 맞춤영양</a>
+            <a href="exercise.html" data-ko="운동가이드" data-en="Exercise">운동가이드</a>
+            <a href="psychology.html" data-ko="심리분석" data-en="Psychology">심리분석</a>
+            <a href="mbti.html" data-ko="MBTI 테스트" data-en="MBTI Test">MBTI 테스트</a>
+            <a href="fortune.html" data-ko="오늘의운세" data-en="Daily Fortune">오늘의운세</a>
+            <a href="games.html" data-ko="미니게임" data-en="Mini Games">미니게임</a>
+            <a href="blog.html" data-ko="건강가이드" data-en="Health Blog">건강가이드</a>
+        </nav>
+    </header>
+
+    <main class="container">
+        <nav style="margin: 30px 0 0; font-size: 0.85rem; color: var(--text-muted);">
+            <a href="index.html" style="color: var(--text-muted); text-decoration: none;" data-ko="홈" data-en="Home">홈</a>
+            <span style="margin: 0 8px;">›</span>
+            <span data-ko="BMI·칼로리 계산기" data-en="BMI & Calorie Calculator">BMI·칼로리 계산기</span>
+        </nav>
+
+        <section class="hero" style="padding-bottom: 20px;">
+            <h2 data-ko="BMI · 기초대사량 · TDEE 계산기" data-en="BMI · BMR · TDEE Calculator" style="font-size: 2.4rem;">BMI · 기초대사량 · TDEE 계산기</h2>
+            <p data-ko="키·체중·활동량을 입력하면 체질량지수, 기초대사량, 하루 필요 칼로리를 즉시 계산해 드립니다." data-en="Enter your height, weight, and activity level to instantly calculate your BMI, BMR, and daily calorie needs.">키·체중·활동량을 입력하면 체질량지수, 기초대사량, 하루 필요 칼로리를 즉시 계산해 드립니다.</p>
+        </section>
+
+        <div class="calc-wrap">
+
+            <!-- Input Card -->
+            <div class="luxury-report-card" style="padding: 40px; margin-bottom: 30px;">
+                <div class="lang-ko">
+
+                    <!-- Gender -->
+                    <div class="input-group">
+                        <label>성별</label>
+                        <div class="gender-grid">
+                            <button class="gender-btn active" id="btn-male" onclick="setGender('male')">
+                                <i class="fas fa-mars"></i> 남성
+                            </button>
+                            <button class="gender-btn" id="btn-female" onclick="setGender('female')">
+                                <i class="fas fa-venus"></i> 여성
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Age -->
+                    <div class="input-group">
+                        <label>나이</label>
+                        <div class="input-row">
+                            <input type="number" class="calc-input" id="input-age" placeholder="25" min="10" max="100">
+                            <span class="unit-label">세</span>
+                        </div>
+                    </div>
+
+                    <!-- Height -->
+                    <div class="input-group">
+                        <label>키</label>
+                        <div class="input-row">
+                            <input type="number" class="calc-input" id="input-height" placeholder="170" min="100" max="250">
+                            <span class="unit-label">cm</span>
+                        </div>
+                    </div>
+
+                    <!-- Weight -->
+                    <div class="input-group">
+                        <label>체중</label>
+                        <div class="input-row">
+                            <input type="number" class="calc-input" id="input-weight" placeholder="65" min="20" max="300">
+                            <span class="unit-label">kg</span>
+                        </div>
+                    </div>
+
+                    <!-- Activity -->
+                    <div class="input-group">
+                        <label>활동 수준</label>
+                        <div class="activity-grid">
+                            <button class="activity-btn active" id="act-1" onclick="setActivity(1, 1.2)">
+                                <strong>🛋️ 거의 활동 없음</strong>
+                                <span style="font-size:0.82rem;">주로 앉아서 생활, 운동 거의 안 함</span>
+                            </button>
+                            <button class="activity-btn" id="act-2" onclick="setActivity(2, 1.375)">
+                                <strong>🚶 가볍게 활동</strong>
+                                <span style="font-size:0.82rem;">주 1~3회 가벼운 운동 또는 걷기</span>
+                            </button>
+                            <button class="activity-btn" id="act-3" onclick="setActivity(3, 1.55)">
+                                <strong>🏃 보통 활동</strong>
+                                <span style="font-size:0.82rem;">주 3~5회 중강도 운동</span>
+                            </button>
+                            <button class="activity-btn" id="act-4" onclick="setActivity(4, 1.725)">
+                                <strong>💪 활동적</strong>
+                                <span style="font-size:0.82rem;">주 6~7회 고강도 운동</span>
+                            </button>
+                            <button class="activity-btn" id="act-5" onclick="setActivity(5, 1.9)">
+                                <strong>🔥 매우 활동적</strong>
+                                <span style="font-size:0.82rem;">하루 2회 운동 또는 육체 노동 직종</span>
+                            </button>
+                        </div>
+                    </div>
+
+                    <button id="calc-btn" onclick="calculate()">
+                        <i class="fas fa-calculator" style="margin-right:8px;"></i> 계산하기
+                    </button>
+
+                </div>
+
+                <!-- EN version -->
+                <div class="lang-en" style="display:none;">
+                    <div class="input-group">
+                        <label>Gender</label>
+                        <div class="gender-grid">
+                            <button class="gender-btn active" id="btn-male-en" onclick="setGender('male')">
+                                <i class="fas fa-mars"></i> Male
+                            </button>
+                            <button class="gender-btn" id="btn-female-en" onclick="setGender('female')">
+                                <i class="fas fa-venus"></i> Female
+                            </button>
+                        </div>
+                    </div>
+                    <div class="input-group">
+                        <label>Age</label>
+                        <div class="input-row">
+                            <input type="number" class="calc-input" id="input-age-en" placeholder="25" min="10" max="100">
+                            <span class="unit-label">yrs</span>
+                        </div>
+                    </div>
+                    <div class="input-group">
+                        <label>Height</label>
+                        <div class="input-row">
+                            <input type="number" class="calc-input" id="input-height-en" placeholder="170" min="100" max="250">
+                            <span class="unit-label">cm</span>
+                        </div>
+                    </div>
+                    <div class="input-group">
+                        <label>Weight</label>
+                        <div class="input-row">
+                            <input type="number" class="calc-input" id="input-weight-en" placeholder="65" min="20" max="300">
+                            <span class="unit-label">kg</span>
+                        </div>
+                    </div>
+                    <div class="input-group">
+                        <label>Activity Level</label>
+                        <div class="activity-grid">
+                            <button class="activity-btn active" id="act-1-en" onclick="setActivity(1, 1.2)"><strong>🛋️ Sedentary</strong><span style="font-size:0.82rem;">Little or no exercise</span></button>
+                            <button class="activity-btn" id="act-2-en" onclick="setActivity(2, 1.375)"><strong>🚶 Lightly Active</strong><span style="font-size:0.82rem;">Light exercise 1–3 days/week</span></button>
+                            <button class="activity-btn" id="act-3-en" onclick="setActivity(3, 1.55)"><strong>🏃 Moderately Active</strong><span style="font-size:0.82rem;">Moderate exercise 3–5 days/week</span></button>
+                            <button class="activity-btn" id="act-4-en" onclick="setActivity(4, 1.725)"><strong>💪 Very Active</strong><span style="font-size:0.82rem;">Hard exercise 6–7 days/week</span></button>
+                            <button class="activity-btn" id="act-5-en" onclick="setActivity(5, 1.9)"><strong>🔥 Extra Active</strong><span style="font-size:0.82rem;">2× training/day or physical job</span></button>
+                        </div>
+                    </div>
+                    <button id="calc-btn-en" onclick="calculate()" style="width:100%;padding:18px;background:var(--primary-color);color:white;border:none;border-radius:16px;font-size:1.1rem;font-weight:900;cursor:pointer;margin-top:8px;">
+                        <i class="fas fa-calculator" style="margin-right:8px;"></i> Calculate
+                    </button>
+                </div>
+            </div>
+
+            <!-- Results -->
+            <div id="results">
+                <div class="luxury-report-card" style="padding: 36px; margin-bottom: 30px;">
+
+                    <!-- BMI Result -->
+                    <div style="margin-bottom: 30px;">
+                        <div style="font-size:0.78rem; font-weight:700; color:var(--text-muted); letter-spacing:0.08em; text-transform:uppercase; margin-bottom:12px;" data-ko="체질량지수 (BMI)" data-en="Body Mass Index (BMI)">체질량지수 (BMI)</div>
+                        <div style="display:flex; align-items:baseline; gap:12px; margin-bottom:10px;">
+                            <span id="bmi-value" style="font-size:3.5rem; font-weight:900; line-height:1;">--</span>
+                            <span id="bmi-label" style="font-size:1.1rem; font-weight:800; padding: 4px 14px; border-radius: 99px;"></span>
+                        </div>
+                        <div class="bmi-gauge">
+                            <div class="bmi-marker" id="bmi-marker" style="left:25%;"></div>
+                        </div>
+                        <div style="display:flex; justify-content:space-between; font-size:0.72rem; color:var(--text-muted); margin-top:4px;">
+                            <span data-ko="저체중" data-en="Underweight">저체중</span>
+                            <span data-ko="정상" data-en="Normal">정상</span>
+                            <span data-ko="과체중" data-en="Overweight">과체중</span>
+                            <span data-ko="비만" data-en="Obese">비만</span>
+                        </div>
+                        <p id="bmi-desc" style="font-size:0.88rem; color:var(--text-muted); margin-top:14px; line-height:1.7;"></p>
+                    </div>
+
+                    <hr style="border:none; border-top:1px solid var(--border-color); margin:24px 0;">
+
+                    <!-- BMR & TDEE -->
+                    <div class="result-grid">
+                        <div class="result-card">
+                            <div class="r-label" data-ko="기초대사량 (BMR)" data-en="Basal Metabolic Rate">기초대사량 (BMR)</div>
+                            <div class="r-value" id="bmr-value" style="color: var(--accent-color);">--</div>
+                            <div class="r-sub">kcal/일</div>
+                        </div>
+                        <div class="result-card">
+                            <div class="r-label" data-ko="일일 총 소모량 (TDEE)" data-en="Total Daily Energy Expenditure">일일 총 소모량 (TDEE)</div>
+                            <div class="r-value" id="tdee-value" style="color: #8b5cf6;">--</div>
+                            <div class="r-sub">kcal/일</div>
+                        </div>
+                        <div class="result-card">
+                            <div class="r-label" data-ko="이상 체중 범위" data-en="Healthy Weight Range">이상 체중 범위</div>
+                            <div class="r-value" id="ideal-weight" style="color: #10b981; font-size: 1.5rem;">--</div>
+                            <div class="r-sub">kg (BMI 18.5~22.9)</div>
+                        </div>
+                    </div>
+
+                    <hr style="border:none; border-top:1px solid var(--border-color); margin:24px 0;">
+
+                    <!-- Calorie Goals -->
+                    <div>
+                        <div style="font-size:0.78rem; font-weight:700; color:var(--text-muted); letter-spacing:0.08em; text-transform:uppercase; margin-bottom:16px;" data-ko="목표별 권장 칼로리" data-en="Calorie Targets by Goal">목표별 권장 칼로리</div>
+                        <div style="overflow-x:auto;">
+                            <table class="calorie-table" id="calorie-table">
+                                <thead>
+                                    <tr>
+                                        <th data-ko="목표" data-en="Goal">목표</th>
+                                        <th data-ko="일일 칼로리" data-en="Daily Calories">일일 칼로리</th>
+                                        <th data-ko="예상 효과" data-en="Expected Result">예상 효과</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="calorie-tbody"></tbody>
+                            </table>
+                        </div>
+                        <p style="font-size:0.78rem; color:var(--text-muted); margin-top:12px; line-height:1.6;" data-ko="* 위 수치는 Mifflin-St Jeor 공식 기반 추정치입니다. 개인 건강 상태에 따라 달라질 수 있으므로 정확한 상담은 전문 의료진과 진행하세요." data-en="* Values are estimates based on the Mifflin-St Jeor equation. Consult a healthcare professional for personalized advice.">* 위 수치는 Mifflin-St Jeor 공식 기반 추정치입니다. 개인 건강 상태에 따라 달라질 수 있으므로 정확한 상담은 전문 의료진과 진행하세요.</p>
+                    </div>
+                </div>
+
+                <!-- Re-calculate -->
+                <div style="text-align:center; margin-bottom:40px;">
+                    <button onclick="resetCalc()" style="padding:12px 28px; background:transparent; border:2px solid var(--border-color); border-radius:14px; font-size:0.9rem; font-weight:700; cursor:pointer; color:var(--text-muted);">
+                        <i class="fas fa-redo" style="margin-right:6px;"></i>
+                        <span data-ko="다시 계산" data-en="Recalculate">다시 계산</span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Education Section -->
+            <div class="edu-section">
+                <h2 data-ko="BMI와 칼로리, 제대로 이해하기" data-en="Understanding BMI & Calories">BMI와 칼로리, 제대로 이해하기</h2>
+
+                <div class="tip-row">
+                    <h3 data-ko="BMI의 한계" data-en="Limitations of BMI">BMI의 한계</h3>
+                    <p data-ko="BMI는 체지방률을 직접 측정하지 않습니다. 근육량이 많은 운동선수는 BMI가 높아도 체지방률은 낮을 수 있고, 반대로 BMI가 정상 범위여도 복부 내장지방이 많으면 대사 위험이 높습니다. BMI와 함께 허리둘레, 체지방률을 함께 확인하는 것이 좋습니다." data-en="BMI doesn't directly measure body fat. Athletes with high muscle mass may have a high BMI but low body fat, while someone with a normal BMI can still have excess visceral fat. Combine BMI with waist circumference and body fat percentage for a fuller picture.">BMI는 체지방률을 직접 측정하지 않습니다. 근육량이 많은 운동선수는 BMI가 높아도 체지방률은 낮을 수 있고, 반대로 BMI가 정상 범위여도 복부 내장지방이 많으면 대사 위험이 높습니다. BMI와 함께 허리둘레, 체지방률을 함께 확인하는 것이 좋습니다.</p>
+                </div>
+
+                <div class="tip-row">
+                    <h3 data-ko="기초대사량(BMR) 이해하기" data-en="Understanding BMR">기초대사량(BMR) 이해하기</h3>
+                    <p data-ko="BMR은 완전히 안정 상태에서 심장 박동, 호흡, 체온 유지 등 기본 생명 활동에 필요한 최소 에너지입니다. 나이가 들수록 근육량 감소로 BMR이 낮아지며, 이것이 나이 들수록 살이 찌기 쉬운 주요 원인입니다. 근력 운동은 근육량을 유지해 BMR 저하를 막는 가장 효과적인 방법입니다." data-en="BMR is the minimum energy your body needs to maintain basic functions like heartbeat, breathing, and temperature regulation at complete rest. BMR decreases with age as muscle mass declines, which is why weight gain becomes easier as we age. Strength training is the most effective way to maintain muscle mass and prevent BMR decline.">BMR은 완전히 안정 상태에서 심장 박동, 호흡, 체온 유지 등 기본 생명 활동에 필요한 최소 에너지입니다. 나이가 들수록 근육량 감소로 BMR이 낮아지며, 이것이 나이 들수록 살이 찌기 쉬운 주요 원인입니다. 근력 운동은 근육량을 유지해 BMR 저하를 막는 가장 효과적인 방법입니다.</p>
+                </div>
+
+                <div class="tip-row">
+                    <h3 data-ko="안전한 체중 감량 속도" data-en="Safe Rate of Weight Loss">안전한 체중 감량 속도</h3>
+                    <p data-ko="체지방 1kg 감량에는 약 7,700kcal의 칼로리 적자가 필요합니다. 주당 0.5kg 감량은 하루 약 550kcal 적자로 달성 가능하며, 이 속도는 근육 손실 없이 체지방을 줄이는 데 최적화된 속도입니다. TDEE의 25% 이상 급격히 줄이면 기초대사량 저하와 근손실이 심해져 요요 현상이 나타나기 쉽습니다." data-en="Losing 1kg of body fat requires a deficit of approximately 7,700 kcal. A weekly loss of 0.5kg is achievable with a daily deficit of ~550 kcal — the optimal rate for reducing body fat without muscle loss. Cutting more than 25% below TDEE can suppress BMR and cause muscle loss, leading to rebound weight gain.">체지방 1kg 감량에는 약 7,700kcal의 칼로리 적자가 필요합니다. 주당 0.5kg 감량은 하루 약 550kcal 적자로 달성 가능하며, 이 속도는 근육 손실 없이 체지방을 줄이는 데 최적화된 속도입니다. TDEE의 25% 이상 급격히 줄이면 기초대사량 저하와 근손실이 심해져 요요 현상이 나타나기 쉽습니다.</p>
+                </div>
+
+                <div class="tip-row">
+                    <h3 data-ko="칼로리만으로 체중을 관리하기 어려운 이유" data-en="Why Calorie Counting Alone Falls Short">칼로리만으로 체중을 관리하기 어려운 이유</h3>
+                    <p data-ko="같은 칼로리여도 단백질과 식이섬유가 풍부한 식품은 포만감이 오래 지속됩니다. 또한 수면 부족과 만성 스트레스는 코르티솔·그렐린(식욕 촉진 호르몬)을 증가시켜 같은 칼로리를 먹어도 더 배고프게 만듭니다. 칼로리 계산과 함께 수면·스트레스 관리가 체중 관리의 핵심입니다." data-en="Even at the same calorie count, protein- and fiber-rich foods keep you fuller longer. Additionally, sleep deprivation and chronic stress raise cortisol and ghrelin (appetite-stimulating hormones), making you hungrier even at the same calorie intake. Managing sleep and stress is just as important as counting calories.">같은 칼로리여도 단백질과 식이섬유가 풍부한 식품은 포만감이 오래 지속됩니다. 또한 수면 부족과 만성 스트레스는 코르티솔·그렐린(식욕 촉진 호르몬)을 증가시켜 같은 칼로리를 먹어도 더 배고프게 만듭니다. 칼로리 계산과 함께 수면·스트레스 관리가 체중 관리의 핵심입니다.</p>
+                </div>
+            </div>
+
+            <!-- Related Links -->
+            <div style="margin-bottom: 60px;">
+                <div style="font-size:0.75rem; font-weight:800; color:var(--text-muted); letter-spacing:0.06em; text-transform:uppercase; margin-bottom:16px;" data-ko="연관 콘텐츠" data-en="Related Content">연관 콘텐츠</div>
+                <div style="display:grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 14px;">
+                    <a href="article-protein.html" style="text-decoration:none; background:var(--card-bg); border:1px solid var(--border-color); border-radius:16px; padding:18px 20px; display:flex; gap:12px; align-items:center; transition:transform 0.2s;" onmouseover="this.style.transform='translateY(-2px)'" onmouseout="this.style.transform=''">
+                        <span style="font-size:1.8rem;">💪</span>
+                        <div>
+                            <strong style="font-size:0.88rem; display:block; margin-bottom:3px;" data-ko="단백질 완전 가이드" data-en="Protein Complete Guide">단백질 완전 가이드</strong>
+                            <span style="font-size:0.78rem; color:var(--text-muted);" data-ko="근육 · 다이어트 · 흡수" data-en="Muscle · Diet · Absorption">근육 · 다이어트 · 흡수</span>
+                        </div>
+                    </a>
+                    <a href="article-intermittent-fasting.html" style="text-decoration:none; background:var(--card-bg); border:1px solid var(--border-color); border-radius:16px; padding:18px 20px; display:flex; gap:12px; align-items:center; transition:transform 0.2s;" onmouseover="this.style.transform='translateY(-2px)'" onmouseout="this.style.transform=''">
+                        <span style="font-size:1.8rem;">⏱️</span>
+                        <div>
+                            <strong style="font-size:0.88rem; display:block; margin-bottom:3px;" data-ko="간헐적 단식 완벽 가이드" data-en="Intermittent Fasting Guide">간헐적 단식 완벽 가이드</strong>
+                            <span style="font-size:0.78rem; color:var(--text-muted);" data-ko="16:8 · 5:2 · 과학적 근거" data-en="16:8 · 5:2 · Science">16:8 · 5:2 · 과학적 근거</span>
+                        </div>
+                    </a>
+                    <a href="article-exercise-nutrition.html" style="text-decoration:none; background:var(--card-bg); border:1px solid var(--border-color); border-radius:16px; padding:18px 20px; display:flex; gap:12px; align-items:center; transition:transform 0.2s;" onmouseover="this.style.transform='translateY(-2px)'" onmouseout="this.style.transform=''">
+                        <span style="font-size:1.8rem;">🏋️</span>
+                        <div>
+                            <strong style="font-size:0.88rem; display:block; margin-bottom:3px;" data-ko="운동 전후 영양 전략" data-en="Exercise Nutrition Strategy">운동 전후 영양 전략</strong>
+                            <span style="font-size:0.78rem; color:var(--text-muted);" data-ko="타이밍 · 탄수화물 · 단백질" data-en="Timing · Carbs · Protein">타이밍 · 탄수화물 · 단백질</span>
+                        </div>
+                    </a>
+                </div>
+            </div>
+
+        </div>
+    </main>
+
+    <footer style="text-align:center; padding:40px 24px; border-top:1px solid var(--border-color); color:var(--text-muted); font-size:0.85rem;">
+        <p>© 2026 VitalGuide. 전인적 건강을 위한 고품격 가이드. &nbsp;|&nbsp;
+            <a href="privacy.html" style="color:inherit; text-decoration:none;">Privacy</a> &nbsp;|&nbsp;
+            <a href="terms.html" style="color:inherit; text-decoration:none;">Terms</a> &nbsp;|&nbsp;
+            <a href="about.html" style="color:inherit; text-decoration:none;">About</a>
+        </p>
+        <p style="margin-top:8px; font-size:0.78rem;" data-ko="본 계산기는 정보 제공 목적이며 의학적 진단을 대체하지 않습니다." data-en="This calculator is for informational purposes only and does not substitute medical diagnosis.">본 계산기는 정보 제공 목적이며 의학적 진단을 대체하지 않습니다.</p>
+    </footer>
+
+    <script src="theme.js"></script>
+    <script src="main.js"></script>
+    <script>
+        let selectedGender = 'male';
+        let selectedActivityMultiplier = 1.2;
+        let selectedActivityIndex = 1;
+
+        function setGender(g) {
+            selectedGender = g;
+            document.querySelectorAll('.gender-btn').forEach(b => b.classList.remove('active'));
+            document.getElementById('btn-male').classList.toggle('active', g === 'male');
+            document.getElementById('btn-female').classList.toggle('active', g === 'female');
+            if (document.getElementById('btn-male-en')) {
+                document.getElementById('btn-male-en').classList.toggle('active', g === 'male');
+                document.getElementById('btn-female-en').classList.toggle('active', g === 'female');
+            }
+        }
+
+        function setActivity(idx, mult) {
+            selectedActivityMultiplier = mult;
+            selectedActivityIndex = idx;
+            for (let i = 1; i <= 5; i++) {
+                const btn = document.getElementById('act-' + i);
+                const btnEn = document.getElementById('act-' + i + '-en');
+                if (btn) btn.classList.toggle('active', i === idx);
+                if (btnEn) btnEn.classList.toggle('active', i === idx);
+            }
+        }
+
+        function getInputVal(idKo, idEn) {
+            const isKo = document.body.getAttribute('data-lang') !== 'en';
+            const el = document.getElementById(isKo ? idKo : idEn) || document.getElementById(idKo);
+            return el ? parseFloat(el.value) : NaN;
+        }
+
+        function calculate() {
+            const age = getInputVal('input-age', 'input-age-en');
+            const height = getInputVal('input-height', 'input-height-en');
+            const weight = getInputVal('input-weight', 'input-weight-en');
+            const isKo = document.body.getAttribute('data-lang') !== 'en';
+
+            if (isNaN(age) || isNaN(height) || isNaN(weight) || age < 10 || height < 100 || weight < 20) {
+                alert(isKo ? '키, 체중, 나이를 올바르게 입력해주세요.' : 'Please enter valid height, weight, and age.');
+                return;
+            }
+
+            // BMI
+            const heightM = height / 100;
+            const bmi = weight / (heightM * heightM);
+
+            // BMR (Mifflin-St Jeor)
+            let bmr;
+            if (selectedGender === 'male') {
+                bmr = 10 * weight + 6.25 * height - 5 * age + 5;
+            } else {
+                bmr = 10 * weight + 6.25 * height - 5 * age - 161;
+            }
+            const tdee = Math.round(bmr * selectedActivityMultiplier);
+            bmr = Math.round(bmr);
+
+            // Ideal weight range (BMI 18.5–22.9)
+            const idealLow = Math.round(18.5 * heightM * heightM * 10) / 10;
+            const idealHigh = Math.round(22.9 * heightM * heightM * 10) / 10;
+
+            // Display BMI
+            document.getElementById('bmi-value').textContent = bmi.toFixed(1);
+
+            let bmiLabel, bmiColor, bmiDesc, bmiPos;
+            if (bmi < 18.5) {
+                bmiLabel = isKo ? '저체중' : 'Underweight';
+                bmiColor = '#60a5fa';
+                bmiDesc = isKo ? '체중이 다소 낮습니다. 균형 잡힌 영양 섭취와 근력 운동으로 건강한 체중을 목표로 하세요.' : 'Your weight is slightly low. Focus on balanced nutrition and strength training to reach a healthy weight.';
+                bmiPos = Math.min((bmi / 18.5) * 12, 12);
+            } else if (bmi < 23) {
+                bmiLabel = isKo ? '정상' : 'Normal';
+                bmiColor = '#34d399';
+                bmiDesc = isKo ? '건강한 체중 범위입니다. 현재 식습관과 운동 루틴을 유지하세요.' : 'You are in a healthy weight range. Maintain your current diet and exercise habits.';
+                bmiPos = 12 + ((bmi - 18.5) / 4.5) * 13;
+            } else if (bmi < 25) {
+                bmiLabel = isKo ? '과체중' : 'Overweight';
+                bmiColor = '#fbbf24';
+                bmiDesc = isKo ? '정상 범위보다 약간 높습니다. 식이 조절과 유산소 운동으로 점진적인 체중 감량을 권장합니다.' : 'Slightly above the healthy range. Gradual weight loss through diet and cardio exercise is recommended.';
+                bmiPos = 25 + ((bmi - 23) / 2) * 12;
+            } else if (bmi < 30) {
+                bmiLabel = isKo ? '비만 1단계' : 'Obese I';
+                bmiColor = '#f87171';
+                bmiDesc = isKo ? '비만 1단계로 생활 습관 개선이 시급합니다. 식이 조절, 운동, 필요시 전문의 상담을 권장합니다.' : 'Class I obesity. Lifestyle changes are urgently needed. Dietary adjustment, exercise, and medical consultation are recommended.';
+                bmiPos = 37 + ((bmi - 25) / 5) * 20;
+            } else {
+                bmiLabel = isKo ? '고도비만' : 'Obese II+';
+                bmiColor = '#ef4444';
+                bmiDesc = isKo ? '고도비만 단계입니다. 반드시 전문 의료진의 상담을 받으시기 바랍니다.' : 'Severe obesity. Please consult a healthcare professional as soon as possible.';
+                bmiPos = Math.min(57 + ((bmi - 30) / 5) * 15, 90);
+            }
+
+            const labelEl = document.getElementById('bmi-label');
+            labelEl.textContent = bmiLabel;
+            labelEl.style.background = bmiColor + '22';
+            labelEl.style.color = bmiColor;
+            document.getElementById('bmi-marker').style.left = bmiPos + '%';
+            document.getElementById('bmi-desc').textContent = bmiDesc;
+
+            // BMR & TDEE
+            document.getElementById('bmr-value').textContent = bmr.toLocaleString();
+            document.getElementById('tdee-value').textContent = tdee.toLocaleString();
+            document.getElementById('ideal-weight').textContent = idealLow + '~' + idealHigh;
+
+            // Calorie table
+            const goals = isKo ? [
+                { label: '빠른 감량', tag: '감량', tagClass: 'tag-lose', cals: Math.round(tdee * 0.75), note: '주 약 0.8~1kg 감량 (근손실 위험 있음)' },
+                { label: '적당한 감량', tag: '감량', tagClass: 'tag-lose', cals: Math.round(tdee * 0.85), note: '주 약 0.4~0.5kg 감량 (권장)' },
+                { label: '체중 유지', tag: '유지', tagClass: 'tag-maintain', cals: tdee, note: '현재 체중 유지' },
+                { label: '점진적 증량', tag: '증량', tagClass: 'tag-gain', cals: Math.round(tdee * 1.10), note: '주 약 0.2~0.3kg 근육/체중 증가' },
+                { label: '적극적 벌크업', tag: '증량', tagClass: 'tag-gain', cals: Math.round(tdee * 1.20), note: '주 약 0.3~0.5kg 증량 (지방 함께 증가 가능)' },
+            ] : [
+                { label: 'Aggressive Cut', tag: 'Lose', tagClass: 'tag-lose', cals: Math.round(tdee * 0.75), note: '~0.8–1kg/week (risk of muscle loss)' },
+                { label: 'Moderate Cut', tag: 'Lose', tagClass: 'tag-lose', cals: Math.round(tdee * 0.85), note: '~0.4–0.5kg/week (recommended)' },
+                { label: 'Maintenance', tag: 'Maintain', tagClass: 'tag-maintain', cals: tdee, note: 'Maintain current weight' },
+                { label: 'Lean Bulk', tag: 'Gain', tagClass: 'tag-gain', cals: Math.round(tdee * 1.10), note: '~0.2–0.3kg/week gain' },
+                { label: 'Aggressive Bulk', tag: 'Gain', tagClass: 'tag-gain', cals: Math.round(tdee * 1.20), note: '~0.3–0.5kg/week (some fat gain likely)' },
+            ];
+
+            const tbody = document.getElementById('calorie-tbody');
+            tbody.innerHTML = goals.map(g => `
+                <tr>
+                    <td><span class="goal-tag ${g.tagClass}">${g.tag}</span> ${g.label}</td>
+                    <td><strong>${g.cals.toLocaleString()} kcal</strong></td>
+                    <td style="color:var(--text-muted); font-size:0.85rem;">${g.note}</td>
+                </tr>
+            `).join('');
+
+            // Show results
+            document.getElementById('results').style.display = 'block';
+            document.getElementById('results').scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+
+        function resetCalc() {
+            document.getElementById('results').style.display = 'none';
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,436 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-P6CTZY2283"></script>
+    <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-P6CTZY2283');</script>
+    <meta name="google-adsense-account" content="ca-pub-9103697866666926">
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9103697866666926" crossorigin="anonymous"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>생체나이 계산기 — 내 실제 생물학적 나이는? | VitalGuide</title>
+    <meta name="description" content="수면·운동·식습관·스트레스 등 8가지 생활 습관을 분석해 실제 나이와 생체나이의 차이를 계산합니다. 더 젊어지는 생활 습관 팁을 함께 제공합니다.">
+    <link rel="canonical" href="https://vi7al.com/biological-age.html">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://vi7al.com/biological-age.html">
+    <meta property="og:title" content="생체나이 계산기 — 내 실제 생물학적 나이는? | VitalGuide">
+    <meta property="og:description" content="수면·운동·식습관·스트레스 8가지 분석으로 내 생체나이를 계산하세요. 젊어지는 팁 포함.">
+    <meta property="og:image" content="https://vi7al.com/og-image.png">
+    <meta property="og:site_name" content="VitalGuide">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="icon" href="favicon.svg" type="image/svg+xml">
+    <script type="application/ld+json">
+    {"@context":"https://schema.org","@type":"WebPage","name":"생체나이 계산기","description":"수면·운동·식습관·스트레스 등 8가지 생활 습관을 분석해 실제 나이와 생체나이의 차이를 계산합니다.","url":"https://vi7al.com/biological-age.html","publisher":{"@type":"Organization","name":"VitalGuide","url":"https://vi7al.com/"}}
+    </script>
+    <style>
+        .bio-wrap { max-width: 780px; margin: 0 auto; }
+        .q-card {
+            background: var(--card-bg); border: 1px solid var(--border-color);
+            border-radius: 24px; padding: 28px 30px; margin-bottom: 20px;
+        }
+        .q-title { font-size: 1rem; font-weight: 800; margin-bottom: 16px; line-height: 1.5; }
+        .q-title span { display: inline-block; background: var(--primary-color); color: white; width: 26px; height: 26px; border-radius: 50%; font-size: 0.78rem; text-align: center; line-height: 26px; margin-right: 10px; flex-shrink: 0; }
+        .opt-row { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 10px; }
+        .opt-btn {
+            padding: 12px 14px; border: 2px solid var(--border-color); border-radius: 14px;
+            background: var(--card-bg); color: var(--text-muted); font-size: 0.86rem;
+            font-weight: 700; cursor: pointer; transition: all 0.2s; text-align: left;
+            display: flex; align-items: center; gap: 8px;
+        }
+        .opt-btn:hover { border-color: var(--accent-color); transform: translateY(-1px); }
+        .opt-btn.sel { border-color: var(--primary-color); background: rgba(56,189,248,0.08); color: var(--text-main); }
+        .opt-btn .oi { font-size: 1.3rem; flex-shrink: 0; }
+        #submit-btn {
+            width: 100%; padding: 18px; background: var(--primary-color); color: white;
+            border: none; border-radius: 16px; font-size: 1.1rem; font-weight: 900;
+            cursor: pointer; transition: opacity 0.2s; margin-top: 8px;
+        }
+        #submit-btn:hover { opacity: 0.85; }
+        #result-section { display: none; animation: fadeIn 0.5s ease; }
+        @keyframes fadeIn { from { opacity:0; transform:translateY(20px); } to { opacity:1; transform:translateY(0); } }
+        .bio-age-display {
+            background: var(--card-bg); border: 1px solid var(--border-color);
+            border-radius: 30px; padding: 48px 40px; text-align: center; margin-bottom: 24px;
+        }
+        .age-compare { display: flex; gap: 40px; justify-content: center; align-items: center; flex-wrap: wrap; margin: 30px 0; }
+        .age-box { text-align: center; }
+        .age-box .age-label { font-size: 0.8rem; font-weight: 700; color: var(--text-muted); letter-spacing: 0.06em; text-transform: uppercase; margin-bottom: 8px; }
+        .age-box .age-num { font-size: 4rem; font-weight: 900; line-height: 1; }
+        .age-separator { font-size: 2rem; color: var(--border-color); font-weight: 300; }
+        .diff-badge { display: inline-block; padding: 8px 24px; border-radius: 99px; font-size: 1.1rem; font-weight: 900; margin-top: 20px; }
+        .area-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 14px; margin-bottom: 30px; }
+        .area-card { background: var(--card-bg); border: 1px solid var(--border-color); border-radius: 18px; padding: 20px; }
+        .area-card .area-name { font-size: 0.82rem; font-weight: 700; color: var(--text-muted); margin-bottom: 8px; }
+        .area-card .area-score-bar { height: 8px; border-radius: 99px; background: var(--border-color); margin-bottom: 8px; overflow: hidden; }
+        .area-card .area-score-fill { height: 100%; border-radius: 99px; transition: width 0.8s ease; }
+        .area-card .area-tip { font-size: 0.82rem; color: var(--text-muted); line-height: 1.6; }
+        .advice-card { background: var(--card-bg); border: 1px solid var(--border-color); border-radius: 20px; padding: 24px; margin-bottom: 14px; display: flex; gap: 16px; }
+        .advice-icon { font-size: 2rem; flex-shrink: 0; }
+        .advice-card h3 { font-size: 0.95rem; font-weight: 800; margin-bottom: 6px; }
+        .advice-card p { font-size: 0.86rem; color: var(--text-muted); line-height: 1.7; margin: 0; }
+        @media (max-width: 600px) { .bio-age-display { padding: 32px 20px; } .age-compare { gap: 20px; } }
+    </style>
+</head>
+<body data-lang="ko">
+    <header>
+        <div class="container header-flex">
+            <a href="index.html" class="logo">VitalGuide</a>
+            <div class="controls-bar">
+                <button id="lang-toggle" class="control-btn">EN</button>
+                <button id="theme-toggle" class="control-btn"><i class="fas fa-moon"></i></button>
+            </div>
+        </div>
+        <nav>
+            <a href="index.html" data-ko="AI 맞춤영양" data-en="AI Nutrition">AI 맞춤영양</a>
+            <a href="exercise.html" data-ko="운동가이드" data-en="Exercise">운동가이드</a>
+            <a href="psychology.html" data-ko="심리분석" data-en="Psychology">심리분석</a>
+            <a href="mbti.html" data-ko="MBTI 테스트" data-en="MBTI Test">MBTI 테스트</a>
+            <a href="fortune.html" data-ko="오늘의운세" data-en="Daily Fortune">오늘의운세</a>
+            <a href="games.html" data-ko="미니게임" data-en="Mini Games">미니게임</a>
+            <a href="blog.html" data-ko="건강가이드" data-en="Health Blog">건강가이드</a>
+        </nav>
+    </header>
+
+    <main class="container">
+        <nav style="margin: 30px 0 0; font-size: 0.85rem; color: var(--text-muted);">
+            <a href="index.html" style="color:var(--text-muted); text-decoration:none;" data-ko="홈" data-en="Home">홈</a>
+            <span style="margin: 0 8px;">›</span>
+            <span data-ko="생체나이 계산기" data-en="Biological Age Calculator">생체나이 계산기</span>
+        </nav>
+
+        <section class="hero" style="padding-bottom: 20px;">
+            <h2 data-ko="나의 생체나이는 몇 살?" data-en="What Is Your Biological Age?" style="font-size: 2.4rem;">나의 생체나이는 몇 살?</h2>
+            <p data-ko="수면·운동·식습관·스트레스 8가지 생활 습관을 분석해 실제 나이와 생체나이의 차이를 알아보세요." data-en="Analyze 8 lifestyle factors — sleep, exercise, diet, and stress — to discover the gap between your chronological and biological age.">수면·운동·식습관·스트레스 8가지 생활 습관을 분석해 실제 나이와 생체나이의 차이를 알아보세요.</p>
+        </section>
+
+        <div class="bio-wrap">
+
+            <!-- Disclaimer -->
+            <div style="background: rgba(56,189,248,0.06); border: 1px solid rgba(56,189,248,0.2); border-radius: 16px; padding: 14px 18px; margin-bottom: 30px; font-size: 0.84rem; color: var(--text-muted); line-height: 1.7;" data-ko="이 계산기는 생활 습관 연구(텔로미어 노화 연구, 블루존 장수 연구 등)를 바탕으로 개발된 추정 도구입니다. 의학적 검사를 대체하지 않으며, 재미와 건강 동기 부여 목적으로 활용하세요." data-en="This calculator is an estimation tool based on lifestyle research (telomere aging studies, Blue Zone longevity research, etc.). It does not replace medical testing — use it for fun and health motivation.">이 계산기는 생활 습관 연구(텔로미어 노화 연구, 블루존 장수 연구 등)를 바탕으로 개발된 추정 도구입니다. 의학적 검사를 대체하지 않으며, 재미와 건강 동기 부여 목적으로 활용하세요.</div>
+
+            <!-- Quiz Form -->
+            <div id="quiz-form">
+
+                <!-- Q0: Real age -->
+                <div class="q-card">
+                    <div class="q-title"><span>0</span> <span data-ko="실제 나이를 입력하세요" data-en="Enter your actual age">실제 나이를 입력하세요</span></div>
+                    <div style="display:flex; gap:12px; align-items:center;">
+                        <input type="number" id="real-age" placeholder="30" min="10" max="99" style="padding:14px 18px; border:2px solid var(--border-color); border-radius:14px; font-size:1.1rem; font-weight:700; background:var(--card-bg); color:var(--text-main); width:140px; outline:none;" onfocus="this.style.borderColor='var(--accent-color)'" onblur="this.style.borderColor='var(--border-color)'">
+                        <span style="color:var(--text-muted); font-weight:700;" data-ko="세" data-en="years old">세</span>
+                    </div>
+                </div>
+
+                <!-- Q1: Sleep -->
+                <div class="q-card">
+                    <div class="q-title"><span>1</span> <span data-ko="평균 수면 시간은 얼마나 되나요?" data-en="How many hours do you sleep on average?">평균 수면 시간은 얼마나 되나요?</span></div>
+                    <div class="opt-row" id="q1">
+                        <button class="opt-btn" data-q="1" data-val="-3" onclick="selectOpt(this)"><span class="oi">😰</span><span data-ko="5시간 미만" data-en="Less than 5h">5시간 미만</span></button>
+                        <button class="opt-btn" data-q="1" data-val="-1" onclick="selectOpt(this)"><span class="oi">😴</span><span data-ko="5~6시간" data-en="5–6h">5~6시간</span></button>
+                        <button class="opt-btn" data-q="1" data-val="2" onclick="selectOpt(this)"><span class="oi">😊</span><span data-ko="7~8시간" data-en="7–8h">7~8시간</span></button>
+                        <button class="opt-btn" data-q="1" data-val="0" onclick="selectOpt(this)"><span class="oi">😑</span><span data-ko="9시간 이상" data-en="9h+">9시간 이상</span></button>
+                    </div>
+                </div>
+
+                <!-- Q2: Exercise -->
+                <div class="q-card">
+                    <div class="q-title"><span>2</span> <span data-ko="일주일에 운동하는 횟수는?" data-en="How often do you exercise per week?">일주일에 운동하는 횟수는?</span></div>
+                    <div class="opt-row" id="q2">
+                        <button class="opt-btn" data-q="2" data-val="-4" onclick="selectOpt(this)"><span class="oi">🛋️</span><span data-ko="거의 안 함" data-en="Rarely">거의 안 함</span></button>
+                        <button class="opt-btn" data-q="2" data-val="0" onclick="selectOpt(this)"><span class="oi">🚶</span><span data-ko="주 1~2회" data-en="1–2×/week">주 1~2회</span></button>
+                        <button class="opt-btn" data-q="2" data-val="2" onclick="selectOpt(this)"><span class="oi">🏃</span><span data-ko="주 3~4회" data-en="3–4×/week">주 3~4회</span></button>
+                        <button class="opt-btn" data-q="2" data-val="3" onclick="selectOpt(this)"><span class="oi">💪</span><span data-ko="주 5회 이상" data-en="5+×/week">주 5회 이상</span></button>
+                    </div>
+                </div>
+
+                <!-- Q3: Diet quality -->
+                <div class="q-card">
+                    <div class="q-title"><span>3</span> <span data-ko="식단의 질은 어느 정도인가요?" data-en="How would you rate your diet quality?">식단의 질은 어느 정도인가요?</span></div>
+                    <div class="opt-row" id="q3">
+                        <button class="opt-btn" data-q="3" data-val="-4" onclick="selectOpt(this)"><span class="oi">🍔</span><span data-ko="패스트푸드·배달 위주" data-en="Mostly fast food">패스트푸드·배달 위주</span></button>
+                        <button class="opt-btn" data-q="3" data-val="-1" onclick="selectOpt(this)"><span class="oi">🍜</span><span data-ko="대체로 편의식" data-en="Mostly processed">대체로 편의식</span></button>
+                        <button class="opt-btn" data-q="3" data-val="1" onclick="selectOpt(this)"><span class="oi">🥗</span><span data-ko="야채·단백질 균형" data-en="Balanced with veg">야채·단백질 균형</span></button>
+                        <button class="opt-btn" data-q="3" data-val="3" onclick="selectOpt(this)"><span class="oi">🥦</span><span data-ko="통곡물·채소 중심" data-en="Whole foods focused">통곡물·채소 중심</span></button>
+                    </div>
+                </div>
+
+                <!-- Q4: Stress -->
+                <div class="q-card">
+                    <div class="q-title"><span>4</span> <span data-ko="평소 스트레스 수준은?" data-en="What is your usual stress level?">평소 스트레스 수준은?</span></div>
+                    <div class="opt-row" id="q4">
+                        <button class="opt-btn" data-q="4" data-val="-4" onclick="selectOpt(this)"><span class="oi">😤</span><span data-ko="항상 극심한 스트레스" data-en="Always intense">항상 극심한 스트레스</span></button>
+                        <button class="opt-btn" data-q="4" data-val="-2" onclick="selectOpt(this)"><span class="oi">😟</span><span data-ko="자주 스트레스 받음" data-en="Often stressed">자주 스트레스 받음</span></button>
+                        <button class="opt-btn" data-q="4" data-val="1" onclick="selectOpt(this)"><span class="oi">🙂</span><span data-ko="보통 수준" data-en="Moderate">보통 수준</span></button>
+                        <button class="opt-btn" data-q="4" data-val="3" onclick="selectOpt(this)"><span class="oi">😌</span><span data-ko="잘 관리되는 편" data-en="Well managed">잘 관리되는 편</span></button>
+                    </div>
+                </div>
+
+                <!-- Q5: Smoking -->
+                <div class="q-card">
+                    <div class="q-title"><span>5</span> <span data-ko="흡연 여부는?" data-en="Do you smoke?">흡연 여부는?</span></div>
+                    <div class="opt-row" id="q5">
+                        <button class="opt-btn" data-q="5" data-val="-6" onclick="selectOpt(this)"><span class="oi">🚬</span><span data-ko="현재 흡연 중" data-en="Current smoker">현재 흡연 중</span></button>
+                        <button class="opt-btn" data-q="5" data-val="-2" onclick="selectOpt(this)"><span class="oi">🚭</span><span data-ko="금연 1~5년" data-en="Quit 1–5yr ago">금연 1~5년</span></button>
+                        <button class="opt-btn" data-q="5" data-val="1" onclick="selectOpt(this)"><span class="oi">✅</span><span data-ko="금연 5년 이상" data-en="Quit 5+ yr ago">금연 5년 이상</span></button>
+                        <button class="opt-btn" data-q="5" data-val="3" onclick="selectOpt(this)"><span class="oi">🌿</span><span data-ko="비흡연자" data-en="Never smoked">비흡연자</span></button>
+                    </div>
+                </div>
+
+                <!-- Q6: Alcohol -->
+                <div class="q-card">
+                    <div class="q-title"><span>6</span> <span data-ko="음주 습관은?" data-en="How do you drink alcohol?">음주 습관은?</span></div>
+                    <div class="opt-row" id="q6">
+                        <button class="opt-btn" data-q="6" data-val="-4" onclick="selectOpt(this)"><span class="oi">🍺</span><span data-ko="매일 또는 과음" data-en="Daily or heavy">매일 또는 과음</span></button>
+                        <button class="opt-btn" data-q="6" data-val="-1" onclick="selectOpt(this)"><span class="oi">🍷</span><span data-ko="주 2~3회" data-en="2–3×/week">주 2~3회</span></button>
+                        <button class="opt-btn" data-q="6" data-val="1" onclick="selectOpt(this)"><span class="oi">🥂</span><span data-ko="가끔 (월 1~4회)" data-en="Occasionally">가끔 (월 1~4회)</span></button>
+                        <button class="opt-btn" data-q="6" data-val="3" onclick="selectOpt(this)"><span class="oi">💧</span><span data-ko="거의 안 마심" data-en="Rarely / Never">거의 안 마심</span></button>
+                    </div>
+                </div>
+
+                <!-- Q7: Water -->
+                <div class="q-card">
+                    <div class="q-title"><span>7</span> <span data-ko="하루 물 섭취량은?" data-en="How much water do you drink daily?">하루 물 섭취량은?</span></div>
+                    <div class="opt-row" id="q7">
+                        <button class="opt-btn" data-q="7" data-val="-2" onclick="selectOpt(this)"><span class="oi">🏜️</span><span data-ko="1L 미만" data-en="Less than 1L">1L 미만</span></button>
+                        <button class="opt-btn" data-q="7" data-val="0" onclick="selectOpt(this)"><span class="oi">🥤</span><span data-ko="1~1.5L" data-en="1–1.5L">1~1.5L</span></button>
+                        <button class="opt-btn" data-q="7" data-val="2" onclick="selectOpt(this)"><span class="oi">💧</span><span data-ko="1.5~2.5L" data-en="1.5–2.5L">1.5~2.5L</span></button>
+                        <button class="opt-btn" data-q="7" data-val="1" onclick="selectOpt(this)"><span class="oi">🌊</span><span data-ko="2.5L 이상" data-en="2.5L+">2.5L 이상</span></button>
+                    </div>
+                </div>
+
+                <!-- Q8: Social/mind -->
+                <div class="q-card">
+                    <div class="q-title"><span>8</span> <span data-ko="사회적 연결과 정서 건강은?" data-en="How is your social connection & emotional health?">사회적 연결과 정서 건강은?</span></div>
+                    <div class="opt-row" id="q8">
+                        <button class="opt-btn" data-q="8" data-val="-3" onclick="selectOpt(this)"><span class="oi">😶</span><span data-ko="고립감, 외로움 자주 느낌" data-en="Often isolated">고립감, 외로움 자주 느낌</span></button>
+                        <button class="opt-btn" data-q="8" data-val="0" onclick="selectOpt(this)"><span class="oi">🤝</span><span data-ko="보통 수준" data-en="Average">보통 수준</span></button>
+                        <button class="opt-btn" data-q="8" data-val="2" onclick="selectOpt(this)"><span class="oi">👥</span><span data-ko="활발한 사회생활" data-en="Active social life">활발한 사회생활</span></button>
+                        <button class="opt-btn" data-q="8" data-val="3" onclick="selectOpt(this)"><span class="oi">❤️</span><span data-ko="강한 유대감·목적의식" data-en="Strong bonds & purpose">강한 유대감·목적의식</span></button>
+                    </div>
+                </div>
+
+                <button id="submit-btn" onclick="calcBioAge()">
+                    <i class="fas fa-dna" style="margin-right:8px;"></i>
+                    <span data-ko="생체나이 계산하기" data-en="Calculate My Biological Age">생체나이 계산하기</span>
+                </button>
+            </div>
+
+            <!-- Result Section -->
+            <div id="result-section">
+
+                <div class="bio-age-display">
+                    <div style="font-size:0.78rem; font-weight:700; color:var(--text-muted); letter-spacing:0.08em; text-transform:uppercase; margin-bottom:6px;" data-ko="분석 결과" data-en="Your Result">분석 결과</div>
+                    <div id="result-headline" style="font-size:1.4rem; font-weight:900; margin-bottom:24px; line-height:1.4;"></div>
+
+                    <div class="age-compare">
+                        <div class="age-box">
+                            <div class="age-label" data-ko="실제 나이" data-en="Chronological Age">실제 나이</div>
+                            <div class="age-num" id="display-real-age" style="color:var(--text-muted);">--</div>
+                        </div>
+                        <div class="age-separator">→</div>
+                        <div class="age-box">
+                            <div class="age-label" data-ko="생체나이" data-en="Biological Age">생체나이</div>
+                            <div class="age-num" id="display-bio-age">--</div>
+                        </div>
+                    </div>
+
+                    <div id="diff-badge-wrap"></div>
+                    <p id="result-summary" style="margin-top:20px; font-size:0.9rem; color:var(--text-muted); line-height:1.8; max-width:500px; margin-left:auto; margin-right:auto;"></p>
+                </div>
+
+                <!-- Area breakdown -->
+                <div style="margin-bottom:30px;">
+                    <div style="font-size:0.75rem; font-weight:800; color:var(--text-muted); letter-spacing:0.06em; text-transform:uppercase; margin-bottom:16px;" data-ko="영역별 건강 점수" data-en="Health Score by Area">영역별 건강 점수</div>
+                    <div class="area-grid" id="area-grid"></div>
+                </div>
+
+                <!-- Personalized advice -->
+                <div style="margin-bottom:30px;">
+                    <div style="font-size:0.75rem; font-weight:800; color:var(--text-muted); letter-spacing:0.06em; text-transform:uppercase; margin-bottom:16px;" data-ko="생체나이를 줄이는 우선순위 행동" data-en="Priority Actions to Reduce Biological Age">생체나이를 줄이는 우선순위 행동</div>
+                    <div id="advice-list"></div>
+                </div>
+
+                <!-- Science note -->
+                <div style="background: var(--card-bg); border: 1px solid var(--border-color); border-radius: 20px; padding: 28px; margin-bottom: 30px;">
+                    <h3 style="font-size:1rem; font-weight:900; margin-bottom:14px;" data-ko="생체나이란 무엇인가?" data-en="What Is Biological Age?">생체나이란 무엇인가?</h3>
+                    <p style="font-size:0.88rem; color:var(--text-muted); line-height:1.8; margin-bottom:12px;" data-ko="생체나이(Biological Age)는 실제 달력 나이와 달리, 세포·장기·대사 기능이 얼마나 노화되었는지를 나타냅니다. 텔로미어 길이, 후성유전체(epigenome) 메틸화 패턴, 염증 바이오마커 등으로 측정할 수 있으며, 같은 달력 나이를 가진 사람들 사이에서도 최대 20~30년의 생체나이 차이가 관찰됩니다." data-en="Biological age reflects how well your cells, organs, and metabolism are functioning — regardless of your calendar age. It can be measured via telomere length, epigenome methylation patterns, and inflammation biomarkers. Differences of 20–30 years in biological age have been observed among people of the same chronological age.">생체나이(Biological Age)는 실제 달력 나이와 달리, 세포·장기·대사 기능이 얼마나 노화되었는지를 나타냅니다. 텔로미어 길이, 후성유전체(epigenome) 메틸화 패턴, 염증 바이오마커 등으로 측정할 수 있으며, 같은 달력 나이를 가진 사람들 사이에서도 최대 20~30년의 생체나이 차이가 관찰됩니다.</p>
+                    <p style="font-size:0.88rem; color:var(--text-muted); line-height:1.8; margin:0;" data-ko="블루존(오키나와·사르디니아·이카리아·로마린다·니코야) 장수 연구에 따르면 규칙적인 운동, 식물성 식품 중심 식단, 강한 사회적 유대, 목적의식이 생체나이를 낮추는 핵심 요소입니다." data-en="Blue Zone longevity research (Okinawa, Sardinia, Ikaria, Loma Linda, Nicoya) identifies regular physical activity, plant-based diets, strong social bonds, and a sense of purpose as the key drivers of a younger biological age.">블루존(오키나와·사르디니아·이카리아·로마린다·니코야) 장수 연구에 따르면 규칙적인 운동, 식물성 식품 중심 식단, 강한 사회적 유대, 목적의식이 생체나이를 낮추는 핵심 요소입니다.</p>
+                </div>
+
+                <!-- Retry & related -->
+                <div style="text-align:center; margin-bottom:20px;">
+                    <button onclick="retryQuiz()" style="padding:12px 28px; background:transparent; border:2px solid var(--border-color); border-radius:14px; font-size:0.9rem; font-weight:700; cursor:pointer; color:var(--text-muted); margin-right:12px;">
+                        <i class="fas fa-redo" style="margin-right:6px;"></i>
+                        <span data-ko="다시 하기" data-en="Retake">다시 하기</span>
+                    </button>
+                </div>
+
+                <!-- Related links -->
+                <div style="margin-bottom: 60px;">
+                    <div style="font-size:0.75rem; font-weight:800; color:var(--text-muted); letter-spacing:0.06em; text-transform:uppercase; margin-bottom:16px;" data-ko="더 알아보기" data-en="Learn More">더 알아보기</div>
+                    <div style="display:grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 14px;">
+                        <a href="article-sleep.html" style="text-decoration:none; background:var(--card-bg); border:1px solid var(--border-color); border-radius:16px; padding:18px 20px; display:flex; gap:12px; align-items:center; transition:transform 0.2s;" onmouseover="this.style.transform='translateY(-2px)'" onmouseout="this.style.transform=''">
+                            <span style="font-size:1.8rem;">🌙</span>
+                            <div><strong style="font-size:0.88rem; display:block; margin-bottom:3px;" data-ko="수면 질 개선 10가지 방법" data-en="10 Ways to Improve Sleep">수면 질 개선 10가지 방법</strong><span style="font-size:0.78rem; color:var(--text-muted);" data-ko="일주기 리듬 · 블루라이트" data-en="Circadian rhythm · Blue light">일주기 리듬 · 블루라이트</span></div>
+                        </a>
+                        <a href="article-stress.html" style="text-decoration:none; background:var(--card-bg); border:1px solid var(--border-color); border-radius:16px; padding:18px 20px; display:flex; gap:12px; align-items:center; transition:transform 0.2s;" onmouseover="this.style.transform='translateY(-2px)'" onmouseout="this.style.transform=''">
+                            <span style="font-size:1.8rem;">🧘</span>
+                            <div><strong style="font-size:0.88rem; display:block; margin-bottom:3px;" data-ko="스트레스 과학적 관리법" data-en="Science-Based Stress Management">스트레스 과학적 관리법</strong><span style="font-size:0.78rem; color:var(--text-muted);" data-ko="코르티솔 · HRV · 회복력" data-en="Cortisol · HRV · Resilience">코르티솔 · HRV · 회복력</span></div>
+                        </a>
+                        <a href="bmi-calculator.html" style="text-decoration:none; background:var(--card-bg); border:1px solid var(--border-color); border-radius:16px; padding:18px 20px; display:flex; gap:12px; align-items:center; transition:transform 0.2s;" onmouseover="this.style.transform='translateY(-2px)'" onmouseout="this.style.transform=''">
+                            <span style="font-size:1.8rem;">⚖️</span>
+                            <div><strong style="font-size:0.88rem; display:block; margin-bottom:3px;" data-ko="BMI·칼로리 계산기" data-en="BMI & Calorie Calculator">BMI·칼로리 계산기</strong><span style="font-size:0.78rem; color:var(--text-muted);" data-ko="BMR · TDEE · 목표 칼로리" data-en="BMR · TDEE · Calorie Goals">BMR · TDEE · 목표 칼로리</span></div>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </main>
+
+    <footer style="text-align:center; padding:40px 24px; border-top:1px solid var(--border-color); color:var(--text-muted); font-size:0.85rem;">
+        <p>© 2026 VitalGuide. 전인적 건강을 위한 고품격 가이드. &nbsp;|&nbsp;
+            <a href="privacy.html" style="color:inherit; text-decoration:none;">Privacy</a> &nbsp;|&nbsp;
+            <a href="terms.html" style="color:inherit; text-decoration:none;">Terms</a> &nbsp;|&nbsp;
+            <a href="about.html" style="color:inherit; text-decoration:none;">About</a>
+        </p>
+        <p style="margin-top:8px; font-size:0.78rem;" data-ko="본 계산기는 연구 기반 추정 도구로 의학적 진단을 대체하지 않습니다." data-en="This calculator is a research-based estimation tool and does not replace medical diagnosis.">본 계산기는 연구 기반 추정 도구로 의학적 진단을 대체하지 않습니다.</p>
+    </footer>
+
+    <script src="theme.js"></script>
+    <script src="main.js"></script>
+    <script>
+        const answers = {};
+
+        function selectOpt(btn) {
+            const q = btn.getAttribute('data-q');
+            document.querySelectorAll(`.opt-btn[data-q="${q}"]`).forEach(b => b.classList.remove('sel'));
+            btn.classList.add('sel');
+            answers[q] = parseInt(btn.getAttribute('data-val'));
+        }
+
+        function calcBioAge() {
+            const isKo = document.body.getAttribute('data-lang') !== 'en';
+            const realAge = parseInt(document.getElementById('real-age').value);
+            if (isNaN(realAge) || realAge < 10 || realAge > 99) {
+                alert(isKo ? '실제 나이를 입력해주세요.' : 'Please enter your actual age.');
+                return;
+            }
+            for (let i = 1; i <= 8; i++) {
+                if (answers[i] === undefined) {
+                    alert(isKo ? `질문 ${i}번에 답해주세요.` : `Please answer question ${i}.`);
+                    return;
+                }
+            }
+
+            const totalScore = Object.values(answers).reduce((a, b) => a + b, 0);
+            const bioAge = Math.max(10, Math.min(99, realAge - totalScore));
+            const diff = realAge - bioAge;
+
+            document.getElementById('display-real-age').textContent = realAge;
+            document.getElementById('display-bio-age').textContent = bioAge;
+            document.getElementById('display-bio-age').style.color = diff > 0 ? '#10b981' : diff < 0 ? '#ef4444' : 'var(--accent-color)';
+
+            let headline, summary, badgeText, badgeColor;
+            if (diff >= 8) {
+                headline = isKo ? '🎉 훌륭합니다! 생활 습관이 세포 노화를 크게 늦추고 있어요.' : '🎉 Excellent! Your lifestyle is significantly slowing cellular aging.';
+                summary = isKo ? `실제 나이보다 ${diff}세 젊은 생체나이를 가지고 있습니다. 지금의 생활 습관이 텔로미어 보호와 항산화·항염증 기전을 잘 유지시켜 주고 있습니다. 현재 습관을 꾸준히 이어나가세요.` : `Your biological age is ${diff} years younger than your chronological age. Your current habits are protecting telomeres and supporting anti-inflammatory pathways. Keep it up!`;
+                badgeText = isKo ? `실제보다 ${diff}세 젊음 🌟` : `${diff} years younger 🌟`;
+                badgeColor = '#10b981';
+            } else if (diff >= 3) {
+                headline = isKo ? '😊 양호합니다! 몇 가지 습관을 개선하면 더 젊어질 수 있어요.' : '😊 Good! A few habit tweaks can make you even younger.';
+                summary = isKo ? `실제 나이보다 ${diff}세 젊은 생체나이입니다. 전반적으로 건강한 편이지만, 아래 개선 영역을 집중 관리하면 생체나이를 더 낮출 수 있습니다.` : `Your biological age is ${diff} years younger. You're generally healthy, but focusing on the improvement areas below can push it even lower.`;
+                badgeText = isKo ? `실제보다 ${diff}세 젊음 ✨` : `${diff} years younger ✨`;
+                badgeColor = '#10b981';
+            } else if (diff >= -2) {
+                headline = isKo ? '😐 보통 수준입니다. 생활 습관 개선으로 젊어질 여지가 많아요!' : '😐 Average. There's lots of room to grow younger with lifestyle changes!';
+                summary = isKo ? `생체나이가 실제 나이와 비슷합니다. 아래 영역들을 개선하면 생체나이를 수 년 낮출 수 있습니다.` : `Your biological age is close to your chronological age. Improving the areas below can shave years off your biological age.`;
+                badgeText = isKo ? '실제 나이와 비슷 📊' : 'Near chronological age 📊';
+                badgeColor = '#f59e0b';
+            } else {
+                const over = Math.abs(diff);
+                headline = isKo ? '⚠️ 생체나이가 실제 나이보다 높습니다. 지금 바로 습관을 바꿔보세요.' : '⚠️ Your biological age exceeds your chronological age. Time to make changes.';
+                summary = isKo ? `생체나이가 실제 나이보다 ${over}세 높게 나타납니다. 특히 아래 위험 영역들을 집중 개선하면 단기간 내 큰 변화를 만들 수 있습니다. 포기하지 마세요 — 생활 습관은 언제든 바꿀 수 있습니다.` : `Your biological age is ${over} years older than your actual age. Focusing on the high-risk areas below can create big changes quickly. Don't give up — lifestyle habits can always be changed.`;
+                badgeText = isKo ? `실제보다 ${over}세 많음 ⚠️` : `${over} years older ⚠️`;
+                badgeColor = '#ef4444';
+            }
+
+            document.getElementById('result-headline').textContent = headline;
+            document.getElementById('result-summary').textContent = summary;
+            document.getElementById('diff-badge-wrap').innerHTML = `<span class="diff-badge" style="background:${badgeColor}22; color:${badgeColor};">${badgeText}</span>`;
+
+            // Area breakdown
+            const areas = isKo ? [
+                { name: '수면', q: 1, maxPos: 2, icon: '🌙', tip: { '-3': '5시간 미만 수면은 염증 마커와 코르티솔을 증가시킵니다. 수면 위생을 개선하고 취침 시간을 일정하게 유지하세요.', '-1': '6시간 수면은 부족합니다. 7~8시간을 목표로 취침 시간 30분 앞당겨 보세요.', '2': '최적 수면 시간입니다.', '0': '9시간 이상 수면은 오히려 심혈관 위험을 높일 수 있습니다. 7~8시간이 최적입니다.' } },
+                { name: '운동', q: 2, maxPos: 3, icon: '🏃', tip: { '-4': '신체 활동 부재는 생체나이를 가장 빠르게 높이는 요인입니다. 하루 30분 걷기부터 시작하세요.', '0': '주 1~2회는 부족합니다. 주 3~5회 중강도 운동을 목표로 하세요.', '2': '좋은 운동 빈도입니다. 근력+유산소 혼합을 권장합니다.', '3': '훌륭한 운동 습관입니다.' } },
+                { name: '식단', q: 3, maxPos: 3, icon: '🥗', tip: { '-4': '가공식품 위주 식단은 만성 염증을 유발합니다. 채소와 단백질 비율을 늘려보세요.', '-1': '조금 더 신선한 식품 비율을 높여보세요.', '1': '균형 잡힌 식단입니다. 더 다양한 색깔의 채소를 추가해보세요.', '3': '훌륭한 식단입니다!' } },
+                { name: '스트레스', q: 4, maxPos: 3, icon: '🧘', tip: { '-4': '만성 스트레스는 텔로미어를 단축시킵니다. 명상, 호흡법, 운동을 통한 관리가 시급합니다.', '-2': '스트레스 관리를 위해 마음 챙김 기반 활동을 도입해보세요.', '1': '보통 수준입니다. 회복 루틴을 더 강화해보세요.', '3': '훌륭한 스트레스 관리 능력입니다.' } },
+                { name: '흡연', q: 5, maxPos: 3, icon: '🚭', tip: { '-6': '흡연은 생체나이를 가장 크게 높이는 단일 요인입니다. 금연 지원 프로그램을 활용하세요.', '-2': '금연 후에도 세포 회복에 시간이 걸립니다. 꾸준한 금연을 유지하세요.', '1': '금연 5년 이상으로 폐 기능이 상당히 회복됩니다.', '3': '비흡연자 — 최상의 선택입니다.' } },
+                { name: '음주', q: 6, maxPos: 3, icon: '🍷', tip: { '-4': '과도한 음주는 간·뇌·심혈관 노화를 가속합니다. 주 2회 이하로 줄여보세요.', '-1': '주 2~3회 음주는 장기 부담이 됩니다. 줄이는 것이 좋습니다.', '1': '적당한 수준입니다.', '3': '훌륭합니다!' } },
+                { name: '수분', q: 7, maxPos: 2, icon: '💧', tip: { '-2': '만성 탈수는 세포 기능을 저하시킵니다. 하루 1.5~2.5L를 목표로 하세요.', '0': '조금 더 마셔보세요.', '2': '적절한 수분 섭취입니다.', '1': '너무 많은 수분은 전해질 불균형을 유발할 수 있습니다. 2~2.5L가 최적입니다.' } },
+                { name: '사회·정서', q: 8, maxPos: 3, icon: '❤️', tip: { '-3': '사회적 고립은 흡연만큼 수명에 영향을 준다는 연구가 있습니다. 소규모 모임부터 시작해보세요.', '0': '사회적 연결을 조금 더 강화해보세요.', '2': '좋은 사회생활입니다.', '3': '블루존 장수인들의 공통점과 일치합니다!' } },
+            ] : [
+                { name: 'Sleep', q: 1, maxPos: 2, icon: '🌙', tip: { '-3': 'Under 5h sleep raises inflammation and cortisol. Improve sleep hygiene and keep a consistent bedtime.', '-1': '6h is insufficient. Aim for 7–8h by shifting bedtime 30 min earlier.', '2': 'Optimal sleep duration!', '0': 'Over 9h can actually increase cardiovascular risk. 7–8h is the sweet spot.' } },
+                { name: 'Exercise', q: 2, maxPos: 3, icon: '🏃', tip: { '-4': 'Physical inactivity accelerates biological aging fastest. Start with 30 min of walking daily.', '0': '1–2×/week is insufficient. Aim for 3–5 moderate sessions/week.', '2': 'Good frequency. Mix strength and cardio.', '3': 'Excellent exercise habits!' } },
+                { name: 'Diet', q: 3, maxPos: 3, icon: '🥗', tip: { '-4': 'Processed food diets cause chronic inflammation. Increase vegetables and protein ratios.', '-1': 'Try to increase the share of fresh, whole foods.', '1': 'Balanced diet. Add more colorful vegetables.', '3': 'Outstanding diet!' } },
+                { name: 'Stress', q: 4, maxPos: 3, icon: '🧘', tip: { '-4': 'Chronic stress shortens telomeres. Meditation, breathwork, and exercise are urgently needed.', '-2': 'Introduce mindfulness-based practices for better stress management.', '1': 'Average level. Strengthen your recovery routine.', '3': 'Excellent stress management!' } },
+                { name: 'Smoking', q: 5, maxPos: 3, icon: '🚭', tip: { '-6': 'Smoking is the single greatest driver of biological aging. Use cessation support programs.', '-2': 'Cell repair takes time after quitting. Stay smoke-free.', '1': '5+ years quit — lung function has recovered significantly.', '3': 'Non-smoker — the best choice.' } },
+                { name: 'Alcohol', q: 6, maxPos: 3, icon: '🍷', tip: { '-4': 'Heavy drinking accelerates liver, brain, and cardiovascular aging. Cut to ≤2×/week.', '-1': '2–3×/week burdens your organs. Reducing is beneficial.', '1': 'Moderate — fine.', '3': 'Excellent!' } },
+                { name: 'Hydration', q: 7, maxPos: 2, icon: '💧', tip: { '-2': 'Chronic dehydration impairs cellular function. Target 1.5–2.5L/day.', '0': 'Drink a bit more.', '2': 'Adequate hydration.', '1': 'Excess hydration can cause electrolyte imbalance. 2–2.5L is optimal.' } },
+                { name: 'Social', q: 8, maxPos: 3, icon: '❤️', tip: { '-3': 'Social isolation impacts longevity as much as smoking. Start with small gatherings.', '0': 'Strengthen your social connections a bit more.', '2': 'Good social life.', '3': 'Matches the common trait of Blue Zone centenarians!' } },
+            ];
+
+            const areaGrid = document.getElementById('area-grid');
+            areaGrid.innerHTML = '';
+            const adviceList = document.getElementById('advice-list');
+            adviceList.innerHTML = '';
+            const worstAreas = [];
+
+            areas.forEach(area => {
+                const val = answers[area.q];
+                const pct = Math.max(0, Math.min(100, ((val + 6) / (area.maxPos + 6)) * 100));
+                const color = pct >= 70 ? '#10b981' : pct >= 40 ? '#f59e0b' : '#ef4444';
+                const tipText = area.tip[String(val)] || '';
+
+                areaGrid.innerHTML += `
+                    <div class="area-card">
+                        <div class="area-name">${area.icon} ${area.name}</div>
+                        <div class="area-score-bar">
+                            <div class="area-score-fill" style="width:${pct}%; background:${color};"></div>
+                        </div>
+                        <div class="area-tip">${tipText}</div>
+                    </div>`;
+
+                if (pct < 50) worstAreas.push({ area, pct, tip: tipText, color });
+            });
+
+            worstAreas.sort((a, b) => a.pct - b.pct).slice(0, 3).forEach(({ area, tip }) => {
+                adviceList.innerHTML += `
+                    <div class="advice-card">
+                        <div class="advice-icon">${area.icon}</div>
+                        <div>
+                            <h3>${area.name}</h3>
+                            <p>${tip}</p>
+                        </div>
+                    </div>`;
+            });
+
+            if (worstAreas.length === 0) {
+                adviceList.innerHTML = `<div class="advice-card"><div class="advice-icon">🏆</div><div><h3>${isKo ? '모든 영역 우수!' : 'All areas excellent!'}</h3><p>${isKo ? '현재의 훌륭한 생활 습관을 꾸준히 유지하는 것이 가장 중요합니다.' : 'Maintaining your excellent current habits consistently is what matters most.'}</p></div></div>`;
+            }
+
+            document.getElementById('quiz-form').style.display = 'none';
+            document.getElementById('result-section').style.display = 'block';
+            document.getElementById('result-section').scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+
+        function retryQuiz() {
+            Object.keys(answers).forEach(k => delete answers[k]);
+            document.querySelectorAll('.opt-btn').forEach(b => b.classList.remove('sel'));
+            document.getElementById('real-age').value = '';
+            document.getElementById('quiz-form').style.display = 'block';
+            document.getElementById('result-section').style.display = 'none';
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+    </script>
+</body>
+</html>
