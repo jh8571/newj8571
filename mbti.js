@@ -134,6 +134,7 @@ function showResult() {
     const isJ = scores.J >= 0;
     const mbti = (isE ? 'E' : 'I') + (isS ? 'S' : 'N') + (isT ? 'T' : 'F') + (isJ ? 'J' : 'P');
     history.replaceState({}, '', '?type=' + mbti);
+    if (window.vgAwardXP) window.vgAwardXP('mbti', { result: mbti });
 
     const [ePct, iPct] = getPct('E', 'I');
     const [sPct, nPct] = getPct('S', 'N');

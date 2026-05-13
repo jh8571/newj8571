@@ -45,6 +45,12 @@ document.addEventListener('DOMContentLoaded', () => {
     function showGameResult(gameKey, heading, stats) {
         if (gameInterval) { clearInterval(gameInterval); cancelAnimationFrame(gameInterval); }
         document.onkeydown = null;
+        // 게임 점수 Firebase 저장
+        const scoreObj = stats.find(s => s.big);
+        if (scoreObj && window.vgSaveGame) {
+            const numScore = parseInt(String(scoreObj.value).replace(/,/g, '')) || 0;
+            if (numScore > 0) window.vgSaveGame(gameKey, numScore);
+        }
 
         const emojiMap = {tetris:'🟦',sudoku:'🔢',clicker:'👆',math:'🔢',reaction:'⚡',
                           snake:'🐍',memory:'🃏',color:'🎨',typing:'⌨️',number:'🎯',

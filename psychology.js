@@ -336,7 +336,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
                 <div style="text-align:center;">
                     <button class="luxury-btn" onclick="location.reload()" style="margin-bottom:15px; max-width:300px;">${t('다른 테스트 하기','Try Another Test')}</button>
-                    ${(history.replaceState({}, '', '?test=' + currentTest.id + '&score=' + totalScore), '')}
+                    ${(history.replaceState({}, '', '?test=' + currentTest.id + '&score=' + totalScore),
+                       window.vgAwardXP && window.vgAwardXP('psychology', { result: level.label }), '')}
                     ${window.getShareUI ? window.getShareUI(
                         t(`${currentTest.title} 결과: ${level.label}`, `${currentTest.title} Result: ${level.label}`),
                         t(`VitalGuide에서 ${currentTest.title}을 했어요. 결과: ${level.label}. 당신도 확인해보세요!`,

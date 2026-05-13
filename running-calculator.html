@@ -716,6 +716,7 @@
 
         document.getElementById('results').style.display = 'block';
         document.getElementById('results').scrollIntoView({ behavior:'smooth', block:'start' });
+        if (window.vgAwardXP) window.vgAwardXP('runningCalculator', { result: fmtPace(paceSecPerKm) + '/km' });
     }
 
     function resetCalc() {

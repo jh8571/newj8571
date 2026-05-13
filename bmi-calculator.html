@@ -525,6 +525,7 @@
             // Show results
             document.getElementById('results').style.display = 'block';
             document.getElementById('results').scrollIntoView({ behavior: 'smooth', block: 'start' });
+            if (window.vgAwardXP) window.vgAwardXP('bmiCalculator', { result: 'BMI ' + bmi.toFixed(1) });
         }
 
         function resetCalc() {

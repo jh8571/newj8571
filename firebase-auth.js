@@ -1,0 +1,403 @@
+// ── VitalGuide Firebase Auth & User Data ──────────────────────────────────
+import { initializeApp }          from "https://www.gstatic.com/firebasejs/12.13.0/firebase-app.js";
+import { getAuth, onAuthStateChanged, signInWithPopup,
+         createUserWithEmailAndPassword, signInWithEmailAndPassword,
+         GoogleAuthProvider, signOut, updateProfile }
+                                   from "https://www.gstatic.com/firebasejs/12.13.0/firebase-auth.js";
+import { getFirestore, doc, getDoc, setDoc, updateDoc,
+         arrayUnion, serverTimestamp }
+                                   from "https://www.gstatic.com/firebasejs/12.13.0/firebase-firestore.js";
+
+const firebaseConfig = {
+  apiKey:            "AIzaSyDN56a13brgJNV0Bw5YLg8N-D4ofn-AJc4",
+  authDomain:        "vi7al-e79f9.firebaseapp.com",
+  projectId:         "vi7al-e79f9",
+  storageBucket:     "vi7al-e79f9.firebasestorage.app",
+  messagingSenderId: "132141266017",
+  appId:             "1:132141266017:web:eb51dad083e327e076a620",
+  measurementId:     "G-SVKGQY7C32"
+};
+
+const app  = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+const db   = getFirestore(app);
+
+// ── Level System ───────────────────────────────────────────────────────────
+const LEVELS = [
+  { level: 1, name: '🌱 웰니스 입문자', nameEn: '🌱 Wellness Beginner', minXP: 0    },
+  { level: 2, name: '🔍 건강 탐험가',   nameEn: '🔍 Health Explorer',   minXP: 100  },
+  { level: 3, name: '💪 건강 실천가',   nameEn: '💪 Health Achiever',   minXP: 300  },
+  { level: 4, name: '🧬 웰니스 전문가', nameEn: '🧬 Wellness Expert',   minXP: 700  },
+  { level: 5, name: '🏆 VitalGuide 마스터', nameEn: '🏆 VitalGuide Master', minXP: 1500 },
+];
+
+const XP_REWARDS = {
+  mbti:             { xp: 50,  label: 'MBTI 테스트 완료' },
+  healthType:       { xp: 50,  label: '건강 유형 테스트 완료' },
+  psychology:       { xp: 30,  label: '심리 분석 완료' },
+  bmiCalculator:    { xp: 20,  label: 'BMI 계산기 사용' },
+  runningCalculator:{ xp: 20,  label: '런닝 계산기 사용' },
+  biologicalAge:    { xp: 30,  label: '생체나이 계산기 완료' },
+  exercise:         { xp: 20,  label: '운동가이드 사용' },
+  gameScore:        { xp: 50,  label: '게임 최고점 갱신' },
+  nutrientQuiz:     { xp: 30,  label: '영양소 퀴즈 완료' },
+  intermittentFast: { xp: 20,  label: '간헐적 단식 가이드 읽기' },
+};
+
+export function getLevelInfo(xp) {
+  let info = LEVELS[0];
+  for (const l of LEVELS) { if (xp >= l.minXP) info = l; }
+  const next = LEVELS.find(l => l.minXP > xp);
+  const pct  = next ? Math.round(((xp - info.minXP) / (next.minXP - info.minXP)) * 100) : 100;
+  return { ...info, xp, next, pct };
+}
+
+// ── Firestore helpers ──────────────────────────────────────────────────────
+async function getUserDoc(uid) {
+  const ref = doc(db, 'users', uid);
+  const snap = await getDoc(ref);
+  if (!snap.exists()) return null;
+  return snap.data();
+}
+
+async function createUserProfile(uid, displayName, email) {
+  const ref = doc(db, 'users', uid);
+  await setDoc(ref, {
+    displayName: displayName || '익명',
+    email:       email || '',
+    xp:          0,
+    level:       1,
+    joinedAt:    serverTimestamp(),
+    results:     {},
+    gameScores:  {},
+    activityLog: [],
+  }, { merge: true });
+}
+
+// ── Auth state ─────────────────────────────────────────────────────────────
+let _currentUser  = null;
+let _currentData  = null;
+const _listeners  = [];
+
+export function onUserChange(cb) { _listeners.push(cb); }
+
+onAuthStateChanged(auth, async user => {
+  if (user) {
+    _currentUser = user;
+    _currentData = await getUserDoc(user.uid);
+    if (!_currentData) {
+      await createUserProfile(user.uid, user.displayName, user.email);
+      _currentData = await getUserDoc(user.uid);
+    }
+  } else {
+    _currentUser = null;
+    _currentData = null;
+  }
+  _listeners.forEach(cb => cb(_currentUser, _currentData));
+  window._vgUser     = _currentUser;
+  window._vgUserData = _currentData;
+  updateHeaderUI(_currentUser, _currentData);
+});
+
+export function getCurrentUser()     { return _currentUser; }
+export function getCurrentUserData() { return _currentData; }
+
+// ── Sign in / out ──────────────────────────────────────────────────────────
+export async function signInGoogle() {
+  const provider = new GoogleAuthProvider();
+  try { await signInWithPopup(auth, provider); }
+  catch(e) { console.error(e); throw e; }
+}
+
+export async function signInEmail(email, password) {
+  try { await signInWithEmailAndPassword(auth, email, password); }
+  catch(e) { throw e; }
+}
+
+export async function signUpEmail(email, password, nickname) {
+  try {
+    const cred = await createUserWithEmailAndPassword(auth, email, password);
+    await updateProfile(cred.user, { displayName: nickname });
+    await createUserProfile(cred.user.uid, nickname, email);
+  } catch(e) { throw e; }
+}
+
+export async function signOutUser() {
+  await signOut(auth);
+}
+
+// ── XP & record saving ─────────────────────────────────────────────────────
+export async function awardXP(activityKey, extraData = {}) {
+  if (!_currentUser) return;
+  const reward = XP_REWARDS[activityKey];
+  if (!reward) return;
+
+  const ref = doc(db, 'users', _currentUser.uid);
+  const snap = await getDoc(ref);
+  if (!snap.exists()) return;
+
+  const data = snap.data();
+  const newXP    = (data.xp || 0) + reward.xp;
+  const newLevel = LEVELS.filter(l => l.minXP <= newXP).pop()?.level || 1;
+
+  const logEntry = {
+    type:  activityKey,
+    label: reward.label,
+    xp:    reward.xp,
+    ts:    new Date().toISOString(),
+    ...extraData,
+  };
+
+  const updatePayload = {
+    xp:          newXP,
+    level:       newLevel,
+    activityLog: arrayUnion(logEntry),
+  };
+
+  // 결과물 저장
+  if (extraData.result !== undefined) {
+    updatePayload[`results.${activityKey}`] = {
+      value: extraData.result,
+      savedAt: new Date().toISOString(),
+    };
+  }
+
+  await updateDoc(ref, updatePayload);
+  _currentData = { ..._currentData, xp: newXP, level: newLevel };
+  window._vgUserData = _currentData;
+  updateHeaderUI(_currentUser, _currentData);
+
+  // 레벨업 체크
+  if (newLevel > (data.level || 1)) {
+    showLevelUpToast(newLevel);
+  } else {
+    showXPToast(reward.xp, reward.label);
+  }
+}
+
+export async function saveGameScore(gameName, score) {
+  if (!_currentUser) return;
+  const ref = doc(db, 'users', _currentUser.uid);
+  const snap = await getDoc(ref);
+  if (!snap.exists()) return;
+
+  const data   = snap.data();
+  const prev   = data.gameScores?.[gameName] || 0;
+  const isNew  = score > prev;
+
+  if (isNew) {
+    await updateDoc(ref, {
+      [`gameScores.${gameName}`]: score,
+    });
+    await awardXP('gameScore', { game: gameName, score });
+  }
+}
+
+// ── Toast notifications ────────────────────────────────────────────────────
+function showXPToast(xp, label) {
+  toast(`+${xp} XP — ${label}`, '#10b981');
+}
+
+function showLevelUpToast(level) {
+  const l = LEVELS.find(x => x.level === level);
+  const lang = localStorage.getItem('lang') || 'ko';
+  toast(`🎉 레벨업! ${lang === 'ko' ? l.name : l.nameEn}`, '#f59e0b', 4000);
+}
+
+function toast(msg, color = '#0f172a', duration = 3000) {
+  const el = document.createElement('div');
+  el.style.cssText = `position:fixed;bottom:24px;left:50%;transform:translateX(-50%);
+    background:${color};color:white;padding:12px 22px;border-radius:14px;font-size:0.9rem;
+    font-weight:700;z-index:99999;box-shadow:0 8px 24px rgba(0,0,0,0.2);
+    animation:vgToastIn 0.3s ease;white-space:nowrap;max-width:90vw;`;
+  el.textContent = msg;
+  if (!document.getElementById('vg-toast-style')) {
+    const s = document.createElement('style');
+    s.id = 'vg-toast-style';
+    s.textContent = `@keyframes vgToastIn{from{opacity:0;transform:translateX(-50%) translateY(12px)}to{opacity:1;transform:translateX(-50%) translateY(0)}}`;
+    document.head.appendChild(s);
+  }
+  document.body.appendChild(el);
+  setTimeout(() => { el.style.opacity = '0'; el.style.transition = 'opacity 0.3s'; setTimeout(() => el.remove(), 300); }, duration);
+}
+
+// ── Header UI injection ────────────────────────────────────────────────────
+function updateHeaderUI(user, data) {
+  let btn = document.getElementById('vg-auth-btn');
+  const lang = localStorage.getItem('lang') || 'ko';
+
+  if (!btn) {
+    btn = document.createElement('button');
+    btn.id = 'vg-auth-btn';
+    btn.style.cssText = `background:var(--border-color);border:none;height:40px;padding:0 14px;
+      border-radius:12px;cursor:pointer;color:var(--text-main);font-weight:800;font-size:0.8rem;
+      display:flex;align-items:center;gap:7px;transition:0.2s;white-space:nowrap;`;
+    btn.onmouseover = () => btn.style.transform = 'translateY(-2px)';
+    btn.onmouseout  = () => btn.style.transform = '';
+    const bar = document.querySelector('.controls-bar');
+    if (bar) bar.prepend(btn);
+  }
+
+  if (user && data) {
+    const lvInfo = getLevelInfo(data.xp || 0);
+    const avatar = user.photoURL
+      ? `<img src="${user.photoURL}" style="width:22px;height:22px;border-radius:50%;object-fit:cover;">`
+      : `<span style="font-size:1rem;">${lvInfo.name.split(' ')[0]}</span>`;
+    btn.innerHTML = `${avatar}<span>Lv.${lvInfo.level}</span>`;
+    btn.title = lang === 'ko' ? `${user.displayName || '사용자'} · ${data.xp || 0} XP` : `${user.displayName || 'User'} · ${data.xp || 0} XP`;
+    btn.onclick = () => { location.href = 'profile.html'; };
+  } else {
+    btn.innerHTML = `<i class="fas fa-user" style="font-size:0.85rem;"></i>${lang === 'ko' ? '로그인' : 'Login'}`;
+    btn.onclick = () => showAuthModal();
+  }
+}
+
+// ── Auth Modal ─────────────────────────────────────────────────────────────
+export function showAuthModal() {
+  if (document.getElementById('vg-auth-modal')) return;
+  const lang = localStorage.getItem('lang') || 'ko';
+
+  const overlay = document.createElement('div');
+  overlay.id = 'vg-auth-modal';
+  overlay.style.cssText = `position:fixed;inset:0;background:rgba(0,0,0,0.5);z-index:100000;
+    display:flex;align-items:center;justify-content:center;padding:20px;backdrop-filter:blur(4px);`;
+
+  overlay.innerHTML = `
+    <div style="background:var(--card-bg);border-radius:28px;padding:40px 36px;max-width:440px;
+      width:100%;box-shadow:0 30px 80px rgba(0,0,0,0.25);border:1px solid var(--border-color);
+      animation:vgModalIn 0.3s ease;position:relative;">
+      <style>@keyframes vgModalIn{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}</style>
+      <button onclick="document.getElementById('vg-auth-modal').remove()"
+        style="position:absolute;top:16px;right:16px;background:var(--border-color);border:none;
+          width:34px;height:34px;border-radius:50%;cursor:pointer;font-size:1.1rem;color:var(--text-muted);">✕</button>
+
+      <div style="text-align:center;margin-bottom:28px;">
+        <div style="font-size:2.5rem;margin-bottom:10px;">🏃</div>
+        <h2 style="font-size:1.5rem;font-weight:900;margin-bottom:6px;">${lang === 'ko' ? '로그인 · 회원가입' : 'Login · Sign Up'}</h2>
+        <p style="font-size:0.85rem;color:var(--text-muted);">${lang === 'ko' ? '결과를 저장하고 레벨을 올려보세요' : 'Save results and level up'}</p>
+      </div>
+
+      <!-- Google -->
+      <button id="vg-google-btn" style="width:100%;padding:14px;background:#fff;color:#1e293b;
+        border:2px solid #e2e8f0;border-radius:14px;font-size:0.95rem;font-weight:800;cursor:pointer;
+        display:flex;align-items:center;justify-content:center;gap:10px;margin-bottom:20px;transition:0.2s;"
+        onmouseover="this.style.borderColor='#4285F4'" onmouseout="this.style.borderColor='#e2e8f0'">
+        <svg width="20" height="20" viewBox="0 0 48 48">
+          <path fill="#EA4335" d="M24 9.5c3.1 0 5.9 1.1 8.1 2.9l6-6C34.5 3.5 29.6 1.5 24 1.5 14.8 1.5 7 7.1 3.7 15l7 5.4C12.4 14.3 17.7 9.5 24 9.5z"/>
+          <path fill="#4285F4" d="M46.5 24.5c0-1.6-.1-3.1-.4-4.5H24v8.5h12.7c-.6 3-2.3 5.5-4.8 7.2l7.4 5.7C43.8 37.4 46.5 31.4 46.5 24.5z"/>
+          <path fill="#FBBC05" d="M10.7 28.5C10.2 27 10 25.5 10 24s.2-3 .7-4.5L3.7 14C2 17.2 1 20.5 1 24s1 6.8 2.7 10l7-5.5z"/>
+          <path fill="#34A853" d="M24 46.5c5.6 0 10.3-1.9 13.8-5l-7.4-5.7c-1.8 1.2-4.1 2-6.4 2-6.3 0-11.6-4.3-13.3-10l-7 5.4C7 40.9 14.8 46.5 24 46.5z"/>
+        </svg>
+        Google${lang === 'ko' ? '로 계속하기' : ' 로그인'}
+      </button>
+
+      <div style="display:flex;align-items:center;gap:12px;margin-bottom:20px;">
+        <div style="flex:1;height:1px;background:var(--border-color);"></div>
+        <span style="font-size:0.78rem;color:var(--text-muted);font-weight:700;">OR</span>
+        <div style="flex:1;height:1px;background:var(--border-color);"></div>
+      </div>
+
+      <!-- Tab -->
+      <div style="display:flex;background:var(--bg-color);border-radius:12px;padding:4px;margin-bottom:20px;">
+        <button id="tab-login" onclick="switchTab('login')" style="flex:1;padding:10px;border:none;border-radius:9px;
+          font-weight:800;font-size:0.88rem;cursor:pointer;background:var(--primary-color);color:white;transition:0.2s;">
+          ${lang === 'ko' ? '로그인' : 'Login'}
+        </button>
+        <button id="tab-signup" onclick="switchTab('signup')" style="flex:1;padding:10px;border:none;
+          border-radius:9px;font-weight:800;font-size:0.88rem;cursor:pointer;background:transparent;
+          color:var(--text-muted);transition:0.2s;">
+          ${lang === 'ko' ? '회원가입' : 'Sign Up'}
+        </button>
+      </div>
+
+      <div id="auth-form-area">
+        <input id="auth-email" type="email" placeholder="${lang === 'ko' ? '이메일' : 'Email'}"
+          style="width:100%;padding:13px 16px;border:2px solid var(--border-color);border-radius:13px;
+            font-size:0.95rem;background:var(--card-bg);color:var(--text-main);outline:none;margin-bottom:10px;box-sizing:border-box;"
+          onfocus="this.style.borderColor='#38bdf8'" onblur="this.style.borderColor='var(--border-color)'">
+        <div id="signup-nickname-wrap" style="display:none;">
+          <input id="auth-nickname" type="text" placeholder="${lang === 'ko' ? '닉네임 (2~12자)' : 'Nickname (2–12 chars)'}"
+            style="width:100%;padding:13px 16px;border:2px solid var(--border-color);border-radius:13px;
+              font-size:0.95rem;background:var(--card-bg);color:var(--text-main);outline:none;margin-bottom:10px;box-sizing:border-box;"
+            onfocus="this.style.borderColor='#38bdf8'" onblur="this.style.borderColor='var(--border-color)'">
+        </div>
+        <input id="auth-password" type="password" placeholder="${lang === 'ko' ? '비밀번호 (6자 이상)' : 'Password (6+ chars)'}"
+          style="width:100%;padding:13px 16px;border:2px solid var(--border-color);border-radius:13px;
+            font-size:0.95rem;background:var(--card-bg);color:var(--text-main);outline:none;margin-bottom:16px;box-sizing:border-box;"
+          onfocus="this.style.borderColor='#38bdf8'" onblur="this.style.borderColor='var(--border-color)'"
+          onkeydown="if(event.key==='Enter') document.getElementById('auth-submit').click()">
+        <p id="auth-error" style="color:#ef4444;font-size:0.83rem;margin:-8px 0 12px;display:none;"></p>
+        <button id="auth-submit" style="width:100%;padding:15px;background:var(--primary-color);color:white;
+          border:none;border-radius:14px;font-size:1rem;font-weight:900;cursor:pointer;transition:opacity 0.2s;"
+          onmouseover="this.style.opacity='0.85'" onmouseout="this.style.opacity='1'">
+          ${lang === 'ko' ? '로그인' : 'Login'}
+        </button>
+      </div>
+    </div>`;
+
+  document.body.appendChild(overlay);
+  overlay.addEventListener('click', e => { if (e.target === overlay) overlay.remove(); });
+
+  let mode = 'login';
+
+  window.switchTab = function(m) {
+    mode = m;
+    const isSignup = m === 'signup';
+    document.getElementById('tab-login').style.cssText  += isSignup ? 'background:transparent;color:var(--text-muted);' : 'background:var(--primary-color);color:white;';
+    document.getElementById('tab-signup').style.cssText += isSignup ? 'background:var(--primary-color);color:white;' : 'background:transparent;color:var(--text-muted);';
+    document.getElementById('signup-nickname-wrap').style.display = isSignup ? '' : 'none';
+    document.getElementById('auth-submit').textContent = lang === 'ko' ? (isSignup ? '가입하기' : '로그인') : (isSignup ? 'Sign Up' : 'Login');
+  };
+
+  document.getElementById('vg-google-btn').onclick = async () => {
+    try {
+      await signInGoogle();
+      document.getElementById('vg-auth-modal')?.remove();
+    } catch(e) {
+      showAuthError(e.message);
+    }
+  };
+
+  document.getElementById('auth-submit').onclick = async () => {
+    const email    = document.getElementById('auth-email').value.trim();
+    const password = document.getElementById('auth-password').value;
+    const nickname = document.getElementById('auth-nickname')?.value.trim();
+    const errEl    = document.getElementById('auth-error');
+    errEl.style.display = 'none';
+
+    if (!email || !password) { showAuthError(lang === 'ko' ? '이메일과 비밀번호를 입력해주세요.' : 'Enter email and password.'); return; }
+
+    try {
+      if (mode === 'signup') {
+        if (!nickname || nickname.length < 2) { showAuthError(lang === 'ko' ? '닉네임을 2자 이상 입력해주세요.' : 'Nickname must be 2+ chars.'); return; }
+        await signUpEmail(email, password, nickname);
+      } else {
+        await signInEmail(email, password);
+      }
+      document.getElementById('vg-auth-modal')?.remove();
+    } catch(e) {
+      const msg = {
+        'auth/user-not-found':    lang === 'ko' ? '등록된 이메일이 아닙니다.' : 'Email not found.',
+        'auth/wrong-password':    lang === 'ko' ? '비밀번호가 틀렸습니다.' : 'Wrong password.',
+        'auth/email-already-in-use': lang === 'ko' ? '이미 사용 중인 이메일입니다.' : 'Email already in use.',
+        'auth/weak-password':     lang === 'ko' ? '비밀번호는 6자 이상이어야 합니다.' : 'Password must be 6+ chars.',
+        'auth/invalid-email':     lang === 'ko' ? '이메일 형식이 올바르지 않습니다.' : 'Invalid email format.',
+        'auth/invalid-credential': lang === 'ko' ? '이메일 또는 비밀번호가 틀렸습니다.' : 'Invalid email or password.',
+      }[e.code] || e.message;
+      showAuthError(msg);
+    }
+  };
+
+  function showAuthError(msg) {
+    const el = document.getElementById('auth-error');
+    el.textContent = msg;
+    el.style.display = 'block';
+  }
+
+  document.getElementById('auth-email').focus();
+}
+
+window.showAuthModal = showAuthModal;
+window.vgAwardXP     = awardXP;
+window.vgSaveGame    = saveGameScore;
+window.vgGetLevel    = getLevelInfo;

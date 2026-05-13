@@ -451,6 +451,7 @@
             document.getElementById('quiz-form').style.display = 'none';
             document.getElementById('result-section').style.display = 'block';
             document.getElementById('result-section').scrollIntoView({ behavior: 'smooth', block: 'start' });
+            if (window.vgAwardXP) window.vgAwardXP('biologicalAge', { result: '생체나이 ' + bioAge + '세' });
         }
 
         function retryQuiz() {

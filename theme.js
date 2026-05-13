@@ -3,6 +3,14 @@ window.t = function(ko, en) {
     return (localStorage.getItem('lang') || 'ko') === 'en' ? en : ko;
 };
 
+// Firebase Auth 자동 로드 (모든 페이지)
+(function() {
+    const s = document.createElement('script');
+    s.type = 'module';
+    s.src  = '/firebase-auth.js';
+    document.head.appendChild(s);
+})();
+
 document.addEventListener('DOMContentLoaded', () => {
     const themeBtn = document.getElementById('theme-toggle');
     const langBtn  = document.getElementById('lang-toggle');
