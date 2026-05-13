@@ -583,10 +583,10 @@
 
         // URL에 결과 유형 삽입 → 친구가 공유받은 링크 열면 결과 바로 표시
         history.replaceState({}, '', '?result=' + winner);
-        if (window.vgAwardXP) window.vgAwardXP('healthType', { result: isKo2 ? t.name : t.nameEn });
 
         // MBTI와 동일한 공유 UI 주입 (theme.js getShareUI)
         const isKo2 = document.body.getAttribute('data-lang') !== 'en';
+        if (window.vgAwardXP) window.vgAwardXP('healthType', { result: isKo2 ? t.name : t.nameEn });
         const shareTitle = isKo2
             ? `나의 건강 유형: ${t.emoji} ${t.name}`
             : `My Health Type: ${t.emoji} ${t.nameEn}`;
