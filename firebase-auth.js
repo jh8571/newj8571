@@ -5,7 +5,7 @@ import { getAuth, onAuthStateChanged, signInWithPopup,
          GoogleAuthProvider, signOut, updateProfile }
                                    from "https://www.gstatic.com/firebasejs/12.13.0/firebase-auth.js";
 import { getFirestore, doc, getDoc, setDoc, updateDoc,
-         arrayUnion, serverTimestamp }
+         arrayUnion, serverTimestamp, runTransaction }
                                    from "https://www.gstatic.com/firebasejs/12.13.0/firebase-firestore.js";
 
 const firebaseConfig = {
@@ -145,6 +145,54 @@ export async function signOutUser() {
   await signOut(auth);
 }
 
+// ── 리더보드 업데이트 ──────────────────────────────────────────────────────
+async function _updateLB(key, score) {
+  if (!_currentUser) return;
+  const uid   = _currentUser.uid;
+  const name  = _currentUser.displayName || '익명';
+  const photo = _currentUser.photoURL || '';
+  const ref   = doc(db, 'leaderboard', key);
+  try {
+    await runTransaction(db, async tx => {
+      const snap = await tx.get(ref);
+      let top = snap.exists() ? (snap.data().top || []) : [];
+      top = top.filter(e => e.uid !== uid);
+      top.push({ uid, name, score, photo });
+      top.sort((a, b) => b.score - a.score);
+      top = top.slice(0, 10);
+      tx.set(ref, { top }, { merge: true });
+    });
+  } catch(e) { console.warn('LB update error', e); }
+}
+
+async function _updateXPLB() {
+  if (!_currentUser || !_currentData) return;
+  const uid   = _currentUser.uid;
+  const name  = _currentUser.displayName || '익명';
+  const photo = _currentUser.photoURL || '';
+  const xp    = _currentData.xp || 0;
+  const level = _currentData.level || 1;
+  const tier  = getTier(level);
+  const ref   = doc(db, 'leaderboard', '_xp');
+  try {
+    await runTransaction(db, async tx => {
+      const snap = await tx.get(ref);
+      let top = snap.exists() ? (snap.data().top || []) : [];
+      top = top.filter(e => e.uid !== uid);
+      top.push({ uid, name, xp, level, tier: tier.icon + ' ' + tier.ko, photo });
+      top.sort((a, b) => b.xp - a.xp);
+      top = top.slice(0, 10);
+      tx.set(ref, { top }, { merge: true });
+    });
+  } catch(e) { console.warn('XP LB update error', e); }
+}
+
+export async function getLeaderboard(key) {
+  const ref  = doc(db, 'leaderboard', key);
+  const snap = await getDoc(ref);
+  return snap.exists() ? (snap.data().top || []) : [];
+}
+
 // ── XP 보상표 ──────────────────────────────────────────────────────────────
 const XP_REWARDS = {
   gameScore:         { xp: 30, label: '🎮 게임 신기록 달성' },
@@ -196,6 +244,8 @@ export async function awardXP(activityKey, extraData = {}) {
   _currentData = { ..._currentData, xp: newXP, level: newLevel };
   window._vgUserData = _currentData;
   updateHeaderUI(_currentUser, _currentData);
+  // XP 랭킹 업데이트
+  await _updateXPLB();
 
   // 레벨업 체크
   if (newLevel > (data.level || 1)) {
@@ -216,9 +266,12 @@ export async function saveGameScore(gameName, score) {
   const isNew  = score > prev;
 
   if (isNew) {
-    await updateDoc(ref, {
-      [`gameScores.${gameName}`]: score,
-    });
+    await updateDoc(ref, { [`gameScores.${gameName}`]: score });
+    // 게임별 + 종합 랭킹 업데이트
+    await _updateLB(gameName, score);
+    const newScores = { ...(data.gameScores || {}), [gameName]: score };
+    const total = Object.values(newScores).reduce((a, b) => a + b, 0);
+    await _updateLB('_total', total);
     await awardXP('gameScore', { game: gameName, score });
   }
 }

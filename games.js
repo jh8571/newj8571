@@ -822,7 +822,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const grade = avg<180?'S':avg<250?'A':avg<350?'B':avg<500?'C':'D';
             const gc = {S:'#facc15',A:'#4ade80',B:'#60a5fa',C:'#fb923c',D:'#f87171'}[grade];
             showGameResult('reaction', t('⚡ 반응속도 결과','⚡ Reaction Speed Result'), [
-                { label: t('등급','Grade'), value: grade, big: true, color: gc },
+                { label: t('등급','Grade'), value: grade, big: true, color: gc, score: Math.max(1, 1000 - avg) },
                 { label: t('평균 반응속도','Avg Reaction'), value: `${avg}ms` },
                 { label: t('최고 기록','Best'), value: `${best}ms`, color: '#10b981' },
                 ...results.map((r,i) => ({
@@ -1166,7 +1166,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     const grade = tries<=5?'S':tries<=8?'A':tries<=12?'B':tries<=18?'C':'D';
                     const gc = {S:'#facc15',A:'#4ade80',B:'#60a5fa',C:'#fb923c',D:'#f87171'}[grade];
                     showGameResult('number', t('🎯 숫자 맞추기 결과','🎯 Number Guess Result'), [
-                        { label: t('등급','Grade'), value: grade, big: true, color: gc },
+                        { label: t('등급','Grade'), value: grade, big: true, color: gc, score: Math.max(1, 100 - tries * 5) },
                         { label: t('정답','Answer'), value: target, color: '#10b981' },
                         { label: t('시도 횟수','Tries'), value: `${tries}${t('번','×')}` },
                     ]);
