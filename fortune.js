@@ -6,7 +6,43 @@ document.addEventListener('DOMContentLoaded', () => {
         .then(r => r.json())
         .then(data => {
             fortuneData = data;
-            switchFortune('tarot');
+            const sp = new URLSearchParams(location.search);
+            const tarotParam = sp.get('tarot');
+            const sajuParam  = sp.get('saju');
+
+            if (tarotParam) {
+                // 타로 공유 URL: ?tarot=3_7_15
+                const idxArr = tarotParam.split('_').map(Number);
+                if (idxArr.length === 3 && idxArr.every(i => !isNaN(i) && i >= 0 && i < fortuneData.tarot.cards.length)) {
+                    switchFortune('tarot'); // renderTarot() 이 내부 데이터를 초기화함
+                    // renderTarot() 완료 후 카드 데이터 재설정하고 결과 렌더
+                    setTimeout(() => {
+                        selectedCardIndices = [...idxArr];
+                        idxArr.forEach(i => usedIndices.add(i));
+                        selectedCardsData = idxArr.map(i => fortuneData.tarot.cards[i]);
+                        selectedCardsCount = 3;
+                        showTarotTotalResult();
+                    }, 150);
+                } else {
+                    switchFortune('tarot');
+                }
+            } else if (sajuParam) {
+                // 사주 공유 URL: ?saju=1990-01-15_12_male
+                const parts = decodeURIComponent(sajuParam).split('_');
+                const [sDate, sTime, sGender] = parts;
+                switchFortune('saju');
+                setTimeout(() => {
+                    const dEl = document.getElementById('birth-date');
+                    const tEl = document.getElementById('birth-time');
+                    const gEl = document.getElementById('gender');
+                    if (dEl) dEl.value = sDate;
+                    if (tEl) tEl.value = sTime || '-1';
+                    if (gEl) gEl.value = sGender || 'male';
+                    window.analyzeSajuDeep();
+                }, 300);
+            } else {
+                switchFortune('tarot');
+            }
         })
         .catch(e => console.error('Fortune data load error:', e));
 
@@ -21,6 +57,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     let selectedCardsCount = 0;
     let selectedCardsData = [];
+    let selectedCardIndices = [];
     const usedIndices = new Set();
 
     window.renderTarot = function () {
@@ -28,6 +65,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const lang = localStorage.getItem('lang') || 'ko';
         selectedCardsCount = 0;
         selectedCardsData = [];
+        selectedCardIndices = [];
         usedIndices.clear();
 
         const posLabels = lang === 'ko'
@@ -88,6 +126,7 @@ document.addEventListener('DOMContentLoaded', () => {
         selectedCardsCount++;
         const cardData = fortuneData.tarot.cards[randomIndex];
         selectedCardsData.push(cardData);
+        selectedCardIndices.push(randomIndex);
 
         const frontEl = document.getElementById(`front-${index}`);
         frontEl.innerHTML = `
@@ -183,6 +222,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     </div>
                     <div style="text-align:center;">
                         <button class="luxury-btn" style="max-width:280px; margin-top:0; margin-bottom:20px;" onclick="window.renderTarot()">${t('새로운 운세 보기','New Reading')}</button>
+                        ${(history.replaceState({}, '', '?tarot=' + selectedCardIndices.join('_')), '')}
                         ${window.getShareUI ? window.getShareUI(
                             t('오늘의 타로 운세 3카드', "Today's 3-Card Tarot Reading"),
                             t(`[${selectedCardsData.map(c => c.name.split('(')[0]).join(' · ')}] — VitalGuide 타로에서 오늘의 운명을 읽었어요!`,
@@ -437,6 +477,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
                     <div style="text-align:center;">
                         <button class="luxury-btn" style="max-width:280px; margin-bottom:20px;" onclick="renderSaju()">${t('다시 분석하기','Analyze Again')}</button>
+                        ${(history.replaceState({}, '', '?saju=' + encodeURIComponent(dateVal) + '_' + timeVal + '_' + gender), '')}
                         ${window.getShareUI ? window.getShareUI(
                             t('사주 정밀 분석 결과', 'Four Pillars Precision Analysis'),
                             t(`${year}년생 ${zodiac ? zodiac.name + '띠' : ''} — VitalGuide 사주 분석으로 운명의 흐름을 읽었어요!`,

@@ -13,6 +13,18 @@ async function initMbti() {
     try {
         const res = await fetch('mbti_data.json');
         mbtiData = await res.json();
+        // 공유 URL로 접근 시 결과 자동 표시
+        const urlType = new URLSearchParams(location.search).get('type');
+        if (urlType && /^[EI][SN][TF][JP]$/i.test(urlType)) {
+            const u = urlType.toUpperCase();
+            scores = { E: u[0]==='E'?5:-5, I: u[0]==='I'?5:-5,
+                       S: u[1]==='S'?5:-5, N: u[1]==='N'?5:-5,
+                       T: u[2]==='T'?5:-5, F: u[2]==='F'?5:-5,
+                       J: u[3]==='J'?5:-5, P: u[3]==='P'?5:-5 };
+            const intro = document.getElementById('intro-section');
+            if (intro) intro.style.display = 'none';
+            showResult();
+        }
     } catch (e) {
         console.error('MBTI data load failed:', e);
     }
@@ -121,6 +133,7 @@ function showResult() {
     const isT = scores.T >= 0;
     const isJ = scores.J >= 0;
     const mbti = (isE ? 'E' : 'I') + (isS ? 'S' : 'N') + (isT ? 'T' : 'F') + (isJ ? 'J' : 'P');
+    history.replaceState({}, '', '?type=' + mbti);
 
     const [ePct, iPct] = getPct('E', 'I');
     const [sPct, nPct] = getPct('S', 'N');

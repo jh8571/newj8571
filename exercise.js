@@ -4,6 +4,18 @@ async function initExercise() {
     try {
         const response = await fetch('exercise_data.json');
         exerciseData = await response.json();
+        // 공유 URL로 접근 시 결과 자동 표시
+        const p = new URLSearchParams(location.search);
+        const h = parseFloat(p.get('h')), w = parseFloat(p.get('w')), a = parseInt(p.get('a')) || 30;
+        if (h && w) {
+            const hEl = document.getElementById('height');
+            const wEl = document.getElementById('weight');
+            const aEl = document.getElementById('age');
+            if (hEl) hEl.value = h;
+            if (wEl) wEl.value = w;
+            if (aEl) aEl.value = a;
+            window.calculateBMI();
+        }
     } catch (error) {
         console.error('Failed to load exercise data:', error);
     }
@@ -216,6 +228,7 @@ function renderExerciseReport(bmi, guide, program, color, height, weight, age) {
                     </ul>
                 </div>
 
+                ${(history.replaceState({}, '', '?h=' + height + '&w=' + weight + '&a=' + age), '')}
                 ${window.getShareUI ? window.getShareUI(
                     t(`내 BMI ${bmi} 맞춤 운동 처방`, `My BMI ${bmi} Custom Exercise Plan`),
                     t(`VitalGuide가 분석한 맞춤 운동 루틴은 [${program.title}]입니다. 함께 건강해져요!`,
