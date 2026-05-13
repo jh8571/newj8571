@@ -48,7 +48,8 @@ document.addEventListener('DOMContentLoaded', () => {
         // 게임 점수 Firebase 저장
         const scoreObj = stats.find(s => s.big);
         if (scoreObj && window.vgSaveGame) {
-            const numScore = parseInt(String(scoreObj.value).replace(/,/g, '')) || 0;
+            // score 필드가 있으면 우선 사용, 없으면 value를 숫자로 파싱
+            const numScore = scoreObj.score || parseInt(String(scoreObj.value).replace(/,/g, '')) || 0;
             if (numScore > 0) window.vgSaveGame(gameKey, numScore);
         }
         // 결과를 URL에 임베드해서 공유 시 친구도 결과 화면을 볼 수 있게
@@ -634,7 +635,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 const gc = {S:'#facc15',A:'#4ade80',B:'#60a5fa',C:'#fb923c',D:'#f87171'}[grade];
                 const diffName = removeCount<=35?t('초급','Easy'):removeCount<=46?t('중급','Medium'):t('고급','Hard');
                 setTimeout(() => showGameResult('sudoku', t('🔢 스도쿠 결과','🔢 Sudoku Result'), [
-                    { label: t('등급','Grade'), value: grade, big: true, color: gc },
+                    { label: t('등급','Grade'), value: grade, big: true, color: gc, score: pct },
                     { label: t('난이도','Difficulty'), value: diffName },
                     { label: t('정답','Correct'), value: `${correct}${t('칸','cells')}`, color: '#10b981' },
                     { label: t('오답','Wrong'), value: `${wrong}${t('칸','cells')}`, color: '#ef4444' },
@@ -965,7 +966,7 @@ document.addEventListener('DOMContentLoaded', () => {
                         const stars = tries <= 10 ? 5 : tries <= 13 ? 4 : tries <= 16 ? 3 : tries <= 20 ? 2 : 1;
                         const starStr = '⭐'.repeat(stars) + '☆'.repeat(5-stars);
                         setTimeout(() => showGameResult('memory', t('🃏 기억력 카드 완성!','🃏 Memory Cards Complete!'), [
-                            { label: t('평가','Rating'), value: starStr, big: true, color: '#f59e0b' },
+                            { label: t('평가','Rating'), value: starStr, big: true, color: '#f59e0b', score: stars * 20 },
                             { label: t('시도 횟수','Tries'), value: `${tries}${t('번','×')}` },
                             { label: t('완료 시간','Time'), value: `${elapsed}${t('초','s')}` },
                         ]), 300);
@@ -1311,7 +1312,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     const grade=score<5?'D':score<10?'C':score<20?'B':score<35?'A':'S';
                     const gc={S:'#facc15',A:'#4ade80',B:'#60a5fa',C:'#fb923c',D:'#f87171'}[grade];
                     setTimeout(()=>showGameResult('flappy',t('🐦 플래피버드 결과','🐦 Flappy Bird Result'),[
-                        {label:t('등급','Grade'),value:grade,big:true,color:gc},
+                        {label:t('등급','Grade'),value:grade,big:true,color:gc,score:score},
                         {label:t('통과 파이프','Pipes'),value:score,color:'var(--accent-color)'},
                     ]),300); return;
                 }
@@ -1442,6 +1443,8 @@ document.addEventListener('DOMContentLoaded', () => {
                     won=true; clearInterval(gameInterval);
                     const sec=Math.floor((Date.now()-t0)/1000);
                     render();
+                    // 클리어 점수: 빠를수록 높음 (신기록 시 XP 적립)
+                    if(window.vgSaveGame) window.vgSaveGame('minesweeper', Math.max(1, 9999 - sec));
                     setTimeout(()=>showGameResult('minesweeper',t('🎉 클리어!','🎉 Cleared!'),[
                         {label:t('결과','Result'),value:t('✅ 성공!','✅ Success!'),big:true,color:'#10b981'},
                         {label:t('시간','Time'),value:sec+'s',color:'var(--accent-color)'},
@@ -1696,7 +1699,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 const grade=score<50?'D':score<100?'C':score<160?'B':score<220?'A':'S';
                 const gc={S:'#facc15',A:'#4ade80',B:'#60a5fa',C:'#fb923c',D:'#f87171'}[grade];
                 showGameResult('whack',t('🔨 두더지 잡기 결과','🔨 Whack-a-Mole Result'),[
-                    {label:t('등급','Grade'),value:grade,big:true,color:gc},
+                    {label:t('등급','Grade'),value:grade,big:true,color:gc,score:score},
                     {label:t('최종 점수','Final Score'),value:score,color:'var(--accent-color)'},
                     {label:t('잡은 두더지','Moles hit'),value:score/10+t('마리','')},
                 ]);
