@@ -203,8 +203,8 @@ const KAKAO_REDIRECT_URI = 'https://vi7al.com';
 
 async function _saveKakaoUser(res) {
   const kakaoId  = String(res.id);
-  const nickname = res.kakao_account?.profile?.nickname || '카카오 사용자';
-  const photo    = res.kakao_account?.profile?.thumbnail_image_url || '';
+  const nickname = res.kakao_account?.profile?.nickname || res.properties?.nickname || '카카오 사용자';
+  const photo    = res.kakao_account?.profile?.thumbnail_image_url || res.properties?.thumbnail_image || '';
   const uid      = 'kakao_' + kakaoId;
 
   const ref  = doc(db, 'users', uid);
@@ -281,7 +281,6 @@ export async function signInKakao() {
   Kakao.Auth.authorize({
     redirectUri: KAKAO_REDIRECT_URI,
     state: 'vg_kakao',
-    scope: 'profile_nickname,profile_image',
   });
 }
 
