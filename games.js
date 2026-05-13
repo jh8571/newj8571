@@ -71,7 +71,7 @@ document.addEventListener('DOMContentLoaded', () => {
             t('도전해보세요!','Can you beat this?')
         ];
         const shareText = shareLines.join('\n');
-        const shareURL  = 'https://newj8571.pages.dev/games.html';
+        const shareURL  = 'https://vi7al.com/games.html';
 
         container.innerHTML = `
             <div style="width:100%; text-align:center;">
@@ -115,23 +115,42 @@ document.addEventListener('DOMContentLoaded', () => {
         document.getElementById('rg-replay').onclick = () => window.startGame(gameKey);
         document.getElementById('rg-close').onclick  = closeGame;
 
-        document.getElementById('rg-share').onclick = async () => {
-            try {
-                if (navigator.share) {
-                    await navigator.share({ title: `VitalGuide — ${gameNameMap[gameKey]}`, text: shareText, url: shareURL });
-                } else {
-                    await navigator.clipboard.writeText(shareText + '\n' + shareURL);
-                    alert(t('클립보드에 복사됐습니다! SNS에 붙여넣기 해주세요.', 'Copied! Paste it on SNS.'));
-                }
-            } catch(e) { /* user cancelled */ }
+        function copyToClip(text, onDone) {
+            if (navigator.clipboard && navigator.clipboard.writeText) {
+                navigator.clipboard.writeText(text).then(onDone).catch(() => execCopyGame(text, onDone));
+            } else { execCopyGame(text, onDone); }
+        }
+        function execCopyGame(text, onDone) {
+            const el = document.createElement('textarea');
+            el.value = text; el.style.cssText = 'position:fixed;opacity:0;';
+            document.body.appendChild(el); el.focus(); el.select();
+            try { document.execCommand('copy'); onDone(); } catch(e) {}
+            document.body.removeChild(el);
+        }
+
+        document.getElementById('rg-share').onclick = () => {
+            const full = shareText + '\n' + shareURL;
+            if (navigator.share) {
+                navigator.share({ title: `VitalGuide — ${gameNameMap[gameKey]}`, text: shareText, url: shareURL })
+                    .catch(err => { if (err?.name !== 'AbortError') copyToClip(full, () => showGameToast(t('✅ 복사됐어요!','✅ Copied!'))); });
+            } else {
+                copyToClip(full, () => showGameToast(t('✅ 클립보드에 복사됐어요!','✅ Copied to clipboard!')));
+            }
         };
 
-        document.getElementById('rg-copy').onclick = async () => {
-            try {
-                await navigator.clipboard.writeText(shareText + '\n' + shareURL);
-                document.getElementById('rg-copy').innerText = t('✅ 복사됨!','✅ Copied!');
-            } catch(e) {}
+        document.getElementById('rg-copy').onclick = () => {
+            copyToClip(shareText + '\n' + shareURL, () => {
+                const btn = document.getElementById('rg-copy');
+                if (btn) btn.innerText = t('✅ 복사됨!','✅ Copied!');
+            });
         };
+
+        function showGameToast(msg) {
+            const el = document.createElement('div');
+            el.style.cssText = 'position:fixed;bottom:24px;left:50%;transform:translateX(-50%);background:#1e293b;color:white;padding:12px 22px;border-radius:12px;font-size:0.9rem;font-weight:700;z-index:99999;white-space:nowrap;';
+            el.textContent = msg; document.body.appendChild(el);
+            setTimeout(() => { el.style.opacity='0'; el.style.transition='opacity 0.3s'; setTimeout(()=>el.remove(),300); }, 2500);
+        }
     }
 
     const t = window.t;
@@ -368,7 +387,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const dt = time - lastTime;
             lastTime = time;
             dropCounter += dt;
-            dropInterval = Math.max(80, 1000 - Math.floor(player.score / 50) * 100);
+            dropInterval = Math.max(120, 1000 - Math.floor(player.score / 100) * 40);
             if (dropCounter > dropInterval) playerDrop();
             draw();
             gameInterval = requestAnimationFrame(update);
@@ -1388,6 +1407,20 @@ document.addEventListener('DOMContentLoaded', () => {
 
             const NC=['','#2563eb','#16a34a','#dc2626','#7c3aed','#92400e','#0891b2','#111827','#6b7280'];
 
+            // 이웃 셀 인덱스 반환
+            function neighbors(idx) {
+                const r=Math.floor(idx/cols), c=idx%cols, res=[];
+                for(let dr=-1;dr<=1;dr++) for(let dc=-1;dc<=1;dc++){
+                    if(!dr&&!dc) continue;
+                    const nr=r+dr, nc=c+dc;
+                    if(nr>=0&&nr<rows&&nc>=0&&nc<cols) res.push(nr*cols+nc);
+                }
+                return res;
+            }
+
+            // 코드 클릭: 숫자 칸에서 양쪽 버튼 → 주변 깃발 수 == 숫자면 자동 열기
+            let chordActive=-1, chordPressed=[], mbState=0;
+
             function render() {
                 const fl=mines-flagged.filter(Boolean).length;
                 const fEl=document.getElementById('msfl'); if(fEl) fEl.innerText=fl;
@@ -1425,7 +1458,7 @@ document.addEventListener('DOMContentLoaded', () => {
                         margin:0 auto;width:fit-content;"></div>
                 </div>
                 <p style="font-size:0.72rem;color:var(--text-muted);margin-top:6px;">
-                    ${t('클릭: 열기 · 우클릭/길게누르기: 깃발','Click: reveal · Right-click/long-press: flag')}</p>
+                    ${t('클릭: 열기 · 우클릭: 깃발 · 양쪽 클릭: 자동 열기','Click: reveal · Right-click: flag · Both buttons: auto-reveal')}</p>
                 <button onclick="startGame('minesweeper')" style="margin-top:8px;padding:8px 18px;
                     background:var(--card-bg);border:2px solid var(--border-color);border-radius:10px;
                     font-size:0.8rem;font-weight:700;cursor:pointer;color:var(--text-main);">${t('새 게임','New Game')}</button>
@@ -1440,10 +1473,53 @@ document.addEventListener('DOMContentLoaded', () => {
                 let pt=null;
                 const flag=()=>{ if(rev[i]||dead||won) return; flagged[i]=!flagged[i]; render(); };
                 el.addEventListener('contextmenu',e=>{e.preventDefault();flag();});
-                el.addEventListener('mousedown',e=>{ if(e.button!==0) return; pt=setTimeout(()=>{flag();pt=null;},500); });
-                el.addEventListener('mouseup',()=>{ if(pt){clearTimeout(pt);pt=null;} });
+
+                // ── 코드 클릭 (양쪽 버튼) ───────────────────────────────
+                function applyChordPress(on) {
+                    neighbors(i).forEach(j=>{
+                        const ce=brd.children[j];
+                        if(ce&&!rev[j]&&!flagged[j]) ce.style.background=on?'var(--border-color)':'var(--card-bg)';
+                    });
+                }
+                function doChord() {
+                    if(dead||won||!rev[i]||board[i]<=0) return;
+                    const nb=neighbors(i);
+                    const fc=nb.filter(j=>flagged[j]).length;
+                    if(fc===board[i]){
+                        let hitMine=false;
+                        nb.forEach(j=>{ if(!rev[j]&&!flagged[j]){ if(board[j]===-1) hitMine=true; flood(j); } });
+                        if(hitMine){
+                            dead=true;
+                            board.forEach((_,j)=>{ if(board[j]===-1) rev[j]=true; });
+                            clearInterval(gameInterval); render();
+                            setTimeout(()=>showGameResult('minesweeper',t('💣 지뢰 밟음!','💣 Boom!'),[
+                                {label:t('결과','Result'),value:t('💀 실패','💀 Failed'),big:true,color:'#ef4444'},
+                                {label:t('열린 칸','Revealed'),value:rev.filter(Boolean).length},
+                            ]),400); return;
+                        }
+                        checkWin(); render();
+                    }
+                }
+
+                el.addEventListener('mousedown',e=>{
+                    e.preventDefault();
+                    mbState|=(1<<e.button);
+                    if(e.button===0&&!rev[i]) pt=setTimeout(()=>{flag();pt=null;},500);
+                    if(mbState===3&&rev[i]&&board[i]>0){ chordActive=i; applyChordPress(true); }
+                });
+                el.addEventListener('mouseup',e=>{
+                    const wasChord=mbState===3&&chordActive===i;
+                    if(wasChord) applyChordPress(false);
+                    mbState&=~(1<<e.button);
+                    if(wasChord){ doChord(); chordActive=-1; return; }
+                    if(pt){clearTimeout(pt);pt=null;}
+                    chordActive=-1;
+                });
+                el.addEventListener('mouseleave',()=>{ if(chordActive===i){applyChordPress(false);} });
+
                 el.addEventListener('touchstart',()=>{ pt=setTimeout(()=>{flag();pt=null;},500); },{passive:true});
                 el.addEventListener('touchend',()=>{ if(pt!==null){clearTimeout(pt);pt=null;click();} });
+
                 const click=()=>{
                     if(flagged[i]||rev[i]||dead||won) return;
                     if(firstClick){ firstClick=false; t0=Date.now(); place(i);
