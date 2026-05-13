@@ -605,7 +605,9 @@ export function showAuthModal() {
       await signInKakao();
       document.getElementById('vg-auth-modal')?.remove();
     } catch(e) {
-      showAuthError(lang === 'ko' ? '카카오 로그인에 실패했습니다.' : 'Kakao login failed.');
+      console.error('Kakao login error:', e);
+      const msg = e?.error_description || e?.message || JSON.stringify(e);
+      showAuthError('카카오 오류: ' + msg);
     }
   };
 
