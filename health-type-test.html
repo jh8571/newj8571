@@ -56,6 +56,19 @@
             .q-text { font-size: 1.15rem; }
         }
 
+        /* Toast */
+        #share-toast {
+            position: fixed; bottom: 28px; left: 50%; transform: translateX(-50%) translateY(0);
+            background: #1e293b; color: white;
+            padding: 14px 24px; border-radius: 14px; font-size: 0.9rem; font-weight: 700;
+            z-index: 9999; box-shadow: 0 8px 30px rgba(0,0,0,0.25);
+            white-space: nowrap; max-width: 90vw; overflow: hidden; text-overflow: ellipsis;
+            animation: toastIn 0.3s ease;
+        }
+        #share-toast.hide { animation: toastOut 0.3s ease forwards; }
+        @keyframes toastIn  { from { opacity:0; transform:translateX(-50%) translateY(16px); } to { opacity:1; transform:translateX(-50%) translateY(0); } }
+        @keyframes toastOut { from { opacity:1; transform:translateX(-50%) translateY(0); }   to { opacity:0; transform:translateX(-50%) translateY(10px); } }
+
         /* Result */
         #result-section { display: none; animation: qslide 0.5s ease; }
 
@@ -592,19 +605,67 @@
     function shareResult() {
         const isKo = document.body.getAttribute('data-lang') !== 'en';
         const t = TYPES[window._resultType || 'lion'];
-        const text = isKo
-            ? `나의 건강 유형은 ${t.emoji} ${t.name}!\n"${t.tagline}"\n\n내 건강 유형 알아보기 → https://vi7al.com/health-type-test.html`
-            : `My health type is ${t.emoji} ${t.nameEn}!\n"${t.taglineEn}"\n\nFind yours → https://vi7al.com/health-type-test.html`;
+        const url = 'https://vi7al.com/health-type-test.html';
+        const shareTitle = isKo ? '나의 건강 유형 테스트 | VitalGuide' : 'My Health Type Test | VitalGuide';
+        const shareText = isKo
+            ? `나의 건강 유형은 ${t.emoji} ${t.name}!\n"${t.tagline}"\n\n내 유형 알아보기 → ${url}`
+            : `My health type is ${t.emoji} ${t.nameEn}!\n"${t.taglineEn}"\n\nFind yours → ${url}`;
 
         if (navigator.share) {
-            navigator.share({ title: isKo ? '나의 건강 유형 테스트' : 'My Health Type Test', text }).catch(() => {});
+            navigator.share({ title: shareTitle, text: shareText, url })
+                .catch(err => {
+                    // 사용자가 취소한 경우(AbortError)는 아무것도 안 함, 그 외는 클립보드로 폴백
+                    if (err && err.name !== 'AbortError') copyToClipboard(shareText, isKo);
+                });
         } else {
-            navigator.clipboard.writeText(text).then(() => {
-                alert(isKo ? '결과가 클립보드에 복사됐습니다! 친구에게 공유해보세요.' : 'Copied to clipboard! Share with friends.');
-            }).catch(() => {
-                alert(isKo ? '공유 URL: https://vi7al.com/health-type-test.html' : 'Share URL: https://vi7al.com/health-type-test.html');
-            });
+            copyToClipboard(shareText, isKo);
         }
+    }
+
+    function copyToClipboard(text, isKo) {
+        const successMsg = isKo ? '✅ 복사됐어요! 친구에게 공유해보세요 😊' : '✅ Copied! Share with friends 😊';
+        const failMsg   = isKo ? '🔗 vi7al.com/health-type-test.html' : '🔗 vi7al.com/health-type-test.html';
+
+        // 1순위: Clipboard API
+        if (navigator.clipboard && navigator.clipboard.writeText) {
+            navigator.clipboard.writeText(text)
+                .then(() => showToast(successMsg))
+                .catch(() => execCopy(text, successMsg, failMsg));
+        } else {
+            execCopy(text, successMsg, failMsg);
+        }
+    }
+
+    function execCopy(text, successMsg, failMsg) {
+        // 2순위: textarea + execCommand (IE11 포함 전 브라우저 호환)
+        const el = document.createElement('textarea');
+        el.value = text;
+        el.setAttribute('readonly', '');
+        el.style.cssText = 'position:fixed;top:-9999px;left:-9999px;opacity:0;';
+        document.body.appendChild(el);
+        el.focus();
+        el.select();
+        try {
+            const ok = document.execCommand('copy');
+            showToast(ok ? successMsg : failMsg, ok ? 3000 : 5000);
+        } catch {
+            showToast(failMsg, 5000);
+        } finally {
+            document.body.removeChild(el);
+        }
+    }
+
+    function showToast(msg, duration = 3000) {
+        const existing = document.getElementById('share-toast');
+        if (existing) existing.remove();
+        const toast = document.createElement('div');
+        toast.id = 'share-toast';
+        toast.textContent = msg;
+        document.body.appendChild(toast);
+        setTimeout(() => {
+            toast.classList.add('hide');
+            setTimeout(() => toast.remove(), 320);
+        }, duration);
     }
 
     function restartTest() {
