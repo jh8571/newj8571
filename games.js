@@ -51,6 +51,9 @@ document.addEventListener('DOMContentLoaded', () => {
             const numScore = parseInt(String(scoreObj.value).replace(/,/g, '')) || 0;
             if (numScore > 0) window.vgSaveGame(gameKey, numScore);
         }
+        // 결과를 URL에 임베드해서 공유 시 친구도 결과 화면을 볼 수 있게
+        const bigVal = scoreObj ? encodeURIComponent(String(scoreObj.value)) : '';
+        history.replaceState({}, '', `?g=${gameKey}&s=${bigVal}&h=${encodeURIComponent(heading)}`);
 
         const emojiMap = {tetris:'🟦',sudoku:'🔢',clicker:'👆',math:'🔢',reaction:'⚡',
                           snake:'🐍',memory:'🃏',color:'🎨',typing:'⌨️',number:'🎯',
@@ -71,7 +74,7 @@ document.addEventListener('DOMContentLoaded', () => {
             t('도전해보세요!','Can you beat this?')
         ];
         const shareText = shareLines.join('\n');
-        const shareURL  = 'https://vi7al.com/games.html';
+        const shareURL  = window.location.href;
 
         container.innerHTML = `
             <div style="width:100%; text-align:center;">
@@ -1419,7 +1422,6 @@ document.addEventListener('DOMContentLoaded', () => {
             }
 
             // 코드 클릭: 숫자 칸에서 양쪽 버튼 → 주변 깃발 수 == 숫자면 자동 열기
-            let chordActive=-1, chordPressed=[], mbState=0;
 
             function render() {
                 const fl=mines-flagged.filter(Boolean).length;
@@ -1470,18 +1472,15 @@ document.addEventListener('DOMContentLoaded', () => {
                 el.className='msc';
                 el.style.cssText=`width:${cs}px;height:${cs}px;background:var(--card-bg);border:1px solid var(--border-color);
                     border-radius:3px;display:flex;align-items:center;justify-content:center;font-weight:800;cursor:pointer;`;
-                let pt=null;
+                let leftDown=false, rightDown=false, longPt=null, chording=false;
                 const flag=()=>{ if(rev[i]||dead||won) return; flagged[i]=!flagged[i]; render(); };
-                el.addEventListener('contextmenu',e=>{e.preventDefault();flag();});
-
-                // ── 코드 클릭 (양쪽 버튼) ───────────────────────────────
-                function applyChordPress(on) {
+                const applyChordPress=(on)=>{
                     neighbors(i).forEach(j=>{
                         const ce=brd.children[j];
                         if(ce&&!rev[j]&&!flagged[j]) ce.style.background=on?'var(--border-color)':'var(--card-bg)';
                     });
-                }
-                function doChord() {
+                };
+                const doChord=()=>{
                     if(dead||won||!rev[i]||board[i]<=0) return;
                     const nb=neighbors(i);
                     const fc=nb.filter(j=>flagged[j]).length;
@@ -1499,27 +1498,7 @@ document.addEventListener('DOMContentLoaded', () => {
                         }
                         checkWin(); render();
                     }
-                }
-
-                el.addEventListener('mousedown',e=>{
-                    e.preventDefault();
-                    mbState|=(1<<e.button);
-                    if(e.button===0&&!rev[i]) pt=setTimeout(()=>{flag();pt=null;},500);
-                    if(mbState===3&&rev[i]&&board[i]>0){ chordActive=i; applyChordPress(true); }
-                });
-                el.addEventListener('mouseup',e=>{
-                    const wasChord=mbState===3&&chordActive===i;
-                    if(wasChord) applyChordPress(false);
-                    mbState&=~(1<<e.button);
-                    if(wasChord){ doChord(); chordActive=-1; return; }
-                    if(pt){clearTimeout(pt);pt=null;}
-                    chordActive=-1;
-                });
-                el.addEventListener('mouseleave',()=>{ if(chordActive===i){applyChordPress(false);} });
-
-                el.addEventListener('touchstart',()=>{ pt=setTimeout(()=>{flag();pt=null;},500); },{passive:true});
-                el.addEventListener('touchend',()=>{ if(pt!==null){clearTimeout(pt);pt=null;click();} });
-
+                };
                 const click=()=>{
                     if(flagged[i]||rev[i]||dead||won) return;
                     if(firstClick){ firstClick=false; t0=Date.now(); place(i);
@@ -1535,7 +1514,28 @@ document.addEventListener('DOMContentLoaded', () => {
                     }
                     flood(i); checkWin(); render();
                 };
-                el.addEventListener('click', click);
+                el.addEventListener('contextmenu', e=>{ e.preventDefault(); });
+                el.addEventListener('mousedown', e=>{
+                    if(e.button===0){ leftDown=true; if(!rightDown&&!rev[i]) longPt=setTimeout(()=>{flag();longPt=null;},500); }
+                    if(e.button===2){ rightDown=true; }
+                    if(leftDown&&rightDown&&!chording){
+                        chording=true;
+                        if(longPt){clearTimeout(longPt);longPt=null;}
+                        if(rev[i]&&board[i]>0) applyChordPress(true);
+                    }
+                });
+                el.addEventListener('mouseup', e=>{
+                    if(chording){ applyChordPress(false); doChord(); chording=false; leftDown=false; rightDown=false; return; }
+                    if(e.button===0){ leftDown=false; if(longPt){clearTimeout(longPt);longPt=null;} click(); }
+                    if(e.button===2){ rightDown=false; flag(); }
+                });
+                el.addEventListener('mouseleave', ()=>{
+                    if(chording) applyChordPress(false);
+                    chording=false; leftDown=false; rightDown=false;
+                    if(longPt){clearTimeout(longPt);longPt=null;}
+                });
+                el.addEventListener('touchstart', ()=>{ longPt=setTimeout(()=>{flag();longPt=null;},500); },{passive:true});
+                el.addEventListener('touchend', ()=>{ if(longPt!==null){clearTimeout(longPt);longPt=null;click();} });
                 brd.appendChild(el);
             }
             render();
@@ -1703,5 +1703,30 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         },1000);
     }
+
+    // 공유된 게임 결과 URL 감지 (?g=tetris&s=1234&h=...)
+    (function(){
+        const params = new URLSearchParams(location.search);
+        if(!params.has('g') || !params.has('s')) return;
+        const gKey = params.get('g');
+        const sVal = decodeURIComponent(params.get('s') || '');
+        const hVal = decodeURIComponent(params.get('h') || '🎮 공유된 결과');
+        if(!sVal) return;
+        const gnm = {tetris:t('테트리스','Tetris'),sudoku:t('스도쿠','Sudoku'),
+            clicker:t('클릭커','Clicker'),math:t('암산왕','Mental Math'),
+            reaction:t('반응속도','Reaction Speed'),snake:t('스네이크','Snake'),
+            memory:t('기억력 카드','Memory Cards'),color:t('색상 찾기','Spot the Color'),
+            typing:t('타이핑','Typing'),number:t('숫자 맞추기','Number Guess'),
+            '2048':t('2048','2048'),flappy:t('플래피버드','Flappy Bird'),
+            minesweeper:t('지뢰찾기','Minesweeper'),breakout:t('블록 깨기','Breakout'),
+            whack:t('두더지 잡기','Whack-a-Mole')};
+        modal.style.display = 'block';
+        document.body.style.overflow = 'hidden';
+        showGameResult(gKey, hVal, [
+            {label:t('게임','Game'), value: gnm[gKey] || gKey},
+            {label:t('결과','Result'), value: sVal, big:true, color:'#6366f1'},
+            {label:'', value: t('친구가 공유한 결과입니다 🎮','A result shared by a friend 🎮')},
+        ]);
+    })();
 
 });
