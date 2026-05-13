@@ -198,57 +198,115 @@ function loadKakaoSDK() {
   });
 }
 
+// Kakao 인증 후 돌아올 URI (Kakao Developers에 정확히 등록 필요)
+const KAKAO_REDIRECT_URI = 'https://vi7al.com';
+
+async function _saveKakaoUser(res) {
+  const kakaoId  = String(res.id);
+  const nickname = res.kakao_account?.profile?.nickname || '카카오 사용자';
+  const photo    = res.kakao_account?.profile?.thumbnail_image_url || '';
+  const uid      = 'kakao_' + kakaoId;
+
+  const ref  = doc(db, 'users', uid);
+  const snap = await getDoc(ref);
+  if (!snap.exists()) {
+    await setDoc(ref, {
+      displayName: nickname, email: '', photoURL: photo,
+      xp: 0, level: 1, joinedAt: serverTimestamp(),
+      results: {}, gameScores: {}, activityLog: [], provider: 'kakao',
+    }, { merge: true });
+  }
+
+  const dataSnap  = await getDoc(ref);
+  _currentUser    = { uid, displayName: nickname, photoURL: photo, email: '', isKakao: true };
+  _currentData    = dataSnap.data();
+  window._vgUser     = _currentUser;
+  window._vgUserData = _currentData;
+
+  localStorage.setItem('vg_kakao_uid',   uid);
+  localStorage.setItem('vg_kakao_name',  nickname);
+  localStorage.setItem('vg_kakao_photo', photo);
+
+  _listeners.forEach(cb => cb(_currentUser, _currentData));
+  updateHeaderUI(_currentUser, _currentData);
+}
+
+async function _fetchKakaoUser() {
+  return new Promise((resolve, reject) => {
+    Kakao.API.request({ url: '/v2/user/me', success: resolve, fail: reject });
+  });
+}
+
+async function _exchangeCodeAndLogin(code) {
+  const res = await fetch('https://kauth.kakao.com/oauth/token', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8' },
+    body: new URLSearchParams({
+      grant_type:   'authorization_code',
+      client_id:    KAKAO_APP_KEY,
+      redirect_uri: KAKAO_REDIRECT_URI,
+      code,
+    }),
+  });
+  const data = await res.json();
+  if (!data.access_token) throw new Error(data.error_description || JSON.stringify(data));
+
+  await loadKakaoSDK();
+  if (!Kakao.isInitialized()) Kakao.init(KAKAO_APP_KEY);
+  Kakao.Auth.setAccessToken(data.access_token, true);
+
+  const userRes = await _fetchKakaoUser();
+  await _saveKakaoUser(userRes);
+}
+
 export async function signInKakao() {
   await loadKakaoSDK();
   if (!Kakao.isInitialized()) Kakao.init(KAKAO_APP_KEY);
 
-  return new Promise((resolve, reject) => {
-    Kakao.Auth.login({
-      success: () => {
-        Kakao.API.request({
-          url: '/v2/user/me',
-          success: async res => {
-            try {
-              const kakaoId  = String(res.id);
-              const nickname = res.kakao_account?.profile?.nickname || '카카오 사용자';
-              const photo    = res.kakao_account?.profile?.thumbnail_image_url || '';
-              const uid      = 'kakao_' + kakaoId;
+  // 이미 토큰이 있으면 바로 사용자 정보 획득
+  if (Kakao.Auth.getAccessToken()) {
+    try {
+      const userRes = await _fetchKakaoUser();
+      await _saveKakaoUser(userRes);
+      return;
+    } catch(e) {
+      Kakao.Auth.setAccessToken(null);
+    }
+  }
 
-              const ref  = doc(db, 'users', uid);
-              const snap = await getDoc(ref);
-              if (!snap.exists()) {
-                await setDoc(ref, {
-                  displayName: nickname,
-                  email: '',
-                  photoURL: photo,
-                  xp: 0, level: 1,
-                  joinedAt: serverTimestamp(),
-                  results: {}, gameScores: {}, activityLog: [],
-                  provider: 'kakao',
-                }, { merge: true });
-              }
+  // 현재 페이지 기억 (로그인 후 복귀용)
+  sessionStorage.setItem('kakao_return_to', location.href);
 
-              const dataSnap = await getDoc(ref);
-              _currentUser = { uid, displayName: nickname, photoURL: photo, email: '', isKakao: true };
-              _currentData = dataSnap.data();
-              window._vgUser     = _currentUser;
-              window._vgUserData = _currentData;
-
-              localStorage.setItem('vg_kakao_uid',   uid);
-              localStorage.setItem('vg_kakao_name',  nickname);
-              localStorage.setItem('vg_kakao_photo', photo);
-
-              _listeners.forEach(cb => cb(_currentUser, _currentData));
-              updateHeaderUI(_currentUser, _currentData);
-              resolve();
-            } catch(e) { reject(e); }
-          },
-          fail: reject,
-        });
-      },
-      fail: reject,
-    });
+  // Kakao 로그인 페이지로 이동 (SDK v2 방식)
+  Kakao.Auth.authorize({
+    redirectUri: KAKAO_REDIRECT_URI,
+    state: 'vg_kakao',
+    scope: 'profile_nickname,profile_image',
   });
+}
+
+// ── 페이지 로드 시 Kakao OAuth 콜백 처리 ───────────────────────────────────
+async function _handleKakaoCallback() {
+  const params = new URLSearchParams(location.search);
+  const code   = params.get('code');
+  const state  = params.get('state');
+  if (!code || state !== 'vg_kakao') return;
+
+  history.replaceState({}, '', location.pathname);
+
+  try {
+    await _exchangeCodeAndLogin(code);
+    const returnTo = sessionStorage.getItem('kakao_return_to');
+    sessionStorage.removeItem('kakao_return_to');
+    if (returnTo && !returnTo.startsWith(location.href)) {
+      location.href = returnTo;
+    } else {
+      toast('카카오 로그인 성공! 🎉', '#FEE500');
+    }
+  } catch(e) {
+    console.error('Kakao callback error:', e);
+    toast('카카오 오류: ' + (e.message || JSON.stringify(e)), '#ef4444', 5000);
+  }
 }
 
 export async function restoreKakaoSession() {
@@ -664,5 +722,7 @@ window.vgAwardXP     = awardXP;
 window.vgSaveGame    = saveGameScore;
 window.vgGetLevel    = getLevelInfo;
 
-// 페이지 로드 시 카카오 세션 복원 (Firebase Auth와 충돌 방지 위해 1초 후 실행)
+// 페이지 로드 시 Kakao OAuth 콜백 처리 (code 파라미터 감지)
+_handleKakaoCallback();
+// Kakao 세션 복원 (Firebase Auth 완료 후)
 setTimeout(restoreKakaoSession, 1000);
