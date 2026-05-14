@@ -775,10 +775,11 @@ export function showAuthModal() {
   document.getElementById('auth-email').focus();
 }
 
-window.showAuthModal = showAuthModal;
-window.vgAwardXP     = awardXP;
-window.vgSaveGame    = saveGameScore;
-window.vgGetLevel    = getLevelInfo;
+window.showAuthModal    = showAuthModal;
+window.vgAwardXP        = awardXP;
+window.vgSaveGame       = saveGameScore;
+window.vgGetLevel       = getLevelInfo;
+window.vgGetLeaderboard = getLeaderboard;
 
 // 페이지 로드 시 Kakao OAuth 콜백 처리 (code 파라미터 감지)
 _handleKakaoCallback();
