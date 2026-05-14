@@ -238,7 +238,8 @@ async function _fetchKakaoUser() {
 }
 
 async function _exchangeCodeAndLogin(code) {
-  const res = await fetch('https://kauth.kakao.com/oauth/token', {
+  // Cloudflare Pages Function을 통해 CORS 우회
+  const res = await fetch('/kakao-token', {
     method: 'POST',
     headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8' },
     body: new URLSearchParams({
