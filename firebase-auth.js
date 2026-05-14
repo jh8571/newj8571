@@ -239,17 +239,20 @@ async function _fetchKakaoUser() {
 }
 
 async function _exchangeCodeAndLogin(code) {
-  // Cloudflare Pages Function을 통해 CORS 우회
-  const res = await fetch('/kakao-token', {
+  const tokenBody = new URLSearchParams({
+    grant_type:   'authorization_code',
+    client_id:    KAKAO_REST_KEY,
+    redirect_uri: KAKAO_REDIRECT_URI,
+    code,
+  });
+
+  // Kakao 토큰 엔드포인트 직접 호출
+  const res = await fetch('https://kauth.kakao.com/oauth/token', {
     method: 'POST',
     headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8' },
-    body: new URLSearchParams({
-      grant_type:   'authorization_code',
-      client_id:    KAKAO_REST_KEY,
-      redirect_uri: KAKAO_REDIRECT_URI,
-      code,
-    }),
+    body: tokenBody,
   });
+
   const text = await res.text();
   let data;
   try { data = JSON.parse(text); }
