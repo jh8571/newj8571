@@ -98,8 +98,22 @@ let _currentUser  = null;
 let _currentData  = null;
 const _listeners  = [];
 
-// 모바일 redirect 로그인 후 결과 처리
-getRedirectResult(auth).catch(e => console.warn('redirect result error', e));
+// 모바일 Google redirect 로그인 후 결과 처리
+getRedirectResult(auth).then(async result => {
+  if (!result?.user) return;
+  const user = result.user;
+  let data = await getUserDoc(user.uid);
+  if (!data) {
+    await createUserProfile(user.uid, user.displayName, user.email);
+    data = await getUserDoc(user.uid);
+  }
+  _currentUser = user;
+  _currentData = data;
+  window._vgUser     = user;
+  window._vgUserData = data;
+  _listeners.forEach(cb => cb(user, data));
+  updateHeaderUI(user, data);
+}).catch(e => console.warn('redirect result error', e));
 
 export function onUserChange(cb) { _listeners.push(cb); }
 
@@ -364,6 +378,23 @@ export async function signUpEmail(email, password, nickname) {
 }
 
 export async function signOutUser() {
+  // 카카오 세션 초기화
+  if (_currentUser?.isKakao) {
+    localStorage.removeItem('vg_kakao_uid');
+    localStorage.removeItem('vg_kakao_name');
+    localStorage.removeItem('vg_kakao_photo');
+    if (window.Kakao?.Auth?.getAccessToken()) {
+      try { await new Promise(r => Kakao.Auth.logout(r)); } catch(e) {}
+    }
+    _currentUser  = null;
+    _currentData  = null;
+    window._vgUser     = null;
+    window._vgUserData = null;
+    _listeners.forEach(cb => cb(null, null));
+    updateHeaderUI(null, null);
+    return;
+  }
+  // Firebase 로그아웃
   await signOut(auth);
 }
 
