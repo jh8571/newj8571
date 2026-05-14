@@ -692,45 +692,36 @@ document.addEventListener('DOMContentLoaded', () => {
 
                 let correct = 0, wrong = 0, empty = 0;
                 const wrongDetails = [];
-                const board = Array(81).fill(0);
-                cells.forEach((td, i) => {
-                    board[i] = puzzle[i] !== 0 ? puzzle[i] : (parseInt(td.textContent) || 0);
-                });
 
                 cells.forEach((td, i) => {
                     if (puzzle[i] !== 0) return;
                     if (td.dataset.hinted === '1') {
-                        td.style.color    = '#f59e0b';
+                        td.style.color      = '#f59e0b';
                         td.style.background = 'rgba(245,158,11,0.15)';
                         correct++;
                         return;
                     }
                     const entered = parseInt(td.textContent);
                     if (!entered) {
-                        td.textContent = solution[i];
-                        td.style.color = '#94a3b8';
+                        td.textContent      = solution[i];
+                        td.style.color      = '#94a3b8';
                         td.style.background = 'rgba(148,163,184,0.12)';
                         empty++;
+                    } else if (entered === solution[i]) {
+                        td.style.color      = '#10b981';
+                        td.style.background = 'rgba(16,185,129,0.12)';
+                        correct++;
                     } else {
-                        board[i] = 0;
-                        const valid = canPlace(board, i, entered);
-                        board[i] = entered;
-                        if (valid) {
-                            td.style.color = '#10b981';
-                            td.style.background = 'rgba(16,185,129,0.12)';
-                            correct++;
-                        } else {
-                            wrongDetails.push({
-                                row: Math.floor(i / 9) + 1,
-                                col: (i % 9) + 1,
-                                entered,
-                                answer: solution[i]
-                            });
-                            td.textContent = solution[i];
-                            td.style.color = '#ef4444';
-                            td.style.background = 'rgba(239,68,68,0.12)';
-                            wrong++;
-                        }
+                        wrongDetails.push({
+                            row: Math.floor(i / 9) + 1,
+                            col: (i % 9) + 1,
+                            entered,
+                            answer: solution[i]
+                        });
+                        td.textContent      = solution[i];
+                        td.style.color      = '#ef4444';
+                        td.style.background = 'rgba(239,68,68,0.12)';
+                        wrong++;
                     }
                 });
 
