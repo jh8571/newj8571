@@ -278,19 +278,49 @@
         </div>`;
     }
 
+    // onSnapshot 실시간 리스너 (최신 PAGE_SIZE개)
+    let gbUnsubscribe = null;
+
+    function startGbListener(user) {
+        if (gbUnsubscribe) gbUnsubscribe();
+        const q = query(collection(db,'guestbook'), orderBy('createdAt','desc'), limit(PAGE_SIZE));
+        gbUnsubscribe = onSnapshot(q, snap => {
+            const list = document.getElementById('gb-list');
+            // 더 보기로 불러온 추가 글은 유지, 최신 PAGE_SIZE만 교체
+            const extras = list.querySelectorAll('.extra-post');
+            list.innerHTML = snap.docs.map(d => renderGbCard(d, user)).join('');
+            extras.forEach(el => list.appendChild(el));
+            gbLastDoc = snap.docs[snap.docs.length - 1];
+            document.getElementById('gb-load-more').style.display =
+                snap.docs.length === PAGE_SIZE ? '' : 'none';
+        }, e => console.error('GB listener error:', e));
+    }
+
     async function loadGb(reset=false) {
         if (gbLoading) return;
         gbLoading = true;
-        if (reset) { gbLastDoc = null; document.getElementById('gb-list').innerHTML = ''; }
         const user = getUser();
-        let q = query(collection(db,'guestbook'), orderBy('createdAt','desc'), limit(PAGE_SIZE));
-        if (gbLastDoc) q = query(collection(db,'guestbook'), orderBy('createdAt','desc'), startAfter(gbLastDoc), limit(PAGE_SIZE));
+        if (reset) {
+            // reset 시에는 실시간 리스너 재시작
+            startGbListener(user);
+            gbLoading = false;
+            return;
+        }
+        // 더 보기 (추가 데이터)
+        if (!gbLastDoc) { gbLoading = false; return; }
+        const q = query(collection(db,'guestbook'), orderBy('createdAt','desc'), startAfter(gbLastDoc), limit(PAGE_SIZE));
         try {
             const snap = await getDocs(q);
             const list = document.getElementById('gb-list');
-            snap.docs.forEach(d => { list.innerHTML += renderGbCard(d, user); });
+            snap.docs.forEach(d => {
+                const el = document.createElement('div');
+                el.innerHTML = renderGbCard(d, user);
+                el.firstChild.classList.add('extra-post');
+                list.appendChild(el.firstChild);
+            });
             gbLastDoc = snap.docs[snap.docs.length - 1];
-            document.getElementById('gb-load-more').style.display = snap.docs.length === PAGE_SIZE ? '' : 'none';
+            document.getElementById('gb-load-more').style.display =
+                snap.docs.length === PAGE_SIZE ? '' : 'none';
         } catch(e) { console.error(e); }
         gbLoading = false;
     }
@@ -305,13 +335,11 @@
             likes: increment(liked ? -1 : 1),
             likedBy: liked ? arrayRemove(user.uid) : arrayUnion(user.uid)
         });
-        loadGb(true);
     };
 
     window.deleteGb = async function(id) {
         if (!confirm('삭제하시겠습니까?')) return;
         await deleteDoc(doc(db,'guestbook',id));
-        loadGb(true);
     };
 
     document.getElementById('gb-load-more').addEventListener('click', () => loadGb(false));
@@ -418,22 +446,50 @@
         </div>`;
     }
 
+    let qnaUnsubscribe = null;
+
+    function startQnaListener(user) {
+        if (qnaUnsubscribe) qnaUnsubscribe();
+        const q = query(collection(db,'qna'), orderBy('createdAt','desc'), limit(PAGE_SIZE));
+        qnaUnsubscribe = onSnapshot(q, async snap => {
+            const list = document.getElementById('qna-list');
+            const extras = list.querySelectorAll('.extra-post');
+            const cards = await Promise.all(snap.docs.map(async d => {
+                const answers = openAnswers.has(d.id) ? await loadAnswers(d.id) : [];
+                return renderQnaCard(d, user, answers);
+            }));
+            list.innerHTML = cards.join('');
+            extras.forEach(el => list.appendChild(el));
+            qnaLastDoc = snap.docs[snap.docs.length - 1];
+            document.getElementById('qna-load-more').style.display =
+                snap.docs.length === PAGE_SIZE ? '' : 'none';
+        }, e => console.error('QnA listener error:', e));
+    }
+
     async function loadQna(reset=false) {
         if (qnaLoading) return;
         qnaLoading = true;
-        if (reset) { qnaLastDoc = null; document.getElementById('qna-list').innerHTML = ''; }
         const user = getUser();
-        let q = query(collection(db,'qna'), orderBy('createdAt','desc'), limit(PAGE_SIZE));
-        if (qnaLastDoc) q = query(collection(db,'qna'), orderBy('createdAt','desc'), startAfter(qnaLastDoc), limit(PAGE_SIZE));
+        if (reset) {
+            startQnaListener(user);
+            qnaLoading = false;
+            return;
+        }
+        if (!qnaLastDoc) { qnaLoading = false; return; }
+        const q = query(collection(db,'qna'), orderBy('createdAt','desc'), startAfter(qnaLastDoc), limit(PAGE_SIZE));
         try {
             const snap = await getDocs(q);
             const list = document.getElementById('qna-list');
             for (const d of snap.docs) {
                 const answers = openAnswers.has(d.id) ? await loadAnswers(d.id) : [];
-                list.innerHTML += renderQnaCard(d, user, answers);
+                const el = document.createElement('div');
+                el.innerHTML = renderQnaCard(d, user, answers);
+                el.firstChild.classList.add('extra-post');
+                list.appendChild(el.firstChild);
             }
             qnaLastDoc = snap.docs[snap.docs.length - 1];
-            document.getElementById('qna-load-more').style.display = snap.docs.length === PAGE_SIZE ? '' : 'none';
+            document.getElementById('qna-load-more').style.display =
+                snap.docs.length === PAGE_SIZE ? '' : 'none';
         } catch(e) { console.error(e); }
         qnaLoading = false;
     }
