@@ -13,8 +13,9 @@
     {"id": "mbti",      "label_ko": "MBTI 테스트",  "label_en": "MBTI Test",     "href": "mbti.html",       "enabled": true},
     {"id": "fortune",   "label_ko": "오늘의운세",   "label_en": "Daily Fortune", "href": "fortune.html",       "enabled": true},
     {"id": "games",     "label_ko": "미니게임",     "label_en": "Mini Games",    "href": "games.html",         "enabled": true},
-    {"id": "quiz",      "label_ko": "영양소 퀴즈",  "label_en": "Nutrient Quiz", "href": "nutrient-quiz.html", "enabled": true},
-    {"id": "blog",      "label_ko": "건강가이드",   "label_en": "Health Blog",   "href": "blog.html",          "enabled": true}
+    {"id": "quiz",      "label_ko": "영양소 퀴즈",  "label_en": "Nutrient Quiz", "href": "nutrient-quiz.html", "enabled": false},
+    {"id": "blog",      "label_ko": "건강가이드",   "label_en": "Health Blog",   "href": "blog.html",          "enabled": true},
+    {"id": "community", "label_ko": "커뮤니티",     "label_en": "Community",     "href": "community.html",     "enabled": true}
   ],
   "footer": {
     "copyright": "© 2026 VitalGuide. 전인적 건강을 위한 고품격 가이드.",
