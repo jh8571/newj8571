@@ -110,6 +110,12 @@ onAuthStateChanged(auth, async user => {
       await createUserProfile(user.uid, user.displayName, user.email);
       _currentData = await getUserDoc(user.uid);
     }
+    // 레벨 공식 변경 시 기존 유저 레벨 자동 재계산
+    const correctLevel = levelFromXP(_currentData.xp || 0);
+    if ((_currentData.level || 1) !== correctLevel) {
+      await updateDoc(doc(db, 'users', user.uid), { level: correctLevel });
+      _currentData = { ..._currentData, level: correctLevel };
+    }
   } else {
     _currentUser = null;
     _currentData = null;
