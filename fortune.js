@@ -448,7 +448,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     </div>` : ''}
 
                     <!-- Professional Analysis -->
-                    <div style="background:var(--card-bg); border:1px solid var(--border-color); padding:30px; border-radius:20px; margin-bottom:25px;">
+                    <div class="saju-inner-card" style="background:var(--card-bg); border:1px solid var(--border-color); padding:30px; border-radius:20px; margin-bottom:25px;">
                         <h4 style="color:var(--primary-color); margin-bottom:15px;"><i class="fas fa-scroll"></i> ${t('격국 및 운기 분석','Pattern & Fortune Analysis')}</h4>
                         <p style="font-size:0.95rem; line-height:2; color:var(--text-main);">
                             ${(lang === 'en' && fortuneData.saju.descriptions.professional_analysis_en) ? fortuneData.saju.descriptions.professional_analysis_en : fortuneData.saju.descriptions.professional_analysis}
@@ -457,19 +457,19 @@ document.addEventListener('DOMContentLoaded', () => {
 
                     <!-- This Year's Fortune -->
                     <div class="saju-fortune-grid">
-                        <div style="background:#f0fdf4; padding:20px; border-radius:16px; border:1px solid #dcfce7;">
+                        <div class="saju-inner-card" style="background:#f0fdf4; padding:20px; border-radius:16px; border:1px solid #dcfce7;">
                             <h5 style="color:#166534; margin-bottom:10px;"><i class="fas fa-briefcase"></i> ${t('직업 & 재물운','Career & Wealth')}</h5>
                             <p style="font-size:0.88rem; color:#14532d; line-height:1.7;">${getFortuneText('career', year, gender, lang)}</p>
                         </div>
-                        <div style="background:#eff6ff; padding:20px; border-radius:16px; border:1px solid #dbeafe;">
+                        <div class="saju-inner-card" style="background:#eff6ff; padding:20px; border-radius:16px; border:1px solid #dbeafe;">
                             <h5 style="color:#1e40af; margin-bottom:10px;"><i class="fas fa-heart"></i> ${t('애정 & 인간관계운','Love & Relationships')}</h5>
                             <p style="font-size:0.88rem; color:#1e3a8a; line-height:1.7;">${getFortuneText('love', year, gender, lang)}</p>
                         </div>
-                        <div style="background:#fdf4ff; padding:20px; border-radius:16px; border:1px solid #e9d5ff;">
+                        <div class="saju-inner-card" style="background:#fdf4ff; padding:20px; border-radius:16px; border:1px solid #e9d5ff;">
                             <h5 style="color:#7c3aed; margin-bottom:10px;"><i class="fas fa-heartbeat"></i> ${t('건강운','Health Fortune')}</h5>
                             <p style="font-size:0.88rem; color:#4c1d95; line-height:1.7;">${getFortuneText('health', year, gender, lang)}</p>
                         </div>
-                        <div style="background:#fff7ed; padding:20px; border-radius:16px; border:1px solid #fed7aa;">
+                        <div class="saju-inner-card" style="background:#fff7ed; padding:20px; border-radius:16px; border:1px solid #fed7aa;">
                             <h5 style="color:#c2410c; margin-bottom:10px;"><i class="fas fa-star"></i> ${t('종합 운세','Overall Fortune')}</h5>
                             <p style="font-size:0.88rem; color:#7c2d12; line-height:1.7;">${getFortuneText('overall', year, gender, lang)}</p>
                         </div>

@@ -83,7 +83,7 @@
         .card-front { transform: rotateY(180deg); }
 
         @media (max-width: 640px) {
-            .saju-result-inner { padding: 20px 16px; }
+            .saju-result-inner { padding: 4px 0; }
             .saju-pillars-grid {
                 grid-template-columns: repeat(2, 1fr);
                 gap: 10px;
@@ -104,7 +104,8 @@
                 grid-template-columns: repeat(4, 1fr);
                 gap: 8px;
             }
-            .luxury-report-card { border-radius: 16px; }
+            /* 내부 카드 패딩 축소 */
+            .saju-inner-card { padding: 16px !important; border-radius: 14px !important; }
         }
         @media (max-width: 400px) {
             .saju-pillars-grid { gap: 8px; }

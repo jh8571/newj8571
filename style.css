@@ -255,3 +255,9 @@ footer { padding: 80px 0; text-align: center; color: var(--text-muted); border-t
     .modal-content { padding: 30px 20px !important; border-radius: 24px; }
     .drug-list { grid-template-columns: 1fr; }
 }
+
+@media (max-width: 640px) {
+    .luxury-report { padding: 16px !important; border-radius: 20px; }
+    .luxury-report-card { padding: 20px 16px; border-radius: 16px; }
+    .report-header { padding: 24px 16px !important; }
+}
