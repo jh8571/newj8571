@@ -361,8 +361,15 @@ async function applySiteConfig() {
         document.body.appendChild(overlay);
         overlay.addEventListener('click', e => { if(e.target===overlay) overlay.remove(); });
 
-        const data = await window.vgGetUserProfile(uid);
-        if (!data) { overlay.querySelector('div').textContent = '프로필을 불러올 수 없습니다.'; return; }
+        let data;
+        try {
+            data = await window.vgGetUserProfile(uid);
+        } catch(e) {
+            overlay.querySelector('div').innerHTML = '⚠️ 프로필을 불러올 수 없습니다.<br><small style="color:var(--text-muted);">Firestore 읽기 권한을 확인해주세요.</small>';
+            console.error('Profile load error:', e);
+            return;
+        }
+        if (!data) { overlay.querySelector('div').textContent = '프로필을 찾을 수 없습니다.'; return; }
 
         const xp      = data.xp || 0;
         const level   = levelFromXP(xp);
