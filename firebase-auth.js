@@ -650,7 +650,7 @@ export function showAuthModal() {
               font-size:0.95rem;background:var(--card-bg);color:var(--text-main);outline:none;margin-bottom:10px;box-sizing:border-box;"
             onfocus="this.style.borderColor='#38bdf8'" onblur="this.style.borderColor='var(--border-color)'">
         </div>
-        <input id="auth-password" type="password" placeholder="${lang === 'ko' ? '비밀번호 (8자 이상, 영문+숫자)' : 'Password (8+ chars, letters+numbers)'}" autocomplete="${mode === 'signup' ? 'new-password' : 'current-password'}"
+        <input id="auth-password" type="password" placeholder="${lang === 'ko' ? '비밀번호 (8자 이상, 영문+숫자)' : 'Password (8+ chars, letters+numbers)'}" autocomplete="current-password"
           style="width:100%;padding:13px 16px;border:2px solid var(--border-color);border-radius:13px;
             font-size:0.95rem;background:var(--card-bg);color:var(--text-main);outline:none;margin-bottom:16px;box-sizing:border-box;"
           onfocus="this.style.borderColor='#38bdf8'" onblur="this.style.borderColor='var(--border-color)'"
@@ -676,6 +676,7 @@ export function showAuthModal() {
     document.getElementById('tab-signup').style.cssText += isSignup ? 'background:var(--primary-color);color:white;' : 'background:transparent;color:var(--text-muted);';
     document.getElementById('signup-nickname-wrap').style.display = isSignup ? '' : 'none';
     document.getElementById('auth-submit').textContent = lang === 'ko' ? (isSignup ? '가입하기' : '로그인') : (isSignup ? 'Sign Up' : 'Login');
+    document.getElementById('auth-password').autocomplete = isSignup ? 'new-password' : 'current-password';
   };
 
   document.getElementById('vg-kakao-btn').onclick = async () => {
