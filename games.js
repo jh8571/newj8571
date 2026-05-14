@@ -635,7 +635,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 const gc = {S:'#facc15',A:'#4ade80',B:'#60a5fa',C:'#fb923c',D:'#f87171'}[grade];
                 const diffName = removeCount<=35?t('초급','Easy'):removeCount<=46?t('중급','Medium'):t('고급','Hard');
                 setTimeout(() => showGameResult('sudoku', t('🔢 스도쿠 결과','🔢 Sudoku Result'), [
-                    { label: t('등급','Grade'), value: grade, big: true, color: gc, score: pct },
+                    { label: t('등급','Grade'), value: grade, big: true, color: gc, score: pct * 3 },
                     { label: t('난이도','Difficulty'), value: diffName },
                     { label: t('정답','Correct'), value: `${correct}${t('칸','cells')}`, color: '#10b981' },
                     { label: t('오답','Wrong'), value: `${wrong}${t('칸','cells')}`, color: '#ef4444' },
@@ -745,7 +745,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 clearInterval(mathTimer);
                 const tier = score<5?t('덧셈','Addition'):score<10?t('±','±'):score<20?t('사칙','×÷'):t('고난도','Expert');
                 showGameResult('math', t('🧮 암산왕 결과','🧮 Mental Math Result'), [
-                    { label: t('최종 점수','Final Score'), value: score, big: true, color: 'var(--accent-color)' },
+                    { label: t('최종 점수','Final Score'), value: score, big: true, color: 'var(--accent-color)', score: score * 12 },
                     { label: t('도달 난이도','Level Reached'), value: tier },
                     { label: t('종료 이유','Ended by'), value: reason, color: '#f87171' },
                     { label: t('정답','Correct Answer'), value: q.ans, color: '#10b981' },
@@ -822,7 +822,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const grade = avg<180?'S':avg<250?'A':avg<350?'B':avg<500?'C':'D';
             const gc = {S:'#facc15',A:'#4ade80',B:'#60a5fa',C:'#fb923c',D:'#f87171'}[grade];
             showGameResult('reaction', t('⚡ 반응속도 결과','⚡ Reaction Speed Result'), [
-                { label: t('등급','Grade'), value: grade, big: true, color: gc, score: Math.max(1, 1000 - avg) },
+                { label: t('등급','Grade'), value: grade, big: true, color: gc, score: Math.max(1, Math.round((1000 - avg) / 2)) },
                 { label: t('평균 반응속도','Avg Reaction'), value: `${avg}ms` },
                 { label: t('최고 기록','Best'), value: `${best}ms`, color: '#10b981' },
                 ...results.map((r,i) => ({
@@ -886,7 +886,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 clearInterval(gameInterval);
                 const snakeLen = snake.length;
                 showGameResult('snake', t('🐍 스네이크 결과','🐍 Snake Result'), [
-                    { label: t('점수','Score'), value: snakeScore, big: true, color: 'var(--accent-color)' },
+                    { label: t('점수','Score'), value: snakeScore, big: true, color: 'var(--accent-color)', score: snakeScore * 8 },
                     { label: t('레벨','Level'), value: `Lv.${level}` },
                     { label: t('뱀 길이','Snake Length'), value: `${snakeLen}칸` },
                 ]);
@@ -966,7 +966,7 @@ document.addEventListener('DOMContentLoaded', () => {
                         const stars = tries <= 10 ? 5 : tries <= 13 ? 4 : tries <= 16 ? 3 : tries <= 20 ? 2 : 1;
                         const starStr = '⭐'.repeat(stars) + '☆'.repeat(5-stars);
                         setTimeout(() => showGameResult('memory', t('🃏 기억력 카드 완성!','🃏 Memory Cards Complete!'), [
-                            { label: t('평가','Rating'), value: starStr, big: true, color: '#f59e0b', score: stars * 20 },
+                            { label: t('평가','Rating'), value: starStr, big: true, color: '#f59e0b', score: stars * 60 },
                             { label: t('시도 횟수','Tries'), value: `${tries}${t('번','×')}` },
                             { label: t('완료 시간','Time'), value: `${elapsed}${t('초','s')}` },
                         ]), 300);
@@ -1020,7 +1020,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     if (i===target) { score++; ask(); }
                     else {
                         showGameResult('color', t('🎨 색상 찾기 결과','🎨 Spot the Color Result'), [
-                            { label: t('점수','Score'), value: score, big: true, color: 'var(--accent-color)' },
+                            { label: t('점수','Score'), value: score, big: true, color: 'var(--accent-color)', score: score * 12 },
                             { label: t('도달 레벨','Level Reached'), value: `Lv.${score}` },
                             { label: t('종료','Ended'), value: t('오선택','Wrong pick'), color: '#f87171' },
                         ]);
@@ -1104,7 +1104,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 clearInterval(typingTimer);
                 const tierName = ['입문','초급','중급','고급'][Math.min(Math.floor(score/5), 3)];
                 showGameResult('typing', t('⌨️ 타이핑 결과','⌨️ Typing Result'), [
-                    { label: t('점수','Score'), value: score, big: true, color: 'var(--accent-color)' },
+                    { label: t('점수','Score'), value: score, big: true, color: 'var(--accent-color)', score: score * 12 },
                     { label: 'WPM', value: wpm, color: '#10b981' },
                     { label: t('난이도','Level'), value: t(tierName, ['Starter','Easy','Medium','Hard'][Math.min(Math.floor(score/5),3)]) },
                     { label: t('종료 이유','Ended by'), value: reason, color: '#f87171' },
@@ -1218,12 +1218,12 @@ document.addEventListener('DOMContentLoaded', () => {
             if (prev.some((v,i)=>v!==grid[i])) addTile();
             render();
             const max = Math.max(...grid);
-            if (max===2048) { over=true; setTimeout(()=>showGameResult('2048',t('🎉 2048 달성!','🎉 2048 Reached!'),[{label:t('점수','Score'),value:score,big:true,color:'#facc15'},{label:t('최고 타일','Best Tile'),value:max}]),200); return; }
+            if (max===2048) { over=true; setTimeout(()=>showGameResult('2048',t('🎉 2048 달성!','🎉 2048 Reached!'),[{label:t('점수','Score'),value:score,big:true,color:'#facc15',score:Math.max(1,Math.round(score/40))},{label:t('최고 타일','Best Tile'),value:max}]),200); return; }
             if (!grid.includes(0)) {
                 const noMove = [0,1,2,3].every(i=>{
                     for(let j=0;j<4;j++){if(j<3&&grid[i*4+j]===grid[i*4+j+1])return false; if(j<3&&grid[j*4+i]===grid[(j+1)*4+i])return false;} return true;
                 });
-                if (noMove) { over=true; setTimeout(()=>showGameResult('2048',t('🎲 2048 결과','🎲 2048 Result'),[{label:t('점수','Score'),value:score,big:true,color:'var(--accent-color)'},{label:t('최고 타일','Best Tile'),value:max}]),200); }
+                if (noMove) { over=true; setTimeout(()=>showGameResult('2048',t('🎲 2048 결과','🎲 2048 Result'),[{label:t('점수','Score'),value:score,big:true,color:'var(--accent-color)',score:Math.max(1,Math.round(score/40))},{label:t('최고 타일','Best Tile'),value:max}]),200); }
             }
         }
 
@@ -1312,7 +1312,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     const grade=score<5?'D':score<10?'C':score<20?'B':score<35?'A':'S';
                     const gc={S:'#facc15',A:'#4ade80',B:'#60a5fa',C:'#fb923c',D:'#f87171'}[grade];
                     setTimeout(()=>showGameResult('flappy',t('🐦 플래피버드 결과','🐦 Flappy Bird Result'),[
-                        {label:t('등급','Grade'),value:grade,big:true,color:gc,score:score},
+                        {label:t('등급','Grade'),value:grade,big:true,color:gc,score:score*6},
                         {label:t('통과 파이프','Pipes'),value:score,color:'var(--accent-color)'},
                     ]),300); return;
                 }
@@ -1444,7 +1444,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     const sec=Math.floor((Date.now()-t0)/1000);
                     render();
                     // 클리어 점수: 빠를수록 높음 (신기록 시 XP 적립)
-                    if(window.vgSaveGame) window.vgSaveGame('minesweeper', Math.max(1, 9999 - sec));
+                    if(window.vgSaveGame) window.vgSaveGame('minesweeper', Math.max(10, Math.round(mines * 8 + Math.max(0, 120 - sec) * 1.5)));
                     setTimeout(()=>showGameResult('minesweeper',t('🎉 클리어!','🎉 Cleared!'),[
                         {label:t('결과','Result'),value:t('✅ 성공!','✅ Success!'),big:true,color:'#10b981'},
                         {label:t('시간','Time'),value:sec+'s',color:'var(--accent-color)'},
