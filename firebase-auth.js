@@ -185,7 +185,8 @@ function _showInAppGuidePopup(lang) {
 }
 
 // ── Kakao Auth ─────────────────────────────────────────────────────────────
-const KAKAO_APP_KEY = 'aab8c65bef75cf69f10357ebaf3a03e8';
+const KAKAO_JS_KEY   = 'aab8c65bef75cf69f10357ebaf3a03e8'; // SDK 초기화용 (JavaScript 키)
+const KAKAO_REST_KEY = 'e3952ba4b233d081484238204e9af8ca'; // OAuth 인증용 (REST API 키)
 
 function loadKakaoSDK() {
   return new Promise(resolve => {
@@ -244,7 +245,7 @@ async function _exchangeCodeAndLogin(code) {
     headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8' },
     body: new URLSearchParams({
       grant_type:   'authorization_code',
-      client_id:    KAKAO_APP_KEY,
+      client_id:    KAKAO_REST_KEY,
       redirect_uri: KAKAO_REDIRECT_URI,
       code,
     }),
@@ -253,7 +254,7 @@ async function _exchangeCodeAndLogin(code) {
   if (!data.access_token) throw new Error(data.error_description || JSON.stringify(data));
 
   await loadKakaoSDK();
-  if (!Kakao.isInitialized()) Kakao.init(KAKAO_APP_KEY);
+  if (!Kakao.isInitialized()) Kakao.init(KAKAO_JS_KEY);
   Kakao.Auth.setAccessToken(data.access_token, true);
 
   const userRes = await _fetchKakaoUser();
@@ -262,7 +263,7 @@ async function _exchangeCodeAndLogin(code) {
 
 export async function signInKakao() {
   await loadKakaoSDK();
-  if (!Kakao.isInitialized()) Kakao.init(KAKAO_APP_KEY);
+  if (!Kakao.isInitialized()) Kakao.init(KAKAO_JS_KEY);
 
   // 이미 토큰이 있으면 바로 사용자 정보 획득
   if (Kakao.Auth.getAccessToken()) {
@@ -278,11 +279,14 @@ export async function signInKakao() {
   // 현재 페이지 기억 (로그인 후 복귀용)
   sessionStorage.setItem('kakao_return_to', location.href);
 
-  // Kakao 로그인 페이지로 이동 (SDK v2 방식)
-  Kakao.Auth.authorize({
-    redirectUri: KAKAO_REDIRECT_URI,
-    state: 'vg_kakao',
+  // REST API 키로 OAuth URL 직접 생성 (Kakao.Auth.authorize는 JS키를 사용해 KOE006 발생)
+  const authUrl = 'https://kauth.kakao.com/oauth/authorize?' + new URLSearchParams({
+    client_id:     KAKAO_REST_KEY,
+    redirect_uri:  KAKAO_REDIRECT_URI,
+    response_type: 'code',
+    state:         'vg_kakao',
   });
+  location.href = authUrl;
 }
 
 // ── 페이지 로드 시 Kakao OAuth 콜백 처리 ───────────────────────────────────
