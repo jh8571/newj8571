@@ -20,6 +20,98 @@
     <link rel="icon" href="favicon.svg" type="image/svg+xml">
     <meta name="robots" content="noindex, follow">
     <link rel="canonical" href="https://vi7al.com/fortune.html">
+    <style>
+        /* 사주 결과 모바일 최적화 */
+        .saju-result-inner { padding: 40px; }
+        .saju-pillars-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 12px;
+            text-align: center;
+        }
+        .saju-fortune-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin-bottom: 25px;
+        }
+        .ohaeng-grid {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 10px;
+        }
+        .zodiac-row {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+        .zodiac-badges {
+            display: flex;
+            gap: 10px;
+            font-size: 0.82rem;
+            flex-wrap: wrap;
+        }
+        /* 타로 카드 그리드 */
+        .tarot-grid {
+            display: grid;
+            grid-template-columns: repeat(6, 1fr);
+            gap: 12px;
+            margin-bottom: 30px;
+        }
+        .tarot-card-container {
+            aspect-ratio: 2/3;
+            cursor: pointer;
+            position: relative;
+            transform-style: preserve-3d;
+            transition: transform 0.6s;
+        }
+        .tarot-card-container.flipped { transform: rotateY(180deg); }
+        .card-face {
+            position: absolute;
+            inset: 0;
+            border-radius: 10px;
+            backface-visibility: hidden;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+        .card-back {
+            background: linear-gradient(135deg, #312e81, #7c3aed);
+            color: white;
+        }
+        .card-front { transform: rotateY(180deg); }
+
+        @media (max-width: 640px) {
+            .saju-result-inner { padding: 20px 16px; }
+            .saju-pillars-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 10px;
+            }
+            .saju-fortune-grid {
+                grid-template-columns: 1fr;
+                gap: 12px;
+            }
+            .ohaeng-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+            .zodiac-row {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 12px;
+            }
+            .tarot-grid {
+                grid-template-columns: repeat(4, 1fr);
+                gap: 8px;
+            }
+            .luxury-report-card { border-radius: 16px; }
+        }
+        @media (max-width: 400px) {
+            .saju-pillars-grid { gap: 8px; }
+            .ohaeng-grid { grid-template-columns: repeat(2, 1fr); }
+            .tarot-grid { grid-template-columns: repeat(3, 1fr); gap: 6px; }
+        }
+    </style>
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://vi7al.com/fortune.html">
     <meta property="og:title" content="VitalGuide : 오늘의 운세 | 사주 기반 일일 분석">

@@ -94,7 +94,7 @@ document.addEventListener('DOMContentLoaded', () => {
             <div id="cards-selected-count" style="text-align:center; margin-bottom:20px; font-size:0.9rem; color:var(--accent-color); font-weight:700;">
                 0 / 3 ${t('선택됨','selected')}
             </div>
-            <div class="tarot-grid" id="tarot-grid">
+            <div class="tarot-grid" id="tarot-grid" style="">
                 ${Array(22).fill(0).map((_, i) => `
                     <div class="tarot-card-container" id="card-${i}" onclick="flipTarot(${i})">
                         <div class="card-face card-back">
@@ -182,8 +182,8 @@ document.addEventListener('DOMContentLoaded', () => {
                     <h2 style="font-size:2rem; margin-bottom:8px;">${t('3카드 스프레드 심층 해석','3-Card Spread Deep Reading')}</h2>
                     <p style="color:var(--text-muted);">${t('과거 · 현재 · 미래의 에너지 흐름을 읽습니다','Reading the flow of energy across Past · Present · Future')}</p>
                 </div>
-                <div style="padding:40px;">
-                    <div style="display:grid; gap:25px; margin-bottom:40px;">
+                <div class="saju-result-inner">
+                    <div style="display:grid; gap:20px; margin-bottom:32px;">
         `;
 
         selectedCardsData.forEach((card, i) => {
@@ -322,7 +322,7 @@ document.addEventListener('DOMContentLoaded', () => {
             <!-- Ohaeng Guide -->
             <div style="max-width:700px; margin:0 auto 30px;">
                 <h4 style="text-align:center; color:var(--primary-color); margin-bottom:20px; font-size:1rem;">${t('오행(五行) 기본 속성','Five Elements (五行) Overview')}</h4>
-                <div style="display:grid; grid-template-columns:repeat(5,1fr); gap:10px;">
+                <div class="ohaeng-grid">
                     ${Object.entries(fortuneData.saju.descriptions.elements).map(([key, val]) => `
                         <div style="background:var(--bg-color); padding:15px 10px; border-radius:14px; text-align:center; border:1px solid var(--border-color);">
                             <div style="font-size:1.2rem; font-weight:900; color:var(--accent-color); margin-bottom:6px;">${key}</div>
@@ -391,11 +391,11 @@ document.addEventListener('DOMContentLoaded', () => {
                     <p style="color:var(--text-muted);">${year}${t('년','/')}${month}${t('월','/')}${day}${t('일','')} ${timeStr} · ${genderLabel}</p>
                 </div>
 
-                <div style="padding:40px;">
+                <div class="saju-result-inner">
                     <!-- Four Pillars Summary -->
                     <div style="margin-bottom:35px;">
                         <h4 style="color:var(--primary-color); margin-bottom:18px;"><i class="fas fa-columns"></i> ${t('사주 팔자(四柱八字) 개요','Four Pillars (四柱八字) Overview')}</h4>
-                        <div style="display:grid; grid-template-columns:repeat(4,1fr); gap:12px; text-align:center;">
+                        <div class="saju-pillars-grid">
                             <div style="background:var(--card-bg); padding:18px 10px; border-radius:16px; border-top:4px solid #6366f1;">
                                 <div style="font-size:0.75rem; color:var(--text-muted); margin-bottom:8px; font-weight:700;">${pillarLabels[0]}</div>
                                 <div style="font-size:1.5rem; font-weight:900; color:#6366f1;">${stemBranch[0]}</div>
@@ -432,14 +432,14 @@ document.addEventListener('DOMContentLoaded', () => {
                     ${zodiac ? `
                     <div style="background:linear-gradient(135deg,#4f46e522,#7c3aed11); border:1px solid #6366f133; padding:25px; border-radius:20px; margin-bottom:25px;">
                         <h4 style="color:#6366f1; margin-bottom:12px;"><i class="fas fa-paw"></i> ${t('띠 분석','Zodiac Analysis')} — ${zodiac.name}</h4>
-                        <div style="display:flex; align-items:center; gap:20px;">
+                        <div class="zodiac-row">
                             <div style="text-align:center; flex-shrink:0;">
                                 <div style="font-size:2.5rem; margin-bottom:5px;">${getZodiacEmoji(zodiac.name)}</div>
                                 <div style="font-size:0.8rem; color:var(--text-muted);">${zodiac.element}</div>
                             </div>
                             <div>
                                 <p style="font-size:0.95rem; line-height:1.8; color:var(--text-main);">${(lang === 'en' && zodiac.trait_en) ? zodiac.trait_en : zodiac.trait}</p>
-                                <div style="margin-top:10px; display:flex; gap:10px; font-size:0.82rem;">
+                                <div class="zodiac-badges" style="margin-top:10px;">
                                     <span style="background:#fef3c7; color:#92400e; padding:4px 10px; border-radius:20px; font-weight:700;">${t('행운의 색','Lucky Color')}: ${(lang === 'en' && zodiac.lucky_color_en) ? zodiac.lucky_color_en : zodiac.lucky_color}</span>
                                     <span style="background:#dbeafe; color:#1e40af; padding:4px 10px; border-radius:20px; font-weight:700;">${t('행운의 숫자','Lucky Number')}: ${zodiac.lucky_number}</span>
                                 </div>
@@ -456,7 +456,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     </div>
 
                     <!-- This Year's Fortune -->
-                    <div style="display:grid; grid-template-columns:1fr 1fr; gap:20px; margin-bottom:25px;">
+                    <div class="saju-fortune-grid">
                         <div style="background:#f0fdf4; padding:20px; border-radius:16px; border:1px solid #dcfce7;">
                             <h5 style="color:#166534; margin-bottom:10px;"><i class="fas fa-briefcase"></i> ${t('직업 & 재물운','Career & Wealth')}</h5>
                             <p style="font-size:0.88rem; color:#14532d; line-height:1.7;">${getFortuneText('career', year, gender, lang)}</p>
