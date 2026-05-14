@@ -250,7 +250,10 @@ async function _exchangeCodeAndLogin(code) {
       code,
     }),
   });
-  const data = await res.json();
+  const text = await res.text();
+  let data;
+  try { data = JSON.parse(text); }
+  catch(e) { throw new Error('응답 파싱 오류 (status ' + res.status + '): ' + text.substring(0, 300)); }
   if (!data.access_token) throw new Error(data.error_description || JSON.stringify(data));
 
   await loadKakaoSDK();
