@@ -110,11 +110,12 @@ onAuthStateChanged(auth, async user => {
       await createUserProfile(user.uid, user.displayName, user.email);
       _currentData = await getUserDoc(user.uid);
     }
-    // 레벨 공식 변경 시 기존 유저 레벨 자동 재계산
+    // 레벨 공식 변경 시 기존 유저 레벨 자동 재계산 + 랭킹 즉시 반영
     const correctLevel = levelFromXP(_currentData.xp || 0);
     if ((_currentData.level || 1) !== correctLevel) {
       await updateDoc(doc(db, 'users', user.uid), { level: correctLevel });
       _currentData = { ..._currentData, level: correctLevel };
+      await _updateXPLB();  // 랭킹 문서도 새 레벨로 업데이트
     }
   } else {
     _currentUser = null;
