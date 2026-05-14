@@ -300,11 +300,14 @@ async function applySiteConfig() {
         list.innerHTML = '<li class="vg-lb-empty">로딩 중...</li>';
         const data = await fetchData(tab==='game' ? curGame : tab==='xp' ? '_xp' : '_total');
         if (!data.length) { list.innerHTML = '<li class="vg-lb-empty">아직 데이터가 없습니다</li>'; return; }
-        list.innerHTML = data.map((e,i) => `<li>
+        list.innerHTML = data.map((e,i) => `<li data-uid="${e.uid||''}" style="cursor:pointer;" title="프로필 보기">
             <span class="vg-lb-rank ${rc(i)}">${medal(i)}</span>${avatar(e)}
             <span class="vg-lb-name">${e.name||'익명'}</span>
             <span class="vg-lb-score">${tab==='xp' ? (e.tier||'')+' Lv.'+(e.level||1) : (e.score||0).toLocaleString()+(tab==='total'?'pts':'')}</span>
         </li>`).join('');
+        list.querySelectorAll('li[data-uid]').forEach(li => {
+            li.addEventListener('click', () => { if(li.dataset.uid) vgShowUserProfile(li.dataset.uid); });
+        });
     }
 
     let waited = 0;
@@ -315,4 +318,104 @@ async function applySiteConfig() {
             if (!isMobile()) render(curTab);
         }
     }, 200);
+})();
+
+// ── 유저 프로필 모달 ─────────────────────────────────────────────────────────
+(function() {
+    const RESULT_LABELS = {
+        mbti:              { ko:'MBTI 유형',        en:'MBTI Type',          icon:'🧠' },
+        psychology:        { ko:'심리 테스트',       en:'Psychology Test',    icon:'🔬' },
+        healthType:        { ko:'건강 유형',         en:'Health Type',        icon:'💪' },
+        biologicalAge:     { ko:'생체나이',          en:'Biological Age',     icon:'🧬' },
+        bmiCalculator:     { ko:'BMI 결과',          en:'BMI Result',         icon:'⚖️' },
+        runningCalculator: { ko:'런닝 페이스',       en:'Running Pace',       icon:'🏃' },
+        nutrientQuiz:      { ko:'영양소 결핍 분석',  en:'Nutrient Analysis',  icon:'🧪' },
+    };
+    const GAME_ICONS = {
+        tetris:'🟦', snake:'🐍', '2048':'🎲', breakout:'🧱', flappy:'🐦',
+        clicker:'👆', math:'🧮', typing:'⌨️', color:'🎨', sudoku:'🔢',
+        memory:'🃏', reaction:'⚡', number:'🎯', minesweeper:'💣', whack:'🔨',
+    };
+    const GAME_NAMES = {
+        tetris:'테트리스', snake:'스네이크', '2048':'2048', breakout:'블록깨기',
+        flappy:'플래피버드', clicker:'클릭커', math:'암산왕', typing:'타이핑',
+        color:'색상찾기', sudoku:'스도쿠', memory:'기억력카드', reaction:'반응속도',
+        number:'숫자맞추기', minesweeper:'지뢰찾기', whack:'두더지잡기',
+    };
+
+    function levelThreshold(n) { return n<=1?0:Math.round(Math.pow(n-1,1.8)*20); }
+    function levelFromXP(xp)   { let lv=1; for(let n=2;n<=100;n++){if(xp>=levelThreshold(n))lv=n;else break;} return lv; }
+
+    window.vgShowUserProfile = async function(uid) {
+        if (!window.vgGetUserProfile) return;
+        const existing = document.getElementById('vg-profile-modal');
+        if (existing) existing.remove();
+
+        // 로딩 모달
+        const overlay = document.createElement('div');
+        overlay.id = 'vg-profile-modal';
+        overlay.style.cssText = 'position:fixed;inset:0;background:rgba(0,0,0,0.55);z-index:99999;display:flex;align-items:center;justify-content:center;padding:20px;backdrop-filter:blur(4px);';
+        overlay.innerHTML = '<div style="background:var(--card-bg);border-radius:24px;padding:40px;text-align:center;color:var(--text-muted);font-size:1rem;font-weight:700;">⏳ 로딩 중...</div>';
+        document.body.appendChild(overlay);
+        overlay.addEventListener('click', e => { if(e.target===overlay) overlay.remove(); });
+
+        const data = await window.vgGetUserProfile(uid);
+        if (!data) { overlay.querySelector('div').textContent = '프로필을 불러올 수 없습니다.'; return; }
+
+        const xp      = data.xp || 0;
+        const level   = levelFromXP(xp);
+        const curXP   = levelThreshold(level);
+        const nextXP  = level < 100 ? levelThreshold(level+1) : null;
+        const pct     = nextXP ? Math.round(((xp-curXP)/(nextXP-curXP))*100) : 100;
+        const results = data.results || {};
+        const games   = data.gameScores || {};
+        const photo   = data.photoURL ? `<img src="${data.photoURL}" style="width:64px;height:64px;border-radius:50%;object-fit:cover;border:3px solid var(--primary-color);">` : `<div style="width:64px;height:64px;border-radius:50%;background:var(--border-color);display:flex;align-items:center;justify-content:center;font-size:1.8rem;">👤</div>`;
+
+        const resultsHtml = Object.entries(results).length
+            ? Object.entries(results).map(([k,v]) => {
+                const lbl = RESULT_LABELS[k] || {ko:k, icon:'📋'};
+                return `<div style="background:var(--bg-color);border:1px solid var(--border-color);border-radius:14px;padding:14px 16px;display:flex;align-items:center;gap:12px;">
+                    <span style="font-size:1.4rem;">${lbl.icon}</span>
+                    <div><div style="font-size:0.72rem;font-weight:700;color:var(--text-muted);margin-bottom:3px;">${lbl.ko}</div>
+                    <div style="font-size:0.92rem;font-weight:900;">${v.value||'-'}</div></div>
+                </div>`;
+            }).join('')
+            : '<div style="color:var(--text-muted);font-size:0.85rem;padding:12px 0;">아직 테스트 결과가 없습니다.</div>';
+
+        const gamesHtml = Object.entries(games).filter(([,s])=>s>0).length
+            ? Object.entries(games).filter(([,s])=>s>0).sort((a,b)=>b[1]-a[1]).map(([k,s]) =>
+                `<div style="display:flex;align-items:center;gap:10px;padding:10px 0;border-bottom:1px solid var(--border-color);">
+                    <span style="font-size:1.3rem;">${GAME_ICONS[k]||'🎮'}</span>
+                    <span style="flex:1;font-size:0.87rem;font-weight:700;">${GAME_NAMES[k]||k}</span>
+                    <span style="font-size:0.95rem;font-weight:900;color:var(--accent-color);">${s.toLocaleString()}</span>
+                </div>`).join('')
+            : '<div style="color:var(--text-muted);font-size:0.85rem;padding:12px 0;">아직 게임 기록이 없습니다.</div>';
+
+        overlay.innerHTML = `
+        <div style="background:var(--card-bg);border-radius:24px;width:100%;max-width:480px;max-height:88vh;overflow-y:auto;box-shadow:0 24px 64px rgba(0,0,0,0.25);position:relative;">
+            <button onclick="document.getElementById('vg-profile-modal').remove()" style="position:absolute;top:14px;right:14px;background:var(--border-color);border:none;width:32px;height:32px;border-radius:50%;cursor:pointer;font-size:1rem;color:var(--text-muted);z-index:1;">✕</button>
+
+            <!-- 헤더 -->
+            <div style="padding:32px 28px 20px;text-align:center;border-bottom:1px solid var(--border-color);">
+                <div style="display:flex;justify-content:center;margin-bottom:12px;">${photo}</div>
+                <div style="font-size:1.2rem;font-weight:900;margin-bottom:4px;">${data.displayName||'익명 사용자'}</div>
+                <div style="font-size:0.82rem;color:var(--text-muted);margin-bottom:14px;">Lv.${level} · ${xp.toLocaleString()} XP</div>
+                <div style="background:var(--border-color);border-radius:99px;height:8px;overflow:hidden;max-width:240px;margin:0 auto;">
+                    <div style="height:100%;width:${pct}%;background:linear-gradient(to right,var(--accent-color),#818cf8);border-radius:99px;"></div>
+                </div>
+                ${nextXP ? `<div style="font-size:0.72rem;color:var(--text-muted);margin-top:6px;">다음 레벨까지 ${(nextXP-xp).toLocaleString()} XP</div>` : ''}
+            </div>
+
+            <!-- 테스트 결과 -->
+            <div style="padding:20px 28px;">
+                <div style="font-size:0.72rem;font-weight:800;color:var(--text-muted);letter-spacing:.07em;text-transform:uppercase;margin-bottom:12px;">테스트 결과</div>
+                <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:24px;">${resultsHtml}</div>
+
+                <!-- 게임 점수 -->
+                <div style="font-size:0.72rem;font-weight:800;color:var(--text-muted);letter-spacing:.07em;text-transform:uppercase;margin-bottom:4px;">게임 최고 점수</div>
+                ${gamesHtml}
+            </div>
+        </div>`;
+        overlay.addEventListener('click', e => { if(e.target===overlay) overlay.remove(); });
+    };
 })();

@@ -780,6 +780,10 @@ window.vgAwardXP        = awardXP;
 window.vgSaveGame       = saveGameScore;
 window.vgGetLevel       = getLevelInfo;
 window.vgGetLeaderboard = getLeaderboard;
+window.vgGetUserProfile = async (uid) => {
+  const snap = await getDoc(doc(db, 'users', uid));
+  return snap.exists() ? { uid, ...snap.data() } : null;
+};
 
 // 페이지 로드 시 Kakao OAuth 콜백 처리 (code 파라미터 감지)
 _handleKakaoCallback();

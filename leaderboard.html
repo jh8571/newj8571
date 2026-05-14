@@ -133,8 +133,9 @@
             const medal = i < 3
                 ? `<span style="font-size:1.4rem;">${MEDALS_BIG[i]}</span>`
                 : `<span style="font-size:.8rem;color:var(--text-muted);font-weight:800;min-width:28px;text-align:center;">${i+1}위</span>`;
+            const clickable = e.uid ? `onclick="window.vgShowUserProfile&&window.vgShowUserProfile('${e.uid}')" style="cursor:pointer;" title="프로필 보기"` : '';
             return `
-              <div class="rank-row ${cls}">
+              <div class="rank-row ${cls}" ${clickable}>
                 <div style="min-width:32px;text-align:center;">${medal}</div>
                 ${avHtml(e)}
                 <div style="flex:1;min-width:0;">
@@ -218,7 +219,7 @@
             document.getElementById('gm-grid').innerHTML = GAMES.map((g, gi) => {
                 const top5 = (gameData[gi] || []).slice(0, 5);
                 const rows = top5.length ? top5.map((e, i) => `
-                    <div class="grank-row">
+                    <div class="grank-row" ${e.uid?`onclick="window.vgShowUserProfile&&window.vgShowUserProfile('${e.uid}')" style="cursor:pointer;" title="프로필 보기"`:''}>
                         <span style="font-size:${i<3?'1.05rem':'.75rem'};min-width:26px;text-align:center;
                               ${i>=3?'color:var(--text-muted);font-weight:800;':''}">${i<3?MEDALS_SMALL[i]:(i+1)+'위'}</span>
                         ${avHtml(e, 26)}
