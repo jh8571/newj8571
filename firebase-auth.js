@@ -650,7 +650,7 @@ export function showAuthModal() {
               font-size:0.95rem;background:var(--card-bg);color:var(--text-main);outline:none;margin-bottom:10px;box-sizing:border-box;"
             onfocus="this.style.borderColor='#38bdf8'" onblur="this.style.borderColor='var(--border-color)'">
         </div>
-        <input id="auth-password" type="password" placeholder="${lang === 'ko' ? '비밀번호 (6자 이상)' : 'Password (6+ chars)'}"
+        <input id="auth-password" type="password" placeholder="${lang === 'ko' ? '비밀번호 (8자 이상, 영문+숫자)' : 'Password (8+ chars, letters+numbers)'}" autocomplete="${mode === 'signup' ? 'new-password' : 'current-password'}"
           style="width:100%;padding:13px 16px;border:2px solid var(--border-color);border-radius:13px;
             font-size:0.95rem;background:var(--card-bg);color:var(--text-main);outline:none;margin-bottom:16px;box-sizing:border-box;"
           onfocus="this.style.borderColor='#38bdf8'" onblur="this.style.borderColor='var(--border-color)'"
@@ -698,33 +698,71 @@ export function showAuthModal() {
     }
   };
 
+  let failCount = 0;
+
   document.getElementById('auth-submit').onclick = async () => {
     const email    = document.getElementById('auth-email').value.trim();
     const password = document.getElementById('auth-password').value;
     const nickname = document.getElementById('auth-nickname')?.value.trim();
+    const submitBtn = document.getElementById('auth-submit');
     const errEl    = document.getElementById('auth-error');
     errEl.style.display = 'none';
 
     if (!email || !password) { showAuthError(lang === 'ko' ? '이메일과 비밀번호를 입력해주세요.' : 'Enter email and password.'); return; }
 
+    if (mode === 'signup') {
+      // 비밀번호 강도 검사 (8자 이상, 영문+숫자 혼합)
+      if (password.length < 8) {
+        showAuthError(lang === 'ko' ? '비밀번호는 8자 이상이어야 합니다.' : 'Password must be at least 8 characters.');
+        return;
+      }
+      if (!/[a-zA-Z]/.test(password) || !/[0-9]/.test(password)) {
+        showAuthError(lang === 'ko' ? '비밀번호는 영문과 숫자를 모두 포함해야 합니다.' : 'Password must contain letters and numbers.');
+        return;
+      }
+      if (!nickname || nickname.length < 2) {
+        showAuthError(lang === 'ko' ? '닉네임을 2자 이상 입력해주세요.' : 'Nickname must be 2+ chars.');
+        return;
+      }
+      // 닉네임 XSS 방지
+      if (/<|>|&|"|'/.test(nickname)) {
+        showAuthError(lang === 'ko' ? '닉네임에 사용할 수 없는 문자가 포함되어 있습니다.' : 'Nickname contains invalid characters.');
+        return;
+      }
+    }
+
+    // 5회 연속 실패 시 30초 잠금
+    if (failCount >= 5) {
+      showAuthError(lang === 'ko' ? '잠시 후 다시 시도해주세요. (보안 잠금)' : 'Too many attempts. Please wait.');
+      return;
+    }
+
+    submitBtn.disabled = true;
+    submitBtn.style.opacity = '0.6';
+
     try {
       if (mode === 'signup') {
-        if (!nickname || nickname.length < 2) { showAuthError(lang === 'ko' ? '닉네임을 2자 이상 입력해주세요.' : 'Nickname must be 2+ chars.'); return; }
         await signUpEmail(email, password, nickname);
       } else {
         await signInEmail(email, password);
       }
       document.getElementById('vg-auth-modal')?.remove();
     } catch(e) {
+      failCount++;
+      // 이메일 존재 여부를 노출하지 않도록 user-not-found와 wrong-password를 동일 메시지로 처리
       const msg = {
-        'auth/user-not-found':    lang === 'ko' ? '등록된 이메일이 아닙니다.' : 'Email not found.',
-        'auth/wrong-password':    lang === 'ko' ? '비밀번호가 틀렸습니다.' : 'Wrong password.',
+        'auth/user-not-found':       lang === 'ko' ? '이메일 또는 비밀번호가 올바르지 않습니다.' : 'Invalid email or password.',
+        'auth/wrong-password':       lang === 'ko' ? '이메일 또는 비밀번호가 올바르지 않습니다.' : 'Invalid email or password.',
+        'auth/invalid-credential':   lang === 'ko' ? '이메일 또는 비밀번호가 올바르지 않습니다.' : 'Invalid email or password.',
         'auth/email-already-in-use': lang === 'ko' ? '이미 사용 중인 이메일입니다.' : 'Email already in use.',
-        'auth/weak-password':     lang === 'ko' ? '비밀번호는 6자 이상이어야 합니다.' : 'Password must be 6+ chars.',
-        'auth/invalid-email':     lang === 'ko' ? '이메일 형식이 올바르지 않습니다.' : 'Invalid email format.',
-        'auth/invalid-credential': lang === 'ko' ? '이메일 또는 비밀번호가 틀렸습니다.' : 'Invalid email or password.',
-      }[e.code] || e.message;
+        'auth/weak-password':        lang === 'ko' ? '비밀번호는 8자 이상 영문+숫자를 포함해야 합니다.' : 'Password must be 8+ chars with letters and numbers.',
+        'auth/invalid-email':        lang === 'ko' ? '이메일 형식이 올바르지 않습니다.' : 'Invalid email format.',
+        'auth/too-many-requests':    lang === 'ko' ? '요청이 너무 많습니다. 잠시 후 다시 시도해주세요.' : 'Too many requests. Please try again later.',
+      }[e.code] || (lang === 'ko' ? '오류가 발생했습니다. 다시 시도해주세요.' : 'An error occurred. Please try again.');
       showAuthError(msg);
+    } finally {
+      submitBtn.disabled = false;
+      submitBtn.style.opacity = '1';
     }
   };
 
