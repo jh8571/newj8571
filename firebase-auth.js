@@ -430,7 +430,8 @@ export async function getLeaderboard(key) {
 
 // ── XP 보상표 ──────────────────────────────────────────────────────────────
 const XP_REWARDS = {
-  gameScore:         { xp: 30, label: '🎮 게임 신기록 달성' },
+  gamePlayed:        { xp: 10, label: '🎮 게임 플레이' },
+  gameScore:         { xp: 60, label: '🏆 신기록 달성!' },
   mbti:              { xp: 20, label: '🧠 MBTI 테스트 완료' },
   psychology:        { xp: 20, label: '🔬 심리 테스트 완료' },
   healthType:        { xp: 20, label: '💪 건강 유형 테스트 완료' },
@@ -502,12 +503,13 @@ export async function saveGameScore(gameName, score) {
 
   if (isNew) {
     await updateDoc(ref, { [`gameScores.${gameName}`]: score });
-    // 게임별 + 종합 랭킹 업데이트
     await _updateLB(gameName, score);
     const newScores = { ...(data.gameScores || {}), [gameName]: score };
     const total = Object.values(newScores).reduce((a, b) => a + b, 0);
     await _updateLB('_total', total);
-    await awardXP('gameScore', { game: gameName, score });
+    await awardXP('gameScore', { game: gameName, score });   // 신기록: +60 XP
+  } else {
+    await awardXP('gamePlayed', { game: gameName, score });  // 일반 플레이: +10 XP
   }
 }
 
