@@ -124,18 +124,26 @@ async function applySiteConfig() {
         const logo = document.querySelector('.logo');
         if (logo && cfg.site?.logo_text) logo.textContent = cfg.site.logo_text;
 
-        // 4-c. Nav rebuild
+        // 4-c. Nav rebuild (깜빡임 방지: 내용이 실제로 다를 때만 교체)
         const nav = document.querySelector('header nav');
         if (nav && Array.isArray(cfg.nav)) {
             const currentFile = window.location.pathname.split('/').pop() || 'index.html';
             const lang = localStorage.getItem('lang') || 'ko';
-            nav.innerHTML = cfg.nav
+            const newHtml = cfg.nav
                 .filter(item => item.enabled !== false)
                 .map(item => {
                     const active = (currentFile === item.href ||
                                    (currentFile === '' && item.href === 'index.html')) ? ' class="active"' : '';
                     return `<a href="${item.href}"${active} data-ko="${item.label_ko}" data-en="${item.label_en}">${lang === 'ko' ? item.label_ko : item.label_en}</a>`;
                 }).join('');
+            // 현재 nav와 실제로 다를 때만 교체 (불필요한 리렌더 방지)
+            const currentLinks = Array.from(nav.querySelectorAll('a')).map(a => a.href.split('/').pop()).join(',');
+            const newLinks = cfg.nav.filter(i => i.enabled !== false).map(i => i.href).join(',');
+            if (currentLinks !== newLinks) {
+                nav.style.opacity = '0';
+                nav.innerHTML = newHtml;
+                requestAnimationFrame(() => { nav.style.transition = 'opacity 0.15s'; nav.style.opacity = '1'; });
+            }
         }
     } catch (e) {
         // silent — fallback to hardcoded nav
