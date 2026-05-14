@@ -204,6 +204,8 @@ async function applySiteConfig() {
     #vg-lb-more{display:block;text-align:center;padding:10px;font-size:.78rem;font-weight:800;color:var(--primary-color);text-decoration:none;border-top:1px solid var(--border-color);}
     .vg-lb-empty{padding:20px;text-align:center;color:var(--text-muted);font-size:.82rem;}
     @media(max-width:900px){#vg-lb-widget{top:auto;bottom:24px;right:16px;}#vg-lb-toggle{display:flex!important;}}
+    body:has(#vg-auth-modal) #vg-lb-widget,
+    body:has(#vg-profile-modal) #vg-lb-widget{pointer-events:none!important;opacity:0.3;}
     `;
     const style = document.createElement('style');
     style.textContent = css;
@@ -354,7 +356,7 @@ async function applySiteConfig() {
         // 로딩 모달
         const overlay = document.createElement('div');
         overlay.id = 'vg-profile-modal';
-        overlay.style.cssText = 'position:fixed;inset:0;background:rgba(0,0,0,0.55);z-index:99999;display:flex;align-items:center;justify-content:center;padding:20px;backdrop-filter:blur(4px);';
+        overlay.style.cssText = 'position:fixed;inset:0;background:rgba(0,0,0,0.6);z-index:99999;display:flex;align-items:center;justify-content:center;padding:20px;';
         overlay.innerHTML = '<div style="background:var(--card-bg);border-radius:24px;padding:40px;text-align:center;color:var(--text-muted);font-size:1rem;font-weight:700;">⏳ 로딩 중...</div>';
         document.body.appendChild(overlay);
         overlay.addEventListener('click', e => { if(e.target===overlay) overlay.remove(); });
