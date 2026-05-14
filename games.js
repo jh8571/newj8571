@@ -496,6 +496,11 @@ document.addEventListener('DOMContentLoaded', () => {
             const cs = window.innerWidth <= 480 ? 30 : 34;
             const BOX  = '2.5px solid var(--primary-color)';
             const THIN = '1px solid var(--border-color)';
+            const memoFs = cs <= 30 ? '0.48rem' : '0.55rem';
+
+            let hintsLeft = 3;
+            let hintDeduction = 0;
+            let memoMode = false;
 
             container.innerHTML = `
                 <div style="overflow-x:auto; width:100%; text-align:center;">
@@ -514,14 +519,22 @@ document.addEventListener('DOMContentLoaded', () => {
                 <p style="font-size:0.72rem;color:var(--text-muted);margin:5px 0 0;text-align:center;">
                     ${t('셀 선택 → 숫자 입력 또는 키보드 1~9','Select cell → tap number or press 1–9')}
                 </p>
-                <div style="display:flex; gap:8px; margin-top:10px; justify-content:center; flex-wrap:wrap;">
-                    <button id="s-check" style="padding:10px 18px; background:#6366f1; color:white; border:none;
-                        border-radius:12px; font-size:0.85rem; font-weight:700; cursor:pointer;">
-                        ${t('정답 확인','Check Answers')}
+                <div style="display:flex; gap:6px; margin-top:10px; justify-content:center; flex-wrap:wrap;">
+                    <button id="s-hint" style="padding:9px 14px;background:var(--card-bg);color:#f59e0b;
+                        border:2px solid #f59e0b;border-radius:12px;font-size:0.82rem;font-weight:700;cursor:pointer;">
+                        💡 ${t('힌트','Hint')} (3)
                     </button>
-                    <button onclick="startGame('sudoku')" style="padding:10px 18px; background:var(--card-bg);
-                        color:var(--text-main); border:2px solid var(--border-color); border-radius:12px;
-                        font-size:0.85rem; font-weight:700; cursor:pointer;">
+                    <button id="s-memo" style="padding:9px 14px;background:var(--card-bg);color:var(--text-muted);
+                        border:2px solid var(--border-color);border-radius:12px;font-size:0.82rem;font-weight:700;cursor:pointer;">
+                        📝 ${t('메모','Memo')}
+                    </button>
+                    <button id="s-check" style="padding:9px 16px;background:#6366f1;color:white;border:none;
+                        border-radius:12px;font-size:0.82rem;font-weight:700;cursor:pointer;">
+                        ${t('정답 확인','Check')}
+                    </button>
+                    <button onclick="startGame('sudoku')" style="padding:9px 14px;background:var(--card-bg);
+                        color:var(--text-main);border:2px solid var(--border-color);border-radius:12px;
+                        font-size:0.82rem;font-weight:700;cursor:pointer;">
                         ${t('새 게임','New Game')}
                     </button>
                 </div>`;
@@ -550,13 +563,15 @@ document.addEventListener('DOMContentLoaded', () => {
                         'user-select:none', 'transition:background 0.15s'
                     ].join(';');
                     td.textContent = puzzle[idx] || '';
-                    td.dataset.fixed = isFixed ? '1' : '0';
+                    td.dataset.fixed   = isFixed ? '1' : '0';
+                    td.dataset.hinted  = '0';
+                    td.dataset.memo    = '';
                     cells.push(td);
 
                     if (!isFixed) {
                         td.addEventListener('click', () => {
                             if (answered) return;
-                            if (selIdx >= 0 && cells[selIdx].dataset.fixed === '0')
+                            if (selIdx >= 0 && cells[selIdx].dataset.fixed === '0' && cells[selIdx].dataset.hinted === '0')
                                 cells[selIdx].style.background = 'var(--card-bg)';
                             selIdx = idx;
                             td.style.background = 'rgba(99,102,241,0.18)';
@@ -565,12 +580,40 @@ document.addEventListener('DOMContentLoaded', () => {
                 }
             }
 
-            // ── number input ──────────────────────────────────────────
+            // ── 메모 셀 렌더 ──────────────────────────────────────────
+            function renderMemo(td, arr) {
+                td.dataset.memo = arr.join(',');
+                if (arr.length === 0) {
+                    td.textContent = '';
+                    td.style.color = 'var(--text-muted)';
+                    return;
+                }
+                td.innerHTML = `<span style="color:#ef4444;font-size:${memoFs};line-height:1.2;display:block;word-break:break-all;">${arr.join(',')}</span>`;
+            }
+
+            // ── 숫자 입력 ─────────────────────────────────────────────
             function inputNum(n) {
-                if (answered || selIdx < 0 || cells[selIdx].dataset.fixed === '1') return;
+                if (answered || selIdx < 0) return;
                 const cell = cells[selIdx];
-                cell.textContent = n || '';
-                cell.style.color = 'var(--text-muted)';
+                if (cell.dataset.fixed === '1' || cell.dataset.hinted === '1') return;
+
+                if (n === 0) {
+                    cell.dataset.memo = '';
+                    cell.textContent = '';
+                    cell.style.color = 'var(--text-muted)';
+                    return;
+                }
+
+                if (memoMode) {
+                    const cur = cell.dataset.memo ? cell.dataset.memo.split(',').map(Number).filter(x => x > 0) : [];
+                    const pos = cur.indexOf(n);
+                    if (pos >= 0) cur.splice(pos, 1); else { cur.push(n); cur.sort((a,b) => a-b); }
+                    renderMemo(cell, cur);
+                } else {
+                    cell.dataset.memo = '';
+                    cell.textContent = n;
+                    cell.style.color = 'var(--text-muted)';
+                }
             }
 
             document.getElementById('s-pad').querySelectorAll('[data-n]').forEach(btn => {
@@ -583,8 +626,64 @@ document.addEventListener('DOMContentLoaded', () => {
                 else if (e.key === 'Backspace' || e.key === 'Delete') inputNum(0);
             };
 
-            // ── answer check ──────────────────────────────────────────
+            // ── 힌트 ─────────────────────────────────────────────────
+            document.getElementById('s-hint').addEventListener('click', () => {
+                if (hintsLeft <= 0) {
+                    alert(t('힌트를 모두 사용했습니다.', 'No hints remaining.'));
+                    return;
+                }
+                if (selIdx < 0 || cells[selIdx].dataset.fixed === '1' || cells[selIdx].dataset.hinted === '1') {
+                    alert(t('힌트를 사용할 빈 칸을 선택하세요.', 'Select an empty cell first.'));
+                    return;
+                }
+                const cell = cells[selIdx];
+                hintsLeft--;
+                hintDeduction += 20;
+                cell.dataset.memo   = '';
+                cell.dataset.hinted = '1';
+                cell.textContent    = solution[selIdx];
+                cell.style.color    = '#f59e0b';
+                cell.style.background = 'rgba(245,158,11,0.15)';
+                cell.style.cursor   = 'default';
+                selIdx = -1;
+
+                const hBtn = document.getElementById('s-hint');
+                if (hBtn) {
+                    hBtn.textContent = `💡 ${t('힌트','Hint')} (${hintsLeft})`;
+                    if (hintsLeft === 0) { hBtn.disabled = true; hBtn.style.opacity = '0.4'; }
+                }
+            });
+
+            // ── 메모 토글 ─────────────────────────────────────────────
+            document.getElementById('s-memo').addEventListener('click', () => {
+                memoMode = !memoMode;
+                const mBtn = document.getElementById('s-memo');
+                if (memoMode) {
+                    mBtn.style.cssText += ';background:#ef4444;color:white;border-color:#ef4444;';
+                    mBtn.textContent = `📝 ${t('메모 ON','Memo ON')}`;
+                } else {
+                    mBtn.style.background = 'var(--card-bg)';
+                    mBtn.style.color      = 'var(--text-muted)';
+                    mBtn.style.borderColor = 'var(--border-color)';
+                    mBtn.textContent = `📝 ${t('메모','Memo')}`;
+                }
+            });
+
+            // ── 정답 확인 ─────────────────────────────────────────────
             document.getElementById('s-check').addEventListener('click', () => {
+                // 메모 남아있으면 제출 차단
+                const hasLeftoverMemo = cells.some((td, i) => puzzle[i] === 0 && td.dataset.hinted === '0' && td.dataset.memo !== '');
+                if (hasLeftoverMemo) {
+                    cells.forEach((td, i) => {
+                        if (puzzle[i] !== 0 || td.dataset.hinted === '1' || td.dataset.memo === '') return;
+                        td.style.background = 'rgba(239,68,68,0.2)';
+                        setTimeout(() => { td.style.background = selIdx === i ? 'rgba(99,102,241,0.18)' : 'var(--card-bg)'; }, 1400);
+                    });
+                    alert(t('📝 메모가 남아있는 칸이 있습니다.\n숫자를 하나로 확정한 뒤 제출하세요.',
+                            '📝 Some cells still have memo notes.\nPlease finalize before submitting.'));
+                    return;
+                }
+
                 answered = true;
                 if (selIdx >= 0 && cells[selIdx].dataset.fixed === '0')
                     cells[selIdx].style.background = 'var(--card-bg)';
@@ -592,22 +691,26 @@ document.addEventListener('DOMContentLoaded', () => {
                 document.onkeydown = null;
 
                 let correct = 0, wrong = 0, empty = 0;
-                // Build full board for rule-based validation (accepts any valid solution)
                 const board = Array(81).fill(0);
                 cells.forEach((td, i) => {
                     board[i] = puzzle[i] !== 0 ? puzzle[i] : (parseInt(td.textContent) || 0);
                 });
+
                 cells.forEach((td, i) => {
-                    if (puzzle[i] !== 0) return; // fixed cell, skip
+                    if (puzzle[i] !== 0) return;
+                    if (td.dataset.hinted === '1') {
+                        td.style.color    = '#f59e0b';
+                        td.style.background = 'rgba(245,158,11,0.15)';
+                        correct++;
+                        return;
+                    }
                     const entered = parseInt(td.textContent);
                     if (!entered) {
-                        // empty — show correct answer in grey
                         td.textContent = solution[i];
                         td.style.color = '#94a3b8';
                         td.style.background = 'rgba(148,163,184,0.12)';
                         empty++;
                     } else {
-                        // validate against Sudoku rules, not just one specific solution
                         board[i] = 0;
                         const valid = canPlace(board, i, entered);
                         board[i] = entered;
@@ -616,7 +719,6 @@ document.addEventListener('DOMContentLoaded', () => {
                             td.style.background = 'rgba(16,185,129,0.12)';
                             correct++;
                         } else {
-                            // wrong — show correct answer in red
                             td.textContent = solution[i];
                             td.style.color = '#ef4444';
                             td.style.background = 'rgba(239,68,68,0.12)';
@@ -626,21 +728,26 @@ document.addEventListener('DOMContentLoaded', () => {
                 });
 
                 const checkBtn = document.getElementById('s-check');
-                checkBtn.disabled = true;
-                checkBtn.style.opacity = '0.5';
+                if (checkBtn) { checkBtn.disabled = true; checkBtn.style.opacity = '0.5'; }
 
                 const total = correct + wrong + empty;
-                const pct = Math.round((correct / total) * 100);
+                const pct   = Math.round((correct / total) * 100);
                 const grade = pct===100?'S':pct>=80?'A':pct>=60?'B':pct>=40?'C':'D';
-                const gc = {S:'#facc15',A:'#4ade80',B:'#60a5fa',C:'#fb923c',D:'#f87171'}[grade];
+                const gc    = {S:'#facc15',A:'#4ade80',B:'#60a5fa',C:'#fb923c',D:'#f87171'}[grade];
                 const diffName = removeCount<=35?t('초급','Easy'):removeCount<=46?t('중급','Medium'):t('고급','Hard');
-                setTimeout(() => showGameResult('sudoku', t('🔢 스도쿠 결과','🔢 Sudoku Result'), [
-                    { label: t('등급','Grade'), value: grade, big: true, color: gc, score: pct * 3 },
+                const finalScore = Math.max(0, pct * 3 - hintDeduction);
+
+                const stats = [
+                    { label: t('등급','Grade'), value: grade, big: true, color: gc, score: finalScore },
                     { label: t('난이도','Difficulty'), value: diffName },
                     { label: t('정답','Correct'), value: `${correct}${t('칸','cells')}`, color: '#10b981' },
-                    { label: t('오답','Wrong'), value: `${wrong}${t('칸','cells')}`, color: '#ef4444' },
+                    { label: t('오답','Wrong'),   value: `${wrong}${t('칸','cells')}`,   color: '#ef4444' },
                     { label: t('정답률','Accuracy'), value: `${pct}%` },
-                ]), 100);
+                ];
+                if (hintDeduction > 0)
+                    stats.push({ label: t('힌트 감점','Hint Penalty'), value: `-${hintDeduction}${t('점','pts')}`, color: '#f59e0b' });
+
+                setTimeout(() => showGameResult('sudoku', t('🔢 스도쿠 결과','🔢 Sudoku Result'), stats), 100);
             });
         }
     }
