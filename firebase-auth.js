@@ -1,7 +1,7 @@
 // ── VitalGuide Firebase Auth & User Data ──────────────────────────────────
 import { initializeApp }          from "https://www.gstatic.com/firebasejs/12.13.0/firebase-app.js";
-import { getAuth, onAuthStateChanged, signInWithPopup, signInWithRedirect,
-         getRedirectResult, createUserWithEmailAndPassword, signInWithEmailAndPassword,
+import { getAuth, onAuthStateChanged, signInWithPopup,
+         createUserWithEmailAndPassword, signInWithEmailAndPassword,
          GoogleAuthProvider, signOut, updateProfile }
                                    from "https://www.gstatic.com/firebasejs/12.13.0/firebase-auth.js";
 import { getFirestore, doc, getDoc, setDoc, updateDoc,
@@ -98,22 +98,6 @@ let _currentUser  = null;
 let _currentData  = null;
 const _listeners  = [];
 
-// 모바일 Google redirect 로그인 후 결과 처리
-getRedirectResult(auth).then(async result => {
-  if (!result?.user) return;
-  const user = result.user;
-  let data = await getUserDoc(user.uid);
-  if (!data) {
-    await createUserProfile(user.uid, user.displayName, user.email);
-    data = await getUserDoc(user.uid);
-  }
-  _currentUser = user;
-  _currentData = data;
-  window._vgUser     = user;
-  window._vgUserData = data;
-  _listeners.forEach(cb => cb(user, data));
-  updateHeaderUI(user, data);
-}).catch(e => console.warn('redirect result error', e));
 
 export function onUserChange(cb) { _listeners.push(cb); }
 
@@ -356,11 +340,8 @@ export async function signInGoogle() {
   }
   const provider = new GoogleAuthProvider();
   try {
-    if (isMobile()) {
-      await signInWithRedirect(auth, provider);
-    } else {
-      await signInWithPopup(auth, provider);
-    }
+    // 모바일 포함 항상 Popup 사용 (Redirect는 일부 모바일 브라우저에서 결과 유실)
+    await signInWithPopup(auth, provider);
   } catch(e) { console.error(e); throw e; }
 }
 
