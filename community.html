@@ -252,7 +252,7 @@
         const d = docSnap.data();
         const myPost = user && (user.uid === d.uid);
         const admin  = isAdmin(user);
-        const canSee = !d.isPrivate || myPost || admin;
+        const canSee = !d.isPrivate || admin;
         const liked  = user && d.likedBy?.includes(user.uid);
 
         return `<div class="post-card" id="gb-${docSnap.id}">
@@ -396,7 +396,7 @@
         const d = docSnap.data();
         const myPost = user && (user.uid === d.uid);
         const admin  = isAdmin(user);
-        const canSee = !d.isPrivate || myPost || admin;
+        const canSee = !d.isPrivate || admin;
         const liked  = user && d.likedBy?.includes(user.uid);
         const answOpen = openAnswers.has(docSnap.id);
 
