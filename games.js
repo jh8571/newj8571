@@ -691,6 +691,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 document.onkeydown = null;
 
                 let correct = 0, wrong = 0, empty = 0;
+                const wrongDetails = [];
                 const board = Array(81).fill(0);
                 cells.forEach((td, i) => {
                     board[i] = puzzle[i] !== 0 ? puzzle[i] : (parseInt(td.textContent) || 0);
@@ -719,6 +720,12 @@ document.addEventListener('DOMContentLoaded', () => {
                             td.style.background = 'rgba(16,185,129,0.12)';
                             correct++;
                         } else {
+                            wrongDetails.push({
+                                row: Math.floor(i / 9) + 1,
+                                col: (i % 9) + 1,
+                                entered,
+                                answer: solution[i]
+                            });
                             td.textContent = solution[i];
                             td.style.color = '#ef4444';
                             td.style.background = 'rgba(239,68,68,0.12)';
@@ -746,6 +753,13 @@ document.addEventListener('DOMContentLoaded', () => {
                 ];
                 if (hintDeduction > 0)
                     stats.push({ label: t('힌트 감점','Hint Penalty'), value: `-${hintDeduction}${t('점','pts')}`, color: '#f59e0b' });
+                wrongDetails.forEach(w => {
+                    stats.push({
+                        label: `↳ ${t(`${w.row}행 ${w.col}열`, `R${w.row} C${w.col}`)}`,
+                        value: `${w.entered} → ${w.answer}`,
+                        color: '#ef4444'
+                    });
+                });
 
                 setTimeout(() => showGameResult('sudoku', t('🔢 스도쿠 결과','🔢 Sudoku Result'), stats), 100);
             });
