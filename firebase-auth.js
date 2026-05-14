@@ -233,9 +233,7 @@ async function _saveKakaoUser(res) {
 }
 
 async function _fetchKakaoUser() {
-  return new Promise((resolve, reject) => {
-    Kakao.API.request({ url: '/v2/user/me', success: resolve, fail: reject });
-  });
+  return await Kakao.API.request({ url: '/v2/user/me' });
 }
 
 async function _exchangeCodeAndLogin(code) {
