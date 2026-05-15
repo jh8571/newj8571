@@ -42,7 +42,7 @@ const TIERS = [
 // 레벨 n의 누적 XP 임계값
 function levelThreshold(n) {
   if (n <= 1) return 0;
-  return Math.round(Math.pow(n - 1, 1.6) * 10);
+  return Math.round(Math.pow(n - 1, 1.6) * 20);
 }
 
 // XP → 레벨
