@@ -39,6 +39,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
         document.onkeydown = null;
         container.innerHTML = '';
+        history.replaceState({}, '', location.pathname);
     };
 
     // ── Shared result screen with SNS share ───────────────────────

@@ -118,6 +118,8 @@ onAuthStateChanged(auth, async user => {
       await _updateXPLB();  // 랭킹 문서도 새 레벨로 업데이트
     }
   } else {
+    // 카카오 유저가 활성화된 상태에서 Firebase null 이벤트가 와도 세션 유지
+    if (_currentUser?.isKakao) return;
     _currentUser = null;
     _currentData = null;
   }
