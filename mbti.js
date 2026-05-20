@@ -23,7 +23,7 @@ async function initMbti() {
                        J: u[3]==='J'?5:-5, P: u[3]==='P'?5:-5 };
             const intro = document.getElementById('intro-section');
             if (intro) intro.style.display = 'none';
-            showResult();
+            showResult(false);
         }
     } catch (e) {
         console.error('MBTI data load failed:', e);
@@ -108,7 +108,7 @@ window.handleAnswer = function (value, type, pole) {
     if (currentQuestion < mbtiData.questions.length) {
         renderQuestion();
     } else {
-        showResult();
+        showResult(true);
     }
 };
 
@@ -123,7 +123,7 @@ function getPct(a, b) {
     return [Math.max(5, Math.min(95, pctA)), Math.max(5, Math.min(95, 100 - pctA))];
 }
 
-function showResult() {
+function showResult(awardXP = false) {
     document.getElementById('quiz-section').style.display = 'none';
     const resultSection = document.getElementById('result-section');
     resultSection.style.display = 'block';
@@ -134,7 +134,7 @@ function showResult() {
     const isJ = scores.J >= 0;
     const mbti = (isE ? 'E' : 'I') + (isS ? 'S' : 'N') + (isT ? 'T' : 'F') + (isJ ? 'J' : 'P');
     history.replaceState({}, '', '?type=' + mbti);
-    if (window.vgAwardXP) window.vgAwardXP('mbti', { result: mbti });
+    if (awardXP && window.vgAwardXP) window.vgAwardXP('mbti', { result: mbti });
 
     const [ePct, iPct] = getPct('E', 'I');
     const [sPct, nPct] = getPct('S', 'N');

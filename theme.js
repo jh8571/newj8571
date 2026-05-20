@@ -353,7 +353,7 @@ async function applySiteConfig() {
         number:'숫자맞추기', minesweeper:'지뢰찾기', whack:'두더지잡기',
     };
 
-    function levelThreshold(n) { return n<=1?0:Math.round(Math.pow(n-1,1.8)*20); }
+    function levelThreshold(n) { return n<=1?0:Math.round(Math.pow(n-1,1.6)*20); }
     function levelFromXP(xp)   { let lv=1; for(let n=2;n<=100;n++){if(xp>=levelThreshold(n))lv=n;else break;} return lv; }
 
     window.vgShowUserProfile = async function(uid) {

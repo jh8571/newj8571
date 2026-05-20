@@ -100,7 +100,7 @@
             { min: 91, max: 99,  icon:'🏆', ko:'웰니스 챔피언', en:'Champion' },
             { min:100, max:100,  icon:'👑', ko:'VitalGuide 레전드', en:'VitalGuide Legend' },
         ];
-        function levelThreshold(n) { return n <= 1 ? 0 : Math.round(Math.pow(n-1, 1.8) * 20); }
+        function levelThreshold(n) { return n <= 1 ? 0 : Math.round(Math.pow(n-1, 1.6) * 20); }
         function levelFromXP(xp) { let lv=1; for(let n=2;n<=100;n++){if(xp>=levelThreshold(n))lv=n;else break;} return lv; }
         function getTierLocal(lv) { return TIERS.find(t=>lv>=t.min&&lv<=t.max)||TIERS[0]; }
 
@@ -115,13 +115,21 @@
         };
 
         const GAME_LABELS = {
-            tetris:    { icon:'🟦', name:'테트리스' },
-            sudoku:    { icon:'🔢', name:'스도쿠' },
-            '2048':    { icon:'🎲', name:'2048' },
-            flappy:    { icon:'🐦', name:'플래피버드' },
+            tetris:     { icon:'🟦', name:'테트리스' },
+            sudoku:     { icon:'🔢', name:'스도쿠' },
+            '2048':     { icon:'🎲', name:'2048' },
+            flappy:     { icon:'🐦', name:'플래피버드' },
             minesweeper:{ icon:'💣', name:'지뢰찾기' },
-            breakout:  { icon:'🏓', name:'블록깨기' },
-            mole:      { icon:'🦡', name:'두더지잡기' },
+            breakout:   { icon:'🧱', name:'블록깨기' },
+            whack:      { icon:'🔨', name:'두더지잡기' },
+            snake:      { icon:'🐍', name:'스네이크' },
+            clicker:    { icon:'👆', name:'클릭커' },
+            math:       { icon:'🧮', name:'암산왕' },
+            reaction:   { icon:'⚡', name:'반응속도' },
+            memory:     { icon:'🃏', name:'기억력카드' },
+            color:      { icon:'🎨', name:'색상찾기' },
+            typing:     { icon:'⌨️', name:'타이핑' },
+            number:     { icon:'🎯', name:'숫자맞추기' },
         };
 
         function fmtDate(iso) {
