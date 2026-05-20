@@ -51,8 +51,8 @@
             <a href="exercise.html" data-ko="운동가이드" data-en="Exercise">운동가이드</a>
             <a href="psychology.html" data-ko="심리분석" data-en="Psychology">심리분석</a>
             <a href="mbti.html" data-ko="MBTI 테스트" data-en="MBTI Test">MBTI 테스트</a>
-            <a href="fortune.html" data-ko="오늘의운세" data-en="Daily Fortune">오늘의운세</a>
-            <a href="games.html" data-ko="미니게임" data-en="Mini Games">미니게임</a>
+            <a href="health-type-test.html" data-ko="건강유형테스트" data-en="Health Type">건강유형테스트</a>
+            <a href="nutrient-quiz.html" data-ko="영양소 퀴즈" data-en="Nutrient Quiz">영양소 퀴즈</a>
             <a href="blog.html" data-ko="건강가이드" data-en="Health Blog">건강가이드</a>
             <a href="community.html" data-ko="커뮤니티" data-en="Community">커뮤니티</a>
         </nav>
@@ -227,7 +227,7 @@
                 <!-- Game Scores -->
                 <div class="section-label">${isKo ? '🎮 게임 최고 점수' : '🎮 Best Game Scores'}</div>
                 ${Object.keys(games).length === 0
-                    ? `<div style="background:var(--card-bg);border:1px solid var(--border-color);border-radius:16px;padding:32px;text-align:center;color:var(--text-muted);font-size:0.9rem;"><a href="games.html" style="color:var(--accent-color);font-weight:800;">${isKo ? '미니게임 하러 가기 →' : 'Play Mini Games →'}</a></div>`
+                    ? `<div style="background:var(--card-bg);border:1px solid var(--border-color);border-radius:16px;padding:32px;text-align:center;color:var(--text-muted);font-size:0.9rem;"><a href="nutrient-quiz.html" data-ko="영양소 퀴즈" data-en="Nutrient Quiz">영양소 퀴즈</a></div>`
                     : Object.entries(games).map(([key, score]) => {
                         const g = GAME_LABELS[key] || { icon:'🎮', name: key };
                         return `<div class="game-row">
