@@ -935,7 +935,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const grade = avg<180?'S':avg<250?'A':avg<350?'B':avg<500?'C':'D';
             const gc = {S:'#facc15',A:'#4ade80',B:'#60a5fa',C:'#fb923c',D:'#f87171'}[grade];
             showGameResult('reaction', t('⚡ 반응속도 결과','⚡ Reaction Speed Result'), [
-                { label: t('등급','Grade'), value: grade, big: true, color: gc, score: Math.max(1, Math.round((1000 - avg) / 2)) },
+                { label: t('등급','Grade'), value: grade, big: true, color: gc, score: Math.max(1, 1000 - avg) },
                 { label: t('평균 반응속도','Avg Reaction'), value: `${avg}ms` },
                 { label: t('최고 기록','Best'), value: `${best}ms`, color: '#10b981' },
                 ...results.map((r,i) => ({
