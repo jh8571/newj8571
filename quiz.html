@@ -151,7 +151,7 @@
         }
         .qz-explain.show { display: block; }
         .qz-next {
-            width: 100%; padding: 14px; background: var(--accent-color); color: var(--primary-color);
+            width: 100%; padding: 14px; background: var(--accent-color); color: #fff;
             border: none; border-radius: 14px; font-weight: 900; font-size: 0.95rem; cursor: pointer;
             margin-top: 12px; display: none; transition: transform .15s;
         }
@@ -194,7 +194,7 @@
             cursor: pointer; transition: transform .15s;
         }
         .res-btn:hover { transform: translateY(-2px); }
-        .res-btn.primary { background: var(--accent-color); color: var(--primary-color); }
+        .res-btn.primary { background: var(--accent-color); color: #fff; }
         .res-btn.secondary { background: var(--card-bg); border: 2px solid var(--border-color); color: var(--text-muted); }
 
         @keyframes pop { 0%{transform:scale(.85);opacity:0} 60%{transform:scale(1.08)} 100%{transform:scale(1);opacity:1} }
@@ -489,6 +489,12 @@
         }
 
         questions = shuffle(questions).slice(0, Q_PER_SESS);
+
+        // API 카테고리이고 한국어 모드일 때 번역
+        if (isApi(selCatKey) && (localStorage.getItem('lang') || 'ko') !== 'en') {
+            questions = await translateQuestionsKo(questions);
+        }
+
         qIdx = 0; score = 0; correctCount = 0; totalTimeBonus = 0; totalBase = 0;
 
         hide('v-loading');
@@ -560,6 +566,41 @@
         const qs = data.results.map(processApiQ);
         sessionStorage.setItem(cacheKey, JSON.stringify(qs));
         return qs;
+    }
+
+    /* ── Google Translate (비공식 무료 엔드포인트) ────────────────── */
+    async function translateQuestionsKo(qs) {
+        const cacheKey = `qz_trans_${selCatKey}_${selDiff}_${qs.map(q=>q.q.slice(0,8)).join('')}`;
+        const cached = sessionStorage.getItem(cacheKey);
+        if (cached) { try { return JSON.parse(cached); } catch(e) {} }
+
+        el('loading-msg').textContent = '🌐 한국어로 번역 중...';
+        show('v-loading'); hide('v-quiz');
+
+        // 각 문제의 질문+보기 4개를 줄바꿈으로 묶고, 문제 간 구분자 삽입
+        const SEP = '\n◈◈◈\n';
+        const blocks = qs.map(q => [q.q, ...q.o].join('\n'));
+        const joined = blocks.join(SEP);
+
+        try {
+            const url = 'https://translate.googleapis.com/translate_a/single?client=gtx&sl=en&tl=ko&dt=t&q='
+                + encodeURIComponent(joined);
+            const res  = await fetch(url);
+            const json = await res.json();
+            const full = json[0].map(chunk => chunk[0]).join('');
+
+            const parts = full.split(/◈◈◈/);
+            const translated = qs.map((q, i) => {
+                const lines = (parts[i] || '').split('\n').map(s => s.trim()).filter(Boolean);
+                if (lines.length < 5) return q;
+                return { ...q, q: lines[0], o: [lines[1], lines[2], lines[3], lines[4]] };
+            });
+
+            sessionStorage.setItem(cacheKey, JSON.stringify(translated));
+            return translated;
+        } catch(e) {
+            return qs; // 번역 실패 시 영어 그대로
+        }
     }
 
     function processApiQ(apiQ) {
