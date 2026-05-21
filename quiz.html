@@ -348,34 +348,36 @@
     ================================================================ */
 
     const DIFF_MULT   = { easy: 1.0, medium: 1.5, hard: 2.0 };
-    const DIFF_LABEL  = { easy: '쉬움', medium: '보통', hard: '어려움' };
+    const DIFF_LABEL    = { easy: '쉬움',  medium: '보통',   hard: '어려움' };
+    const DIFF_LABEL_EN = { easy: 'Easy', medium: 'Medium', hard: 'Hard'   };
+    function diffLabel(d) { return localStorage.getItem('lang')==='en' ? DIFF_LABEL_EN[d] : DIFF_LABEL[d]; }
     const MAX_TIME    = 20; // seconds
     const Q_PER_SESS  = 10;
 
     /* ── Category definitions ─────────────────────────────────── */
     const KO_CATS = [
-        { key:'kpolitics', label:'한국 정치', icon:'🗳️', color:'#6366f1' },
-        { key:'wpolitics', label:'세계 정치', icon:'🌐', color:'#8b5cf6' },
-        { key:'keconomy',  label:'한국 경제', icon:'💰', color:'#10b981' },
-        { key:'weconomy',  label:'세계 경제', icon:'📈', color:'#059669' },
-        { key:'ksociety',  label:'한국 사회', icon:'🏘️', color:'#f59e0b' },
-        { key:'wsociety',  label:'세계 사회', icon:'🌏', color:'#d97706' },
-        { key:'khistory',  label:'한국사',    icon:'📜', color:'#ef4444' },
-        { key:'whistory',  label:'세계사',    icon:'🏛️', color:'#dc2626' },
-        { key:'science',   label:'과학',      icon:'🔬', color:'#06b6d4' },
-        { key:'it',        label:'IT·기술',   icon:'💻', color:'#3b82f6' },
+        { key:'kpolitics', label:'한국 정치', labelEn:'Korean Politics', icon:'🗳️', color:'#6366f1' },
+        { key:'wpolitics', label:'세계 정치', labelEn:'World Politics',  icon:'🌐', color:'#8b5cf6' },
+        { key:'keconomy',  label:'한국 경제', labelEn:'Korean Economy',  icon:'💰', color:'#10b981' },
+        { key:'weconomy',  label:'세계 경제', labelEn:'World Economy',   icon:'📈', color:'#059669' },
+        { key:'ksociety',  label:'한국 사회', labelEn:'Korean Society',  icon:'🏘️', color:'#f59e0b' },
+        { key:'wsociety',  label:'세계 사회', labelEn:'World Society',   icon:'🌏', color:'#d97706' },
+        { key:'khistory',  label:'한국사',    labelEn:'Korean History',  icon:'📜', color:'#ef4444' },
+        { key:'whistory',  label:'세계사',    labelEn:'World History',   icon:'🏛️', color:'#dc2626' },
+        { key:'science',   label:'과학',      labelEn:'Science',         icon:'🔬', color:'#06b6d4' },
+        { key:'it',        label:'IT·기술',   labelEn:'IT & Tech',       icon:'💻', color:'#3b82f6' },
     ];
     const API_CATS = [
-        { key:'general',   label:'일반 상식', icon:'🎯', color:'#84cc16', apiId:9  },
-        { key:'sports',    label:'스포츠',    icon:'⚽', color:'#22c55e', apiId:21 },
-        { key:'geography', label:'지리',      icon:'🗺️', color:'#14b8a6', apiId:22 },
-        { key:'music',     label:'음악',      icon:'🎵', color:'#a855f7', apiId:12 },
-        { key:'math',      label:'수학',      icon:'➕', color:'#ec4899', apiId:19 },
-        { key:'myth',      label:'신화',      icon:'⚡', color:'#f97316', apiId:20 },
-        { key:'art',       label:'예술',      icon:'🎨', color:'#e11d48', apiId:25 },
-        { key:'film',      label:'영화',      icon:'🎬', color:'#7c3aed', apiId:11 },
-        { key:'nature',    label:'자연과학',  icon:'🌿', color:'#16a34a', apiId:17 },
-        { key:'computer',  label:'컴퓨터',    icon:'🖥️', color:'#2563eb', apiId:18 },
+        { key:'general',   label:'일반 상식', labelEn:'General Knowledge', icon:'🎯', color:'#84cc16', apiId:9  },
+        { key:'sports',    label:'스포츠',    labelEn:'Sports',            icon:'⚽', color:'#22c55e', apiId:21 },
+        { key:'geography', label:'지리',      labelEn:'Geography',         icon:'🗺️', color:'#14b8a6', apiId:22 },
+        { key:'music',     label:'음악',      labelEn:'Music',             icon:'🎵', color:'#a855f7', apiId:12 },
+        { key:'math',      label:'수학',      labelEn:'Mathematics',       icon:'➕', color:'#ec4899', apiId:19 },
+        { key:'myth',      label:'신화',      labelEn:'Mythology',         icon:'⚡', color:'#f97316', apiId:20 },
+        { key:'art',       label:'예술',      labelEn:'Art',               icon:'🎨', color:'#e11d48', apiId:25 },
+        { key:'film',      label:'영화',      labelEn:'Film',              icon:'🎬', color:'#7c3aed', apiId:11 },
+        { key:'nature',    label:'자연과학',  labelEn:'Science & Nature',  icon:'🌿', color:'#16a34a', apiId:17 },
+        { key:'computer',  label:'컴퓨터',    labelEn:'Computers',         icon:'🖥️', color:'#2563eb', apiId:18 },
     ];
     const ALL_CATS = [...KO_CATS, ...API_CATS];
     const CAT_MAP  = Object.fromEntries(ALL_CATS.map(c => [c.key, c]));
@@ -411,6 +413,9 @@
     function hide(id)   { document.getElementById(id).style.display='none'; }
     function el(id)     { return document.getElementById(id); }
     function isApi(key) { return API_CATS.some(c => c.key === key); }
+    function catLabel(cat) {
+        return (localStorage.getItem('lang') === 'en' && cat.labelEn) ? cat.labelEn : cat.label;
+    }
 
     /* ── Category grid render ─────────────────────────────────── */
     function renderCatGrid() {
@@ -425,7 +430,7 @@
                  onkeydown="if(event.key==='Enter')openDiff('${cat.key}')">
                 <div class="cat-card-accent" style="background:${cat.color};"></div>
                 <span class="cat-card-icon">${cat.icon}</span>
-                <div class="cat-card-name">${cat.label}</div>
+                <div class="cat-card-name">${catLabel(cat)}</div>
                 <div class="cat-card-tags">
                     <span class="diff-tag easy">${eCnt}</span>
                     <span class="diff-tag medium">${mCnt}</span>
@@ -442,14 +447,18 @@
     function openDiff(key) {
         selCatKey = key;
         const cat = CAT_MAP[key];
+        const isEn = localStorage.getItem('lang') === 'en';
         el('dm-icon').textContent  = cat.icon;
-        el('dm-title').textContent = cat.label;
-        el('dm-sub').textContent   = isApi(key) ? 'Open Trivia DB · 영어 문제' : '한국어 문제은행';
+        el('dm-title').textContent = catLabel(cat);
+        el('dm-sub').textContent   = isApi(key)
+            ? (isEn ? 'Open Trivia DB · English' : 'Open Trivia DB · 영어 문제')
+            : (isEn ? 'Korean Question Bank' : '한국어 문제은행');
 
         const koData = !isApi(key) && typeof QUIZ_KO !== 'undefined' && QUIZ_KO[key];
-        el('dm-easy-cnt').textContent  = koData ? `(${koData.easy.length}문제)`   : '(30문제)';
-        el('dm-med-cnt').textContent   = koData ? `(${koData.medium.length}문제)` : '(30문제)';
-        el('dm-hard-cnt').textContent  = koData ? `(${koData.hard.length}문제)`   : '(30문제)';
+        const qUnit  = isEn ? 'Qs' : '문제';
+        el('dm-easy-cnt').textContent  = koData ? `(${koData.easy.length}${qUnit})`   : `(30${qUnit})`;
+        el('dm-med-cnt').textContent   = koData ? `(${koData.medium.length}${qUnit})` : `(30${qUnit})`;
+        el('dm-hard-cnt').textContent  = koData ? `(${koData.hard.length}${qUnit})`   : `(30${qUnit})`;
 
         const modal = el('diff-modal');
         modal.classList.remove('pop');
@@ -569,37 +578,38 @@
     }
 
     /* ── Google Translate (비공식 무료 엔드포인트) ────────────────── */
+    async function gtOne(text) {
+        const url = 'https://translate.googleapis.com/translate_a/single?client=gtx&sl=en&tl=ko&dt=t&q='
+            + encodeURIComponent(text);
+        const res  = await fetch(url);
+        const json = await res.json();
+        return json[0].map(c => c[0]).join('').trim();
+    }
+
     async function translateQuestionsKo(qs) {
-        const cacheKey = `qz_trans_${selCatKey}_${selDiff}_${qs.map(q=>q.q.slice(0,8)).join('')}`;
+        const cacheKey = `qz_trans2_${selCatKey}_${selDiff}_${qs.map(q=>q.q.slice(0,6)).join('')}`;
         const cached = sessionStorage.getItem(cacheKey);
         if (cached) { try { return JSON.parse(cached); } catch(e) {} }
 
         el('loading-msg').textContent = '🌐 한국어로 번역 중...';
         show('v-loading'); hide('v-quiz');
 
-        // 각 문제의 질문+보기 4개를 줄바꿈으로 묶고, 문제 간 구분자 삽입
-        const SEP = '\n◈◈◈\n';
-        const blocks = qs.map(q => [q.q, ...q.o].join('\n'));
-        const joined = blocks.join(SEP);
-
         try {
-            const url = 'https://translate.googleapis.com/translate_a/single?client=gtx&sl=en&tl=ko&dt=t&q='
-                + encodeURIComponent(joined);
-            const res  = await fetch(url);
-            const json = await res.json();
-            const full = json[0].map(chunk => chunk[0]).join('');
-
-            const parts = full.split(/◈◈◈/);
-            const translated = qs.map((q, i) => {
-                const lines = (parts[i] || '').split('\n').map(s => s.trim()).filter(Boolean);
-                if (lines.length < 5) return q;
-                return { ...q, q: lines[0], o: [lines[1], lines[2], lines[3], lines[4]] };
-            });
-
+            // 문제별로 [질문, 보기A, 보기B, 보기C, 보기D] 5개 항목을 병렬 번역
+            const translated = await Promise.all(qs.map(async q => {
+                try {
+                    const [tq, ta, tb, tc, td] = await Promise.all(
+                        [q.q, q.o[0], q.o[1], q.o[2], q.o[3]].map(gtOne)
+                    );
+                    return { ...q, q: tq, o: [ta, tb, tc, td] };
+                } catch(e) {
+                    return q; // 개별 실패 시 영어 유지
+                }
+            }));
             sessionStorage.setItem(cacheKey, JSON.stringify(translated));
             return translated;
         } catch(e) {
-            return qs; // 번역 실패 시 영어 그대로
+            return qs;
         }
     }
 
@@ -623,7 +633,7 @@
         const q   = questions[qIdx];
         const pct = (qIdx / questions.length) * 100;
 
-        el('qz-cat-label').textContent = `${cat.icon} ${cat.label} · ${DIFF_LABEL[selDiff]}`;
+        el('qz-cat-label').textContent = `${cat.icon} ${catLabel(cat)} · ${diffLabel(selDiff)}`;
         el('qz-score').textContent     = score.toLocaleString();
         el('qz-prog-fill').style.width = pct + '%';
         el('qz-prog-label').textContent = `${qIdx+1} / ${questions.length}`;
@@ -746,11 +756,16 @@
         setTimeout(() => { el('res-acc-fill').style.width = accPct + '%'; }, 100);
 
         const mult = DIFF_MULT[selDiff];
+        const isEn = localStorage.getItem('lang') === 'en';
+        const pt   = isEn ? 'pts' : '점';
+        el('res-acc-text').textContent = isEn
+            ? `${correctCount}/${questions.length} Correct`
+            : `${correctCount}/${questions.length} 정답`;
         el('res-breakdown').innerHTML = [
-            { label: '정답 기본점수', val: totalBase.toLocaleString() + '점' },
-            { label: '속도 보너스',   val: '+' + totalTimeBonus.toLocaleString() + '점' },
-            { label: '난이도 배율',   val: `×${mult} (${DIFF_LABEL[selDiff]})` },
-            { label: '최종 점수',     val: score.toLocaleString() + '점', bold: true },
+            { label: isEn ? 'Base Score'        : '정답 기본점수', val: totalBase.toLocaleString() + pt },
+            { label: isEn ? 'Speed Bonus'       : '속도 보너스',   val: '+' + totalTimeBonus.toLocaleString() + pt },
+            { label: isEn ? 'Difficulty'        : '난이도 배율',   val: `×${mult} (${diffLabel(selDiff)})` },
+            { label: isEn ? 'Final Score'       : '최종 점수',     val: score.toLocaleString() + pt, bold: true },
         ].map(r => `
             <div class="res-row">
                 <span style="color:var(--text-muted);">${r.label}</span>
@@ -759,7 +774,10 @@
                 </span>
             </div>`).join('');
 
-        el('res-replay').textContent = `🔄 ${CAT_MAP[selCatKey].label} 다시 도전`;
+        const cat = CAT_MAP[selCatKey];
+        el('res-replay').textContent = isEn
+            ? `🔄 Play ${catLabel(cat)} Again`
+            : `🔄 ${catLabel(cat)} 다시 도전`;
 
         // Save score (toast notification handled by firebase-auth.js)
         if (score > 0 && window.vgSaveGame) {
