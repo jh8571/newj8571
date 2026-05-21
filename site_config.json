@@ -7,7 +7,7 @@
     "logo_text": "VitalGuide"
   },
   "nav": [
-    {"id": "nutrition", "label_ko": "AI 맞춤영양", "label_en": "AI Nutrition", "href": "index.html", "enabled": true},
+    {"id": "nutrition", "label_ko": "맞춤영양",    "label_en": "Nutrition",    "href": "index.html", "enabled": true},
     {"id": "exercise",  "label_ko": "운동가이드",   "label_en": "Exercise",      "href": "exercise.html",   "enabled": true},
     {"id": "psychology","label_ko": "심리분석",     "label_en": "Psychology",    "href": "psychology.html", "enabled": true},
     {"id": "mbti",      "label_ko": "MBTI 테스트",  "label_en": "MBTI Test",     "href": "mbti.html",       "enabled": true},
