@@ -514,25 +514,47 @@
         const cacheKey = `qz_api_${key}_${difficulty}`;
         const cached   = sessionStorage.getItem(cacheKey);
         if (cached) {
-            const parsed = JSON.parse(cached);
-            if (parsed.length > 0) return shuffle(parsed);
+            try {
+                const parsed = JSON.parse(cached);
+                if (parsed.length > 0) return shuffle(parsed);
+            } catch(e) { sessionStorage.removeItem(cacheKey); }
         }
 
-        const cat    = CAT_MAP[key];
-        const apiDiff = difficulty; // easy | medium | hard
-        const url    = `https://opentdb.com/api.php?amount=30&category=${cat.apiId}&difficulty=${apiDiff}&type=multiple`;
+        const cat = CAT_MAP[key];
 
-        const res  = await fetch(url);
-        const data = await res.json();
+        // response_code 5 = rate limited → 5초 대기 후 1회 재시도
+        async function tryFetch(url, retry = true) {
+            const res  = await fetch(url);
+            const data = await res.json();
+            if (data.response_code === 5 && retry) {
+                el('loading-msg').textContent = 'API 대기 중... (5초)';
+                await new Promise(r => setTimeout(r, 5500));
+                return tryFetch(url, false);
+            }
+            return data;
+        }
 
-        if (data.response_code !== 0 || !data.results) {
-            // Fallback: fetch without difficulty filter
-            const res2  = await fetch(`https://opentdb.com/api.php?amount=30&category=${cat.apiId}&type=multiple`);
-            const data2 = await res2.json();
-            if (data2.response_code !== 0) throw new Error('API error');
-            const qs = data2.results.map(processApiQ);
-            sessionStorage.setItem(cacheKey, JSON.stringify(qs));
-            return qs;
+        // 1차: 난이도 지정 + amount=15
+        let data = await tryFetch(
+            `https://opentdb.com/api.php?amount=15&category=${cat.apiId}&difficulty=${difficulty}&type=multiple`
+        );
+
+        // 2차: 난이도 미지정 fallback (amount=15)
+        if (data.response_code !== 0 || !data.results?.length) {
+            data = await tryFetch(
+                `https://opentdb.com/api.php?amount=15&category=${cat.apiId}&type=multiple`
+            );
+        }
+
+        // 3차: amount=10 최소 요청
+        if (data.response_code !== 0 || !data.results?.length) {
+            data = await tryFetch(
+                `https://opentdb.com/api.php?amount=10&category=${cat.apiId}&type=multiple`
+            );
+        }
+
+        if (data.response_code !== 0 || !data.results?.length) {
+            throw new Error('API error: ' + data.response_code);
         }
 
         const qs = data.results.map(processApiQ);
