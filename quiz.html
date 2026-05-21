@@ -1,0 +1,739 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-P6CTZY2283"></script>
+    <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-P6CTZY2283');</script>
+    <meta name="google-adsense-account" content="ca-pub-9103697866666926">
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9103697866666926" crossorigin="anonymous"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>지식 퀴즈 — 20개 분야 방대한 문제은행 | VitalGuide</title>
+    <meta name="description" content="한국사, 세계사, 정치, 경제, 과학, IT 등 20개 분야 퀴즈! 쉬움·보통·어려움 3단계 난이도, 랭킹 시스템으로 친구와 경쟁하세요.">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="icon" href="favicon.svg" type="image/svg+xml">
+    <style>
+        /* ── Quiz-specific styles ── */
+        .qz-hero { padding: 56px 0 28px; text-align: center; }
+        .qz-hero h1 { font-size: 2.6rem; font-weight: 900; letter-spacing: -1.5px; margin-bottom: 10px; }
+        .qz-hero p  { color: var(--text-muted); font-size: 1rem; }
+
+        /* Category grid */
+        .cat-section-label {
+            font-size: 0.78rem; font-weight: 800; letter-spacing: 1px; text-transform: uppercase;
+            color: var(--text-muted); margin: 28px 0 12px; display: flex; align-items: center; gap: 8px;
+        }
+        .cat-section-label::after { content:''; flex:1; height:1px; background:var(--border-color); }
+        .cat-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+            gap: 12px; margin-bottom: 16px;
+        }
+        .cat-card {
+            background: var(--card-bg); border: 1.5px solid var(--border-color);
+            border-radius: 16px; padding: 16px 14px; cursor: pointer;
+            transition: transform .18s, border-color .18s, box-shadow .18s;
+            position: relative; overflow: hidden;
+        }
+        .cat-card:hover { transform: translateY(-4px); box-shadow: 0 8px 24px rgba(0,0,0,.1); }
+        .cat-card-icon { font-size: 1.8rem; margin-bottom: 8px; display: block; }
+        .cat-card-name { font-size: 0.88rem; font-weight: 800; color: var(--primary-color); margin-bottom: 6px; }
+        .cat-card-tags { display: flex; gap: 4px; flex-wrap: wrap; }
+        .diff-tag {
+            font-size: 0.65rem; font-weight: 700; padding: 2px 6px;
+            border-radius: 6px; color: #fff;
+        }
+        .diff-tag.easy   { background: #10b981; }
+        .diff-tag.medium { background: #f59e0b; }
+        .diff-tag.hard   { background: #ef4444; }
+        .diff-tag.api    { background: #6366f1; }
+        .cat-card-accent { position: absolute; top:0; left:0; width:100%; height:3px; border-radius:16px 16px 0 0; }
+
+        /* Difficulty overlay */
+        #v-diff {
+            position: fixed; inset: 0; background: rgba(0,0,0,.55); z-index: 900;
+            display: flex; align-items: center; justify-content: center; padding: 20px;
+        }
+        .diff-modal {
+            background: var(--card-bg); border-radius: 24px; padding: 28px 24px;
+            max-width: 360px; width: 100%; box-shadow: 0 24px 64px rgba(0,0,0,.3);
+        }
+        .diff-modal-header { display: flex; align-items: center; gap: 10px; margin-bottom: 20px; }
+        .diff-modal-icon { font-size: 2rem; }
+        .diff-modal-title { font-size: 1.15rem; font-weight: 900; }
+        .diff-btn {
+            width: 100%; padding: 14px 18px; border-radius: 14px; border: 2px solid transparent;
+            cursor: pointer; font-weight: 800; font-size: 0.9rem; display: flex;
+            align-items: center; justify-content: space-between; margin-bottom: 10px;
+            transition: transform .15s, box-shadow .15s;
+        }
+        .diff-btn:hover { transform: translateX(4px); box-shadow: 0 4px 16px rgba(0,0,0,.12); }
+        .diff-btn.easy   { background:#f0fdf4; border-color:#10b981; color:#065f46; }
+        .diff-btn.medium { background:#fffbeb; border-color:#f59e0b; color:#78350f; }
+        .diff-btn.hard   { background:#fef2f2; border-color:#ef4444; color:#7f1d1d; }
+        [data-theme='dark'] .diff-btn.easy   { background:#064e3b22; color:#34d399; }
+        [data-theme='dark'] .diff-btn.medium { background:#78350f22; color:#fbbf24; }
+        [data-theme='dark'] .diff-btn.hard   { background:#7f1d1d22; color:#f87171; }
+        .diff-btn-right { font-size:0.78rem; opacity:.7; }
+        .diff-close {
+            width:100%; padding:10px; border:none; background:transparent;
+            color:var(--text-muted); cursor:pointer; font-size:0.85rem; margin-top:4px;
+        }
+
+        /* Loading */
+        #v-loading {
+            display: flex; align-items: center; justify-content: center;
+            min-height: 300px; flex-direction: column; gap: 16px;
+        }
+        .spin { width:40px; height:40px; border:4px solid var(--border-color); border-top-color:var(--accent-color); border-radius:50%; animation:spin .8s linear infinite; }
+        @keyframes spin { to { transform:rotate(360deg); } }
+
+        /* Quiz view */
+        #v-quiz { max-width: 560px; margin: 0 auto; padding: 16px 0 40px; }
+        .qz-topbar {
+            display: flex; align-items: center; justify-content: space-between;
+            margin-bottom: 16px; gap: 8px;
+        }
+        .qz-cat-label { font-size: 0.78rem; font-weight: 800; color: var(--text-muted); }
+        .qz-score-label {
+            font-size: 0.88rem; font-weight: 900;
+            background: var(--card-bg); border: 1.5px solid var(--border-color);
+            padding: 4px 12px; border-radius: 20px; color: var(--primary-color);
+        }
+        .qz-progress-bar {
+            height: 5px; background: var(--border-color); border-radius: 3px;
+            margin-bottom: 6px; overflow: hidden;
+        }
+        .qz-progress-fill { height: 100%; background: var(--accent-color); transition: width .4s ease; border-radius:3px; }
+        .qz-progress-label { font-size: 0.75rem; color: var(--text-muted); margin-bottom: 14px; font-weight:700; }
+
+        .qz-timer-wrap { margin-bottom: 20px; }
+        .qz-timer-bar { height: 8px; background: var(--border-color); border-radius: 4px; overflow: hidden; }
+        .qz-timer-fill {
+            height: 100%; width: 100%; border-radius: 4px;
+            transition: width 1s linear;
+            background: linear-gradient(90deg, #10b981, #f59e0b);
+        }
+        .qz-timer-label { font-size: 0.72rem; color: var(--text-muted); text-align:right; margin-top:3px; font-weight:700; }
+
+        .qz-card {
+            background: var(--card-bg); border: 1.5px solid var(--border-color);
+            border-radius: 20px; padding: 24px 22px; margin-bottom: 14px;
+        }
+        .qz-question { font-size: 1.05rem; font-weight: 700; line-height: 1.7; word-break: keep-all; }
+
+        .qz-options { display: flex; flex-direction: column; gap: 10px; }
+        .qz-opt {
+            padding: 13px 16px; border-radius: 13px; border: 2px solid var(--border-color);
+            background: var(--card-bg); cursor: pointer; font-size: 0.9rem; font-weight: 600;
+            display: flex; align-items: center; gap: 10px; transition: border-color .15s, background .15s, transform .1s;
+            text-align: left; line-height: 1.5; word-break: keep-all;
+        }
+        .qz-opt:hover:not(:disabled) { border-color: var(--accent-color); transform: translateX(3px); }
+        .qz-opt:disabled { cursor: default; }
+        .qz-opt.correct  { border-color:#10b981; background:#f0fdf4; color:#065f46; }
+        .qz-opt.wrong    { border-color:#ef4444; background:#fef2f2; color:#7f1d1d; }
+        [data-theme='dark'] .qz-opt.correct { background:#064e3b33; color:#34d399; }
+        [data-theme='dark'] .qz-opt.wrong   { background:#7f1d1d33; color:#f87171; }
+        .qz-opt-letter {
+            width:26px; height:26px; border-radius:8px; background:var(--border-color);
+            display:flex; align-items:center; justify-content:center; font-size:0.75rem;
+            font-weight:900; flex-shrink:0; transition:background .15s;
+        }
+        .qz-opt.correct .qz-opt-letter { background:#10b981; color:#fff; }
+        .qz-opt.wrong   .qz-opt-letter { background:#ef4444; color:#fff; }
+
+        .qz-explain {
+            margin-top: 14px; padding: 13px 16px;
+            background: var(--border-color); border-radius: 12px;
+            font-size: 0.85rem; line-height: 1.6; color: var(--text-muted);
+            display: none;
+        }
+        .qz-explain.show { display: block; }
+        .qz-next {
+            width: 100%; padding: 14px; background: var(--accent-color); color: var(--primary-color);
+            border: none; border-radius: 14px; font-weight: 900; font-size: 0.95rem; cursor: pointer;
+            margin-top: 12px; display: none; transition: transform .15s;
+        }
+        .qz-next:hover { transform: translateY(-2px); }
+        .qz-next.show { display: block; }
+
+        /* Result view */
+        #v-result { max-width: 480px; margin: 0 auto; padding: 20px 0 60px; }
+        .res-card {
+            background: var(--card-bg); border: 1.5px solid var(--border-color);
+            border-radius: 24px; padding: 28px 24px; margin-bottom: 16px;
+        }
+        .res-score { font-size: 3.2rem; font-weight: 900; text-align: center; letter-spacing: -2px; }
+        .res-label { font-size: 0.8rem; color: var(--text-muted); text-align: center; margin-top: 4px; }
+        .res-accuracy { display: flex; align-items: center; gap: 12px; margin: 16px 0 8px; }
+        .res-acc-bar { flex: 1; height: 8px; background: var(--border-color); border-radius: 4px; overflow: hidden; }
+        .res-acc-fill { height: 100%; background: #10b981; border-radius: 4px; transition: width 1s ease; }
+        .res-row { display: flex; justify-content: space-between; align-items: center; padding: 8px 0; border-bottom: 1px solid var(--border-color); font-size: 0.88rem; }
+        .res-row:last-child { border-bottom: none; }
+        .res-row-val { font-weight: 800; color: var(--primary-color); }
+        .res-new-record {
+            text-align: center; padding: 12px; background: linear-gradient(135deg,#f59e0b22,#facc1522);
+            border: 1.5px solid #f59e0b; border-radius: 14px; margin-bottom: 16px;
+            font-weight: 900; font-size: 0.95rem; color: #92400e;
+        }
+        [data-theme='dark'] .res-new-record { color: #fbbf24; }
+
+        .lb-row {
+            display: flex; align-items: center; gap: 10px; padding: 8px 0;
+            border-bottom: 1px solid var(--border-color); font-size: 0.85rem;
+        }
+        .lb-row:last-child { border-bottom: none; }
+        .lb-rank { width: 28px; text-align: center; font-weight: 900; font-size: 0.9rem; }
+        .lb-name { flex: 1; font-weight: 700; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+        .lb-score { font-weight: 900; color: var(--accent-color); white-space: nowrap; }
+
+        .res-btns { display: flex; flex-direction: column; gap: 10px; }
+        .res-btn {
+            padding: 14px; border-radius: 14px; border: none; font-weight: 900; font-size: 0.9rem;
+            cursor: pointer; transition: transform .15s;
+        }
+        .res-btn:hover { transform: translateY(-2px); }
+        .res-btn.primary { background: var(--accent-color); color: var(--primary-color); }
+        .res-btn.secondary { background: var(--card-bg); border: 2px solid var(--border-color); color: var(--text-muted); }
+
+        @keyframes pop { 0%{transform:scale(.85);opacity:0} 60%{transform:scale(1.08)} 100%{transform:scale(1);opacity:1} }
+        .pop { animation: pop .35s ease forwards; }
+
+        @media (max-width:600px) {
+            .cat-grid { grid-template-columns: repeat(2, 1fr); gap: 10px; }
+            .qz-hero h1 { font-size: 2rem; }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <a href="/" class="brand">VitalGuide</a>
+        <nav>
+            <a href="/" data-ko="맞춤 영양분석" data-en="Nutrition">맞춤 영양분석</a>
+            <a href="exercise.html" data-ko="운동가이드" data-en="Exercise">운동가이드</a>
+            <a href="psychology.html" data-ko="심리분석" data-en="Psychology">심리분석</a>
+            <a href="mbti.html" data-ko="MBTI 테스트" data-en="MBTI">MBTI 테스트</a>
+            <a href="quiz.html" class="active" data-ko="지식 퀴즈" data-en="Quiz">지식 퀴즈</a>
+            <a href="games.html" data-ko="미니게임" data-en="Games">미니게임</a>
+            <a href="blog.html" data-ko="건강가이드" data-en="Blog">건강가이드</a>
+            <a href="community.html" data-ko="커뮤니티" data-en="Community">커뮤니티</a>
+        </nav>
+        <div class="controls-bar">
+            <button class="theme-toggle" id="theme-toggle" aria-label="다크모드 전환"><i class="fas fa-moon"></i></button>
+            <button class="lang-btn" id="lang-btn">EN</button>
+        </div>
+    </header>
+
+    <main class="container">
+
+        <!-- ── 카테고리 선택 ── -->
+        <div id="v-cats">
+            <section class="qz-hero">
+                <h1 data-ko="🧠 지식 퀴즈" data-en="🧠 Knowledge Quiz">🧠 지식 퀴즈</h1>
+                <p data-ko="20개 분야 · 3단계 난이도 · 랭킹 배틀" data-en="20 categories · 3 difficulty levels · Ranking battle">20개 분야 · 3단계 난이도 · 랭킹 배틀</p>
+                <div style="margin-top:12px;">
+                    <a href="leaderboard.html" style="display:inline-flex;align-items:center;gap:7px;padding:10px 22px;
+                        background:linear-gradient(135deg,#f59e0b,#f97316);color:white;border-radius:20px;
+                        font-size:.85rem;font-weight:800;text-decoration:none;box-shadow:0 4px 14px rgba(245,158,11,.3);"
+                        data-ko="🏆 랭킹 보기" data-en="🏆 View Rankings">🏆 랭킹 보기</a>
+                </div>
+            </section>
+
+            <div class="cat-section-label" data-ko="🇰🇷 한국어 문제 — 엑셀 문제은행" data-en="🇰🇷 Korean Questions — Custom Bank">🇰🇷 한국어 문제 — 엑셀 문제은행</div>
+            <div class="cat-grid" id="ko-grid"></div>
+
+            <div class="cat-section-label" data-ko="🌍 세계 문제 — Open Trivia 연동" data-en="🌍 World Questions — Open Trivia API">🌍 세계 문제 — Open Trivia 연동</div>
+            <div class="cat-grid" id="api-grid"></div>
+
+            <div style="height:60px;"></div>
+        </div>
+
+        <!-- ── 난이도 선택 오버레이 ── -->
+        <div id="v-diff" style="display:none;">
+            <div class="diff-modal pop" id="diff-modal">
+                <div class="diff-modal-header">
+                    <span class="diff-modal-icon" id="dm-icon"></span>
+                    <div>
+                        <div class="diff-modal-title" id="dm-title"></div>
+                        <div style="font-size:.75rem;color:var(--text-muted);" id="dm-sub"></div>
+                    </div>
+                </div>
+                <button class="diff-btn easy"   onclick="startQuiz('easy')"  >
+                    <span>😊 쉬움 <span style="opacity:.6;font-size:.78rem;" id="dm-easy-cnt"></span></span>
+                    <span class="diff-btn-right">×1.0 · +10 XP</span>
+                </button>
+                <button class="diff-btn medium" onclick="startQuiz('medium')">
+                    <span>🤔 보통 <span style="opacity:.6;font-size:.78rem;" id="dm-med-cnt"></span></span>
+                    <span class="diff-btn-right">×1.5 · +10 XP</span>
+                </button>
+                <button class="diff-btn hard"   onclick="startQuiz('hard')"  >
+                    <span>🔥 어려움 <span style="opacity:.6;font-size:.78rem;" id="dm-hard-cnt"></span></span>
+                    <span class="diff-btn-right">×2.0 · +10 XP</span>
+                </button>
+                <button class="diff-close" onclick="closeDiff()">✕ 닫기</button>
+            </div>
+        </div>
+
+        <!-- ── 로딩 ── -->
+        <div id="v-loading" style="display:none;">
+            <div class="spin"></div>
+            <div style="font-size:.9rem;color:var(--text-muted);font-weight:700;" id="loading-msg">문제를 불러오는 중...</div>
+        </div>
+
+        <!-- ── 퀴즈 화면 ── -->
+        <div id="v-quiz" style="display:none;">
+            <div class="qz-topbar">
+                <span class="qz-cat-label" id="qz-cat-label"></span>
+                <span class="qz-score-label">⭐ <span id="qz-score">0</span></span>
+            </div>
+            <div class="qz-progress-bar"><div class="qz-progress-fill" id="qz-prog-fill"></div></div>
+            <div class="qz-progress-label" id="qz-prog-label">1 / 10</div>
+
+            <div class="qz-timer-wrap">
+                <div class="qz-timer-bar"><div class="qz-timer-fill" id="qz-timer-fill"></div></div>
+                <div class="qz-timer-label" id="qz-timer-label">⏱ 20초</div>
+            </div>
+
+            <div class="qz-card">
+                <div class="qz-question" id="qz-question"></div>
+                <div class="qz-explain" id="qz-explain"></div>
+            </div>
+
+            <div class="qz-options" id="qz-options"></div>
+            <button class="qz-next" id="qz-next" onclick="nextQuestion()"></button>
+        </div>
+
+        <!-- ── 결과 화면 ── -->
+        <div id="v-result" style="display:none;">
+            <!-- 신기록 알림은 firebase-auth.js 토스트로 표시됨 -->
+
+            <div class="res-card">
+                <div class="res-score pop" id="res-score">0</div>
+                <div class="res-label" id="res-label">점</div>
+                <div class="res-accuracy">
+                    <span style="font-size:.82rem;font-weight:700;" id="res-acc-text">0/10 정답</span>
+                    <div class="res-acc-bar"><div class="res-acc-fill" id="res-acc-fill" style="width:0%"></div></div>
+                </div>
+                <div id="res-breakdown"></div>
+            </div>
+
+            <div class="res-card" id="res-lb-card" style="display:none;">
+                <div style="font-size:.82rem;font-weight:800;color:var(--text-muted);margin-bottom:12px;">🏆 이 분야 랭킹 TOP 5</div>
+                <div id="res-lb-list"></div>
+            </div>
+
+            <div class="res-btns">
+                <button class="res-btn primary" id="res-replay" onclick="replayQuiz()">🔄 다시 도전</button>
+                <button class="res-btn secondary" onclick="showCategories()">📚 다른 분야 선택</button>
+            </div>
+        </div>
+
+    </main>
+
+    <footer style="text-align:center;padding:40px 20px;color:var(--text-muted);font-size:.8rem;border-top:1px solid var(--border-color);margin-top:60px;">
+        <p>© 2025 VitalGuide · <a href="privacy.html" style="color:var(--text-muted);">개인정보처리방침</a> · <a href="terms.html" style="color:var(--text-muted);">이용약관</a></p>
+    </footer>
+
+    <script src="quiz_ko_data.js"></script>
+    <script src="theme.js"></script>
+    <script type="module" src="firebase-auth.js"></script>
+    <script>
+    /* ================================================================
+       VitalGuide — Knowledge Quiz Engine
+       Korean data: QUIZ_KO (from quiz_ko_data.js)
+       English data: Open Trivia Database API (opentdb.com)
+    ================================================================ */
+
+    const DIFF_MULT   = { easy: 1.0, medium: 1.5, hard: 2.0 };
+    const DIFF_LABEL  = { easy: '쉬움', medium: '보통', hard: '어려움' };
+    const MAX_TIME    = 20; // seconds
+    const Q_PER_SESS  = 10;
+
+    /* ── Category definitions ─────────────────────────────────── */
+    const KO_CATS = [
+        { key:'kpolitics', label:'한국 정치', icon:'🗳️', color:'#6366f1' },
+        { key:'wpolitics', label:'세계 정치', icon:'🌐', color:'#8b5cf6' },
+        { key:'keconomy',  label:'한국 경제', icon:'💰', color:'#10b981' },
+        { key:'weconomy',  label:'세계 경제', icon:'📈', color:'#059669' },
+        { key:'ksociety',  label:'한국 사회', icon:'🏘️', color:'#f59e0b' },
+        { key:'wsociety',  label:'세계 사회', icon:'🌏', color:'#d97706' },
+        { key:'khistory',  label:'한국사',    icon:'📜', color:'#ef4444' },
+        { key:'whistory',  label:'세계사',    icon:'🏛️', color:'#dc2626' },
+        { key:'science',   label:'과학',      icon:'🔬', color:'#06b6d4' },
+        { key:'it',        label:'IT·기술',   icon:'💻', color:'#3b82f6' },
+    ];
+    const API_CATS = [
+        { key:'general',   label:'일반 상식', icon:'🎯', color:'#84cc16', apiId:9  },
+        { key:'sports',    label:'스포츠',    icon:'⚽', color:'#22c55e', apiId:21 },
+        { key:'geography', label:'지리',      icon:'🗺️', color:'#14b8a6', apiId:22 },
+        { key:'music',     label:'음악',      icon:'🎵', color:'#a855f7', apiId:12 },
+        { key:'math',      label:'수학',      icon:'➕', color:'#ec4899', apiId:19 },
+        { key:'myth',      label:'신화',      icon:'⚡', color:'#f97316', apiId:20 },
+        { key:'art',       label:'예술',      icon:'🎨', color:'#e11d48', apiId:25 },
+        { key:'film',      label:'영화',      icon:'🎬', color:'#7c3aed', apiId:11 },
+        { key:'nature',    label:'자연과학',  icon:'🌿', color:'#16a34a', apiId:17 },
+        { key:'computer',  label:'컴퓨터',    icon:'🖥️', color:'#2563eb', apiId:18 },
+    ];
+    const ALL_CATS = [...KO_CATS, ...API_CATS];
+    const CAT_MAP  = Object.fromEntries(ALL_CATS.map(c => [c.key, c]));
+
+    /* ── State ────────────────────────────────────────────────── */
+    let selCatKey   = null;
+    let selDiff     = null;
+    let questions   = [];
+    let qIdx        = 0;
+    let score       = 0;
+    let timerId     = null;
+    let timeLeft    = MAX_TIME;
+    let answered    = false;
+    let correctCount = 0;
+    let totalTimeBonus = 0;
+    let totalBase   = 0;
+
+    /* ── Utilities ────────────────────────────────────────────── */
+    function shuffle(arr) {
+        const a = [...arr];
+        for (let i = a.length-1; i > 0; i--) {
+            const j = Math.floor(Math.random()*(i+1));
+            [a[i],a[j]] = [a[j],a[i]];
+        }
+        return a;
+    }
+    function decodeHtml(html) {
+        const el = document.createElement('textarea');
+        el.innerHTML = html;
+        return el.value;
+    }
+    function show(id)   { document.getElementById(id).style.display=''; }
+    function hide(id)   { document.getElementById(id).style.display='none'; }
+    function el(id)     { return document.getElementById(id); }
+    function isApi(key) { return API_CATS.some(c => c.key === key); }
+
+    /* ── Category grid render ─────────────────────────────────── */
+    function renderCatGrid() {
+        function cardHtml(cat, isApiCat) {
+            const koData = !isApiCat && typeof QUIZ_KO !== 'undefined' && QUIZ_KO[cat.key];
+            const eCnt = koData ? koData.easy.length   : '30+';
+            const mCnt = koData ? koData.medium.length : '30+';
+            const hCnt = koData ? koData.hard.length   : '30+';
+            const engBadge = isApiCat ? `<span class="diff-tag api">ENG</span>` : '';
+            return `
+            <div class="cat-card" onclick="openDiff('${cat.key}')" tabindex="0"
+                 onkeydown="if(event.key==='Enter')openDiff('${cat.key}')">
+                <div class="cat-card-accent" style="background:${cat.color};"></div>
+                <span class="cat-card-icon">${cat.icon}</span>
+                <div class="cat-card-name">${cat.label}</div>
+                <div class="cat-card-tags">
+                    <span class="diff-tag easy">${eCnt}</span>
+                    <span class="diff-tag medium">${mCnt}</span>
+                    <span class="diff-tag hard">${hCnt}</span>
+                    ${engBadge}
+                </div>
+            </div>`;
+        }
+        el('ko-grid').innerHTML  = KO_CATS.map(c => cardHtml(c, false)).join('');
+        el('api-grid').innerHTML = API_CATS.map(c => cardHtml(c, true)).join('');
+    }
+
+    /* ── Difficulty overlay ───────────────────────────────────── */
+    function openDiff(key) {
+        selCatKey = key;
+        const cat = CAT_MAP[key];
+        el('dm-icon').textContent  = cat.icon;
+        el('dm-title').textContent = cat.label;
+        el('dm-sub').textContent   = isApi(key) ? 'Open Trivia DB · 영어 문제' : '한국어 문제은행';
+
+        const koData = !isApi(key) && typeof QUIZ_KO !== 'undefined' && QUIZ_KO[key];
+        el('dm-easy-cnt').textContent  = koData ? `(${koData.easy.length}문제)`   : '(30문제)';
+        el('dm-med-cnt').textContent   = koData ? `(${koData.medium.length}문제)` : '(30문제)';
+        el('dm-hard-cnt').textContent  = koData ? `(${koData.hard.length}문제)`   : '(30문제)';
+
+        const modal = el('diff-modal');
+        modal.classList.remove('pop');
+        void modal.offsetWidth;
+        modal.classList.add('pop');
+        show('v-diff');
+    }
+    function closeDiff() { hide('v-diff'); }
+    el('v-diff').addEventListener('click', e => { if (e.target === el('v-diff')) closeDiff(); });
+
+    /* ── Start quiz ───────────────────────────────────────────── */
+    async function startQuiz(difficulty) {
+        selDiff = difficulty;
+        hide('v-diff');
+        hide('v-cats');
+        show('v-loading');
+        el('loading-msg').textContent = '문제를 불러오는 중...';
+
+        try {
+            if (isApi(selCatKey)) {
+                questions = await fetchApiQuestions(selCatKey, difficulty);
+            } else {
+                questions = getKoQuestions(selCatKey, difficulty);
+            }
+        } catch(e) {
+            hide('v-loading');
+            show('v-cats');
+            alert('문제를 불러오지 못했습니다. 잠시 후 다시 시도해주세요.');
+            return;
+        }
+
+        if (!questions || questions.length === 0) {
+            hide('v-loading');
+            show('v-cats');
+            alert('이 난이도의 문제가 없습니다.');
+            return;
+        }
+
+        questions = shuffle(questions).slice(0, Q_PER_SESS);
+        qIdx = 0; score = 0; correctCount = 0; totalTimeBonus = 0; totalBase = 0;
+
+        hide('v-loading');
+        show('v-quiz');
+        renderQuestion();
+    }
+
+    /* ── Korean questions ─────────────────────────────────────── */
+    function getKoQuestions(key, difficulty) {
+        if (typeof QUIZ_KO === 'undefined') return [];
+        const cat = QUIZ_KO[key];
+        if (!cat) return [];
+        return (cat[difficulty] || []).map(q => ({
+            q: q.q,
+            o: q.o,
+            a: q.a,
+            e: q.e || ''
+        }));
+    }
+
+    /* ── API questions ────────────────────────────────────────── */
+    async function fetchApiQuestions(key, difficulty) {
+        const cacheKey = `qz_api_${key}_${difficulty}`;
+        const cached   = sessionStorage.getItem(cacheKey);
+        if (cached) {
+            const parsed = JSON.parse(cached);
+            if (parsed.length > 0) return shuffle(parsed);
+        }
+
+        const cat    = CAT_MAP[key];
+        const apiDiff = difficulty; // easy | medium | hard
+        const url    = `https://opentdb.com/api.php?amount=30&category=${cat.apiId}&difficulty=${apiDiff}&type=multiple`;
+
+        const res  = await fetch(url);
+        const data = await res.json();
+
+        if (data.response_code !== 0 || !data.results) {
+            // Fallback: fetch without difficulty filter
+            const res2  = await fetch(`https://opentdb.com/api.php?amount=30&category=${cat.apiId}&type=multiple`);
+            const data2 = await res2.json();
+            if (data2.response_code !== 0) throw new Error('API error');
+            const qs = data2.results.map(processApiQ);
+            sessionStorage.setItem(cacheKey, JSON.stringify(qs));
+            return qs;
+        }
+
+        const qs = data.results.map(processApiQ);
+        sessionStorage.setItem(cacheKey, JSON.stringify(qs));
+        return qs;
+    }
+
+    function processApiQ(apiQ) {
+        const opts  = shuffle([apiQ.correct_answer, ...apiQ.incorrect_answers]);
+        const ansIdx = opts.indexOf(apiQ.correct_answer);
+        return {
+            q: decodeHtml(apiQ.question),
+            o: opts.map(decodeHtml),
+            a: ansIdx,
+            e: ''
+        };
+    }
+
+    /* ── Render question ──────────────────────────────────────── */
+    function renderQuestion() {
+        answered = false;
+        timeLeft = MAX_TIME;
+
+        const cat = CAT_MAP[selCatKey];
+        const q   = questions[qIdx];
+        const pct = (qIdx / questions.length) * 100;
+
+        el('qz-cat-label').textContent = `${cat.icon} ${cat.label} · ${DIFF_LABEL[selDiff]}`;
+        el('qz-score').textContent     = score.toLocaleString();
+        el('qz-prog-fill').style.width = pct + '%';
+        el('qz-prog-label').textContent = `${qIdx+1} / ${questions.length}`;
+        el('qz-question').textContent  = q.q;
+
+        el('qz-explain').textContent = q.e;
+        el('qz-explain').className   = 'qz-explain';
+        el('qz-next').className      = 'qz-next';
+        el('qz-next').textContent    = qIdx < questions.length-1 ? '다음 문제 →' : '결과 보기 →';
+
+        // Options
+        const letters = ['A','B','C','D'];
+        el('qz-options').innerHTML = q.o.map((opt, i) => `
+            <button class="qz-opt" onclick="selectAnswer(${i})" id="qz-opt-${i}">
+                <span class="qz-opt-letter">${letters[i]}</span>
+                <span>${opt}</span>
+            </button>
+        `).join('');
+
+        // Timer
+        el('qz-timer-fill').style.transition = 'none';
+        el('qz-timer-fill').style.width = '100%';
+        el('qz-timer-fill').style.background = 'linear-gradient(90deg,#10b981,#f59e0b)';
+        el('qz-timer-label').textContent = `⏱ ${MAX_TIME}초`;
+
+        clearInterval(timerId);
+        void el('qz-timer-fill').offsetWidth;
+        el('qz-timer-fill').style.transition = 'width 1s linear';
+
+        timerId = setInterval(() => {
+            timeLeft--;
+            el('qz-timer-label').textContent = `⏱ ${timeLeft}초`;
+            el('qz-timer-fill').style.width  = (timeLeft / MAX_TIME * 100) + '%';
+            if (timeLeft <= 7)  el('qz-timer-fill').style.background = '#ef4444';
+            else if (timeLeft <= 13) el('qz-timer-fill').style.background = '#f59e0b';
+            if (timeLeft <= 0) { clearInterval(timerId); timeExpired(); }
+        }, 1000);
+    }
+
+    /* ── Answer logic ─────────────────────────────────────────── */
+    function selectAnswer(idx) {
+        if (answered) return;
+        answered = true;
+        clearInterval(timerId);
+
+        const q        = questions[qIdx];
+        const isRight  = idx === q.a;
+        const mult     = DIFF_MULT[selDiff];
+        const timeBonus = isRight ? Math.floor((timeLeft / MAX_TIME) * 50 * mult) : 0;
+        const base      = isRight ? Math.round(100 * mult) : 0;
+
+        score += base + timeBonus;
+        if (isRight) { correctCount++; totalBase += base; totalTimeBonus += timeBonus; }
+
+        el('qz-score').textContent = score.toLocaleString();
+
+        // Highlight options
+        const opts = el('qz-options').querySelectorAll('.qz-opt');
+        opts.forEach((btn, i) => {
+            btn.disabled = true;
+            if (i === q.a) btn.classList.add('correct');
+            else if (i === idx && !isRight) btn.classList.add('wrong');
+        });
+
+        if (q.e) el('qz-explain').classList.add('show');
+        el('qz-next').classList.add('show');
+    }
+
+    function timeExpired() {
+        if (answered) return;
+        answered = true;
+        const q = questions[qIdx];
+        const opts = el('qz-options').querySelectorAll('.qz-opt');
+        opts.forEach((btn, i) => {
+            btn.disabled = true;
+            if (i === q.a) btn.classList.add('correct');
+        });
+        if (q.e) el('qz-explain').classList.add('show');
+        el('qz-next').classList.add('show');
+        el('qz-timer-label').textContent = '⏱ 시간 초과!';
+    }
+
+    function nextQuestion() {
+        qIdx++;
+        if (qIdx >= questions.length) { showResult(); return; }
+        renderQuestion();
+    }
+
+    /* ── Show categories ──────────────────────────────────────── */
+    function showCategories() {
+        clearInterval(timerId);
+        hide('v-quiz'); hide('v-result'); hide('v-loading'); hide('v-diff');
+        show('v-cats');
+    }
+    window.showCategories = showCategories;
+
+    function replayQuiz() { startQuiz(selDiff); }
+    window.replayQuiz = replayQuiz;
+
+    /* ── Result ───────────────────────────────────────────────── */
+    async function showResult() {
+        clearInterval(timerId);
+        hide('v-quiz');
+        show('v-result');
+
+        const accPct = Math.round(correctCount / questions.length * 100);
+
+        // Animate score count-up
+        let displayed = 0;
+        const target  = score;
+        const step    = Math.max(1, Math.round(target / 40));
+        const counter = setInterval(() => {
+            displayed = Math.min(displayed + step, target);
+            el('res-score').textContent = displayed.toLocaleString();
+            if (displayed >= target) clearInterval(counter);
+        }, 30);
+
+        el('res-label').textContent   = `점 · ${correctCount}/${questions.length} 정답 (${accPct}%)`;
+        el('res-acc-text').textContent = `${correctCount}/${questions.length} 정답`;
+        setTimeout(() => { el('res-acc-fill').style.width = accPct + '%'; }, 100);
+
+        const mult = DIFF_MULT[selDiff];
+        el('res-breakdown').innerHTML = [
+            { label: '정답 기본점수', val: totalBase.toLocaleString() + '점' },
+            { label: '속도 보너스',   val: '+' + totalTimeBonus.toLocaleString() + '점' },
+            { label: '난이도 배율',   val: `×${mult} (${DIFF_LABEL[selDiff]})` },
+            { label: '최종 점수',     val: score.toLocaleString() + '점', bold: true },
+        ].map(r => `
+            <div class="res-row">
+                <span style="color:var(--text-muted);">${r.label}</span>
+                <span class="res-row-val" style="${r.bold?'color:var(--accent-color);font-size:1.1rem;':''}">
+                    ${r.val}
+                </span>
+            </div>`).join('');
+
+        el('res-replay').textContent = `🔄 ${CAT_MAP[selCatKey].label} 다시 도전`;
+
+        // Save score (toast notification handled by firebase-auth.js)
+        if (score > 0 && window.vgSaveGame) {
+            try { await window.vgSaveGame('quiz_' + selCatKey, score); } catch(e) {}
+        }
+
+        // Load leaderboard
+        loadResultLB();
+    }
+
+    async function loadResultLB() {
+        if (!window.vgGetLeaderboard) return;
+        try {
+            const top = await window.vgGetLeaderboard('quiz_' + selCatKey);
+            if (!top || top.length === 0) return;
+            const medals = ['🥇','🥈','🥉'];
+            el('res-lb-list').innerHTML = top.slice(0,5).map((e,i) => `
+                <div class="lb-row">
+                    <span class="lb-rank">${i<3?medals[i]:(i+1)+'위'}</span>
+                    <span class="lb-name">${e.name || '익명'}</span>
+                    <span class="lb-score">${(e.score||0).toLocaleString()}점</span>
+                </div>`).join('');
+            show('res-lb-card');
+        } catch(e) {}
+    }
+
+    /* ── Init ─────────────────────────────────────────────────── */
+    renderCatGrid();
+
+    // URL deep-link: ?cat=khistory&diff=hard
+    (function checkUrlParams() {
+        const p    = new URLSearchParams(location.search);
+        const cat  = p.get('cat');
+        const diff = p.get('diff');
+        if (cat && CAT_MAP[cat] && diff && DIFF_MULT[diff]) {
+            selCatKey = cat;
+            startQuiz(diff);
+        }
+    })();
+    </script>
+</body>
+</html>

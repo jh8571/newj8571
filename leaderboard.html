@@ -64,10 +64,10 @@
             <a href="exercise.html" data-ko="운동가이드"    data-en="Exercise">운동가이드</a>
             <a href="psychology.html" data-ko="심리분석"   data-en="Psychology">심리분석</a>
             <a href="mbti.html"     data-ko="MBTI 테스트"  data-en="MBTI Test">MBTI 테스트</a>
-            <a href="health-type-test.html" data-ko="건강유형테스트" data-en="Health Type">건강유형테스트</a>
-            <a href="nutrient-quiz.html" data-ko="영양소 퀴즈" data-en="Nutrient Quiz">영양소 퀴즈</a>
+            <a href="quiz.html"     data-ko="지식 퀴즈"    data-en="Quiz">지식 퀴즈</a>
+            <a href="games.html"    data-ko="미니게임"      data-en="Games">미니게임</a>
             <a href="blog.html"     data-ko="건강가이드"   data-en="Health Blog">건강가이드</a>
-                    <a href="community.html" data-ko="커뮤니티" data-en="Community">커뮤니티</a>
+            <a href="community.html" data-ko="커뮤니티" data-en="Community">커뮤니티</a>
         </nav>
     </header>
 
@@ -86,15 +86,17 @@
         <!-- Tabs -->
         <div style="display:flex;gap:6px;background:var(--card-bg);border-radius:16px;
                     padding:5px;border:1px solid var(--border-color);margin-bottom:24px;">
-            <button id="tb-lv" class="tab-btn on"  onclick="switchTab('lv')" data-ko="🌟 레벨 랭킹"  data-en="🌟 Level">🌟 레벨 랭킹</button>
-            <button id="tb-tt" class="tab-btn off" onclick="switchTab('tt')" data-ko="🎮 종합 점수"  data-en="🎮 Total">🎮 종합 점수</button>
-            <button id="tb-gm" class="tab-btn off" onclick="switchTab('gm')" data-ko="🕹️ 게임별"    data-en="🕹️ Games">🕹️ 게임별</button>
+            <button id="tb-lv" class="tab-btn on"  onclick="switchTab('lv')" data-ko="🌟 레벨"    data-en="🌟 Level">🌟 레벨 랭킹</button>
+            <button id="tb-tt" class="tab-btn off" onclick="switchTab('tt')" data-ko="🎮 종합"    data-en="🎮 Total">🎮 종합 점수</button>
+            <button id="tb-gm" class="tab-btn off" onclick="switchTab('gm')" data-ko="🕹️ 게임별" data-en="🕹️ Games">🕹️ 게임별</button>
+            <button id="tb-qz" class="tab-btn off" onclick="switchTab('qz')" data-ko="🧠 퀴즈별" data-en="🧠 Quiz">🧠 퀴즈별</button>
         </div>
 
         <!-- Panels -->
         <div id="pn-lv"><div id="lv-list" style="display:flex;flex-direction:column;gap:8px;"></div></div>
         <div id="pn-tt" style="display:none;"><div id="tt-list" style="display:flex;flex-direction:column;gap:8px;"></div></div>
         <div id="pn-gm" style="display:none;"><div id="gm-grid" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(285px,1fr));gap:14px;"></div></div>
+        <div id="pn-qz" style="display:none;"><div id="qz-grid" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(285px,1fr));gap:14px;"></div></div>
 
     </main>
 
@@ -103,7 +105,7 @@
         import { getLeaderboard, getLevelInfo } from './firebase-auth.js';
 
         /* ── tab ─────────────────────────────────────────────────── */
-        const TABS = ['lv','tt','gm'];
+        const TABS = ['lv','tt','gm','qz'];
         window.switchTab = function(tab) {
             TABS.forEach(t => {
                 document.getElementById('pn-'+t).style.display = t===tab ? '' : 'none';
@@ -193,13 +195,60 @@
                ${skeletons(3).replace(/height:68px/g,'height:40px')}
              </div>`).join('');
 
+        /* ── quiz categories ─────────────────────────────────────── */
+        const QUIZ_CATS = [
+            {k:'quiz_kpolitics', ko:'한국 정치', icon:'🗳️'},
+            {k:'quiz_wpolitics', ko:'세계 정치', icon:'🌐'},
+            {k:'quiz_keconomy',  ko:'한국 경제', icon:'💰'},
+            {k:'quiz_weconomy',  ko:'세계 경제', icon:'📈'},
+            {k:'quiz_ksociety',  ko:'한국 사회', icon:'🏘️'},
+            {k:'quiz_wsociety',  ko:'세계 사회', icon:'🌏'},
+            {k:'quiz_khistory',  ko:'한국사',    icon:'📜'},
+            {k:'quiz_whistory',  ko:'세계사',    icon:'🏛️'},
+            {k:'quiz_science',   ko:'과학',      icon:'🔬'},
+            {k:'quiz_it',        ko:'IT·기술',   icon:'💻'},
+            {k:'quiz_general',   ko:'일반 상식', icon:'🎯'},
+            {k:'quiz_sports',    ko:'스포츠',    icon:'⚽'},
+            {k:'quiz_geography', ko:'지리',      icon:'🗺️'},
+            {k:'quiz_music',     ko:'음악',      icon:'🎵'},
+            {k:'quiz_math',      ko:'수학',      icon:'➕'},
+            {k:'quiz_myth',      ko:'신화',      icon:'⚡'},
+            {k:'quiz_art',       ko:'예술',      icon:'🎨'},
+            {k:'quiz_film',      ko:'영화',      icon:'🎬'},
+            {k:'quiz_nature',    ko:'자연과학',  icon:'🌿'},
+            {k:'quiz_computer',  ko:'컴퓨터',    icon:'🖥️'},
+        ];
+
+        function quizGameCardHtml(g, top5) {
+            const catKey = g.k.replace('quiz_','');
+            const rows = top5.length ? top5.map((e, i) => `
+                <div class="grank-row" ${e.uid?`onclick="window.vgShowUserProfile&&window.vgShowUserProfile('${e.uid}')" style="cursor:pointer;" title="프로필 보기"`:''}>
+                    <span style="font-size:${i<3?'1.05rem':'.75rem'};min-width:26px;text-align:center;
+                          ${i>=3?'color:var(--text-muted);font-weight:800;':''}">${i<3?MEDALS_SMALL[i]:(i+1)+'위'}</span>
+                    ${avHtml(e, 26)}
+                    <div style="flex:1;min-width:0;font-size:.82rem;font-weight:700;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">${esc(e.name)}</div>
+                    <div style="font-size:.82rem;font-weight:900;color:var(--primary-color);white-space:nowrap;">${(e.score||0).toLocaleString()}점</div>
+                </div>`).join('')
+            : `<div style="text-align:center;padding:18px 0;color:var(--text-muted);font-size:.8rem;">아직 기록 없음</div>`;
+            return `<div class="game-card">
+                <div style="display:flex;align-items:center;gap:8px;margin-bottom:12px;padding-bottom:10px;border-bottom:1px solid var(--border-color);">
+                    <span style="font-size:1.5rem;">${g.icon}</span>
+                    <span style="font-weight:900;font-size:.93rem;">${g.ko}</span>
+                    <a href="quiz.html?cat=${catKey}" style="margin-left:auto;font-size:.72rem;font-weight:800;
+                       color:var(--accent-color);text-decoration:none;padding:3px 8px;border:1px solid var(--accent-color);border-radius:8px;">도전 →</a>
+                </div>
+                ${rows}
+            </div>`;
+        }
+
         /* ── load & render ───────────────────────────────────────── */
         async function loadAll() {
-            const [lvData, ttData, ...gameData] = await Promise.all([
+            const [lvData, ttData, ...rest] = await Promise.all([
                 getLeaderboard('_xp'),
                 getLeaderboard('_total'),
                 ...GAMES.map(g => getLeaderboard(g.k)),
             ]);
+            const gameData = rest;
 
             /* level ranking */
             document.getElementById('lv-list').innerHTML = lvData.length
@@ -233,6 +282,37 @@
                     ${rows}
                 </div>`;
             }).join('');
+        }
+
+        /* ── load quiz rankings (lazy, on tab click) ─────────────── */
+        let quizLoaded = false;
+        const origSwitch = window.switchTab;
+        window.switchTab = function(tab) {
+            origSwitch(tab);
+            if (tab === 'qz' && !quizLoaded) {
+                quizLoaded = true;
+                loadQuizRankings();
+            }
+        };
+
+        async function loadQuizRankings() {
+            const grid = document.getElementById('qz-grid');
+            grid.innerHTML = QUIZ_CATS.map(g =>
+                `<div class="game-card" id="qzc-${g.k}">
+                    <div style="display:flex;align-items:center;gap:8px;margin-bottom:10px;">
+                        <span style="font-size:1.5rem;">${g.icon}</span>
+                        <span style="font-weight:900;font-size:.93rem;">${g.ko}</span>
+                    </div>
+                    ${skeletons(3).replace(/height:68px/g,'height:40px')}
+                </div>`).join('');
+
+            for (const g of QUIZ_CATS) {
+                try {
+                    const top5 = (await getLeaderboard(g.k)).slice(0, 5);
+                    const card = document.getElementById('qzc-' + g.k);
+                    if (card) card.outerHTML = quizGameCardHtml(g, top5);
+                } catch(e) {}
+            }
         }
 
         loadAll().catch(err => {
