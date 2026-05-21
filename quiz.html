@@ -208,21 +208,23 @@
 </head>
 <body>
     <header>
-        <a href="/" class="brand">VitalGuide</a>
+        <div class="container header-flex">
+            <a href="/" class="logo" data-ko="VitalGuide" data-en="VitalGuide">VitalGuide</a>
+            <div class="controls-bar">
+                <button id="lang-toggle" class="control-btn">EN</button>
+                <button id="theme-toggle" class="control-btn"><i class="fas fa-moon"></i></button>
+            </div>
+        </div>
         <nav>
-            <a href="/" data-ko="맞춤 영양분석" data-en="Nutrition">맞춤 영양분석</a>
+            <a href="/" data-ko="AI 맞춤영양" data-en="AI Nutrition">맞춤 영양분석</a>
             <a href="exercise.html" data-ko="운동가이드" data-en="Exercise">운동가이드</a>
             <a href="psychology.html" data-ko="심리분석" data-en="Psychology">심리분석</a>
-            <a href="mbti.html" data-ko="MBTI 테스트" data-en="MBTI">MBTI 테스트</a>
+            <a href="mbti.html" data-ko="MBTI 테스트" data-en="MBTI Test">MBTI 테스트</a>
             <a href="quiz.html" class="active" data-ko="지식 퀴즈" data-en="Quiz">지식 퀴즈</a>
-            <a href="games.html" data-ko="미니게임" data-en="Games">미니게임</a>
-            <a href="blog.html" data-ko="건강가이드" data-en="Blog">건강가이드</a>
+            <a href="games.html" data-ko="미니게임" data-en="Mini Games">미니게임</a>
+            <a href="blog.html" data-ko="건강가이드" data-en="Health Blog">건강가이드</a>
             <a href="community.html" data-ko="커뮤니티" data-en="Community">커뮤니티</a>
         </nav>
-        <div class="controls-bar">
-            <button class="theme-toggle" id="theme-toggle" aria-label="다크모드 전환"><i class="fas fa-moon"></i></button>
-            <button class="lang-btn" id="lang-btn">EN</button>
-        </div>
     </header>
 
     <main class="container">
