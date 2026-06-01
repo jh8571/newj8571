@@ -4,67 +4,67 @@
   <!-- Main pages -->
   <url>
     <loc>https://vi7al.com/</loc>
-    <lastmod>2026-05-20</lastmod>
+    <lastmod>2026-06-01</lastmod>
     <changefreq>daily</changefreq>
     <priority>1.0</priority>
   </url>
   <url>
     <loc>https://vi7al.com/blog.html</loc>
-    <lastmod>2026-05-20</lastmod>
+    <lastmod>2026-06-01</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
     <loc>https://vi7al.com/exercise.html</loc>
-    <lastmod>2026-05-20</lastmod>
+    <lastmod>2026-06-01</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://vi7al.com/psychology.html</loc>
-    <lastmod>2026-05-20</lastmod>
+    <lastmod>2026-06-01</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://vi7al.com/mbti.html</loc>
-    <lastmod>2026-05-20</lastmod>
+    <lastmod>2026-06-01</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://vi7al.com/food-search.html</loc>
-    <lastmod>2026-05-20</lastmod>
+    <lastmod>2026-06-01</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.85</priority>
   </url>
   <url>
     <loc>https://vi7al.com/recipe-finder.html</loc>
-    <lastmod>2026-05-20</lastmod>
+    <lastmod>2026-06-01</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.85</priority>
   </url>
   <url>
     <loc>https://vi7al.com/workout-db.html</loc>
-    <lastmod>2026-05-20</lastmod>
+    <lastmod>2026-06-01</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.82</priority>
   </url>
   <url>
     <loc>https://vi7al.com/nutrient-quiz.html</loc>
-    <lastmod>2026-05-20</lastmod>
+    <lastmod>2026-06-01</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
     <loc>https://vi7al.com/article-health-checkup.html</loc>
-    <lastmod>2026-05-20</lastmod>
+    <lastmod>2026-06-01</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.92</priority>
   </url>
   <url>
     <loc>https://vi7al.com/article-thyroid.html</loc>
-    <lastmod>2026-05-20</lastmod>
+    <lastmod>2026-06-01</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.90</priority>
   </url>
@@ -107,146 +107,165 @@
   <!-- Utility pages -->
   <url>
     <loc>https://vi7al.com/about.html</loc>
-    <lastmod>2026-05-20</lastmod>
+    <lastmod>2026-06-01</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://vi7al.com/contact.html</loc>
-    <lastmod>2026-05-20</lastmod>
+    <lastmod>2026-06-01</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://vi7al.com/privacy.html</loc>
-    <lastmod>2026-05-20</lastmod>
+    <lastmod>2026-06-01</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.4</priority>
   </url>
   <url>
     <loc>https://vi7al.com/terms.html</loc>
-    <lastmod>2026-05-20</lastmod>
+    <lastmod>2026-06-01</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.4</priority>
+  </url>
+  <!-- New tools and articles 2026-06 -->
+  <url>
+    <loc>https://vi7al.com/supplement-interaction-checker.html</loc>
+    <lastmod>2026-06-01</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.95</priority>
+  </url>
+  <url>
+    <loc>https://vi7al.com/article-kfood-health.html</loc>
+    <lastmod>2026-06-01</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.92</priority>
+  </url>
+  <url>
+    <loc>https://vi7al.com/article-nutrition-myths.html</loc>
+    <lastmod>2026-06-01</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.90</priority>
   </url>
   <!-- Blog articles — 20 total -->
   <url>
     <loc>https://vi7al.com/article-omega3.html</loc>
-    <lastmod>2026-05-20</lastmod>
+    <lastmod>2026-06-01</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.85</priority>
   </url>
   <url>
     <loc>https://vi7al.com/article-vitaminD.html</loc>
-    <lastmod>2026-05-20</lastmod>
+    <lastmod>2026-06-01</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.85</priority>
   </url>
   <url>
     <loc>https://vi7al.com/article-magnesium.html</loc>
-    <lastmod>2026-05-20</lastmod>
+    <lastmod>2026-06-01</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.85</priority>
   </url>
   <url>
     <loc>https://vi7al.com/article-sleep.html</loc>
-    <lastmod>2026-05-20</lastmod>
+    <lastmod>2026-06-01</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.85</priority>
   </url>
   <url>
     <loc>https://vi7al.com/article-burnout.html</loc>
-    <lastmod>2026-05-20</lastmod>
+    <lastmod>2026-06-01</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.85</priority>
   </url>
   <url>
     <loc>https://vi7al.com/article-supplements-time.html</loc>
-    <lastmod>2026-05-20</lastmod>
+    <lastmod>2026-06-01</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.85</priority>
   </url>
   <url>
     <loc>https://vi7al.com/article-absorption.html</loc>
-    <lastmod>2026-05-20</lastmod>
+    <lastmod>2026-06-01</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.85</priority>
   </url>
   <url>
     <loc>https://vi7al.com/article-stress.html</loc>
-    <lastmod>2026-05-20</lastmod>
+    <lastmod>2026-06-01</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.85</priority>
   </url>
   <url>
     <loc>https://vi7al.com/article-microbiome.html</loc>
-    <lastmod>2026-05-20</lastmod>
+    <lastmod>2026-06-01</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.85</priority>
   </url>
   <url>
     <loc>https://vi7al.com/article-nutrients-40s.html</loc>
-    <lastmod>2026-05-20</lastmod>
+    <lastmod>2026-06-01</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.85</priority>
   </url>
   <url>
     <loc>https://vi7al.com/article-exercise-nutrition.html</loc>
-    <lastmod>2026-05-20</lastmod>
+    <lastmod>2026-06-01</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.85</priority>
   </url>
   <url>
     <loc>https://vi7al.com/article-lutein.html</loc>
-    <lastmod>2026-05-20</lastmod>
+    <lastmod>2026-06-01</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.85</priority>
   </url>
   <url>
     <loc>https://vi7al.com/article-cortisol.html</loc>
-    <lastmod>2026-05-20</lastmod>
+    <lastmod>2026-06-01</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.85</priority>
   </url>
   <url>
     <loc>https://vi7al.com/article-immunity.html</loc>
-    <lastmod>2026-05-20</lastmod>
+    <lastmod>2026-06-01</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.85</priority>
   </url>
   <url>
     <loc>https://vi7al.com/article-hair-loss.html</loc>
-    <lastmod>2026-05-20</lastmod>
+    <lastmod>2026-06-01</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.85</priority>
   </url>
   <url>
     <loc>https://vi7al.com/article-blood-sugar.html</loc>
-    <lastmod>2026-05-20</lastmod>
+    <lastmod>2026-06-01</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.85</priority>
   </url>
   <url>
     <loc>https://vi7al.com/article-antioxidant.html</loc>
-    <lastmod>2026-05-20</lastmod>
+    <lastmod>2026-06-01</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.85</priority>
   </url>
   <url>
     <loc>https://vi7al.com/article-sleep-nutrients.html</loc>
-    <lastmod>2026-05-20</lastmod>
+    <lastmod>2026-06-01</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.85</priority>
   </url>
   <url>
     <loc>https://vi7al.com/article-vitaminb12.html</loc>
-    <lastmod>2026-05-20</lastmod>
+    <lastmod>2026-06-01</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.85</priority>
   </url>
   <url>
     <loc>https://vi7al.com/article-protein.html</loc>
-    <lastmod>2026-05-20</lastmod>
+    <lastmod>2026-06-01</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.85</priority>
   </url>
