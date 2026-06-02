@@ -117,6 +117,25 @@
     <changefreq>yearly</changefreq>
     <priority>0.4</priority>
   </url>
+  <!-- KILLER tools 2026-06-02 (highest priority for search) -->
+  <url>
+    <loc>https://vi7al.com/food-safety-check.html</loc>
+    <lastmod>2026-06-02</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>1.0</priority>
+  </url>
+  <url>
+    <loc>https://vi7al.com/symptom-cause-finder.html</loc>
+    <lastmod>2026-06-02</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>1.0</priority>
+  </url>
+  <url>
+    <loc>https://vi7al.com/korean-health-stats.html</loc>
+    <lastmod>2026-06-02</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.98</priority>
+  </url>
   <!-- New tools and articles 2026-06 -->
   <url>
     <loc>https://vi7al.com/daily-checkin.html</loc>

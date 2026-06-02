@@ -1,0 +1,741 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-P6CTZY2283"></script>
+    <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-P6CTZY2283');</script>
+    <meta name="google-adsense-account" content="ca-pub-9103697866666926">
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9103697866666926" crossorigin="anonymous"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>이거 먹어도 돼? — 임신·당뇨·고혈압·신장 등 상황별 음식·약 안전성 체커 | VitalGuide</title>
+    <meta name="description" content="임신 중 커피? 당뇨 환자가 고구마? 고혈압인데 라면? 100+ 음식·약·영양제의 상황별 안전성을 즉시 확인하세요. 의학 가이드라인 기반.">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="icon" href="favicon.svg" type="image/svg+xml">
+    <link rel="canonical" href="https://vi7al.com/food-safety-check.html">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://vi7al.com/food-safety-check.html">
+    <meta property="og:title" content="이거 먹어도 돼? — 상황별 음식·약 안전성 체커">
+    <meta property="og:description" content="임신·당뇨·고혈압 등 상황에 따라 이 음식이 안전한지 즉시 확인하세요.">
+    <meta property="og:image" content="https://vi7al.com/og-image.png">
+    <meta property="og:site_name" content="VitalGuide">
+    <script type="application/ld+json">
+    {"@context":"https://schema.org","@type":"WebApplication","name":"이거 먹어도 돼?","description":"상황별 음식·약·영양제 안전성 즉시 체크","url":"https://vi7al.com/food-safety-check.html","applicationCategory":"HealthApplication","operatingSystem":"All","offers":{"@type":"Offer","price":"0","priceCurrency":"KRW"},"provider":{"@type":"Organization","name":"VitalGuide","url":"https://vi7al.com/"}}
+    </script>
+    <style>
+        .condition-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(130px, 1fr)); gap: 10px; margin: 18px 0 24px; }
+        .condition-btn { background: var(--card-bg); border: 2px solid var(--border-color); border-radius: 14px; padding: 16px 8px; cursor: pointer; text-align: center; transition: all 0.15s; user-select: none; }
+        .condition-btn:hover { border-color: var(--primary-color); }
+        .condition-btn.selected { background: var(--primary-color); color: white; border-color: var(--primary-color); }
+        .condition-btn .emoji { font-size: 1.7rem; display: block; margin-bottom: 4px; }
+        .condition-btn .lbl { font-size: 0.82rem; font-weight: 700; }
+        .search-box { width: 100%; padding: 16px 22px; border: 2px solid var(--border-color); border-radius: 14px; font-size: 1rem; background: var(--bg-color); color: var(--text-color); }
+        .search-box:focus { border-color: var(--primary-color); outline: none; }
+        .category-tabs { display: flex; flex-wrap: wrap; gap: 8px; margin: 16px 0; }
+        .category-tab { padding: 8px 16px; border-radius: 99px; background: var(--card-bg); border: 1.5px solid var(--border-color); cursor: pointer; font-size: 0.85rem; font-weight: 700; color: var(--text-color); user-select: none; transition: all 0.15s; }
+        .category-tab:hover { border-color: var(--primary-color); }
+        .category-tab.active { background: var(--primary-color); color: white; border-color: var(--primary-color); }
+        .item-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 10px; }
+        .item-card { background: var(--card-bg); border: 1.5px solid var(--border-color); border-radius: 12px; padding: 14px 12px; cursor: pointer; text-align: center; transition: all 0.15s; position: relative; }
+        .item-card:hover { transform: translateY(-2px); border-color: var(--primary-color); box-shadow: 0 6px 14px rgba(0,0,0,0.06); }
+        .item-card .emoji { font-size: 1.8rem; display: block; margin-bottom: 4px; }
+        .item-card .name { font-size: 0.85rem; font-weight: 700; color: var(--text-color); }
+        .item-card .verdict-dot { position: absolute; top: 8px; right: 8px; width: 12px; height: 12px; border-radius: 50%; }
+        .verdict-card { border-radius: 22px; padding: 32px 36px; margin: 24px 0; border-left: 8px solid; }
+        .v-safe { background: linear-gradient(135deg, #d1fae5, #ecfdf5); border-left-color: #059669; }
+        .v-caution { background: linear-gradient(135deg, #fef3c7, #fffbeb); border-left-color: #d97706; }
+        .v-danger { background: linear-gradient(135deg, #fee2e2, #fef2f2); border-left-color: #dc2626; }
+        .v-neutral { background: linear-gradient(135deg, #e0f2fe, #f0f9ff); border-left-color: #0284c7; }
+        .verdict-icon { font-size: 2.6rem; line-height: 1; }
+        .verdict-label { font-size: 1.3rem; font-weight: 900; margin: 0 0 4px; }
+        .verdict-reason { background: rgba(255,255,255,0.6); border-radius: 14px; padding: 16px 20px; margin: 16px 0; line-height: 1.8; font-size: 0.95rem; color: #111; }
+        .alt-pill { display: inline-block; padding: 6px 14px; background: rgba(255,255,255,0.85); border-radius: 99px; font-size: 0.85rem; font-weight: 700; margin: 4px 4px 0 0; cursor: pointer; color: #111; }
+        .alt-pill:hover { background: white; }
+        .related-section { margin-top: 28px; }
+        #condition-needed { background: linear-gradient(135deg, #fef3c7, #fde68a); border-radius: 14px; padding: 16px 20px; text-align: center; color: #78350f; font-weight: 700; }
+    </style>
+</head>
+<body data-lang="ko">
+    <header>
+        <div class="container header-flex">
+            <a href="/" class="logo">VitalGuide</a>
+            <div class="controls-bar">
+                <button id="lang-toggle" class="control-btn">EN</button>
+                <button id="theme-toggle" class="control-btn"><i class="fas fa-moon"></i></button>
+            </div>
+        </div>
+        <nav>
+            <a href="/">맞춤 영양분석</a>
+            <a href="exercise.html">운동가이드</a>
+            <a href="health-type-test.html">건강유형테스트</a>
+            <a href="nutrient-quiz.html">영양소 퀴즈</a>
+            <a href="blog.html">건강가이드</a>
+        </nav>
+    </header>
+
+    <main class="container" style="max-width: 920px;">
+        <nav style="margin: 30px 0 0; font-size: 0.85rem; color: var(--text-muted);">
+            <a href="/" style="color: var(--text-muted); text-decoration: none;">홈</a>
+            <span style="margin: 0 8px;">›</span>
+            <span>이거 먹어도 돼?</span>
+        </nav>
+
+        <div class="luxury-report-card" style="margin-top: 24px; padding: 40px;">
+            <div class="report-badge" style="background: #16a34a; margin-bottom: 14px;">Safety Checker</div>
+            <h1 style="font-size: 2rem; line-height: 1.4; margin-bottom: 12px;">이거 먹어도 돼?</h1>
+            <p style="color: var(--text-muted); line-height: 1.85; margin: 0 0 6px;">임신, 당뇨, 고혈압, 신장질환 같은 상황에서 <strong>이 음식·약·영양제를 먹어도 되는지</strong> 즉시 확인하세요. 의학 가이드라인 기반 100+ 항목 데이터베이스.</p>
+            <p style="font-size: 0.82rem; color: var(--text-muted); margin: 0;"><i class="fas fa-info-circle"></i> 일반적 가이드일 뿐, 본인의 정확한 상태는 담당 의사가 가장 잘 압니다.</p>
+        </div>
+
+        <!-- Step 1: Condition -->
+        <h2 style="font-size: 1.15rem; margin: 30px 0 12px;">1️⃣ 본인 상황을 선택하세요 <span style="font-size:0.78rem; color:var(--text-muted); font-weight:600;">(복수 선택 가능)</span></h2>
+        <div class="condition-grid" id="condition-grid"></div>
+
+        <!-- Step 2: Search/select item -->
+        <h2 style="font-size: 1.15rem; margin: 30px 0 12px;">2️⃣ 궁금한 음식·약·영양제</h2>
+        <input type="text" class="search-box" id="search-input" placeholder="🔍 음식 이름을 입력하세요 (예: 커피, 김치, 바나나, 타이레놀, 오메가3)" autocomplete="off">
+
+        <div class="category-tabs" id="category-tabs">
+            <div class="category-tab active" data-cat="all">전체</div>
+            <div class="category-tab" data-cat="korean">🍲 한식</div>
+            <div class="category-tab" data-cat="fruit">🍎 과일</div>
+            <div class="category-tab" data-cat="veggie">🥬 채소</div>
+            <div class="category-tab" data-cat="protein">🥩 단백질</div>
+            <div class="category-tab" data-cat="seafood">🐟 해산물</div>
+            <div class="category-tab" data-cat="beverage">☕ 음료</div>
+            <div class="category-tab" data-cat="alcohol">🍺 술</div>
+            <div class="category-tab" data-cat="supplement">💊 영양제</div>
+            <div class="category-tab" data-cat="drug">💉 의약품</div>
+            <div class="category-tab" data-cat="snack">🍪 간식</div>
+        </div>
+
+        <div class="item-grid" id="item-grid"></div>
+
+        <!-- Result section -->
+        <div id="result-section"></div>
+
+        <!-- Education -->
+        <div class="luxury-report-card" style="margin: 36px 0; padding: 38px;">
+            <h2 style="font-size: 1.3rem; font-weight: 900; margin-bottom: 16px; color: var(--primary-color);">이 도구가 다루는 10가지 상황</h2>
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 16px;">
+                <div><strong>🤰 임신·모유수유</strong><p style="color:var(--text-muted); font-size:0.85rem; line-height:1.7; margin: 4px 0 0;">카페인·생선·약물 등 태아·아기에게 영향이 있는 항목 안내</p></div>
+                <div><strong>🩸 당뇨 (1형·2형·전단계)</strong><p style="color:var(--text-muted); font-size:0.85rem; line-height:1.7; margin: 4px 0 0;">혈당 스파이크 위험과 GI 지수 기반 판정</p></div>
+                <div><strong>❤️ 고혈압</strong><p style="color:var(--text-muted); font-size:0.85rem; line-height:1.7; margin: 4px 0 0;">나트륨·감초·카페인 등 혈압 영향 항목</p></div>
+                <div><strong>🟡 신장질환·만성신부전</strong><p style="color:var(--text-muted); font-size:0.85rem; line-height:1.7; margin: 4px 0 0;">칼륨·인·단백질 부담 항목</p></div>
+                <div><strong>🦋 갑상선 (저하·항진)</strong><p style="color:var(--text-muted); font-size:0.85rem; line-height:1.7; margin: 4px 0 0;">요오드·콩·십자화과 채소 영향</p></div>
+                <div><strong>🎯 통풍 (요산 높음)</strong><p style="color:var(--text-muted); font-size:0.85rem; line-height:1.7; margin: 4px 0 0;">퓨린 함량 기반 안전성</p></div>
+                <div><strong>🟣 위염·역류성식도염</strong><p style="color:var(--text-muted); font-size:0.85rem; line-height:1.7; margin: 4px 0 0;">위 점막 자극 항목</p></div>
+                <div><strong>🟠 고콜레스테롤</strong><p style="color:var(--text-muted); font-size:0.85rem; line-height:1.7; margin: 4px 0 0;">포화·트랜스지방, LDL 영향</p></div>
+                <div><strong>📉 다이어트 중</strong><p style="color:var(--text-muted); font-size:0.85rem; line-height:1.7; margin: 4px 0 0;">칼로리·당분·포만감 기반 추천</p></div>
+                <div><strong>💊 약물 복용 중</strong><p style="color:var(--text-muted); font-size:0.85rem; line-height:1.7; margin: 4px 0 0;">와파린·스타틴·갑상선약 등 상호작용</p></div>
+            </div>
+        </div>
+
+        <div style="background: linear-gradient(135deg, #fef3c7, #fde68a); border-radius: 16px; padding: 22px 26px; margin-bottom: 30px; border-left: 4px solid #d97706;">
+            <strong style="color: #78350f; font-size: 0.95rem;">⚠️ 중요 안내</strong>
+            <p style="margin: 8px 0 0; line-height: 1.8; color: #92400e; font-size: 0.88rem;">본 도구는 일반 가이드라인 기반 정보 제공용입니다. <strong>본인의 정확한 상태는 담당 의사·약사가 가장 잘 압니다.</strong> 특히 처방약 복용 중이거나 합병증이 있는 경우, 본 도구의 판정과 다를 수 있습니다. 모든 결정은 의료진과 상담 후 내리세요.</p>
+        </div>
+
+        <div style="text-align:center; margin: 0 0 60px;">
+            <a href="blog.html" class="luxury-btn" style="display:inline-block; text-decoration:none;">← 건강가이드 목록으로</a>
+        </div>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2026 VitalGuide. 과학 기반 건강 정보 가이드.</p>
+            <div style="margin-top: 20px; display: flex; justify-content: center; gap: 20px; font-size: 0.8rem;">
+                <a href="about.html#editorial" style="color: var(--text-muted); text-decoration: none;">편집 원칙</a>
+                <a href="privacy.html" style="color: var(--text-muted); text-decoration: none;">Privacy</a>
+                <a href="terms.html" style="color: var(--text-muted); text-decoration: none;">Terms</a>
+                <a href="about.html" style="color: var(--text-muted); text-decoration: none;">About</a>
+                <a href="contact.html" style="color: var(--text-muted); text-decoration: none;">Contact</a>
+            </div>
+        </div>
+    </footer>
+
+    <script src="theme.js"></script>
+    <script src="cookie-consent.js"></script>
+    <script>
+    const CONDITIONS = [
+        {id:'pregnancy', emoji:'🤰', lbl:'임신'},
+        {id:'breastfeeding', emoji:'🤱', lbl:'모유수유'},
+        {id:'diabetes', emoji:'🩸', lbl:'당뇨'},
+        {id:'hypertension', emoji:'❤️', lbl:'고혈압'},
+        {id:'kidney', emoji:'🟡', lbl:'신장질환'},
+        {id:'thyroid', emoji:'🦋', lbl:'갑상선'},
+        {id:'gout', emoji:'🎯', lbl:'통풍'},
+        {id:'gastritis', emoji:'🟣', lbl:'위염'},
+        {id:'cholesterol', emoji:'🟠', lbl:'고콜레스테롤'},
+        {id:'dieting', emoji:'📉', lbl:'다이어트'},
+    ];
+
+    // status: safe | caution | danger | neutral
+    // [emoji, name, category, conditions{condId: {status, reason, alt?}}]
+    const ITEMS = [
+        // ============ KOREAN FOODS ============
+        ['☕','커피','beverage', {
+            pregnancy:{s:'caution', r:'하루 200mg(약 1잔) 이하로 제한. 과다 시 유산·저체중아·수면장애 위험. 카페인은 태반을 통과해 태아 대사에 영향.', a:['디카페인 커피','보리차','곡물차']},
+            breastfeeding:{s:'caution', r:'하루 1~2잔 가능. 모유로 일부 전달되어 아기 수면·짜증 유발 가능. 수유 직후 마시는 게 안전.'},
+            diabetes:{s:'safe', r:'블랙커피는 혈당에 거의 영향 없음. 일부 연구에서 2형 당뇨 위험 감소. 단, 시럽·설탕·크림 금지.'},
+            hypertension:{s:'caution', r:'카페인이 일시적으로 혈압 5-10mmHg 상승. 약물 치료 중이면 1~2잔/일 이하. 빈맥 동반 시 디카페인 권장.'},
+            kidney:{s:'caution', r:'중증 신부전(eGFR<30)이면 칼륨 부담. 경증이면 1잔/일 가능.'},
+            gastritis:{s:'danger', r:'위산 분비를 강하게 자극해 점막 자극. 역류성 식도염 악화 가능.', a:['보리차','연한 녹차']},
+            dieting:{s:'safe', r:'블랙 5kcal. 식욕 억제·대사 촉진 효과. 라떼·시럽 추가 시 200~400kcal로 급증.'},
+        }],
+        ['🍵','녹차','beverage', {
+            pregnancy:{s:'caution', r:'카페인 30mg/잔 + 폴리페놀이 엽산·철분 흡수 방해. 하루 2잔 이하, 식사와 1시간 떨어트려.'},
+            diabetes:{s:'safe', r:'EGCG 성분이 인슐린 감수성 개선. 무가당 권장.'},
+            hypertension:{s:'safe', r:'카페콜레라가 살아있는 혈관 이완 효과. 권장.'},
+            cholesterol:{s:'safe', r:'카테킨이 LDL 산화 억제. 일일 3~4잔 권장.'},
+            gastritis:{s:'caution', r:'공복엔 위 자극. 식후 또는 식사 중 권장.'},
+        }],
+        ['🥛','우유','beverage', {
+            pregnancy:{s:'safe', r:'칼슘·단백질·요오드 공급원. 살균 우유만. 생우유·살균 안 된 치즈는 리스테리아 위험.'},
+            diabetes:{s:'caution', r:'유당이 혈당 약간 상승. 저지방 200ml/일 정도. 가당 우유 금지.'},
+            kidney:{s:'caution', r:'인·칼륨 함유. 신부전 진행 시 제한. 의사 상담 필수.'},
+            thyroid:{s:'safe', r:'요오드 공급. 갑상선저하증에 적합. 갑상선약은 우유 4시간 전후로 분리 복용.'},
+            cholesterol:{s:'caution', r:'전유는 포화지방 많음. 저지방·무지방으로 대체 권장.'},
+        }],
+        ['🍺','맥주','alcohol', {
+            pregnancy:{s:'danger', r:'태아알코올증후군 위험. 안전 용량 없음. 절대 금주.'},
+            breastfeeding:{s:'danger', r:'알코올이 모유로 그대로 전달. 마셨다면 최소 2시간 후 수유.'},
+            diabetes:{s:'caution', r:'당과 칼로리. 저혈당 위험(특히 인슐린 사용자). 500ml/주 이하.'},
+            hypertension:{s:'caution', r:'급성으론 혈압 낮추지만 만성 음주는 상승. 남 2잔/일, 여 1잔/일 이하.'},
+            gout:{s:'danger', r:'맥주의 퓨린이 가장 강한 통풍 발작 유발. 절주 권장.', a:['청량음료(무가당)','와인 소량']},
+            cholesterol:{s:'caution', r:'중성지방 상승. 주 2~3회 이하.'},
+        }],
+        ['🍶','소주','alcohol', {
+            pregnancy:{s:'danger', r:'태아알코올증후군. 절대 금주.'},
+            diabetes:{s:'caution', r:'간 당신생 억제로 저혈당 위험. 음주 시 반드시 음식과 함께.'},
+            hypertension:{s:'caution', r:'단기엔 혈압↓, 장기엔 혈압↑. 1잔/일 이하.'},
+            gout:{s:'caution', r:'맥주만큼은 아니나 알코올 자체가 요산 배설 방해.'},
+        }],
+        ['🍷','와인','alcohol', {
+            pregnancy:{s:'danger', r:'안전한 알코올은 없음. 금주.'},
+            cholesterol:{s:'caution', r:'레드와인 폴리페놀 효과는 과장됨. 1잔/일 이하 권장.'},
+            gout:{s:'caution', r:'맥주보다 안전하지만 과음 시 발작 유발.'},
+        }],
+        // Korean foods
+        ['🍜','라면','korean', {
+            pregnancy:{s:'caution', r:'나트륨 1,800~2,400mg/봉지 = 1일 권장량 1.2배. 부종·고혈압 유발. 국물 절반만.'},
+            diabetes:{s:'caution', r:'정제 탄수 + 나트륨. 혈당 스파이크. 채소·계란 추가, 국물 자제.'},
+            hypertension:{s:'danger', r:'나트륨 폭탄. 한 끼에 일일 권장량 초과. 혈압 약 효과 무력화.', a:['칼국수(저염 육수)','채소 듬뿍 비빔국수']},
+            kidney:{s:'danger', r:'나트륨·인 첨가물 과다. 단백질 분말 함유도 부담.'},
+            cholesterol:{s:'caution', r:'팜유 튀김 + 트랜스지방. 라면 스프 절반만.'},
+            dieting:{s:'caution', r:'500kcal에 단백질 적고 포만감 짧음. 비효율적 칼로리.'},
+        }],
+        ['🥬','김치','korean', {
+            pregnancy:{s:'caution', r:'유산균은 좋지만 나트륨 주의. 100g/일 이하 권장.'},
+            diabetes:{s:'safe', r:'유산균이 혈당 조절 도움. 한 끼 약간씩.'},
+            hypertension:{s:'caution', r:'잘 익은 김치 100g당 나트륨 500~700mg. 100g/일 이하.', a:['저염 김치','물김치']},
+            kidney:{s:'caution', r:'칼륨·나트륨 함유. 의사 상담 후 양 조절.'},
+            gastritis:{s:'caution', r:'캡사이신·산미가 위 점막 자극. 적당량.'},
+            gout:{s:'safe', r:'퓨린 낮음. 안전.'},
+        }],
+        ['🍲','김치찌개','korean', {
+            pregnancy:{s:'caution', r:'잘 익혀 먹기. 나트륨·매운맛 주의.'},
+            hypertension:{s:'danger', r:'국물에 나트륨 1,500mg 이상. 건더기만 권장.'},
+            kidney:{s:'danger', r:'국물 칼륨·나트륨. 건더기 약간만.'},
+            gastritis:{s:'caution', r:'매운맛 자극. 청양고추 줄이기.'},
+        }],
+        ['🥘','된장찌개','korean', {
+            pregnancy:{s:'caution', r:'잘 익혀 먹기. 두부 단백질 좋음.'},
+            hypertension:{s:'caution', r:'된장 자체가 짠 편. 국물 자제, 건더기 위주.'},
+            kidney:{s:'caution', r:'대두 단백질·인 부담. 단백질 제한 시 주의.'},
+            thyroid:{s:'caution', r:'대두 이소플라본이 갑상선약 흡수 방해. 약 후 4시간 텀.'},
+            cholesterol:{s:'safe', r:'대두 사포닌이 LDL 감소. 권장.'},
+        }],
+        ['🍚','흰쌀밥','korean', {
+            diabetes:{s:'caution', r:'GI 73으로 높음. 1공기→2/3공기, 잡곡밥 권장.', a:['현미밥','보리밥','귀리밥']},
+            kidney:{s:'safe', r:'단백질·칼륨 낮아 신장 부담 적음. 권장 탄수원.'},
+            dieting:{s:'caution', r:'200kcal/공기. 양 조절.'},
+        }],
+        ['🌾','현미밥','korean', {
+            diabetes:{s:'safe', r:'GI 55, 식이섬유 풍부. 흰쌀 대체 권장.'},
+            kidney:{s:'caution', r:'인·칼륨 함유로 진행된 신부전엔 주의.'},
+            cholesterol:{s:'safe', r:'식이섬유가 LDL 감소 도움.'},
+        }],
+        ['🍣','회/생선회','korean', {
+            pregnancy:{s:'danger', r:'리스테리아·아니사키스·수은 위험. 절대 금지.', a:['익힌 생선','초밥(익힌 새우·계란)']},
+            breastfeeding:{s:'caution', r:'신선도 확실해야. 큰 생선(참치)은 수은 주의.'},
+            gout:{s:'caution', r:'정어리·청어 등 등푸른 생선은 퓨린 높음.'},
+            cholesterol:{s:'safe', r:'오메가3 풍부. 흰살 생선 회 권장.'},
+        }],
+        ['🍱','김밥','korean', {
+            pregnancy:{s:'safe', r:'잘 만든 김밥은 안전. 단무지 나트륨은 적당히.'},
+            diabetes:{s:'caution', r:'밥 + 단무지로 혈당 상승 빠름. 채소 김밥 권장.'},
+            dieting:{s:'caution', r:'1줄 약 400~500kcal. 마요·튀김 김밥은 600kcal+.'},
+        }],
+        ['🍗','삼겹살','korean', {
+            pregnancy:{s:'safe', r:'완전히 익혀 먹기. 채소 쌈과 함께.'},
+            cholesterol:{s:'danger', r:'포화지방 폭탄. 일주일 1회 이하.', a:['닭가슴살','수육(돼지 안심)','구운 생선']},
+            gout:{s:'caution', r:'붉은육 퓨린 중등도. 100g/회 이하.'},
+            dieting:{s:'caution', r:'100g 약 330kcal. 양 조절 + 채소 듬뿍.'},
+        }],
+        ['🍗','치킨','korean', {
+            pregnancy:{s:'safe', r:'완전히 익혀 먹기. 양념·튀김옷은 나트륨·당.'},
+            diabetes:{s:'caution', r:'양념·당 첨가. 가슴살 구이가 안전.'},
+            hypertension:{s:'caution', r:'양념·소금 폭탄. 후라이드 1조각 나트륨 200mg+.'},
+            cholesterol:{s:'caution', r:'튀김은 트랜스지방. 구이·통닭 권장.'},
+            dieting:{s:'caution', r:'1마리 1,500~2,500kcal. 가슴살 200g(220kcal)으로 대체.'},
+        }],
+        ['🥢','떡볶이','korean', {
+            pregnancy:{s:'caution', r:'매운맛 자극. 잘 익은 어묵 확인.'},
+            diabetes:{s:'danger', r:'정제 탄수 + 설탕. 혈당 급상승. 50g 이하.', a:['닭갈비(채소 중심)','쌀국수']},
+            hypertension:{s:'caution', r:'국물·고추장 나트륨 1,000mg+.'},
+            dieting:{s:'caution', r:'1인분 약 600~800kcal. 저칼로리 단백질로 대체.'},
+        }],
+        ['🥩','소고기 (살코기)','protein', {
+            pregnancy:{s:'safe', r:'완전히 익혀(미디엄 이상) 먹기. 철분·B12 공급원. 주 2~3회.'},
+            cholesterol:{s:'caution', r:'살코기는 OK, 마블링·갈비살은 피하기. 주 500g 이하.'},
+            gout:{s:'caution', r:'붉은육 퓨린 함량. 100g/회 이하.'},
+            kidney:{s:'caution', r:'단백질 제한 단계라면 양 조절.'},
+        }],
+        ['🐔','닭가슴살','protein', {
+            pregnancy:{s:'safe', r:'고단백 저지방. 임신 단백질 요구량 증가에 적합.'},
+            diabetes:{s:'safe', r:'혈당 영향 거의 없음. 권장 단백질.'},
+            cholesterol:{s:'safe', r:'포화지방 낮음. 권장.'},
+            dieting:{s:'safe', r:'100g 165kcal, 단백질 23g. 다이어트 1순위.'},
+            kidney:{s:'caution', r:'단백질 제한 단계라면 양 조절.'},
+        }],
+        ['🥚','달걀','protein', {
+            pregnancy:{s:'safe', r:'완전히 익혀 먹기. 반숙·날달걀은 살모넬라 위험.'},
+            diabetes:{s:'safe', r:'혈당 영향 없음. 권장 단백질.'},
+            cholesterol:{s:'safe', r:'최신 연구로 누명 벗음. 하루 1~2개 안전(당뇨 동반 시 1개).'},
+            dieting:{s:'safe', r:'1개 70kcal, 단백질 6g. 포만감 높음.'},
+        }],
+        ['🥩','곱창','korean', {
+            gout:{s:'danger', r:'내장은 퓨린 함량 최고. 통풍 발작 직격탄.', a:['살코기','닭가슴살','두부']},
+            cholesterol:{s:'danger', r:'내장 콜레스테롤·포화지방 폭탄.'},
+            pregnancy:{s:'caution', r:'완벽히 익혀야. 비타민A 과다 위험으로 주 1회 이하.'},
+        }],
+        ['🦐','새우','seafood', {
+            pregnancy:{s:'safe', r:'완전히 익혀 먹기. 수은 낮은 안전한 단백질.'},
+            cholesterol:{s:'caution', r:'콜레스테롤 함량 있지만 포화지방은 적음. 주 2~3회 OK.'},
+            gout:{s:'caution', r:'갑각류 퓨린 중등도. 발작 시기 피하기.'},
+        }],
+        ['🐟','연어','seafood', {
+            pregnancy:{s:'safe', r:'오메가3 풍부, 수은 낮음. 주 2~3회 권장. 익혀 먹기.'},
+            cholesterol:{s:'safe', r:'EPA·DHA가 중성지방·LDL 감소. 적극 권장.'},
+            kidney:{s:'caution', r:'단백질·인 함유. 양 조절.'},
+        }],
+        ['🐟','참치 (생선통조림)','seafood', {
+            pregnancy:{s:'caution', r:'수은 함량. 통조림(가다랑어) 주 2~3회까지, 큰 참치회는 피하기.'},
+            cholesterol:{s:'safe', r:'오메가3 풍부. 권장.'},
+        }],
+        ['🐠','멸치','seafood', {
+            gout:{s:'danger', r:'퓨린 함량 최고급. 발작 직접 유발.', a:['살코기 소량','두부','달걀']},
+            hypertension:{s:'caution', r:'멸치볶음은 짠 편. 양 조절.'},
+            cholesterol:{s:'safe', r:'오메가3·칼슘 풍부.'},
+        }],
+        // ============ FRUITS ============
+        ['🍌','바나나','fruit', {
+            diabetes:{s:'caution', r:'잘 익은 바나나 GI 60. 작은 사이즈 1개로 제한.'},
+            kidney:{s:'danger', r:'칼륨 358mg/100g. 신부전 진행 시 위험.', a:['사과','블루베리','딸기']},
+            hypertension:{s:'safe', r:'칼륨이 혈압 낮춤. DASH 식단 권장.'},
+        }],
+        ['🍎','사과','fruit', {
+            pregnancy:{s:'safe', r:'안전한 과일. 식이섬유 풍부.'},
+            diabetes:{s:'safe', r:'GI 36. 식이섬유가 혈당 천천히 올림. 권장.'},
+            kidney:{s:'safe', r:'칼륨 낮음. 신장에 안전한 과일.'},
+            cholesterol:{s:'safe', r:'펙틴이 LDL 감소. 적극 권장.'},
+        }],
+        ['🍇','포도','fruit', {
+            diabetes:{s:'caution', r:'GI 53. 당도 높음. 10알 이하.'},
+            kidney:{s:'caution', r:'칼륨 중등도. 50g 이하.'},
+        }],
+        ['🍉','수박','fruit', {
+            diabetes:{s:'caution', r:'GI 76으로 매우 높음. 100g 이하.'},
+            kidney:{s:'caution', r:'칼륨 + 수분. 양 조절.'},
+        }],
+        ['🍓','딸기','fruit', {
+            pregnancy:{s:'safe', r:'엽산·비타민C. 권장.'},
+            diabetes:{s:'safe', r:'GI 40. 안전.'},
+            kidney:{s:'safe', r:'칼륨 낮음.'},
+        }],
+        ['🥝','키위','fruit', {
+            pregnancy:{s:'safe', r:'비타민C·엽산 풍부.'},
+            diabetes:{s:'safe', r:'GI 50. 한 개 정도 OK.'},
+            kidney:{s:'caution', r:'칼륨 중등도.'},
+        }],
+        ['🍒','체리','fruit', {
+            gout:{s:'safe', r:'요산 낮춤 임상 근거. 권장.'},
+            diabetes:{s:'safe', r:'GI 22. 안전.'},
+        }],
+        ['🍅','토마토','fruit', {
+            kidney:{s:'danger', r:'칼륨·인 함유. 신부전 진행 시 위험.'},
+            cholesterol:{s:'safe', r:'리코펜이 LDL 산화 억제. 권장.'},
+            gastritis:{s:'caution', r:'산도 높음. 위염엔 자제.'},
+        }],
+        // ============ VEGGIES ============
+        ['🥬','시금치','veggie', {
+            pregnancy:{s:'safe', r:'엽산 풍부. 임신 1순위 채소.'},
+            kidney:{s:'danger', r:'칼륨·옥살산 매우 높음. 결석·칼륨혈증 위험.', a:['양배추','오이','상추']},
+            gout:{s:'caution', r:'퓨린 중등도. 발작 시기엔 자제.'},
+            thyroid:{s:'safe', r:'생식 과다 아니면 안전.'},
+        }],
+        ['🥦','브로콜리','veggie', {
+            pregnancy:{s:'safe', r:'엽산·비타민K 풍부.'},
+            thyroid:{s:'caution', r:'생식 과다(매일 컵 단위)는 갑상선저하 악화 가능. 익혀먹으면 안전.'},
+            diabetes:{s:'safe', r:'식이섬유. 권장.'},
+        }],
+        ['🥬','양배추','veggie', {
+            pregnancy:{s:'safe', r:'엽산·비타민C.'},
+            thyroid:{s:'caution', r:'생식 과다 시 갑상선저하 악화. 익히면 안전.'},
+            gastritis:{s:'safe', r:'양배추즙이 위 점막 보호.'},
+            kidney:{s:'safe', r:'칼륨 낮음.'},
+        }],
+        ['🥑','아보카도','veggie', {
+            cholesterol:{s:'safe', r:'단불포화지방산. HDL↑.'},
+            kidney:{s:'danger', r:'칼륨 매우 높음(485mg/100g). 신부전엔 위험.'},
+            dieting:{s:'caution', r:'1개 240kcal. 양 조절.'},
+        }],
+        ['🧄','마늘','veggie', {
+            pregnancy:{s:'safe', r:'음식 양은 안전. 보충제(고용량)는 의사 상담.'},
+            hypertension:{s:'safe', r:'알리신이 혈압 약간 낮춤.'},
+            cholesterol:{s:'safe', r:'LDL 약간 감소.'},
+            gastritis:{s:'caution', r:'공복 자극.'},
+        }],
+        ['🟠','감자','veggie', {
+            diabetes:{s:'caution', r:'삶은 감자 GI 78. 양 제한.', a:['고구마(GI 54)','옥수수']},
+            kidney:{s:'danger', r:'칼륨 425mg/100g. 신부전엔 데쳐서 칼륨 제거 후.'},
+        }],
+        ['🟤','고구마','veggie', {
+            diabetes:{s:'caution', r:'GI 54 (감자보다 낮음). 200g 이하.'},
+            kidney:{s:'caution', r:'칼륨 중등도.'},
+            dieting:{s:'safe', r:'식이섬유 풍부, 포만감.'},
+        }],
+        // ============ SEAWEED & SOY ============
+        ['🟤','두부','protein', {
+            pregnancy:{s:'safe', r:'식물성 단백질·칼슘. 권장.'},
+            cholesterol:{s:'safe', r:'대두 사포닌이 LDL 감소.'},
+            thyroid:{s:'caution', r:'대두 이소플라본이 갑상선약 흡수 방해. 약 후 4시간 텀.'},
+            kidney:{s:'caution', r:'식물성 단백질이지만 인 함유. 양 조절.'},
+            gout:{s:'caution', r:'콩류 퓨린 중등도.'},
+        }],
+        ['🟫','콩 (대두)','protein', {
+            thyroid:{s:'caution', r:'고용량 콩 단백질 분말은 갑상선저하 악화 가능.'},
+            kidney:{s:'caution', r:'단백질·인·칼륨.'},
+            gout:{s:'caution', r:'퓨린 중등도.'},
+        }],
+        ['🟢','미역','seafood', {
+            pregnancy:{s:'safe', r:'산후 회복 전통 음식. 요오드·칼슘 풍부.'},
+            thyroid:{s:'caution', r:'요오드 과다는 갑상선 기능 이상. 매일 다량 섭취 자제.', a:['양배추','애호박']},
+            hypertension:{s:'caution', r:'알긴산이 좋지만 미역국 나트륨 주의.'},
+        }],
+        ['🌊','다시마','seafood', {
+            thyroid:{s:'danger', r:'요오드 함량 압도적(300-500mcg/g). 갑상선 질환자 위험.', a:['김 (요오드 적음)']},
+            pregnancy:{s:'caution', r:'국물용 OK, 직접 섭취는 요오드 과다.'},
+        }],
+        ['🌊','김','seafood', {
+            pregnancy:{s:'safe', r:'요오드 적당. 비타민B12 식물성 공급원.'},
+            thyroid:{s:'safe', r:'다시마보다 요오드 낮음. 1일 5g 이하.'},
+            kidney:{s:'caution', r:'칼륨 중등도.'},
+        }],
+        // ============ NUTS ============
+        ['🥜','아몬드','snack', {
+            diabetes:{s:'safe', r:'식이섬유·마그네슘. 혈당 안정. 30g/일.'},
+            cholesterol:{s:'safe', r:'LDL 감소 임상 근거. 권장.'},
+            kidney:{s:'caution', r:'인·칼륨 함유.'},
+            dieting:{s:'caution', r:'30g 170kcal. 양 조절 필수.'},
+        }],
+        ['🌰','호두','snack', {
+            cholesterol:{s:'safe', r:'오메가3·식물성. LDL↓ HDL↑.'},
+            pregnancy:{s:'safe', r:'DHA 식물성 공급원.'},
+            kidney:{s:'caution', r:'인·칼륨.'},
+        }],
+        // ============ DRINKS ============
+        ['🥤','콜라','beverage', {
+            pregnancy:{s:'caution', r:'카페인+당 부담. 자제.'},
+            diabetes:{s:'danger', r:'설탕 39g/캔. 혈당 폭발.', a:['제로콜라','탄산수']},
+            hypertension:{s:'caution', r:'카페인+나트륨.'},
+            kidney:{s:'caution', r:'인산이 신장 부담.'},
+            dieting:{s:'danger', r:'150kcal 헛 칼로리.'},
+        }],
+        ['💧','물','beverage', {
+            pregnancy:{s:'safe', r:'필수. 1일 2~3L.'},
+            kidney:{s:'caution', r:'투석 환자는 수분 제한. 의사 지시 따르기.'},
+        }],
+        ['🥛','두유','beverage', {
+            pregnancy:{s:'safe', r:'가당 두유는 자제. 무가당 OK.'},
+            thyroid:{s:'caution', r:'대두 이소플라본. 갑상선약 흡수 방해.'},
+            cholesterol:{s:'safe', r:'LDL↓. 권장.'},
+        }],
+        // ============ SUPPLEMENTS ============
+        ['💊','비타민D','supplement', {
+            pregnancy:{s:'safe', r:'600~2000IU/일 권장. 결핍 시 4000IU까지.'},
+            kidney:{s:'caution', r:'활성형 처방 필요. 일반 D3는 의사 상담.'},
+            thyroid:{s:'safe', r:'갑상선과 무관. 면역에 도움.'},
+        }],
+        ['💊','오메가3','supplement', {
+            pregnancy:{s:'safe', r:'DHA 200~300mg/일. 태아 뇌 발달.'},
+            cholesterol:{s:'safe', r:'EPA+DHA 2g/일이 중성지방↓.'},
+            hypertension:{s:'safe', r:'혈압 약간 낮춤.'},
+        }],
+        ['💊','철분','supplement', {
+            pregnancy:{s:'safe', r:'임신 후반기 권장. 변비 부작용.'},
+            kidney:{s:'caution', r:'투석 환자는 처방 필요.'},
+        }],
+        ['💊','칼슘','supplement', {
+            pregnancy:{s:'safe', r:'1000mg/일.'},
+            kidney:{s:'caution', r:'고칼슘혈증 위험. 의사 상담.'},
+            hypertension:{s:'safe', r:'경미한 혈압 감소.'},
+        }],
+        ['💊','비타민A','supplement', {
+            pregnancy:{s:'danger', r:'10,000IU 이상 과다는 기형 위험. 베타카로틴 형태로 섭취.', a:['베타카로틴','당근','고구마']},
+        }],
+        ['💊','글루코사민','supplement', {
+            diabetes:{s:'caution', r:'혈당 약간 상승 가능. 모니터링.'},
+            hypertension:{s:'caution', r:'와파린·일부 약물과 상호작용.'},
+        }],
+        ['💊','비오틴','supplement', {
+            diabetes:{s:'caution', r:'고용량은 갑상선·트로포닌 검사 결과 왜곡. 검사 전 3일 중단.'},
+            thyroid:{s:'caution', r:'TSH·T4 검사 결과 거짓 수치. 검사 전 3일 중단.'},
+        }],
+        ['💊','콜라겐','supplement', {
+            pregnancy:{s:'safe', r:'식품 유래라면 안전.'},
+            kidney:{s:'caution', r:'단백질 함량 고려.'},
+        }],
+        ['💊','프로바이오틱스','supplement', {
+            pregnancy:{s:'safe', r:'장 건강에 도움.'},
+            diabetes:{s:'safe', r:'혈당·인슐린 감수성 약간 개선.'},
+        }],
+        ['💊','인삼','supplement', {
+            pregnancy:{s:'caution', r:'1형 트리메스터엔 자제. 출혈 위험.'},
+            hypertension:{s:'caution', r:'혈압 상승 보고. 자제.'},
+            diabetes:{s:'caution', r:'혈당강하제와 상호작용으로 저혈당 위험.'},
+        }],
+        // ============ DRUGS ============
+        ['💊','타이레놀 (아세트아미노펜)','drug', {
+            pregnancy:{s:'safe', r:'임신 중 가장 안전한 진통·해열제. 1000mg/회, 4000mg/일 이하.'},
+            breastfeeding:{s:'safe', r:'모유 안전.'},
+            kidney:{s:'caution', r:'장기 고용량은 신장 부담. 의사 상담.'},
+        }],
+        ['💊','이부프로펜 (부루펜)','drug', {
+            pregnancy:{s:'danger', r:'특히 임신 20주 이후 금기. 양수 감소·태아 신장 문제.', a:['타이레놀(아세트아미노펜)']},
+            hypertension:{s:'caution', r:'혈압 상승. 항고혈압제 효과 감소.'},
+            kidney:{s:'danger', r:'신장 손상 위험.'},
+            gastritis:{s:'danger', r:'위 점막 손상·궤양.'},
+        }],
+        ['💊','아스피린','drug', {
+            pregnancy:{s:'caution', r:'저용량은 임신 합병증 예방에 처방 가능. 일반 진통제로는 금지.'},
+            gastritis:{s:'danger', r:'위 출혈 위험.'},
+        }],
+        ['💊','감기약 (콘택600 등)','drug', {
+            pregnancy:{s:'caution', r:'슈도에페드린은 임신 초기 회피. 단일 성분(아세트아미노펜)으로 대체.'},
+            hypertension:{s:'caution', r:'슈도에페드린이 혈압 상승.'},
+        }],
+        ['💊','수면유도제 (졸피뎀)','drug', {
+            pregnancy:{s:'danger', r:'태아 영향 우려. 의사와 대안 상의.'},
+            breastfeeding:{s:'caution', r:'모유 전달. 의사 상의.'},
+        }],
+        ['💊','지르텍 (세티리진)','drug', {
+            pregnancy:{s:'safe', r:'임신 중 비교적 안전한 항히스타민으로 분류.'},
+        }],
+        ['💊','멜라토닌','supplement', {
+            pregnancy:{s:'caution', r:'임신 중 안전성 데이터 부족.'},
+            breastfeeding:{s:'caution', r:'모유 영향 불명확.'},
+        }],
+        // SNACKS
+        ['🍫','초콜릿','snack', {
+            pregnancy:{s:'safe', r:'다크초콜릿(70%↑) 적당량 OK. 카페인 함유 주의.'},
+            diabetes:{s:'caution', r:'다크 적당량은 OK. 밀크초콜릿은 당.'},
+            cholesterol:{s:'safe', r:'다크초콜릿 폴리페놀이 LDL 산화 억제.'},
+        }],
+        ['🍪','과자','snack', {
+            diabetes:{s:'danger', r:'설탕·정제 탄수.'},
+            hypertension:{s:'caution', r:'나트륨 의외로 많음.'},
+            cholesterol:{s:'danger', r:'팜유·트랜스지방.'},
+        }],
+        ['🍦','아이스크림','snack', {
+            diabetes:{s:'danger', r:'설탕·지방 폭탄.'},
+            dieting:{s:'danger', r:'1컵 250~400kcal.'},
+            cholesterol:{s:'caution', r:'포화지방.'},
+        }],
+        // EXTRA
+        ['🌶️','매운 음식 (청양고추, 떡볶이 등)','korean', {
+            pregnancy:{s:'caution', r:'적당량은 OK. 과다는 역류·설사.'},
+            gastritis:{s:'danger', r:'위 점막 직접 자극.'},
+            hypertension:{s:'safe', r:'캡사이신이 오히려 혈관 확장.'},
+        }],
+        ['🍯','꿀','snack', {
+            pregnancy:{s:'caution', r:'산모는 OK. 12개월 미만 아기는 보툴리누스 위험.'},
+            diabetes:{s:'caution', r:'설탕보다 약간 낮은 GI지만 여전히 당.'},
+        }],
+    ];
+
+    // STATE
+    let activeConditions = new Set();
+    let activeCategory = 'all';
+    let searchTerm = '';
+
+    function renderConditions() {
+        const html = CONDITIONS.map(c => `
+            <div class="condition-btn ${activeConditions.has(c.id) ? 'selected' : ''}" data-id="${c.id}">
+                <span class="emoji">${c.emoji}</span>
+                <span class="lbl">${c.lbl}</span>
+            </div>
+        `).join('');
+        document.getElementById('condition-grid').innerHTML = html;
+        document.querySelectorAll('.condition-btn').forEach(b => {
+            b.onclick = () => {
+                const id = b.dataset.id;
+                if (activeConditions.has(id)) activeConditions.delete(id);
+                else activeConditions.add(id);
+                renderConditions();
+                renderItems();
+            };
+        });
+    }
+
+    function getStatus(item) {
+        // Returns worst status across active conditions
+        if (activeConditions.size === 0) return null;
+        const rank = { safe:0, neutral:1, caution:2, danger:3 };
+        let worst = 'safe';
+        for (const cid of activeConditions) {
+            const rule = item[3][cid];
+            if (rule && rank[rule.s] > rank[worst]) worst = rule.s;
+        }
+        return worst;
+    }
+
+    function statusColor(s) {
+        return { safe:'#16a34a', neutral:'#0284c7', caution:'#d97706', danger:'#dc2626' }[s] || '#6b7280';
+    }
+
+    function renderItems() {
+        let filtered = ITEMS;
+        if (activeCategory !== 'all') filtered = filtered.filter(i => i[2] === activeCategory);
+        if (searchTerm) {
+            const q = searchTerm.toLowerCase().replace(/\s/g,'');
+            filtered = filtered.filter(i => i[1].toLowerCase().replace(/\s/g,'').includes(q));
+        }
+        if (filtered.length === 0) {
+            document.getElementById('item-grid').innerHTML = `
+                <div style="grid-column:1/-1; text-align:center; padding:30px; color:var(--text-muted); background:var(--card-bg); border-radius:14px;">
+                    🔍 검색 결과가 없습니다. 다른 키워드로 시도해 보세요.
+                </div>`;
+            return;
+        }
+        const html = filtered.map((item, idx) => {
+            const status = getStatus(item);
+            const dotHTML = status ? `<span class="verdict-dot" style="background:${statusColor(status)};"></span>` : '';
+            const origIdx = ITEMS.indexOf(item);
+            return `
+                <div class="item-card" data-idx="${origIdx}">
+                    ${dotHTML}
+                    <span class="emoji">${item[0]}</span>
+                    <span class="name">${item[1]}</span>
+                </div>
+            `;
+        }).join('');
+        document.getElementById('item-grid').innerHTML = html;
+        document.querySelectorAll('.item-card').forEach(c => {
+            c.onclick = () => showVerdict(parseInt(c.dataset.idx));
+        });
+    }
+
+    function showVerdict(idx) {
+        const item = ITEMS[idx];
+        if (activeConditions.size === 0) {
+            document.getElementById('result-section').innerHTML = `
+                <div id="condition-needed">⚠️ 먼저 위에서 본인의 상황(임신·당뇨 등)을 1개 이상 선택해 주세요.</div>
+            `;
+            document.getElementById('result-section').scrollIntoView({behavior:'smooth'});
+            return;
+        }
+
+        let html = `<h2 style="font-size:1.3rem; margin: 24px 0 16px;">📋 분석 결과: ${item[0]} ${item[1]}</h2>`;
+
+        const labels = { safe:['✅','안전','괜찮습니다'], caution:['⚠️','주의','조심하세요'], danger:['❌','위험','피하세요'], neutral:['ℹ️','중립','문제 없음'] };
+
+        for (const cid of activeConditions) {
+            const cdef = CONDITIONS.find(c => c.id === cid);
+            const rule = item[3][cid];
+            if (!rule) {
+                html += `
+                    <div class="verdict-card v-neutral">
+                        <div style="display:flex; gap:14px; align-items:center;">
+                            <div class="verdict-icon">ℹ️</div>
+                            <div>
+                                <p class="verdict-label" style="color:#0c4a6e;">${cdef.emoji} ${cdef.lbl} — 특별한 주의사항 없음</p>
+                                <p style="margin:0; color:#0369a1; font-size:0.9rem;">이 항목은 ${cdef.lbl} 상황에서 특별히 알려진 주의사항이 없습니다. 일반 식이 가이드라인을 따르세요.</p>
+                            </div>
+                        </div>
+                    </div>
+                `;
+                continue;
+            }
+            const [icon, lbl, sublbl] = labels[rule.s];
+            const color = { safe:'#065f46', caution:'#78350f', danger:'#991b1b', neutral:'#0c4a6e' }[rule.s];
+            html += `
+                <div class="verdict-card v-${rule.s}">
+                    <div style="display:flex; gap:18px; align-items:flex-start; flex-wrap:wrap;">
+                        <div class="verdict-icon">${icon}</div>
+                        <div style="flex:1; min-width: 200px;">
+                            <p class="verdict-label" style="color:${color};">${cdef.emoji} ${cdef.lbl} → ${lbl} <span style="font-size:0.85rem; opacity:0.7;">(${sublbl})</span></p>
+                            <div class="verdict-reason">${rule.r}</div>
+                            ${rule.a ? `
+                                <div style="margin-top: 12px;">
+                                    <p style="margin: 0 0 6px; font-size:0.86rem; color:${color}; font-weight:700;">🔄 대체 추천:</p>
+                                    ${rule.a.map(alt => `<span class="alt-pill" onclick="searchFor('${alt.replace(/'/g,"\\'")}')">${alt}</span>`).join('')}
+                                </div>
+                            ` : ''}
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        // Related items in same category
+        const related = ITEMS.filter(i => i[2] === item[2] && i !== item).slice(0, 6);
+        if (related.length) {
+            html += `
+                <div class="related-section">
+                    <h3 style="font-size:1rem; margin-bottom:10px; color:var(--text-muted);">함께 자주 보는 항목</h3>
+                    <div class="item-grid">
+                        ${related.map(r => {
+                            const oidx = ITEMS.indexOf(r);
+                            const rstatus = getStatus(r);
+                            const rdot = rstatus ? `<span class="verdict-dot" style="background:${statusColor(rstatus)};"></span>` : '';
+                            return `<div class="item-card" onclick="showVerdict(${oidx})">${rdot}<span class="emoji">${r[0]}</span><span class="name">${r[1]}</span></div>`;
+                        }).join('')}
+                    </div>
+                </div>
+            `;
+        }
+
+        document.getElementById('result-section').innerHTML = html;
+        document.getElementById('result-section').scrollIntoView({ behavior:'smooth' });
+    }
+
+    function searchFor(name) {
+        document.getElementById('search-input').value = name;
+        searchTerm = name;
+        activeCategory = 'all';
+        document.querySelectorAll('.category-tab').forEach(t => t.classList.toggle('active', t.dataset.cat === 'all'));
+        renderItems();
+        document.getElementById('item-grid').scrollIntoView({ behavior:'smooth' });
+    }
+
+    // Init
+    document.getElementById('search-input').oninput = (e) => {
+        searchTerm = e.target.value;
+        renderItems();
+    };
+    document.querySelectorAll('.category-tab').forEach(t => {
+        t.onclick = () => {
+            document.querySelectorAll('.category-tab').forEach(x => x.classList.remove('active'));
+            t.classList.add('active');
+            activeCategory = t.dataset.cat;
+            renderItems();
+        };
+    });
+
+    renderConditions();
+    renderItems();
+    </script>
+</body>
+</html>

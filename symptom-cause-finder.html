@@ -1,0 +1,453 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-P6CTZY2283"></script>
+    <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-P6CTZY2283');</script>
+    <meta name="google-adsense-account" content="ca-pub-9103697866666926">
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9103697866666926" crossorigin="anonymous"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>왜 그래? — 증상으로 영양 결핍·호르몬 이상 원인 찾기 | VitalGuide</title>
+    <meta name="description" content="만성 피로, 탈모, 다크써클, 손톱이 약함, 입꼬리 갈라짐... 증상을 선택하면 가능한 영양 결핍·호르몬 이상·생활습관 원인을 즉시 분석. 검사해야 할 혈액검사 항목도 추천.">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="icon" href="favicon.svg" type="image/svg+xml">
+    <link rel="canonical" href="https://vi7al.com/symptom-cause-finder.html">
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="왜 그래? — 증상으로 원인 찾기">
+    <meta property="og:description" content="만성피로, 탈모, 다크써클 등 증상의 진짜 원인을 즉시 분석합니다.">
+    <meta property="og:image" content="https://vi7al.com/og-image.png">
+    <meta property="og:site_name" content="VitalGuide">
+    <script type="application/ld+json">
+    {"@context":"https://schema.org","@type":"WebApplication","name":"증상-원인 매칭기","description":"증상으로 영양 결핍·호르몬 이상 원인 찾기","url":"https://vi7al.com/symptom-cause-finder.html","applicationCategory":"HealthApplication","operatingSystem":"All"}
+    </script>
+    <style>
+        .symptom-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 10px; margin: 18px 0; }
+        .symptom-card { background: var(--card-bg); border: 2px solid var(--border-color); border-radius: 14px; padding: 14px 10px; cursor: pointer; text-align: center; transition: all 0.15s; user-select: none; }
+        .symptom-card:hover { border-color: var(--primary-color); transform: translateY(-2px); }
+        .symptom-card.selected { background: color-mix(in srgb, var(--primary-color) 12%, var(--card-bg)); border-color: var(--primary-color); }
+        .symptom-card.selected::after { content:'✓'; position: absolute; top:8px; right:10px; color: var(--primary-color); font-weight: 900; font-size: 1.1rem; }
+        .symptom-card { position: relative; }
+        .symptom-card .emoji { font-size: 1.5rem; display: block; margin-bottom: 5px; }
+        .symptom-card .name { font-size: 0.85rem; font-weight: 700; color: var(--text-color); line-height: 1.4; }
+        .category-section { background: var(--card-bg); border-radius: 16px; padding: 22px 26px; margin-bottom: 14px; border: 1px solid var(--border-color); }
+        .category-section h3 { margin: 0 0 14px; font-size: 1rem; font-weight: 800; display: flex; align-items: center; gap: 8px; }
+        .selected-pills { display: flex; flex-wrap: wrap; gap: 8px; min-height: 40px; padding: 10px 14px; background: var(--card-bg); border-radius: 12px; border: 1.5px dashed var(--border-color); }
+        .pill { background: var(--primary-color); color: white; border-radius: 18px; padding: 5px 12px; font-size: 0.82rem; font-weight: 700; display: inline-flex; align-items: center; gap: 5px; cursor: pointer; }
+        .pill .x { opacity: 0.7; }
+        .analyze-btn { background: var(--primary-color); color: white; border: none; border-radius: 14px; padding: 16px 40px; font-size: 1.05rem; font-weight: 800; cursor: pointer; display: block; margin: 22px auto; }
+        .analyze-btn:disabled { opacity: 0.45; cursor: not-allowed; }
+        .cause-card { background: var(--card-bg); border: 1px solid var(--border-color); border-radius: 18px; padding: 26px 30px; margin-bottom: 16px; border-left: 6px solid; }
+        .cause-rank { display: inline-block; background: var(--primary-color); color: white; font-weight: 900; padding: 4px 12px; border-radius: 10px; font-size: 0.8rem; letter-spacing: 0.05em; }
+        .cause-score { font-size: 0.78rem; color: var(--text-muted); margin-left: 8px; }
+        .matched-symptoms { background: color-mix(in srgb, var(--primary-color) 6%, transparent); border-radius: 10px; padding: 10px 14px; margin-top: 10px; font-size: 0.85rem; color: var(--text-color); line-height: 1.6; }
+        .test-pill { display: inline-block; padding: 6px 14px; background: linear-gradient(135deg, #dbeafe, #bfdbfe); color: #1e40af; border-radius: 99px; font-size: 0.85rem; font-weight: 700; margin: 4px 4px 0 0; }
+        .red-flag-card { background: linear-gradient(135deg, #fee2e2, #fef2f2); border-radius: 16px; padding: 22px 26px; border-left: 5px solid #dc2626; margin: 20px 0; }
+    </style>
+</head>
+<body data-lang="ko">
+    <header>
+        <div class="container header-flex">
+            <a href="/" class="logo">VitalGuide</a>
+            <div class="controls-bar">
+                <button id="lang-toggle" class="control-btn">EN</button>
+                <button id="theme-toggle" class="control-btn"><i class="fas fa-moon"></i></button>
+            </div>
+        </div>
+        <nav>
+            <a href="/">맞춤 영양분석</a>
+            <a href="exercise.html">운동가이드</a>
+            <a href="health-type-test.html">건강유형테스트</a>
+            <a href="nutrient-quiz.html">영양소 퀴즈</a>
+            <a href="blog.html">건강가이드</a>
+        </nav>
+    </header>
+
+    <main class="container" style="max-width: 920px;">
+        <nav style="margin: 30px 0 0; font-size: 0.85rem; color: var(--text-muted);">
+            <a href="/" style="color: var(--text-muted); text-decoration: none;">홈</a>
+            <span style="margin: 0 8px;">›</span>
+            <span>증상 → 원인 찾기</span>
+        </nav>
+
+        <div class="luxury-report-card" style="margin-top: 24px; padding: 40px;">
+            <div class="report-badge" style="background: #7c3aed; margin-bottom: 14px;">Symptom Analyzer</div>
+            <h1 style="font-size: 2rem; line-height: 1.4; margin-bottom: 12px;">왜 그래? <span style="font-size:1.1rem; color:var(--text-muted); font-weight:600;">증상 → 원인 찾기</span></h1>
+            <p style="color: var(--text-muted); line-height: 1.85; margin: 0;">"항상 피곤하다", "머리가 자꾸 빠진다", "손톱이 약하다"... 막연히 느끼는 증상의 <strong>진짜 원인</strong>을 영양 결핍·호르몬·생활습관 관점에서 분석합니다. 의심되는 영양소 + 받아야 할 혈액 검사 + 병원 가야 할 신호까지.</p>
+        </div>
+
+        <h2 style="font-size: 1.15rem; margin: 30px 0 14px;">1️⃣ 현재 느끼는 증상을 모두 선택하세요</h2>
+        <p style="color: var(--text-muted); font-size:0.88rem; margin-bottom:18px;">최근 2주 이상 지속되는 증상에 체크. 많이 선택할수록 정확도↑ (최소 2개)</p>
+
+        <!-- Categories -->
+        <div class="category-section">
+            <h3>⚡ 에너지·전신</h3>
+            <div class="symptom-grid" id="cat-energy"></div>
+        </div>
+        <div class="category-section">
+            <h3>💇 머리카락·손톱·피부</h3>
+            <div class="symptom-grid" id="cat-skin"></div>
+        </div>
+        <div class="category-section">
+            <h3>🧠 정신·인지</h3>
+            <div class="symptom-grid" id="cat-mental"></div>
+        </div>
+        <div class="category-section">
+            <h3>😴 수면</h3>
+            <div class="symptom-grid" id="cat-sleep"></div>
+        </div>
+        <div class="category-section">
+            <h3>🍽️ 소화·식욕</h3>
+            <div class="symptom-grid" id="cat-digest"></div>
+        </div>
+        <div class="category-section">
+            <h3>🦴 근육·관절·신경</h3>
+            <div class="symptom-grid" id="cat-musc"></div>
+        </div>
+        <div class="category-section">
+            <h3>🌡️ 체온·순환</h3>
+            <div class="symptom-grid" id="cat-circ"></div>
+        </div>
+
+        <!-- Selected pills -->
+        <h3 style="font-size:0.95rem; margin: 24px 0 8px;">선택된 증상</h3>
+        <div class="selected-pills" id="selected-pills"></div>
+
+        <button class="analyze-btn" id="analyze-btn" onclick="analyze()" disabled><i class="fas fa-microscope"></i> &nbsp;원인 분석하기</button>
+
+        <!-- Results -->
+        <div id="result-section"></div>
+
+        <!-- Educational -->
+        <div class="luxury-report-card" style="margin: 36px 0; padding: 38px;">
+            <h2 style="font-size: 1.3rem; font-weight: 900; margin-bottom: 16px; color: var(--primary-color);">증상의 진짜 원인 — 4가지 큰 그림</h2>
+            <p style="line-height: 1.85; color: var(--text-muted); margin-bottom: 18px;">병원에 가도 "스트레스 때문이에요"라는 말을 자주 듣지만, 사실 만성 증상의 80%는 다음 4가지 중 하나입니다:</p>
+            <ol style="line-height: 2.1; color: var(--text-muted); font-size: 0.94rem; padding-left: 22px; margin: 0;">
+                <li><strong>영양 결핍 (가장 흔함):</strong> 철분, 비타민D, B12, 마그네슘, 아연 결핍은 한국인 30~70%가 해당. 증상이 다양해서 놓치기 쉽습니다.</li>
+                <li><strong>호르몬 이상:</strong> 갑상선(저하 5%, 항진 1%), 부신 피로(코르티솔), 인슐린 저항성. 혈액검사로 확인 가능.</li>
+                <li><strong>장 건강 (마이크로바이옴):</strong> 장내 미생물 불균형은 피로·집중력·기분·면역에 광범위 영향.</li>
+                <li><strong>만성 염증·생활습관:</strong> 수면 부족, 만성 스트레스, 운동 부족이 누적된 결과.</li>
+            </ol>
+            <p style="line-height: 1.85; color: var(--text-muted); margin-top: 16px;">이 도구는 증상 패턴을 보고 가장 가능성 높은 원인부터 순서대로 알려드립니다. 다만 단일 진단 도구가 아니라 <strong>"의심해 볼 만한 것"</strong>의 가이드입니다.</p>
+        </div>
+
+        <div style="background: linear-gradient(135deg, #fef3c7, #fde68a); border-radius: 16px; padding: 22px 26px; margin-bottom: 30px; border-left: 4px solid #d97706;">
+            <strong style="color: #78350f; font-size: 0.95rem;">⚠️ 중요</strong>
+            <p style="margin: 8px 0 0; line-height: 1.8; color: #92400e; font-size: 0.88rem;">본 도구는 의학적 진단이 아닙니다. 정확한 원인 파악과 치료는 반드시 의료기관 방문을 통해 이루어져야 합니다. 특히 갑작스러운 증상 변화나 출혈·체중급감·심한 통증은 즉시 진료받으세요.</p>
+        </div>
+
+        <div style="text-align:center; margin: 0 0 60px;">
+            <a href="blog.html" class="luxury-btn" style="display:inline-block; text-decoration:none;">← 건강가이드 목록으로</a>
+        </div>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2026 VitalGuide. 과학 기반 건강 정보 가이드.</p>
+            <div style="margin-top: 20px; display: flex; justify-content: center; gap: 20px; font-size: 0.8rem;">
+                <a href="about.html#editorial" style="color: var(--text-muted); text-decoration: none;">편집 원칙</a>
+                <a href="privacy.html" style="color: var(--text-muted); text-decoration: none;">Privacy</a>
+                <a href="terms.html" style="color: var(--text-muted); text-decoration: none;">Terms</a>
+                <a href="about.html" style="color: var(--text-muted); text-decoration: none;">About</a>
+                <a href="contact.html" style="color: var(--text-muted); text-decoration: none;">Contact</a>
+            </div>
+        </div>
+    </footer>
+
+    <script src="theme.js"></script>
+    <script src="cookie-consent.js"></script>
+    <script>
+    // Symptom catalog
+    // [id, emoji, name, category]
+    const SYMPTOMS = [
+        // energy
+        ['fatigue','⚡','만성 피로','energy'],
+        ['morning_low','🌅','아침에 일어나기 힘듦','energy'],
+        ['afternoon_crash','📉','오후 무기력','energy'],
+        ['dizzy','💫','어지러움 (앉았다 일어날 때)','energy'],
+        ['cold_hands','🥶','손발이 차다','energy'],
+        ['exercise_intolerance','🏃','운동 후 회복 느림','energy'],
+        // skin/hair/nails
+        ['hair_loss','💇','머리카락 많이 빠짐','skin'],
+        ['hair_thin','💇','머리카락이 가늘어짐','skin'],
+        ['nail_brittle','💅','손톱이 약하고 잘 부러짐','skin'],
+        ['nail_lines','💅','손톱에 세로줄','skin'],
+        ['dry_skin','🏜️','피부가 건조함','skin'],
+        ['adult_acne','😟','성인 여드름','skin'],
+        ['bruise_easy','🩹','쉽게 멍이 듦','skin'],
+        ['wound_slow','🩹','상처 회복 느림','skin'],
+        ['dark_circles','👁️','다크써클이 짙음','skin'],
+        ['lip_corner','💋','입꼬리 갈라짐 (구각염)','skin'],
+        ['mouth_ulcer','😷','입안이 자주 헐음','skin'],
+        // mental
+        ['poor_concentration','🧠','집중력 저하','mental'],
+        ['memory_decline','🧠','기억력 감퇴','mental'],
+        ['brain_fog','☁️','뇌가 멍한 느낌','mental'],
+        ['mood_low','😔','기분 가라앉음·우울','mental'],
+        ['anxiety','😰','불안·초조','mental'],
+        ['irritable','😠','짜증·예민','mental'],
+        // sleep
+        ['insomnia','😴','잠들기 힘듦','sleep'],
+        ['night_wake','🌙','자다 자주 깸','sleep'],
+        ['unrefreshing_sleep','💤','자고 일어나도 피곤','sleep'],
+        ['vivid_dreams','💭','이상한 꿈 자주','sleep'],
+        ['restless_legs','🦵','다리에 이상한 느낌(자기 전)','sleep'],
+        // digest
+        ['bloating','🎈','복부 팽만','digest'],
+        ['constipation','🚽','변비','digest'],
+        ['diarrhea','💧','설사·묽은 변','digest'],
+        ['heartburn','🔥','속쓰림·역류','digest'],
+        ['gas','💨','가스 많음','digest'],
+        ['craving_sweet','🍬','단 음식 자주 당김','digest'],
+        ['no_appetite','🥄','식욕 없음','digest'],
+        // muscle/joint/nerve
+        ['muscle_cramp','🦵','다리에 쥐 자주','musc'],
+        ['twitch','👁️','눈꺼풀·근육 떨림','musc'],
+        ['joint_pain','🦴','관절 통증','musc'],
+        ['tingling','🤚','손발 저림','musc'],
+        ['back_pain','🦴','만성 요통','musc'],
+        // circulation/temperature
+        ['cold_intolerance','❄️','추위 잘 탐','circ'],
+        ['heat_intolerance','🥵','더위 잘 탐','circ'],
+        ['sweating','💦','땀이 많음','circ'],
+        ['palpitations','💓','심장 두근거림','circ'],
+        ['morning_edema','😴','아침에 부음','circ'],
+        ['frequent_cold','🤒','감기 자주 걸림','circ'],
+    ];
+
+    // Cause definitions
+    // [id, name, type, symptoms{symId: weight}, tests, action, severity (1-3)]
+    const CAUSES = [
+        {id:'iron_def', name:'철분(페리틴) 결핍성 빈혈', type:'영양 결핍',
+         symptoms:{fatigue:9, hair_loss:8, hair_thin:6, nail_brittle:7, nail_lines:6, dizzy:7, cold_hands:6, dark_circles:8, exercise_intolerance:7, brain_fog:6, restless_legs:8, palpitations:5, frequent_cold:4},
+         tests:['헤모글로빈','페리틴 (저장철)','TIBC','MCV'],
+         action:'페리틴이 30 ng/mL 미만이면 헤모글로빈이 정상이어도 잠재성 결핍. 철분 + 비타민C 복용, 가임기 여성·임신·생리과다 시 특히 흔함.',
+         priority:'high'},
+        {id:'vitd_def', name:'비타민D 결핍', type:'영양 결핍',
+         symptoms:{fatigue:7, mood_low:7, bone_pain:6, frequent_cold:7, hair_loss:5, joint_pain:5, back_pain:6, muscle_cramp:5, brain_fog:5},
+         tests:['25-OH 비타민D'],
+         action:'한국인 90%가 부족. 20ng/mL 미만 결핍, 20-30 불충분. D3 2,000~4,000IU/일 + 햇빛 노출 15분/일.',
+         priority:'medium'},
+        {id:'b12_def', name:'비타민B12 결핍', type:'영양 결핍',
+         symptoms:{fatigue:8, tingling:8, memory_decline:7, brain_fog:7, mood_low:6, lip_corner:6, mouth_ulcer:5, dizzy:6, palpitations:5, hair_thin:4},
+         tests:['비타민B12','호모시스테인','MMA(메틸말론산)'],
+         action:'200 pg/mL 미만 결핍. 채식주의자·노인·위절제·메트포민 복용자 위험. 메틸코발라민 1,000mcg/일.',
+         priority:'high'},
+        {id:'magnesium_def', name:'마그네슘 결핍', type:'영양 결핍',
+         symptoms:{muscle_cramp:9, twitch:8, insomnia:8, night_wake:7, anxiety:7, irritable:6, palpitations:7, restless_legs:7, headache:6, constipation:5, craving_sweet:6, fatigue:5},
+         tests:['혈청 마그네슘 (단, 정확도 낮음)','RBC 마그네슘 (정확)'],
+         action:'현대인 50% 결핍. 마그네슘 글리시네이트 300~400mg 저녁 복용. 가공식품·알코올·스트레스가 소실 가속.',
+         priority:'medium'},
+        {id:'zinc_def', name:'아연 결핍', type:'영양 결핍',
+         symptoms:{frequent_cold:8, hair_loss:7, wound_slow:8, adult_acne:7, no_appetite:6, mouth_ulcer:6, nail_lines:7, brain_fog:5},
+         tests:['혈청 아연','구리/아연 비율'],
+         action:'아연 15~30mg/일. 구리 결핍 막기 위해 장기 시 구리 2mg 병용. 굴·소고기·호박씨가 천연 공급원.',
+         priority:'medium'},
+        {id:'thyroid_low', name:'갑상선 기능 저하증', type:'호르몬 이상',
+         symptoms:{fatigue:9, hair_loss:8, dry_skin:8, cold_intolerance:9, constipation:7, mood_low:7, brain_fog:7, weight_gain:7, memory_decline:6, hair_thin:7, morning_edema:6, nail_brittle:5, no_appetite:5, joint_pain:5},
+         tests:['TSH','Free T4','갑상선 항체 (TPO Ab)'],
+         action:'TSH > 4.5 mIU/L 의심. 여성 5%, 60세↑ 10% 유병률. 가정의학과·내분비내과 진료 필수. 셀레늄·요오드 적정량.',
+         priority:'high'},
+        {id:'thyroid_high', name:'갑상선 기능 항진증', type:'호르몬 이상',
+         symptoms:{heat_intolerance:9, sweating:8, palpitations:8, anxiety:8, irritable:7, insomnia:7, weight_loss:8, hair_thin:6, exercise_intolerance:6, diarrhea:6, fatigue:6},
+         tests:['TSH','Free T4','Free T3','갑상선 항체 (TSI)'],
+         action:'TSH < 0.4 mIU/L. 즉시 내분비내과 진료. 그레이브스병이 흔한 원인.',
+         priority:'high'},
+        {id:'insulin_resist', name:'인슐린 저항성·전당뇨', type:'호르몬 이상',
+         symptoms:{afternoon_crash:9, craving_sweet:9, fatigue:7, brain_fog:7, weight_gain:6, dark_circles:5, adult_acne:6, morning_edema:5, palpitations:4},
+         tests:['공복혈당','HbA1c','공복 인슐린','HOMA-IR'],
+         action:'HbA1c 5.7~6.4%면 전당뇨. 정제 탄수 줄이고 식후 산책 10분. 크롬·마그네슘·베르베린 보충 고려.',
+         priority:'high'},
+        {id:'adrenal_fatigue', name:'만성 스트레스·HPA축 부담', type:'호르몬·생활',
+         symptoms:{fatigue:8, morning_low:9, afternoon_crash:8, insomnia:7, night_wake:7, craving_sweet:7, irritable:7, anxiety:7, brain_fog:6, frequent_cold:6, unrefreshing_sleep:7},
+         tests:['아침/저녁 코르티솔 (타액 4회)','DHEA-S'],
+         action:'정식 의학 진단명은 아니나 임상적 의미 있음. 아슈와간다, 마그네슘, 명상, 7시간 수면.',
+         priority:'medium'},
+        {id:'gut_dysbiosis', name:'장내 미생물 불균형', type:'장 건강',
+         symptoms:{bloating:9, gas:9, constipation:7, diarrhea:7, brain_fog:6, mood_low:6, adult_acne:6, anxiety:5, fatigue:5, frequent_cold:5, craving_sweet:5},
+         tests:['장내 미생물 검사 (선택)','SIBO 호흡 검사','대변 칼프로텍틴'],
+         action:'프로바이오틱스(다양한 균주)·발효식품·식이섬유 25g/일. 단당류·가공식품 줄이기. 4주 시도 후 평가.',
+         priority:'low'},
+        {id:'sleep_deprived', name:'만성 수면 부족·수면 무호흡', type:'생활습관',
+         symptoms:{fatigue:9, unrefreshing_sleep:9, morning_low:9, dark_circles:8, brain_fog:8, memory_decline:7, mood_low:7, weight_gain:6, irritable:7, craving_sweet:7, palpitations:5},
+         tests:['수면다원검사 (코골이·무호흡 의심 시)'],
+         action:'7시간 미만 + 코골이·자다 깸 빈번 시 무호흡 의심. 가정의학과·이비인후과·수면클리닉.',
+         priority:'high'},
+        {id:'dehydration', name:'만성 탈수', type:'생활습관',
+         symptoms:{fatigue:5, brain_fog:6, dry_skin:6, constipation:6, dark_circles:4, headache:6, dizzy:5, no_appetite:3},
+         tests:[],
+         action:'하루 체중(kg) × 30ml의 물. 커피·차는 별도. 소변 색이 진한 노랑이면 부족.',
+         priority:'low'},
+        {id:'protein_def', name:'단백질 부족', type:'영양 결핍',
+         symptoms:{hair_thin:7, nail_brittle:6, fatigue:5, frequent_cold:5, wound_slow:6, exercise_intolerance:5, morning_edema:5, mood_low:4},
+         tests:['혈청 알부민','총 단백'],
+         action:'체중 1kg당 단백질 0.8~1.2g 목표. 다이어트 중·노인·채식주의자 위험.',
+         priority:'medium'},
+        {id:'omega3_def', name:'오메가3·DHA 부족', type:'영양 결핍',
+         symptoms:{dry_skin:7, joint_pain:5, mood_low:6, brain_fog:5, memory_decline:5, adult_acne:4, hair_thin:4},
+         tests:['오메가3 지수 (선택)','중성지방'],
+         action:'주 2~3회 등푸른 생선 또는 EPA+DHA 1,000~2,000mg/일 보충.',
+         priority:'low'},
+        {id:'sad', name:'계절성 정서 장애 (SAD) 가능성', type:'정신 건강',
+         symptoms:{mood_low:8, fatigue:7, morning_low:6, craving_sweet:7, weight_gain:6, unrefreshing_sleep:6, brain_fog:5},
+         tests:['우울 자가진단 (PHQ-9)','비타민D'],
+         action:'10~3월 증상 심화 시 의심. 아침 광선 노출, 비타민D 보충, 심하면 정신건강의학과.',
+         priority:'medium'},
+        {id:'iodine_def', name:'요오드 결핍 또는 과다', type:'영양 결핍',
+         symptoms:{fatigue:5, weight_gain:5, hair_thin:4, dry_skin:5, cold_intolerance:5, brain_fog:4, mood_low:4},
+         tests:['소변 요오드','갑상선 검사'],
+         action:'요오드는 결핍·과다 모두 갑상선 문제. 한국인은 해조류 과다로 과잉 경향. 의사 상담.',
+         priority:'low'},
+    ];
+
+    // STATE
+    let selected = new Set();
+
+    function renderCategory(catId, catName) {
+        const items = SYMPTOMS.filter(s => s[3] === catId);
+        const html = items.map(s => `
+            <div class="symptom-card ${selected.has(s[0]) ? 'selected' : ''}" data-id="${s[0]}">
+                <span class="emoji">${s[1]}</span>
+                <span class="name">${s[2]}</span>
+            </div>
+        `).join('');
+        document.getElementById(`cat-${catId}`).innerHTML = html;
+    }
+
+    function renderAll() {
+        ['energy','skin','mental','sleep','digest','musc','circ'].forEach(c => renderCategory(c));
+        // pills
+        const pillHTML = [...selected].map(id => {
+            const s = SYMPTOMS.find(x => x[0] === id);
+            return `<span class="pill" onclick="toggleSym('${id}')">${s[1]} ${s[2]} <span class="x">×</span></span>`;
+        }).join('');
+        document.getElementById('selected-pills').innerHTML = pillHTML || '<span style="color:var(--text-muted); font-size:0.85rem; padding:6px 0;">아직 선택된 증상이 없습니다</span>';
+        // Enable analyze
+        document.getElementById('analyze-btn').disabled = selected.size < 2;
+
+        // Listeners
+        document.querySelectorAll('.symptom-card').forEach(c => {
+            c.onclick = () => toggleSym(c.dataset.id);
+        });
+    }
+
+    function toggleSym(id) {
+        if (selected.has(id)) selected.delete(id);
+        else selected.add(id);
+        renderAll();
+    }
+
+    function analyze() {
+        // Score each cause
+        const scores = CAUSES.map(c => {
+            let total = 0;
+            let matched = [];
+            for (const symId of selected) {
+                if (c.symptoms[symId]) {
+                    total += c.symptoms[symId];
+                    matched.push(SYMPTOMS.find(s => s[0] === symId));
+                }
+            }
+            // Normalize: % of selected symptoms that match this cause
+            const matchRatio = matched.length / selected.size;
+            const finalScore = total * (0.5 + 0.5 * matchRatio); // weight by ratio
+            return { ...c, score: finalScore, matched, matchedCount: matched.length };
+        }).filter(c => c.matchedCount >= 2)
+          .sort((a, b) => b.score - a.score)
+          .slice(0, 5);
+
+        if (scores.length === 0) {
+            document.getElementById('result-section').innerHTML = `
+                <div class="luxury-report-card" style="padding: 30px; margin-top: 20px; text-align: center;">
+                    <p style="font-size:1rem;">선택하신 증상 조합으로 매칭되는 명확한 원인이 부족합니다. 더 많은 증상을 선택하거나 의료기관 진료를 권합니다.</p>
+                </div>
+            `;
+            document.getElementById('result-section').scrollIntoView({ behavior:'smooth' });
+            return;
+        }
+
+        // Collect tests (top 5)
+        const testSet = new Set();
+        scores.slice(0, 3).forEach(c => c.tests.forEach(t => testSet.add(t)));
+
+        // Check for red flag combinations
+        const redFlags = checkRedFlags();
+
+        let html = `
+            <h2 style="font-size: 1.4rem; margin: 30px 0 20px;">🔬 분석 결과</h2>
+            <p style="color: var(--text-muted); margin-bottom: 20px; font-size: 0.92rem;">선택하신 ${selected.size}개 증상을 기반으로 가능성이 높은 원인 순으로 나열했습니다.</p>
+        `;
+
+        if (redFlags.length) {
+            html += `
+                <div class="red-flag-card">
+                    <p style="font-weight:900; font-size:1.05rem; margin:0 0 10px; color:#991b1b;">⚠️ 즉시 진료 권장 신호</p>
+                    <p style="margin:0; line-height:1.8; color:#7f1d1d; font-size:0.9rem;">${redFlags.join('<br>')}</p>
+                </div>
+            `;
+        }
+
+        const colorByType = { '영양 결핍':'#7c3aed', '호르몬 이상':'#dc2626', '호르몬·생활':'#d97706', '장 건강':'#16a34a', '생활습관':'#0891b2', '정신 건강':'#ec4899' };
+
+        scores.forEach((cause, i) => {
+            const color = colorByType[cause.type] || '#6b7280';
+            const matchedNames = cause.matched.map(m => `${m[1]} ${m[2]}`).join(', ');
+            html += `
+                <div class="cause-card" style="border-left-color:${color};">
+                    <div style="display:flex; justify-content:space-between; align-items:flex-start; flex-wrap:wrap; gap:8px; margin-bottom:10px;">
+                        <div>
+                            <span class="cause-rank" style="background:${color};">#${i+1} 의심</span>
+                            <span class="cause-score">${cause.matchedCount}/${selected.size}개 증상 매칭</span>
+                            <h3 style="font-size:1.15rem; font-weight:900; margin:8px 0 0;">${cause.name}</h3>
+                            <span style="font-size:0.78rem; color:var(--text-muted); font-weight:700; letter-spacing:0.04em;">${cause.type}</span>
+                        </div>
+                    </div>
+                    <p style="line-height: 1.85; color:var(--text-color); margin:14px 0 0; font-size:0.92rem;">${cause.action}</p>
+                    <div class="matched-symptoms">
+                        <strong>매칭된 증상:</strong> ${matchedNames}
+                    </div>
+                </div>
+            `;
+        });
+
+        if (testSet.size) {
+            html += `
+                <div class="luxury-report-card" style="padding: 28px 30px; margin: 20px 0;">
+                    <h3 style="font-size:1.1rem; margin:0 0 14px;">🩺 받아볼 만한 혈액 검사</h3>
+                    <p style="color:var(--text-muted); font-size:0.88rem; line-height:1.7; margin-bottom: 14px;">위 가능성 높은 원인들을 확인하기 위해 의사에게 다음 검사를 요청해 보세요:</p>
+                    <div style="line-height: 2.4;">
+                        ${[...testSet].map(t => `<span class="test-pill">🧪 ${t}</span>`).join('')}
+                    </div>
+                    <p style="font-size:0.82rem; color:var(--text-muted); margin: 14px 0 0; line-height:1.7;">💡 일반 건강검진엔 빠진 항목들도 있습니다. 가정의학과·내분비내과·진단검사의학과에서 추가로 요청 가능합니다.</p>
+                </div>
+            `;
+        }
+
+        html += `
+            <div style="background: linear-gradient(135deg, #ecfdf5, #d1fae5); border-radius:16px; padding:22px 26px; margin:20px 0; border-left:4px solid #059669;">
+                <p style="font-weight:800; color:#065f46; margin:0 0 8px;">📋 다음 단계 추천</p>
+                <ol style="color:#047857; line-height:2; margin:0; padding-left:22px; font-size:0.92rem;">
+                    <li>위 검사 항목을 메모해서 <strong>가정의학과</strong> 또는 해당 전문과 방문</li>
+                    <li>2주간 식이·수면·운동을 기록 (의사 진료 시 큰 도움)</li>
+                    <li>관련 영양제 시작 전 의사·약사와 상담</li>
+                </ol>
+            </div>
+        `;
+
+        document.getElementById('result-section').innerHTML = html;
+        document.getElementById('result-section').scrollIntoView({ behavior:'smooth' });
+    }
+
+    function checkRedFlags() {
+        const flags = [];
+        // Combinations that warrant immediate care
+        if (selected.has('weight_loss') && selected.has('fatigue')) flags.push('✗ 의도하지 않은 체중 감소 + 만성 피로 → 당뇨·갑상선항진·악성종양 평가 필요');
+        if (selected.has('palpitations') && selected.has('dizzy')) flags.push('✗ 두근거림 + 어지러움 → 부정맥·빈혈 의심, 심전도 검사');
+        if (selected.has('memory_decline') && selected.has('brain_fog') && selected.has('tingling')) flags.push('✗ 기억력 저하 + 신경 증상 → B12 결핍 또는 신경학적 평가');
+        return flags;
+    }
+
+    renderAll();
+    </script>
+</body>
+</html>

@@ -1,0 +1,457 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-P6CTZY2283"></script>
+    <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-P6CTZY2283');</script>
+    <meta name="google-adsense-account" content="ca-pub-9103697866666926">
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9103697866666926" crossorigin="anonymous"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>한국인 평균과 비교 — 내 건강 수치는 또래 중 몇 % | VitalGuide</title>
+    <meta name="description" content="키·체중·허리·혈압·혈당·수면 등 8가지 건강 지표를 입력하면 국민건강영양조사 데이터 기반으로 같은 나이대 한국인 중 몇 %인지 알려드립니다.">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="icon" href="favicon.svg" type="image/svg+xml">
+    <link rel="canonical" href="https://vi7al.com/korean-health-stats.html">
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="한국인 평균과 비교 — 내 건강 수치는 또래 중 몇 %">
+    <meta property="og:description" content="키·체중·혈압 등 8가지 지표가 또래 한국인 중 어느 위치인지 알려드립니다.">
+    <meta property="og:image" content="https://vi7al.com/og-image.png">
+    <meta property="og:site_name" content="VitalGuide">
+    <script type="application/ld+json">
+    {"@context":"https://schema.org","@type":"WebApplication","name":"한국인 평균과 비교","description":"건강 지표를 또래 한국인과 비교","url":"https://vi7al.com/korean-health-stats.html","applicationCategory":"HealthApplication","operatingSystem":"All"}
+    </script>
+    <style>
+        .input-row { background: var(--card-bg); border-radius: 14px; padding: 16px 20px; margin-bottom: 12px; display: flex; align-items: center; gap: 14px; border: 1px solid var(--border-color); flex-wrap: wrap; }
+        .input-row .label { min-width: 130px; font-weight: 700; font-size: 0.92rem; color: var(--text-color); display: flex; align-items: center; gap: 8px; }
+        .input-row input, .input-row select { flex: 1; min-width: 100px; padding: 10px 14px; border: 1.5px solid var(--border-color); border-radius: 10px; background: var(--bg-color); color: var(--text-color); font-size: 0.92rem; }
+        .input-row input:focus, .input-row select:focus { border-color: var(--primary-color); outline: none; }
+        .input-row .unit { font-size: 0.78rem; color: var(--text-muted); }
+        .demo-row { background: linear-gradient(135deg, color-mix(in srgb, var(--primary-color) 8%, transparent), transparent); border-radius: 14px; padding: 16px 20px; margin-bottom: 14px; display: flex; gap: 14px; align-items: center; border: 1.5px solid color-mix(in srgb, var(--primary-color) 20%, transparent); flex-wrap: wrap; }
+        .analyze-btn { background: var(--primary-color); color: white; border: none; border-radius: 14px; padding: 16px 40px; font-size: 1.05rem; font-weight: 800; cursor: pointer; display: block; margin: 24px auto; width: 100%; max-width: 360px; }
+        .analyze-btn:hover { opacity: 0.9; }
+        .result-card { background: var(--card-bg); border-radius: 18px; padding: 22px 26px; margin-bottom: 14px; border: 1px solid var(--border-color); }
+        .percentile-bar { height: 36px; border-radius: 18px; background: linear-gradient(90deg, #dc2626, #d97706, #16a34a, #d97706, #dc2626); position: relative; margin: 14px 0 8px; }
+        .percentile-marker { position: absolute; top: -8px; bottom: -8px; width: 4px; background: var(--text-color); border-radius: 4px; box-shadow: 0 0 0 3px var(--bg-color); transition: left 0.6s; }
+        .percentile-label { position: absolute; top: -32px; transform: translateX(-50%); background: var(--text-color); color: var(--bg-color); padding: 4px 10px; border-radius: 8px; font-size: 0.75rem; font-weight: 800; white-space: nowrap; }
+        .percentile-label::after { content: ''; position: absolute; bottom: -5px; left: 50%; transform: translateX(-50%); border: 5px solid transparent; border-top-color: var(--text-color); }
+        .scale-labels { display: flex; justify-content: space-between; font-size: 0.72rem; color: var(--text-muted); margin-top: 4px; }
+        .verdict { display: inline-block; padding: 5px 14px; border-radius: 99px; font-size: 0.82rem; font-weight: 800; margin-top: 8px; }
+        .v-good { background: #d1fae5; color: #065f46; }
+        .v-avg { background: #dbeafe; color: #1e40af; }
+        .v-warn { background: #fef3c7; color: #92400e; }
+        .v-bad { background: #fee2e2; color: #991b1b; }
+        .summary-score { width: 180px; height: 180px; border-radius: 50%; display: flex; flex-direction: column; align-items: center; justify-content: center; color: white; margin: 0 auto 16px; box-shadow: 0 10px 28px rgba(0,0,0,0.2); }
+        .summary-score .num { font-size: 3rem; font-weight: 900; line-height: 1; }
+        .summary-score .lbl { font-size: 0.82rem; opacity: 0.95; margin-top: 4px; }
+        .share-btn { background: linear-gradient(135deg, #fbbf24, #f59e0b); color: white; border: none; border-radius: 12px; padding: 14px 28px; font-weight: 800; cursor: pointer; font-size: 0.95rem; display: inline-flex; align-items: center; gap: 8px; }
+        .share-btn:hover { opacity: 0.92; }
+    </style>
+</head>
+<body data-lang="ko">
+    <header>
+        <div class="container header-flex">
+            <a href="/" class="logo">VitalGuide</a>
+            <div class="controls-bar">
+                <button id="lang-toggle" class="control-btn">EN</button>
+                <button id="theme-toggle" class="control-btn"><i class="fas fa-moon"></i></button>
+            </div>
+        </div>
+        <nav>
+            <a href="/">맞춤 영양분석</a>
+            <a href="exercise.html">운동가이드</a>
+            <a href="health-type-test.html">건강유형테스트</a>
+            <a href="nutrient-quiz.html">영양소 퀴즈</a>
+            <a href="blog.html">건강가이드</a>
+        </nav>
+    </header>
+
+    <main class="container" style="max-width: 820px;">
+        <nav style="margin: 30px 0 0; font-size: 0.85rem; color: var(--text-muted);">
+            <a href="/" style="color: var(--text-muted); text-decoration: none;">홈</a>
+            <span style="margin: 0 8px;">›</span>
+            <span>한국인 평균과 비교</span>
+        </nav>
+
+        <div class="luxury-report-card" style="margin-top: 24px; padding: 40px;">
+            <div class="report-badge" style="background: #ec4899; margin-bottom: 14px;">Korean Health Stats</div>
+            <h1 style="font-size: 2rem; line-height: 1.4; margin-bottom: 12px;">한국인 평균과 비교 — 나는 또래 중 몇 %?</h1>
+            <p style="color: var(--text-muted); line-height: 1.85; margin: 0 0 6px;">국민건강영양조사(KNHANES) 데이터 기반으로 나의 키·체중·혈압·혈당 등이 같은 성별·나이대 한국인 중 어디에 위치하는지 알려드립니다.</p>
+            <p style="font-size: 0.82rem; color: var(--text-muted); margin: 0;"><i class="fas fa-shield-alt"></i> 입력 정보는 브라우저에서만 처리되며 어디에도 저장되지 않습니다.</p>
+        </div>
+
+        <h2 style="font-size: 1.15rem; margin: 26px 0 14px;">1️⃣ 기본 정보</h2>
+        <div class="demo-row">
+            <div class="input-row" style="flex:1; background:transparent; border:none; padding:0; margin:0;">
+                <span class="label">👤 성별</span>
+                <select id="sex">
+                    <option value="m">남성</option>
+                    <option value="f">여성</option>
+                </select>
+            </div>
+            <div class="input-row" style="flex:1; background:transparent; border:none; padding:0; margin:0;">
+                <span class="label">🎂 나이</span>
+                <input type="number" id="age" placeholder="35" min="19" max="80">
+                <span class="unit">세</span>
+            </div>
+        </div>
+
+        <h2 style="font-size: 1.15rem; margin: 26px 0 14px;">2️⃣ 측정값 (아는 것만 입력해도 OK)</h2>
+
+        <div class="input-row">
+            <span class="label">📏 키</span>
+            <input type="number" id="height" placeholder="170" step="0.1">
+            <span class="unit">cm</span>
+        </div>
+        <div class="input-row">
+            <span class="label">⚖️ 체중</span>
+            <input type="number" id="weight" placeholder="65" step="0.1">
+            <span class="unit">kg</span>
+        </div>
+        <div class="input-row">
+            <span class="label">🎯 허리둘레</span>
+            <input type="number" id="waist" placeholder="80" step="0.1">
+            <span class="unit">cm</span>
+        </div>
+        <div class="input-row">
+            <span class="label">❤️ 수축기 혈압</span>
+            <input type="number" id="sbp" placeholder="118">
+            <span class="unit">mmHg</span>
+        </div>
+        <div class="input-row">
+            <span class="label">🩸 공복혈당</span>
+            <input type="number" id="fbs" placeholder="92">
+            <span class="unit">mg/dL</span>
+        </div>
+        <div class="input-row">
+            <span class="label">🟠 LDL 콜레스테롤</span>
+            <input type="number" id="ldl" placeholder="110">
+            <span class="unit">mg/dL</span>
+        </div>
+        <div class="input-row">
+            <span class="label">😴 평일 수면시간</span>
+            <input type="number" id="sleep" placeholder="7" step="0.5">
+            <span class="unit">시간</span>
+        </div>
+        <div class="input-row">
+            <span class="label">🏃 주당 운동</span>
+            <input type="number" id="exercise" placeholder="3">
+            <span class="unit">회</span>
+        </div>
+
+        <button class="analyze-btn" onclick="analyze()"><i class="fas fa-chart-bar"></i> &nbsp;또래 한국인과 비교하기</button>
+
+        <div id="result-section"></div>
+
+        <!-- Educational -->
+        <div class="luxury-report-card" style="margin: 36px 0; padding: 38px;">
+            <h2 style="font-size: 1.3rem; font-weight: 900; margin-bottom: 16px; color: var(--primary-color);">데이터 출처와 신뢰성</h2>
+            <p style="line-height: 1.85; color: var(--text-muted); margin-bottom: 16px;">이 도구의 비교 기준은 보건복지부와 질병관리청이 매년 진행하는 <strong>국민건강영양조사(KNHANES, Korea National Health and Nutrition Examination Survey)</strong> 데이터입니다. 매년 약 1만 명의 한국인을 직접 조사·측정한 대표성 있는 통계입니다.</p>
+            <p style="line-height: 1.85; color: var(--text-muted); margin-bottom: 16px;">평균(평균값)뿐 아니라 <strong>분포(표준편차)</strong>까지 사용해 정규분포 가정 하에 백분위를 계산합니다. 예를 들어 "상위 20%"는 "100명 중 20번째로 좋은 수치"를 의미합니다.</p>
+            <h3 style="font-size: 1.05rem; margin: 22px 0 10px;">⚠️ 한계점</h3>
+            <ul style="line-height: 2.1; color: var(--text-muted); font-size: 0.92rem; padding-left: 22px; margin: 0;">
+                <li>정규분포 가정이라 극단값 정확도는 떨어질 수 있습니다.</li>
+                <li>"평균"이 "최적"을 뜻하지 않습니다. 한국인 평균 비타민D는 16ng/mL인데, 이는 결핍 수준입니다.</li>
+                <li>특수 상황(임신, 만성질환, 약물 복용 중)은 비교 기준이 다를 수 있습니다.</li>
+            </ul>
+        </div>
+
+        <div style="text-align:center; margin: 0 0 60px;">
+            <a href="blog.html" class="luxury-btn" style="display:inline-block; text-decoration:none;">← 건강가이드 목록으로</a>
+        </div>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2026 VitalGuide. 과학 기반 건강 정보 가이드.</p>
+            <div style="margin-top: 20px; display: flex; justify-content: center; gap: 20px; font-size: 0.8rem;">
+                <a href="about.html#editorial" style="color: var(--text-muted); text-decoration: none;">편집 원칙</a>
+                <a href="privacy.html" style="color: var(--text-muted); text-decoration: none;">Privacy</a>
+                <a href="terms.html" style="color: var(--text-muted); text-decoration: none;">Terms</a>
+                <a href="about.html" style="color: var(--text-muted); text-decoration: none;">About</a>
+                <a href="contact.html" style="color: var(--text-muted); text-decoration: none;">Contact</a>
+            </div>
+        </div>
+    </footer>
+
+    <script src="theme.js"></script>
+    <script src="cookie-consent.js"></script>
+    <script>
+    // KNHANES-based normative data (mean, SD) per age band, sex
+    // ageBand: 20s, 30s, 40s, 50s, 60s+
+    // Source: 국민건강영양조사 (KNHANES) 종합 통계
+    // For metrics where lower is better, higher percentile = worse
+    const NORMS = {
+        // [metric][sex][ageBand] = {mean, sd, betterIs: 'low'|'high'|'mid', emoji, name, unit}
+        height: { meta: {betterIs:'high', emoji:'📏', name:'키', unit:'cm', noJudge:true},
+            m: {'20':{m:174,s:6}, '30':{m:173,s:6}, '40':{m:170,s:6}, '50':{m:167,s:6}, '60':{m:165,s:6.5}},
+            f: {'20':{m:161,s:5.5},'30':{m:160,s:5.5},'40':{m:159,s:5.5},'50':{m:156,s:5.5},'60':{m:153,s:6}} },
+        weight: { meta: {betterIs:'mid', emoji:'⚖️', name:'체중', unit:'kg'},
+            m: {'20':{m:74,s:11},'30':{m:76,s:11},'40':{m:75,s:11},'50':{m:71,s:10},'60':{m:68,s:10}},
+            f: {'20':{m:57,s:9}, '30':{m:58,s:9.5},'40':{m:59,s:9}, '50':{m:59,s:9}, '60':{m:58,s:9}} },
+        bmi: { meta: {betterIs:'mid', emoji:'⚖️', name:'BMI', unit:'kg/m²', ideal:[18.5,23]},
+            m: {'20':{m:24.4,s:3.5},'30':{m:25.3,s:3.5},'40':{m:25.5,s:3.3},'50':{m:25.0,s:3.2},'60':{m:24.5,s:3.3}},
+            f: {'20':{m:22.0,s:3.5},'30':{m:22.4,s:3.6},'40':{m:23.0,s:3.5},'50':{m:23.6,s:3.4},'60':{m:24.0,s:3.5}} },
+        waist: { meta: {betterIs:'low', emoji:'🎯', name:'허리둘레', unit:'cm', danger: {m:90, f:85}},
+            m: {'20':{m:83,s:9}, '30':{m:86,s:9}, '40':{m:87,s:8.5},'50':{m:86,s:8}, '60':{m:86,s:8}},
+            f: {'20':{m:74,s:8}, '30':{m:75,s:8.5},'40':{m:78,s:9}, '50':{m:81,s:9}, '60':{m:83,s:9}} },
+        sbp: { meta: {betterIs:'low', emoji:'❤️', name:'수축기 혈압', unit:'mmHg', ideal:[100,120]},
+            m: {'20':{m:118,s:11},'30':{m:120,s:12},'40':{m:122,s:13},'50':{m:124,s:14},'60':{m:128,s:15}},
+            f: {'20':{m:108,s:10},'30':{m:110,s:11},'40':{m:114,s:13},'50':{m:120,s:14},'60':{m:127,s:15}} },
+        fbs: { meta: {betterIs:'low', emoji:'🩸', name:'공복혈당', unit:'mg/dL', ideal:[80,99]},
+            m: {'20':{m:92,s:9}, '30':{m:96,s:11},'40':{m:99,s:14},'50':{m:103,s:18},'60':{m:107,s:22}},
+            f: {'20':{m:88,s:8}, '30':{m:90,s:9}, '40':{m:94,s:13},'50':{m:98,s:16},'60':{m:103,s:20}} },
+        ldl: { meta: {betterIs:'low', emoji:'🟠', name:'LDL 콜레스테롤', unit:'mg/dL', ideal:[70,130]},
+            m: {'20':{m:108,s:28},'30':{m:118,s:30},'40':{m:124,s:32},'50':{m:120,s:32},'60':{m:115,s:32}},
+            f: {'20':{m:98,s:25}, '30':{m:104,s:26},'40':{m:115,s:30},'50':{m:128,s:32},'60':{m:128,s:33}} },
+        sleep: { meta: {betterIs:'mid', emoji:'😴', name:'평일 수면시간', unit:'시간', ideal:[7,8]},
+            m: {'20':{m:6.7,s:1.2},'30':{m:6.6,s:1.1},'40':{m:6.5,s:1.1},'50':{m:6.5,s:1.1},'60':{m:6.7,s:1.2}},
+            f: {'20':{m:6.8,s:1.2},'30':{m:6.5,s:1.1},'40':{m:6.4,s:1.1},'50':{m:6.5,s:1.1},'60':{m:6.6,s:1.2}} },
+        exercise: { meta: {betterIs:'high', emoji:'🏃', name:'주당 운동 횟수', unit:'회', ideal:[3,7]},
+            m: {'20':{m:2.3,s:2.0},'30':{m:2.0,s:1.9},'40':{m:2.2,s:1.9},'50':{m:2.5,s:2.0},'60':{m:2.6,s:2.0}},
+            f: {'20':{m:1.8,s:1.8},'30':{m:1.6,s:1.7},'40':{m:1.9,s:1.8},'50':{m:2.2,s:1.9},'60':{m:2.4,s:1.9}} },
+    };
+
+    function getAgeBand(age) {
+        if (age < 30) return '20';
+        if (age < 40) return '30';
+        if (age < 50) return '40';
+        if (age < 60) return '50';
+        return '60';
+    }
+
+    // Normal CDF approximation
+    function normCDF(z) {
+        // Approximation via erf
+        const a1 = 0.254829592, a2 = -0.284496736, a3 = 1.421413741, a4 = -1.453152027, a5 = 1.061405429, p = 0.3275911;
+        const sign = z < 0 ? -1 : 1;
+        z = Math.abs(z) / Math.sqrt(2);
+        const t = 1.0 / (1.0 + p * z);
+        const y = 1.0 - (((((a5 * t + a4) * t) + a3) * t + a2) * t + a1) * t * Math.exp(-z * z);
+        return 0.5 * (1 + sign * y);
+    }
+
+    function getPercentile(value, mean, sd) {
+        const z = (value - mean) / sd;
+        return normCDF(z) * 100; // 0-100, where higher = bigger than peers
+    }
+
+    function val(id) {
+        const el = document.getElementById(id);
+        if (!el) return null;
+        const v = parseFloat(el.value);
+        return isNaN(v) ? null : v;
+    }
+
+    function judgePercentile(percentile, betterIs) {
+        // returns [label, class, color]
+        if (betterIs === 'mid') {
+            const distFromMid = Math.abs(percentile - 50);
+            if (distFromMid < 20) return ['평균 수준 ✓', 'v-good'];
+            if (distFromMid < 35) return ['평균에서 벗어남', 'v-avg'];
+            return ['평균과 차이 큼', 'v-warn'];
+        }
+        if (betterIs === 'low') {
+            if (percentile < 25) return ['매우 양호 ✨', 'v-good'];
+            if (percentile < 50) return ['양호 ✓', 'v-good'];
+            if (percentile < 75) return ['평균 또는 약간 높음', 'v-avg'];
+            if (percentile < 90) return ['높은 편 - 주의', 'v-warn'];
+            return ['매우 높음 - 관리 필요', 'v-bad'];
+        }
+        if (betterIs === 'high') {
+            if (percentile > 75) return ['매우 양호 ✨', 'v-good'];
+            if (percentile > 50) return ['양호 ✓', 'v-good'];
+            if (percentile > 25) return ['평균 또는 약간 낮음', 'v-avg'];
+            if (percentile > 10) return ['낮은 편 - 관심 필요', 'v-warn'];
+            return ['매우 낮음 - 관리 필요', 'v-bad'];
+        }
+        return ['평균 수준', 'v-avg'];
+    }
+
+    function analyze() {
+        const sex = document.getElementById('sex').value;
+        const age = val('age');
+        if (!age || age < 19 || age > 80) {
+            alert('19~80세 사이의 나이를 입력해 주세요.');
+            return;
+        }
+        const ageBand = getAgeBand(age);
+        const results = [];
+        const metrics = {
+            height: val('height'), weight: val('weight'),
+            waist: val('waist'), sbp: val('sbp'),
+            fbs: val('fbs'), ldl: val('ldl'),
+            sleep: val('sleep'), exercise: val('exercise'),
+        };
+
+        // BMI calculated
+        if (metrics.height && metrics.weight) {
+            metrics.bmi = metrics.weight / Math.pow(metrics.height/100, 2);
+        }
+
+        const allMetrics = ['height', 'weight', 'bmi', 'waist', 'sbp', 'fbs', 'ldl', 'sleep', 'exercise'];
+        let totalScore = 0, scoredCount = 0;
+
+        for (const key of allMetrics) {
+            const v = metrics[key];
+            if (v == null) continue;
+            const norm = NORMS[key];
+            const band = norm[sex][ageBand];
+            if (!band) continue;
+            const pct = getPercentile(v, band.m, band.s);
+            const meta = norm.meta;
+            const [label, cls] = judgePercentile(pct, meta.betterIs);
+            results.push({ key, value: v, mean: band.m, sd: band.s, pct, meta, label, cls });
+
+            // Score for summary
+            if (!meta.noJudge) {
+                let s;
+                if (meta.betterIs === 'mid') s = 100 - Math.abs(pct - 50) * 2;
+                else if (meta.betterIs === 'low') s = 100 - pct;
+                else s = pct;
+                totalScore += s;
+                scoredCount++;
+            }
+        }
+
+        if (results.length === 0) {
+            alert('최소 1개 이상의 측정값을 입력해 주세요.');
+            return;
+        }
+
+        const overallScore = scoredCount ? Math.round(totalScore / scoredCount) : 0;
+        renderResults(results, overallScore, sex, ageBand);
+    }
+
+    function renderResults(results, overallScore, sex, ageBand) {
+        const sexLbl = sex === 'm' ? '남성' : '여성';
+        const ageLbl = ageBand === '60' ? '60세 이상' : `${ageBand}대`;
+        let scoreColor = '#16a34a', scoreLbl = '매우 양호';
+        if (overallScore < 50) { scoreColor = '#dc2626'; scoreLbl = '관리 필요'; }
+        else if (overallScore < 65) { scoreColor = '#d97706'; scoreLbl = '주의 필요'; }
+        else if (overallScore < 80) { scoreColor = '#0891b2'; scoreLbl = '양호'; }
+
+        let html = `
+            <h2 style="font-size:1.4rem; margin:30px 0 8px; text-align:center;">📊 분석 결과</h2>
+            <p style="text-align:center; color:var(--text-muted); margin-bottom:24px;">${ageLbl} 한국 ${sexLbl} 평균과 비교</p>
+
+            <div class="luxury-report-card" style="padding:32px; text-align:center;">
+                <div class="summary-score" style="background:linear-gradient(135deg, ${scoreColor}, color-mix(in srgb, ${scoreColor} 70%, black));">
+                    <div class="num">${overallScore}</div>
+                    <div class="lbl">또래 비교 점수</div>
+                </div>
+                <p style="font-weight:900; font-size:1.05rem; margin:0;">${scoreLbl}</p>
+                <p style="color:var(--text-muted); font-size:0.85rem; margin:6px 0 0;">100점이면 또래 중 최상위, 50점이면 평균과 동일</p>
+            </div>
+        `;
+
+        results.forEach(r => {
+            const isBetter = r.meta.betterIs;
+            let direction = '';
+            if (isBetter === 'low') {
+                if (r.pct < 50) direction = `또래보다 <strong style="color:#16a34a;">낮은 편</strong> (좋음)`;
+                else direction = `또래보다 <strong style="color:#dc2626;">높은 편</strong> (주의)`;
+            } else if (isBetter === 'high') {
+                if (r.pct > 50) direction = `또래보다 <strong style="color:#16a34a;">높은 편</strong> (좋음)`;
+                else direction = `또래보다 <strong style="color:#d97706;">낮은 편</strong>`;
+            } else {
+                const distFromMid = Math.abs(r.pct - 50);
+                if (distFromMid < 15) direction = `<strong style="color:#16a34a;">또래 평균과 유사</strong>`;
+                else direction = `<strong>또래 평균과 차이</strong>`;
+            }
+
+            // For 'low better' metrics, invert percentile for visual
+            const displayPct = isBetter === 'low' ? 100 - r.pct : r.pct;
+
+            html += `
+                <div class="result-card">
+                    <div style="display:flex; justify-content:space-between; align-items:flex-start; flex-wrap:wrap; gap:8px;">
+                        <div>
+                            <p style="margin:0; font-weight:800; font-size:1rem;">${r.meta.emoji} ${r.meta.name}</p>
+                            <p style="margin:4px 0 0; font-size:0.85rem; color:var(--text-muted);">내 수치: <strong style="color:var(--text-color); font-size:0.95rem;">${r.value.toFixed(r.key==='bmi'||r.key==='sleep'?1:0)} ${r.meta.unit}</strong> · 또래 평균: ${r.mean.toFixed(r.key==='bmi'||r.key==='sleep'?1:0)} ${r.meta.unit}</p>
+                        </div>
+                        <span class="verdict ${r.cls}">${r.label}</span>
+                    </div>
+                    <div class="percentile-bar">
+                        <div class="percentile-marker" style="left:${displayPct}%;">
+                            <span class="percentile-label">상위 ${Math.round(100-displayPct)}%</span>
+                        </div>
+                    </div>
+                    <div class="scale-labels">
+                        <span>${isBetter==='low'?'하위(나쁨)':'상위(좋음)'}</span>
+                        <span>평균</span>
+                        <span>${isBetter==='low'?'상위(좋음)':'하위(나쁨)'}</span>
+                    </div>
+                    <p style="font-size:0.85rem; color:var(--text-muted); margin:14px 0 0;">${direction}. ${getMetricAdvice(r)}</p>
+                </div>
+            `;
+        });
+
+        // Share section
+        html += `
+            <div class="luxury-report-card" style="padding:28px 32px; margin-top:24px; text-align:center; background:linear-gradient(135deg, #fff7ed, #fed7aa);">
+                <p style="font-weight:800; margin:0 0 12px; color:#7c2d12;">📱 결과를 친구에게 공유하기</p>
+                <p style="color:#9a3412; font-size:0.88rem; margin:0 0 16px; line-height:1.7;">결과를 캡처해서 친구·가족과 비교해 보세요. 또래보다 우위인 지표·관리가 필요한 지표가 한눈에 보입니다.</p>
+                <button class="share-btn" onclick="shareResult(${overallScore}, '${sexLbl}', '${ageLbl}')"><i class="fas fa-share-alt"></i> 카카오톡·문자로 공유</button>
+            </div>
+        `;
+
+        document.getElementById('result-section').innerHTML = html;
+        document.getElementById('result-section').scrollIntoView({ behavior:'smooth' });
+    }
+
+    function getMetricAdvice(r) {
+        const k = r.key;
+        if (k === 'bmi') {
+            if (r.value < 18.5) return '저체중. 근력 운동 + 단백질·건강한 지방으로 균형 회복.';
+            if (r.value < 23) return '정상. 잘 유지하세요.';
+            if (r.value < 25) return '과체중 경계. 식습관·운동 점검 시점.';
+            return '비만. 5~10% 감량 시 모든 건강 지표가 크게 개선.';
+        }
+        if (k === 'waist') {
+            const danger = r.meta.danger;
+            if (r.value >= danger.m) return '복부비만 기준 초과. 인슐린 저항성·심혈관 위험 증가.';
+            return '정상 범위. 유지 권장.';
+        }
+        if (k === 'sbp') {
+            if (r.value < 120) return '정상. 운동·DASH 식단 유지.';
+            if (r.value < 140) return '주의 혈압. 나트륨·체중 관리.';
+            return '고혈압 단계. 가정의학과 진료 필요.';
+        }
+        if (k === 'fbs') {
+            if (r.value < 100) return '정상. 식후 가벼운 활동 유지.';
+            if (r.value < 126) return '공복혈당장애(전당뇨). 정제 탄수 줄이기.';
+            return '당뇨 의심. 내분비내과 진료 필요.';
+        }
+        if (k === 'ldl') {
+            if (r.value < 130) return '정상. 오메가3·통곡물 유지.';
+            if (r.value < 160) return '경계성. 포화지방 줄이기.';
+            return '높음. 의사 상담 권장.';
+        }
+        if (k === 'sleep') {
+            if (r.value < 6) return '수면 부족. 인지·면역 영향. 7시간 목표.';
+            if (r.value < 7) return '약간 부족. 7~8시간 권장.';
+            if (r.value <= 8) return '권장 수면시간.';
+            return '과다 수면. 수면의 질 점검 필요.';
+        }
+        if (k === 'exercise') {
+            if (r.value < 2) return '운동 부족. WHO 권장 주 150분(중강도) 시작.';
+            if (r.value < 3) return '평균. 더 늘리면 큰 효과.';
+            return '활발한 활동. 부상 없이 유지.';
+        }
+        return '';
+    }
+
+    function shareResult(score, sexLbl, ageLbl) {
+        const text = `📊 VitalGuide 건강 비교 결과\n나는 ${ageLbl} ${sexLbl} 중 ${score}점 (100점 만점)\n또래와 내 건강 비교 → https://vi7al.com/korean-health-stats.html`;
+        if (navigator.share) {
+            navigator.share({ title:'내 건강 점수', text, url:'https://vi7al.com/korean-health-stats.html' });
+        } else {
+            navigator.clipboard.writeText(text).then(() => {
+                alert('복사되었습니다! 원하는 곳에 붙여넣기하세요.');
+            });
+        }
+    }
+    </script>
+</body>
+</html>
