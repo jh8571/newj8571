@@ -1,0 +1,754 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-P6CTZY2283"></script>
+    <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-P6CTZY2283');</script>
+    <meta name="google-adsense-account" content="ca-pub-9103697866666926">
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9103697866666926" crossorigin="anonymous"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>건강검진 결과 해독기 — 공복혈당·LDL·AST·갑상선 등 30+ 수치 자동 분석 | VitalGuide</title>
+    <meta name="description" content="건강검진 결과지의 공복혈당, HbA1c, LDL·HDL 콜레스테롤, AST·ALT, 크레아티닌, TSH 등 30+ 수치를 입력하면 자동으로 정상/주의/위험을 분석하고 개선 가이드를 제공합니다.">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="icon" href="favicon.svg" type="image/svg+xml">
+    <link rel="canonical" href="https://vi7al.com/health-checkup-decoder.html">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://vi7al.com/health-checkup-decoder.html">
+    <meta property="og:title" content="건강검진 결과 해독기 — 30+ 수치 자동 분석">
+    <meta property="og:description" content="검진 결과지의 모든 수치를 입력하면 자동 해석 + 개선 가이드를 받아보세요.">
+    <meta property="og:image" content="https://vi7al.com/og-image.png">
+    <meta property="og:site_name" content="VitalGuide">
+    <script type="application/ld+json">
+    {"@context":"https://schema.org","@type":"WebApplication","name":"건강검진 결과 해독기","description":"검진 결과 30+ 수치를 입력하면 자동으로 정상/주의/위험을 분석합니다.","url":"https://vi7al.com/health-checkup-decoder.html","applicationCategory":"HealthApplication","operatingSystem":"All","offers":{"@type":"Offer","price":"0","priceCurrency":"KRW"},"provider":{"@type":"Organization","name":"VitalGuide","url":"https://vi7al.com/"}}
+    </script>
+    <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"홈","item":"https://vi7al.com/"},{"@type":"ListItem","position":2,"name":"건강검진 결과 해독기","item":"https://vi7al.com/health-checkup-decoder.html"}]}</script>
+    <style>
+        .metric-section { background: var(--card-bg); border: 1px solid var(--border-color); border-radius: 16px; margin-bottom: 14px; overflow: hidden; }
+        .metric-section-header { padding: 16px 22px; background: color-mix(in srgb, var(--primary-color) 5%, transparent); display: flex; align-items: center; justify-content: space-between; cursor: pointer; user-select: none; }
+        .metric-section-header h3 { margin: 0; font-size: 1rem; font-weight: 800; display: flex; align-items: center; gap: 10px; }
+        .metric-section-body { padding: 18px 22px; display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 16px; }
+        .metric-input { display: flex; flex-direction: column; gap: 4px; }
+        .metric-input label { font-size: 0.82rem; font-weight: 700; color: var(--text-color); }
+        .metric-input .ref { font-size: 0.7rem; color: var(--text-muted); }
+        .metric-input .input-wrap { display: flex; align-items: center; gap: 6px; }
+        .metric-input input { flex: 1; padding: 8px 12px; border: 1.5px solid var(--border-color); border-radius: 8px; font-size: 0.92rem; background: var(--bg-color); color: var(--text-color); }
+        .metric-input input:focus { border-color: var(--primary-color); outline: none; }
+        .metric-input .unit { font-size: 0.78rem; color: var(--text-muted); white-space: nowrap; }
+        .toggle-arrow { transition: transform 0.2s; font-size: 0.85rem; color: var(--text-muted); }
+        .metric-section.collapsed .metric-section-body { display: none; }
+        .metric-section.collapsed .toggle-arrow { transform: rotate(-90deg); }
+        .result-card { background: var(--card-bg); border-radius: 16px; padding: 22px 26px; margin-bottom: 14px; border-left: 4px solid; }
+        .result-normal { border-left-color: #059669; background: linear-gradient(to right, color-mix(in srgb, #059669 5%, transparent), transparent); }
+        .result-borderline { border-left-color: #d97706; background: linear-gradient(to right, color-mix(in srgb, #d97706 5%, transparent), transparent); }
+        .result-high { border-left-color: #dc2626; background: linear-gradient(to right, color-mix(in srgb, #dc2626 5%, transparent), transparent); }
+        .result-low { border-left-color: #2563eb; background: linear-gradient(to right, color-mix(in srgb, #2563eb 5%, transparent), transparent); }
+        .status-badge { display: inline-block; padding: 3px 10px; border-radius: 16px; font-size: 0.72rem; font-weight: 800; letter-spacing: 0.05em; }
+        .status-normal { background: #d1fae5; color: #065f46; }
+        .status-borderline { background: #fef3c7; color: #92400e; }
+        .status-high { background: #fee2e2; color: #991b1b; }
+        .status-low { background: #dbeafe; color: #1e40af; }
+        .score-ring { width: 140px; height: 140px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 2.4rem; font-weight: 900; color: white; margin: 0 auto 20px; box-shadow: 0 8px 24px rgba(0,0,0,0.15); }
+        .analyze-btn { background: var(--primary-color); color: white; border: none; border-radius: 14px; padding: 16px 40px; font-size: 1.05rem; font-weight: 800; cursor: pointer; transition: opacity 0.2s; display: block; margin: 28px auto 16px; }
+        .analyze-btn:hover { opacity: 0.85; }
+        #results-section { display: none; margin-top: 30px; }
+        .priority-item { background: var(--card-bg); border-radius: 12px; padding: 14px 18px; margin-bottom: 10px; display: flex; gap: 12px; align-items: flex-start; }
+        .priority-num { width: 28px; height: 28px; border-radius: 50%; background: var(--primary-color); color: white; display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 0.85rem; flex-shrink: 0; }
+        .nutrient-pill { display: inline-block; padding: 4px 12px; background: color-mix(in srgb, var(--primary-color) 12%, transparent); color: var(--primary-color); border-radius: 16px; font-size: 0.78rem; font-weight: 700; margin: 3px; }
+        .save-btn { background: transparent; color: var(--text-color); border: 1.5px solid var(--border-color); border-radius: 12px; padding: 10px 22px; font-size: 0.88rem; font-weight: 700; cursor: pointer; }
+    </style>
+</head>
+<body data-lang="ko">
+    <header>
+        <div class="container header-flex">
+            <a href="/" class="logo">VitalGuide</a>
+            <div class="controls-bar">
+                <button id="lang-toggle" class="control-btn">EN</button>
+                <button id="theme-toggle" class="control-btn"><i class="fas fa-moon"></i></button>
+            </div>
+        </div>
+        <nav>
+            <a href="/">맞춤 영양분석</a>
+            <a href="exercise.html">운동가이드</a>
+            <a href="health-type-test.html">건강유형테스트</a>
+            <a href="nutrient-quiz.html">영양소 퀴즈</a>
+            <a href="blog.html">건강가이드</a>
+        </nav>
+    </header>
+
+    <main class="container" style="max-width: 950px;">
+        <nav style="margin: 30px 0 0; font-size: 0.85rem; color: var(--text-muted);">
+            <a href="/" style="color: var(--text-muted); text-decoration: none;">홈</a>
+            <span style="margin: 0 8px;">›</span>
+            <span>건강검진 결과 해독기</span>
+        </nav>
+
+        <div class="luxury-report-card" style="margin-top: 24px; padding: 44px;">
+            <div class="report-badge" style="background: #0891b2; margin-bottom: 16px;">Health Decoder</div>
+            <h1 style="font-size: 1.95rem; line-height: 1.4; margin-bottom: 14px;">건강검진 결과 해독기</h1>
+            <p style="color: var(--text-muted); line-height: 1.8; margin-bottom: 8px;">건강검진 결과지의 수치를 입력하시면 <strong>대한진단검사의학회 기준</strong>으로 정상/주의/위험을 자동 분석하고, 각 항목별 의미와 개선 방법을 알려드립니다.</p>
+            <p style="font-size: 0.82rem; color: var(--text-muted); margin: 0;"><i class="fas fa-shield-alt"></i> 입력 데이터는 브라우저에만 저장되며 서버로 전송되지 않습니다.</p>
+        </div>
+
+        <!-- Quick Save/Load -->
+        <div style="display: flex; gap: 10px; justify-content: flex-end; margin: 16px 0;">
+            <button class="save-btn" onclick="saveData()"><i class="far fa-save"></i> 저장</button>
+            <button class="save-btn" onclick="loadData()"><i class="far fa-folder-open"></i> 불러오기</button>
+            <button class="save-btn" onclick="clearForm()" style="color:#dc2626;"><i class="far fa-trash-alt"></i> 초기화</button>
+        </div>
+
+        <form id="checkup-form" onsubmit="event.preventDefault(); analyze();">
+
+            <!-- 1. Body Measurement -->
+            <div class="metric-section" data-cat="body">
+                <div class="metric-section-header" onclick="toggleSection(this)">
+                    <h3><i class="fas fa-weight" style="color:#0891b2;"></i> 기본 신체 측정 <span style="font-size:0.75rem; color:var(--text-muted); font-weight:600;">(5)</span></h3>
+                    <span class="toggle-arrow">▼</span>
+                </div>
+                <div class="metric-section-body">
+                    <div class="metric-input">
+                        <label>키 <span class="ref">(cm)</span></label>
+                        <div class="input-wrap"><input type="number" id="height" step="0.1" placeholder="170"><span class="unit">cm</span></div>
+                    </div>
+                    <div class="metric-input">
+                        <label>체중 <span class="ref">(kg)</span></label>
+                        <div class="input-wrap"><input type="number" id="weight" step="0.1" placeholder="65"><span class="unit">kg</span></div>
+                    </div>
+                    <div class="metric-input">
+                        <label>허리둘레 <span class="ref">남 ≤90, 여 ≤85 cm</span></label>
+                        <div class="input-wrap"><input type="number" id="waist" step="0.1" placeholder="80"><span class="unit">cm</span></div>
+                    </div>
+                    <div class="metric-input">
+                        <label>수축기 혈압 <span class="ref">정상 &lt;120 mmHg</span></label>
+                        <div class="input-wrap"><input type="number" id="sbp" placeholder="118"><span class="unit">mmHg</span></div>
+                    </div>
+                    <div class="metric-input">
+                        <label>이완기 혈압 <span class="ref">정상 &lt;80 mmHg</span></label>
+                        <div class="input-wrap"><input type="number" id="dbp" placeholder="76"><span class="unit">mmHg</span></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 2. Blood Sugar -->
+            <div class="metric-section" data-cat="glucose">
+                <div class="metric-section-header" onclick="toggleSection(this)">
+                    <h3><i class="fas fa-tint" style="color:#dc2626;"></i> 혈당 (당뇨) <span style="font-size:0.75rem; color:var(--text-muted); font-weight:600;">(3)</span></h3>
+                    <span class="toggle-arrow">▼</span>
+                </div>
+                <div class="metric-section-body">
+                    <div class="metric-input">
+                        <label>공복혈당 <span class="ref">정상 70-99 mg/dL</span></label>
+                        <div class="input-wrap"><input type="number" id="fbs" placeholder="92"><span class="unit">mg/dL</span></div>
+                    </div>
+                    <div class="metric-input">
+                        <label>HbA1c (당화혈색소) <span class="ref">정상 &lt;5.7%</span></label>
+                        <div class="input-wrap"><input type="number" id="hba1c" step="0.1" placeholder="5.4"><span class="unit">%</span></div>
+                    </div>
+                    <div class="metric-input">
+                        <label>식후 2시간 혈당 <span class="ref">정상 &lt;140 mg/dL</span></label>
+                        <div class="input-wrap"><input type="number" id="pp2" placeholder="125"><span class="unit">mg/dL</span></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 3. Lipids -->
+            <div class="metric-section" data-cat="lipid">
+                <div class="metric-section-header" onclick="toggleSection(this)">
+                    <h3><i class="fas fa-heart" style="color:#ec4899;"></i> 콜레스테롤 (지질 프로필) <span style="font-size:0.75rem; color:var(--text-muted); font-weight:600;">(4)</span></h3>
+                    <span class="toggle-arrow">▼</span>
+                </div>
+                <div class="metric-section-body">
+                    <div class="metric-input">
+                        <label>총 콜레스테롤 <span class="ref">정상 &lt;200 mg/dL</span></label>
+                        <div class="input-wrap"><input type="number" id="tc" placeholder="180"><span class="unit">mg/dL</span></div>
+                    </div>
+                    <div class="metric-input">
+                        <label>LDL 콜레스테롤 <span class="ref">정상 &lt;130 mg/dL</span></label>
+                        <div class="input-wrap"><input type="number" id="ldl" placeholder="110"><span class="unit">mg/dL</span></div>
+                    </div>
+                    <div class="metric-input">
+                        <label>HDL 콜레스테롤 <span class="ref">남≥40, 여≥50 mg/dL</span></label>
+                        <div class="input-wrap"><input type="number" id="hdl" placeholder="55"><span class="unit">mg/dL</span></div>
+                    </div>
+                    <div class="metric-input">
+                        <label>중성지방 (TG) <span class="ref">정상 &lt;150 mg/dL</span></label>
+                        <div class="input-wrap"><input type="number" id="tg" placeholder="120"><span class="unit">mg/dL</span></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 4. Liver -->
+            <div class="metric-section" data-cat="liver">
+                <div class="metric-section-header" onclick="toggleSection(this)">
+                    <h3><i class="fas fa-heart-pulse" style="color:#7c3aed;"></i> 간 기능 <span style="font-size:0.75rem; color:var(--text-muted); font-weight:600;">(5)</span></h3>
+                    <span class="toggle-arrow">▼</span>
+                </div>
+                <div class="metric-section-body">
+                    <div class="metric-input">
+                        <label>AST (GOT) <span class="ref">정상 ≤40 U/L</span></label>
+                        <div class="input-wrap"><input type="number" id="ast" placeholder="22"><span class="unit">U/L</span></div>
+                    </div>
+                    <div class="metric-input">
+                        <label>ALT (GPT) <span class="ref">정상 ≤40 U/L</span></label>
+                        <div class="input-wrap"><input type="number" id="alt" placeholder="20"><span class="unit">U/L</span></div>
+                    </div>
+                    <div class="metric-input">
+                        <label>γ-GTP <span class="ref">남≤63, 여≤35 U/L</span></label>
+                        <div class="input-wrap"><input type="number" id="ggt" placeholder="25"><span class="unit">U/L</span></div>
+                    </div>
+                    <div class="metric-input">
+                        <label>총 빌리루빈 <span class="ref">정상 0.2-1.2 mg/dL</span></label>
+                        <div class="input-wrap"><input type="number" id="tbil" step="0.01" placeholder="0.8"><span class="unit">mg/dL</span></div>
+                    </div>
+                    <div class="metric-input">
+                        <label>알부민 <span class="ref">정상 3.5-5.2 g/dL</span></label>
+                        <div class="input-wrap"><input type="number" id="alb" step="0.1" placeholder="4.5"><span class="unit">g/dL</span></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 5. Kidney -->
+            <div class="metric-section" data-cat="kidney">
+                <div class="metric-section-header" onclick="toggleSection(this)">
+                    <h3><i class="fas fa-kidneys" style="color:#0d9488;"></i> 신장 기능 <span style="font-size:0.75rem; color:var(--text-muted); font-weight:600;">(4)</span></h3>
+                    <span class="toggle-arrow">▼</span>
+                </div>
+                <div class="metric-section-body">
+                    <div class="metric-input">
+                        <label>크레아티닌 <span class="ref">남0.7-1.3, 여0.6-1.1</span></label>
+                        <div class="input-wrap"><input type="number" id="cr" step="0.01" placeholder="0.9"><span class="unit">mg/dL</span></div>
+                    </div>
+                    <div class="metric-input">
+                        <label>eGFR (사구체여과율) <span class="ref">정상 ≥90</span></label>
+                        <div class="input-wrap"><input type="number" id="egfr" placeholder="95"><span class="unit">mL/min</span></div>
+                    </div>
+                    <div class="metric-input">
+                        <label>BUN (요소질소) <span class="ref">정상 8-20 mg/dL</span></label>
+                        <div class="input-wrap"><input type="number" id="bun" placeholder="14"><span class="unit">mg/dL</span></div>
+                    </div>
+                    <div class="metric-input">
+                        <label>요산 (Uric Acid) <span class="ref">남≤7.0, 여≤6.0</span></label>
+                        <div class="input-wrap"><input type="number" id="ua" step="0.1" placeholder="5.5"><span class="unit">mg/dL</span></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 6. CBC -->
+            <div class="metric-section collapsed" data-cat="cbc">
+                <div class="metric-section-header" onclick="toggleSection(this)">
+                    <h3><i class="fas fa-droplet" style="color:#ef4444;"></i> 혈액 일반 (빈혈) <span style="font-size:0.75rem; color:var(--text-muted); font-weight:600;">(4)</span></h3>
+                    <span class="toggle-arrow">▼</span>
+                </div>
+                <div class="metric-section-body">
+                    <div class="metric-input">
+                        <label>헤모글로빈 <span class="ref">남13.5-17.5, 여12-15.5</span></label>
+                        <div class="input-wrap"><input type="number" id="hb" step="0.1" placeholder="14.5"><span class="unit">g/dL</span></div>
+                    </div>
+                    <div class="metric-input">
+                        <label>적혈구 (RBC) <span class="ref">남4.5-5.9, 여4.0-5.2</span></label>
+                        <div class="input-wrap"><input type="number" id="rbc" step="0.01" placeholder="4.8"><span class="unit">10⁶/μL</span></div>
+                    </div>
+                    <div class="metric-input">
+                        <label>백혈구 (WBC) <span class="ref">정상 4.0-10.0</span></label>
+                        <div class="input-wrap"><input type="number" id="wbc" step="0.1" placeholder="6.5"><span class="unit">10³/μL</span></div>
+                    </div>
+                    <div class="metric-input">
+                        <label>혈소판 (PLT) <span class="ref">정상 150-450</span></label>
+                        <div class="input-wrap"><input type="number" id="plt" placeholder="280"><span class="unit">10³/μL</span></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 7. Thyroid + Vit + Inflammation -->
+            <div class="metric-section collapsed" data-cat="extra">
+                <div class="metric-section-header" onclick="toggleSection(this)">
+                    <h3><i class="fas fa-flask" style="color:#a855f7;"></i> 갑상선·비타민·염증 <span style="font-size:0.75rem; color:var(--text-muted); font-weight:600;">(5)</span></h3>
+                    <span class="toggle-arrow">▼</span>
+                </div>
+                <div class="metric-section-body">
+                    <div class="metric-input">
+                        <label>TSH (갑상선자극호르몬) <span class="ref">정상 0.4-4.5 mIU/L</span></label>
+                        <div class="input-wrap"><input type="number" id="tsh" step="0.01" placeholder="2.1"><span class="unit">mIU/L</span></div>
+                    </div>
+                    <div class="metric-input">
+                        <label>비타민D (25-OH) <span class="ref">충분 ≥30 ng/mL</span></label>
+                        <div class="input-wrap"><input type="number" id="vitd" step="0.1" placeholder="25"><span class="unit">ng/mL</span></div>
+                    </div>
+                    <div class="metric-input">
+                        <label>비타민B12 <span class="ref">정상 200-900 pg/mL</span></label>
+                        <div class="input-wrap"><input type="number" id="vitb12" placeholder="450"><span class="unit">pg/mL</span></div>
+                    </div>
+                    <div class="metric-input">
+                        <label>페리틴 (저장철) <span class="ref">남30-400, 여15-150</span></label>
+                        <div class="input-wrap"><input type="number" id="ferritin" placeholder="80"><span class="unit">ng/mL</span></div>
+                    </div>
+                    <div class="metric-input">
+                        <label>hs-CRP (염증 지표) <span class="ref">정상 &lt;1.0 mg/L</span></label>
+                        <div class="input-wrap"><input type="number" id="crp" step="0.01" placeholder="0.6"><span class="unit">mg/L</span></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Sex selector for sex-specific ranges -->
+            <div class="metric-section" style="background: color-mix(in srgb, var(--primary-color) 4%, transparent);">
+                <div class="metric-section-body" style="grid-template-columns: 1fr 1fr;">
+                    <div class="metric-input">
+                        <label>성별 (성별 특이 기준 적용)</label>
+                        <select id="sex" style="padding:8px 12px; border:1.5px solid var(--border-color); border-radius:8px; font-size:0.92rem; background:var(--bg-color); color:var(--text-color);">
+                            <option value="m">남성</option>
+                            <option value="f">여성</option>
+                        </select>
+                    </div>
+                    <div class="metric-input">
+                        <label>연령</label>
+                        <div class="input-wrap"><input type="number" id="age" placeholder="35"><span class="unit">세</span></div>
+                    </div>
+                </div>
+            </div>
+
+            <button type="submit" class="analyze-btn"><i class="fas fa-microscope"></i> &nbsp;수치 분석하기</button>
+        </form>
+
+        <!-- Results -->
+        <div id="results-section">
+            <div class="luxury-report-card" style="padding: 36px;">
+                <h2 style="text-align:center; font-size:1.4rem; margin:0 0 24px;">📊 종합 분석 결과</h2>
+                <div id="score-display"></div>
+                <div id="category-summary" style="margin-top: 22px;"></div>
+                <div id="priority-actions" style="margin-top: 30px;"></div>
+                <div id="detailed-results" style="margin-top: 30px;"></div>
+                <div id="recommended-nutrients" style="margin-top: 30px;"></div>
+            </div>
+        </div>
+
+        <!-- Educational Content -->
+        <div class="luxury-report-card" style="margin: 24px 0; padding: 44px;">
+            <h2 style="font-size: 1.4rem; font-weight: 900; margin-bottom: 20px; color: var(--primary-color);">검진 수치 완전 가이드</h2>
+            <p style="line-height:1.85; color:var(--text-muted); margin-bottom: 24px;">한국에서 매년 약 1,500만 명이 건강검진을 받지만, 결과지의 수치를 정확히 이해하는 사람은 드뭅니다. 아래는 가장 자주 묻는 수치들의 의미와 개선 방법입니다.</p>
+
+            <h3 style="font-size:1.15rem; margin: 28px 0 14px;">💉 혈당 — 당뇨병의 조기 신호</h3>
+            <p style="line-height:1.85; color:var(--text-muted); margin-bottom: 14px;">공복혈당 100~125 mg/dL은 '공복혈당장애'로, 당뇨 전 단계입니다. HbA1c는 지난 2~3개월간 평균 혈당을 반영하므로 일시적 식사 영향에 흔들리지 않는 정확한 지표입니다. HbA1c 5.7~6.4%는 당뇨 전단계, 6.5% 이상은 당뇨 진단 기준입니다. 공복혈당이 정상이어도 식후 2시간 혈당이 140 이상이면 인슐린 저항성을 의심해야 합니다.</p>
+
+            <h3 style="font-size:1.15rem; margin: 28px 0 14px;">❤️ 콜레스테롤 — LDL만 보지 마세요</h3>
+            <p style="line-height:1.85; color:var(--text-muted); margin-bottom: 14px;">LDL은 '나쁜 콜레스테롤'로 알려져 있지만, 더 중요한 지표는 <strong>중성지방/HDL 비율</strong>입니다. 이 비율이 2.0 이하이면 심혈관 위험이 낮고, 3.5 이상이면 인슐린 저항성과 대사증후군 위험이 큽니다. HDL은 운동, 오메가3, 견과류로 올릴 수 있습니다.</p>
+
+            <h3 style="font-size:1.15rem; margin: 28px 0 14px;">🟣 간 수치 (AST/ALT) — 지방간 vs 알코올성</h3>
+            <p style="line-height:1.85; color:var(--text-muted); margin-bottom: 14px;">AST/ALT 비율이 중요합니다. <strong>ALT > AST</strong>(비율 &lt;1)이면 비알코올성 지방간(NAFLD)을 의심합니다. <strong>AST &gt; ALT 2배 이상</strong>이면 알코올성 간 손상을 의심합니다. γ-GTP는 알코올 섭취와 매우 민감하게 반응하므로, 음주가 없는데도 높다면 담관·췌장 문제도 검토해야 합니다.</p>
+
+            <h3 style="font-size:1.15rem; margin: 28px 0 14px;">🩺 갑상선 (TSH) — 피로의 숨은 원인</h3>
+            <p style="line-height:1.85; color:var(--text-muted); margin-bottom: 14px;">TSH가 4.5 mIU/L 이상이면 갑상선 기능 저하증을 의심합니다. 만성 피로, 체중 증가, 변비, 우울감, 탈모가 동반된다면 더 의심됩니다. 반대로 TSH가 0.4 미만이면 갑상선 기능 항진증(체중 감소, 심박 증가, 떨림)을 의심합니다. 임상 가이드라인은 TSH 2.5 이하를 '최적'으로 봅니다.</p>
+
+            <h3 style="font-size:1.15rem; margin: 28px 0 14px;">🟡 비타민D — 한국인 90%가 부족</h3>
+            <p style="line-height:1.85; color:var(--text-muted); margin-bottom: 14px;">25-OH 비타민D 20 ng/mL 미만은 '결핍', 20-30은 '불충분'입니다. 한국인 평균 농도는 16-18 ng/mL로 OECD 최하위권입니다. 면역, 골밀도, 우울감, 자가면역 위험에 직결됩니다. 햇빛 노출이 부족하면 D3 2,000~4,000 IU/일 보충을 권장합니다.</p>
+
+            <h3 style="font-size:1.15rem; margin: 28px 0 14px;">🔴 페리틴 — 헤모글로빈이 정상이어도 부족할 수 있음</h3>
+            <p style="line-height:1.85; color:var(--text-muted); margin-bottom: 14px;">페리틴은 체내 '저장철' 양을 반영합니다. 헤모글로빈이 정상이어도 페리틴이 30 ng/mL 미만이면 '잠재성 철 결핍'으로, 피로·탈모·집중력 저하·운동력 감소를 유발합니다. 가임기 여성에서 특히 흔합니다.</p>
+
+            <h3 style="font-size:1.15rem; margin: 28px 0 14px;">⚪ hs-CRP — 숨은 만성 염증의 신호</h3>
+            <p style="line-height:1.85; color:var(--text-muted); margin-bottom: 14px;">hs-CRP가 1.0 mg/L 이상이면 만성 저강도 염증을 의심합니다. 비만, 흡연, 만성 스트레스, 치주염, 수면 부족이 원인이 될 수 있습니다. 1.0~3.0은 중등도 위험, 3.0 이상은 고위험으로 심혈관 질환 발생률이 2~3배 증가합니다.</p>
+        </div>
+
+        <div style="background: linear-gradient(135deg, #fef3c7, #fde68a); border-radius: 16px; padding: 22px 26px; margin-bottom: 30px; border-left: 4px solid #d97706;">
+            <strong style="color: #78350f; font-size: 0.95rem;">⚠️ 중요 안내</strong>
+            <p style="margin: 8px 0 0; line-height: 1.8; color: #92400e; font-size: 0.88rem;">본 도구는 일반인의 검진 결과 이해를 돕기 위한 <strong>교육·참고용</strong>입니다. 의학적 진단·치료를 대신할 수 없습니다. 결과지에 '판정 의뢰'나 비정상이 표시된 경우, 반드시 가정의학과 또는 해당 전문의를 방문하시기 바랍니다. 특히 본인의 기존 질환·복용약·임신 여부는 수치 해석에 큰 영향을 미칩니다.</p>
+        </div>
+
+        <div style="text-align:center; margin: 0 0 60px;">
+            <a href="blog.html" class="luxury-btn" style="display:inline-block; text-decoration:none;">← 건강가이드 목록으로</a>
+        </div>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2026 VitalGuide. 과학 기반 건강 정보 가이드.</p>
+            <div style="margin-top: 20px; display: flex; justify-content: center; gap: 20px; font-size: 0.8rem;">
+                <a href="about.html#editorial" style="color: var(--text-muted); text-decoration: none;">편집 원칙</a>
+                <a href="privacy.html" style="color: var(--text-muted); text-decoration: none;">Privacy</a>
+                <a href="terms.html" style="color: var(--text-muted); text-decoration: none;">Terms</a>
+                <a href="about.html" style="color: var(--text-muted); text-decoration: none;">About</a>
+                <a href="contact.html" style="color: var(--text-muted); text-decoration: none;">Contact</a>
+            </div>
+        </div>
+    </footer>
+
+    <script src="theme.js"></script>
+    <script src="cookie-consent.js"></script>
+    <script>
+    function toggleSection(el) { el.parentElement.classList.toggle('collapsed'); }
+
+    const METRICS = {
+        // [id, name, unit, ranges {normal, borderline, high, low}, nutrients, advice]
+        bmi: null, // computed
+        sbp:    { name:'수축기 혈압', unit:'mmHg', cat:'body',
+            normal:[90,119], borderline:[120,139], high:[140,9999],
+            advice_high:'고혈압 가능성. 나트륨 줄이기 + DASH 식단 + 유산소 운동',
+            nutrients:['마그네슘','오메가3','코엔자임Q10','칼륨'] },
+        dbp:    { name:'이완기 혈압', unit:'mmHg', cat:'body',
+            normal:[60,79], borderline:[80,89], high:[90,9999],
+            advice_high:'고혈압 의심. 스트레스 관리 + 운동 + 체중 감량',
+            nutrients:['마그네슘','히비스커스','비트루트'] },
+        fbs:    { name:'공복혈당', unit:'mg/dL', cat:'glucose',
+            normal:[70,99], borderline:[100,125], high:[126,9999], low:[0,69],
+            advice_borderline:'공복혈당장애(당뇨 전단계). 정제 탄수화물 줄이기 + 식후 산책 10분',
+            advice_high:'당뇨병 의심. 가정의학과/내분비내과 진료 필요',
+            nutrients:['크롬','마그네슘','베르베린','시나몬'] },
+        hba1c:  { name:'HbA1c', unit:'%', cat:'glucose',
+            normal:[4,5.6], borderline:[5.7,6.4], high:[6.5,99],
+            advice_borderline:'당뇨 전단계. 체중 5% 감량 시 당뇨 진행 위험 58% 감소',
+            advice_high:'당뇨 진단 기준. 즉시 내분비내과 진료',
+            nutrients:['베르베린','알파리포산','크롬'] },
+        pp2:    { name:'식후2시간혈당', unit:'mg/dL', cat:'glucose',
+            normal:[0,139], borderline:[140,199], high:[200,9999],
+            advice_borderline:'내당능 장애. 저GI 식단 + 식후 운동',
+            advice_high:'당뇨 의심. 의사 진료 필요',
+            nutrients:['크롬','마그네슘'] },
+        tc:     { name:'총 콜레스테롤', unit:'mg/dL', cat:'lipid',
+            normal:[0,199], borderline:[200,239], high:[240,9999],
+            advice_borderline:'경계성. 포화지방 줄이기 + 식이섬유 25g/일',
+            advice_high:'고콜레스테롤혈증. 심혈관 위험 평가 필요',
+            nutrients:['오메가3','홍국','식물성스테롤'] },
+        ldl:    { name:'LDL 콜레스테롤', unit:'mg/dL', cat:'lipid',
+            normal:[0,129], borderline:[130,159], high:[160,9999],
+            advice_borderline:'경계성. 가공식품·트랜스지방 제거',
+            advice_high:'위험. 의사 진료 (스타틴 고려)',
+            nutrients:['홍국','식물성스테롤','오메가3','베타글루칸'] },
+        hdl:    { name:'HDL 콜레스테롤', unit:'mg/dL', cat:'lipid',
+            // sex-specific - handle in analyze
+            advice_low:'좋은 콜레스테롤 부족. 유산소 운동 + 오메가3 + 견과류',
+            nutrients:['나이아신','오메가3','올리브유'] },
+        tg:     { name:'중성지방', unit:'mg/dL', cat:'lipid',
+            normal:[0,149], borderline:[150,199], high:[200,9999],
+            advice_borderline:'주의. 단순당·알코올 제한',
+            advice_high:'위험. 췌장염 위험 (500↑), 의사 상담',
+            nutrients:['오메가3 (EPA 고용량)','나이아신','베르베린'] },
+        ast:    { name:'AST (GOT)', unit:'U/L', cat:'liver',
+            normal:[0,40], borderline:[41,80], high:[81,9999],
+            advice_borderline:'경도 상승. 음주·약물·체중 확인',
+            advice_high:'간 손상 의심. 의사 진료',
+            nutrients:['실리마린','NAC','글루타치온'] },
+        alt:    { name:'ALT (GPT)', unit:'U/L', cat:'liver',
+            normal:[0,40], borderline:[41,80], high:[81,9999],
+            advice_borderline:'경도 상승. 지방간 가능성 - 체중 감량',
+            advice_high:'간 손상. 의사 진료 + 복부 초음파',
+            nutrients:['실리마린','콜린','NAC','비타민E'] },
+        ggt:    { name:'γ-GTP', unit:'U/L', cat:'liver',
+            // sex-specific
+            advice_high:'음주·담관/췌장 문제 가능. 의사 상담',
+            nutrients:['실리마린','NAC'] },
+        tbil:   { name:'총 빌리루빈', unit:'mg/dL', cat:'liver',
+            normal:[0.2,1.2], borderline:[1.3,2.0], high:[2.1,99],
+            advice_borderline:'경도 상승. 길버트 증후군(양성)일 수 있음',
+            advice_high:'간담도 문제 가능. 의사 진료',
+            nutrients:[] },
+        alb:    { name:'알부민', unit:'g/dL', cat:'liver',
+            normal:[3.5,5.2], low:[0,3.4],
+            advice_low:'영양실조/만성염증 의심. 단백질 섭취 점검',
+            nutrients:['단백질'] },
+        cr:     { name:'크레아티닌', unit:'mg/dL', cat:'kidney',
+            // sex-specific
+            advice_high:'신장 기능 저하 가능. 신장내과 진료',
+            nutrients:['비트루트','마그네슘'] },
+        egfr:   { name:'eGFR', unit:'mL/min', cat:'kidney',
+            normal:[90,999], borderline:[60,89], high:[0,59],
+            advice_borderline:'경도 저하. 단백질·소금 적정 섭취',
+            advice_high:'신부전 단계. 신장내과 진료 필수',
+            nutrients:[] },
+        bun:    { name:'BUN', unit:'mg/dL', cat:'kidney',
+            normal:[8,20], borderline:[21,30], high:[31,99],
+            advice_borderline:'탈수/단백 과다 가능. 수분 확인',
+            advice_high:'신장 기능 점검 필요',
+            nutrients:[] },
+        ua:     { name:'요산', unit:'mg/dL', cat:'kidney',
+            // sex-specific
+            advice_high:'고요산혈증. 통풍·신결석 위험. 퓨린 제한',
+            nutrients:['타르트체리','비타민C','커큐민'] },
+        hb:     { name:'헤모글로빈', unit:'g/dL', cat:'cbc',
+            // sex-specific
+            advice_low:'빈혈 의심. 철분·B12·엽산 평가 필요',
+            nutrients:['철분','비타민C','엽산','비타민B12'] },
+        rbc:    { name:'적혈구', unit:'10⁶/μL', cat:'cbc',
+            // sex-specific
+            advice_low:'빈혈 동반 가능',
+            nutrients:['철분','B12','엽산'] },
+        wbc:    { name:'백혈구', unit:'10³/μL', cat:'cbc',
+            normal:[4,10], borderline:[10.1,12], high:[12.1,99], low:[0,3.9],
+            advice_low:'면역 저하. 골수 기능/감염 평가',
+            advice_high:'염증·감염 의심',
+            nutrients:['비타민C','아연','베타글루칸'] },
+        plt:    { name:'혈소판', unit:'10³/μL', cat:'cbc',
+            normal:[150,450], low:[0,149], high:[451,9999],
+            advice_low:'출혈 위험. 의사 평가',
+            advice_high:'혈전 위험 또는 염증 동반',
+            nutrients:[] },
+        tsh:    { name:'TSH', unit:'mIU/L', cat:'extra',
+            normal:[0.4,4.5], borderline:[4.6,10], high:[10.1,99], low:[0,0.39],
+            advice_borderline:'갑상선기능저하 의심. 가정의학과/내분비내과 진료',
+            advice_high:'명백한 갑상선저하. 의사 진료 필수',
+            advice_low:'갑상선기능항진 가능. 의사 진료',
+            nutrients:['셀레늄','요오드(주의)','아연','비타민D'] },
+        vitd:   { name:'비타민D', unit:'ng/mL', cat:'extra',
+            normal:[30,100], borderline:[20,29.9], high:[100.1,999], low:[0,19.9],
+            advice_borderline:'불충분. D3 1,000-2,000IU/일 보충 권장',
+            advice_low:'결핍. D3 2,000-4,000IU/일 + 햇빛 노출',
+            advice_high:'과잉. 보충제 중단 + 의사 상담',
+            nutrients:['비타민D3','비타민K2','마그네슘'] },
+        vitb12: { name:'비타민B12', unit:'pg/mL', cat:'extra',
+            normal:[300,900], borderline:[200,299], low:[0,199], high:[901,9999],
+            advice_borderline:'부족 경계. 메틸코발라민 보충 + 동물성 단백질',
+            advice_low:'결핍. 신경 손상 위험. 보충제 또는 주사',
+            nutrients:['메틸코발라민','엽산','단백질'] },
+        ferritin:{name:'페리틴', unit:'ng/mL', cat:'extra',
+            // sex-specific
+            advice_low:'잠재성 철 결핍. 피로·탈모 원인 가능',
+            advice_high:'염증/간질환 동반 가능. 평가 필요',
+            nutrients:['철분','비타민C'] },
+        crp:    { name:'hs-CRP', unit:'mg/L', cat:'extra',
+            normal:[0,0.99], borderline:[1,2.99], high:[3,9999],
+            advice_borderline:'중등도 염증. 심혈관 위험 1.5배',
+            advice_high:'고위험. 만성 염증 원인 평가',
+            nutrients:['오메가3','커큐민','케르세틴','비타민D'] },
+    };
+
+    const CAT_NAMES = {
+        body:'기본 신체·혈압', glucose:'혈당', lipid:'콜레스테롤',
+        liver:'간 기능', kidney:'신장 기능', cbc:'혈액 일반',
+        extra:'갑상선·비타민·염증'
+    };
+
+    function getRange(id, sex) {
+        const m = METRICS[id];
+        if (!m) return null;
+        // Sex-specific overrides
+        if (id === 'hdl') {
+            return sex === 'm'
+                ? { normal:[40,999], low:[0,39] }
+                : { normal:[50,999], low:[0,49] };
+        }
+        if (id === 'ggt') {
+            return sex === 'm'
+                ? { normal:[0,63], borderline:[64,120], high:[121,9999] }
+                : { normal:[0,35], borderline:[36,70], high:[71,9999] };
+        }
+        if (id === 'cr') {
+            return sex === 'm'
+                ? { normal:[0.7,1.3], high:[1.31,99] }
+                : { normal:[0.6,1.1], high:[1.11,99] };
+        }
+        if (id === 'ua') {
+            return sex === 'm'
+                ? { normal:[3.4,7.0], high:[7.01,99] }
+                : { normal:[2.4,6.0], high:[6.01,99] };
+        }
+        if (id === 'hb') {
+            return sex === 'm'
+                ? { normal:[13.5,17.5], low:[0,13.4], high:[17.51,99] }
+                : { normal:[12.0,15.5], low:[0,11.9], high:[15.51,99] };
+        }
+        if (id === 'rbc') {
+            return sex === 'm'
+                ? { normal:[4.5,5.9], low:[0,4.49] }
+                : { normal:[4.0,5.2], low:[0,3.99] };
+        }
+        if (id === 'ferritin') {
+            return sex === 'm'
+                ? { normal:[30,400], low:[0,29], high:[401,99999] }
+                : { normal:[15,150], low:[0,14], high:[151,99999] };
+        }
+        return { normal:m.normal, borderline:m.borderline, high:m.high, low:m.low };
+    }
+
+    function classify(id, value, sex) {
+        const r = getRange(id, sex);
+        if (!r) return null;
+        if (r.low && value >= r.low[0] && value <= r.low[1]) return 'low';
+        if (r.high && value >= r.high[0] && value <= r.high[1]) return 'high';
+        if (r.borderline && value >= r.borderline[0] && value <= r.borderline[1]) return 'borderline';
+        if (r.normal && value >= r.normal[0] && value <= r.normal[1]) return 'normal';
+        return null;
+    }
+
+    function val(id) {
+        const el = document.getElementById(id);
+        if (!el) return null;
+        const v = parseFloat(el.value);
+        return isNaN(v) ? null : v;
+    }
+
+    function analyze() {
+        const sex = document.getElementById('sex').value;
+        const age = val('age') || 35;
+        const results = [];
+        const categoryStatus = {};
+        let totalChecks = 0, normalCount = 0;
+
+        // Special: BMI
+        const h = val('height'), w = val('weight');
+        if (h && w) {
+            const bmi = w / Math.pow(h/100, 2);
+            let status, advice;
+            if (bmi < 18.5) { status='low'; advice='저체중. 단백질·건강한 지방 + 근력 운동'; }
+            else if (bmi < 25) { status='normal'; advice='정상 체중 유지'; }
+            else if (bmi < 30) { status='borderline'; advice='과체중. 5~10% 감량 시 건강 지표 크게 개선'; }
+            else { status='high'; advice='비만. 의사 상담 + 식이·운동 처방'; }
+            results.push({ id:'bmi', name:'BMI', value:bmi.toFixed(1), unit:'kg/m²', status, advice, cat:'body', nutrients:[] });
+            totalChecks++;
+            if (status === 'normal') normalCount++;
+            categoryStatus.body = categoryStatus.body || 'normal';
+            if (status !== 'normal') categoryStatus.body = worst(categoryStatus.body, status);
+        }
+
+        // Process all metrics
+        for (const id in METRICS) {
+            if (!METRICS[id]) continue;
+            const v = val(id);
+            if (v === null) continue;
+            const m = METRICS[id];
+            const status = classify(id, v, sex);
+            if (!status) continue;
+            let advice = '';
+            if (status === 'normal') advice = '정상 범위';
+            else if (status === 'borderline' && m.advice_borderline) advice = m.advice_borderline;
+            else if (status === 'high' && m.advice_high) advice = m.advice_high;
+            else if (status === 'low' && m.advice_low) advice = m.advice_low;
+            results.push({ id, name:m.name, value:v, unit:m.unit, status, advice, cat:m.cat, nutrients:m.nutrients||[] });
+            totalChecks++;
+            if (status === 'normal') normalCount++;
+            categoryStatus[m.cat] = categoryStatus[m.cat] || 'normal';
+            if (status !== 'normal') categoryStatus[m.cat] = worst(categoryStatus[m.cat], status);
+        }
+
+        if (totalChecks === 0) {
+            alert('최소 1개 이상의 수치를 입력해 주세요.');
+            return;
+        }
+
+        renderResults(results, categoryStatus, normalCount, totalChecks);
+        document.getElementById('results-section').style.display = 'block';
+        document.getElementById('results-section').scrollIntoView({ behavior:'smooth' });
+    }
+
+    function worst(a, b) {
+        const rank = { normal:0, borderline:1, low:2, high:3 };
+        return rank[b] > rank[a] ? b : a;
+    }
+
+    function statusLabel(s) {
+        return { normal:'정상', borderline:'경계', low:'낮음', high:'주의' }[s] || s;
+    }
+
+    function statusColor(s) {
+        return { normal:'#059669', borderline:'#d97706', low:'#2563eb', high:'#dc2626' }[s];
+    }
+
+    function renderResults(results, categoryStatus, normalCount, totalChecks) {
+        // Score ring
+        const score = Math.round((normalCount / totalChecks) * 100);
+        let scoreColor = '#059669';
+        let scoreLabel = '우수';
+        if (score < 50) { scoreColor = '#dc2626'; scoreLabel = '주의 필요'; }
+        else if (score < 75) { scoreColor = '#d97706'; scoreLabel = '관리 필요'; }
+        else if (score < 90) { scoreColor = '#0891b2'; scoreLabel = '양호'; }
+        document.getElementById('score-display').innerHTML = `
+            <div style="text-align:center;">
+                <div class="score-ring" style="background:linear-gradient(135deg, ${scoreColor}, color-mix(in srgb, ${scoreColor} 70%, black));">${score}</div>
+                <p style="font-weight:900; font-size:1.1rem; margin:0;">종합 건강 점수: ${scoreLabel}</p>
+                <p style="color:var(--text-muted); font-size:0.88rem; margin:6px 0 0;">총 ${totalChecks}개 항목 중 ${normalCount}개 정상</p>
+            </div>
+        `;
+
+        // Category summary
+        const catHTML = Object.entries(categoryStatus).map(([cat, status]) => `
+            <div style="background:var(--card-bg); border-radius:12px; padding:14px 18px; border-left:4px solid ${statusColor(status)}; display:flex; justify-content:space-between; align-items:center;">
+                <span style="font-weight:700; font-size:0.92rem;">${CAT_NAMES[cat]||cat}</span>
+                <span class="status-badge status-${status}">${statusLabel(status)}</span>
+            </div>
+        `).join('');
+        document.getElementById('category-summary').innerHTML = `
+            <h3 style="font-size:1.05rem; margin-bottom:12px;">카테고리별 상태</h3>
+            <div style="display:grid; grid-template-columns:repeat(auto-fill, minmax(200px,1fr)); gap:10px;">${catHTML}</div>
+        `;
+
+        // Priority actions (top 3 abnormal)
+        const abnormal = results.filter(r => r.status !== 'normal');
+        if (abnormal.length > 0) {
+            const priorities = abnormal.slice(0, 5).map((r, i) => `
+                <div class="priority-item">
+                    <span class="priority-num">${i+1}</span>
+                    <div style="flex:1;">
+                        <p style="font-weight:800; margin:0 0 4px;">${r.name} ${r.value} ${r.unit} <span class="status-badge status-${r.status}" style="margin-left:6px;">${statusLabel(r.status)}</span></p>
+                        <p style="font-size:0.86rem; color:var(--text-muted); margin:0; line-height:1.7;">${r.advice}</p>
+                    </div>
+                </div>
+            `).join('');
+            document.getElementById('priority-actions').innerHTML = `
+                <h3 style="font-size:1.05rem; margin-bottom:14px;">🎯 우선 관리할 항목 (TOP ${Math.min(abnormal.length,5)})</h3>
+                ${priorities}
+            `;
+        } else {
+            document.getElementById('priority-actions').innerHTML = `
+                <div style="background:linear-gradient(135deg,#d1fae5,#a7f3d0); border-radius:14px; padding:20px; text-align:center;">
+                    <p style="color:#065f46; font-weight:800; margin:0; font-size:1rem;">🎉 모든 입력 항목이 정상 범위입니다!</p>
+                    <p style="color:#047857; margin:6px 0 0; font-size:0.88rem;">현재 생활습관을 잘 유지하세요.</p>
+                </div>
+            `;
+        }
+
+        // Detailed results table
+        const tableHTML = results.map(r => `
+            <div class="result-card result-${r.status}">
+                <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:6px; flex-wrap:wrap; gap:8px;">
+                    <strong style="font-size:0.95rem;">${r.name}</strong>
+                    <span style="font-weight:800; font-size:0.95rem; color:${statusColor(r.status)};">${r.value} ${r.unit} <span class="status-badge status-${r.status}" style="margin-left:6px;">${statusLabel(r.status)}</span></span>
+                </div>
+                <p style="font-size:0.85rem; color:var(--text-muted); margin:0; line-height:1.7;">${r.advice}</p>
+            </div>
+        `).join('');
+        document.getElementById('detailed-results').innerHTML = `
+            <h3 style="font-size:1.05rem; margin-bottom:14px;">📋 항목별 상세</h3>
+            ${tableHTML}
+        `;
+
+        // Recommended nutrients (aggregate)
+        const nutrientSet = new Set();
+        results.filter(r => r.status !== 'normal').forEach(r => (r.nutrients||[]).forEach(n => nutrientSet.add(n)));
+        if (nutrientSet.size > 0) {
+            const pills = [...nutrientSet].map(n => `<span class="nutrient-pill">${n}</span>`).join('');
+            document.getElementById('recommended-nutrients').innerHTML = `
+                <h3 style="font-size:1.05rem; margin-bottom:14px;">💊 검토할 영양소</h3>
+                <p style="font-size:0.84rem; color:var(--text-muted); margin-bottom:12px;">아래는 비정상 수치 개선에 도움이 될 수 있는 영양소입니다. 보충제 시작 전 의사·약사와 상담하세요.</p>
+                <div style="line-height:2.4;">${pills}</div>
+                <div style="margin-top:14px; font-size:0.84rem; padding:14px; background:var(--card-bg); border-radius:10px;">💡 영양소 간 상호작용이 궁금하다면 <a href="supplement-interaction-checker.html" style="color:var(--primary-color); font-weight:700;">영양제 상호작용 체크기</a>를 이용하세요.</div>
+            `;
+        } else {
+            document.getElementById('recommended-nutrients').innerHTML = '';
+        }
+    }
+
+    function saveData() {
+        const data = {};
+        document.querySelectorAll('#checkup-form input, #checkup-form select').forEach(el => {
+            if (el.value) data[el.id] = el.value;
+        });
+        localStorage.setItem('vg-checkup', JSON.stringify(data));
+        alert('저장되었습니다. (이 브라우저에만)');
+    }
+
+    function loadData() {
+        const raw = localStorage.getItem('vg-checkup');
+        if (!raw) { alert('저장된 데이터가 없습니다.'); return; }
+        const data = JSON.parse(raw);
+        Object.entries(data).forEach(([k,v]) => {
+            const el = document.getElementById(k);
+            if (el) el.value = v;
+        });
+        alert('불러왔습니다.');
+    }
+
+    function clearForm() {
+        if (!confirm('모든 입력값을 지우시겠습니까?')) return;
+        document.querySelectorAll('#checkup-form input').forEach(el => el.value = '');
+        document.getElementById('results-section').style.display = 'none';
+    }
+    </script>
+</body>
+</html>

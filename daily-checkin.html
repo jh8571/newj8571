@@ -1,0 +1,545 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-P6CTZY2283"></script>
+    <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-P6CTZY2283');</script>
+    <meta name="google-adsense-account" content="ca-pub-9103697866666926">
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9103697866666926" crossorigin="anonymous"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>오늘의 건강 체크인 — 30초 자가진단 + 30일 트렌드 | VitalGuide</title>
+    <meta name="description" content="매일 30초만 투자하세요. 수면·수분·식이·운동·스트레스 기반 데일리 건강 점수와 30일 트렌드를 추적합니다. 주간 인사이트로 결핍 위험을 미리 알려드려요.">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="icon" href="favicon.svg" type="image/svg+xml">
+    <link rel="canonical" href="https://vi7al.com/daily-checkin.html">
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="오늘의 건강 체크인 — 30초 자가진단 + 30일 트렌드">
+    <meta property="og:description" content="매일 30초 체크인으로 건강 점수와 트렌드를 추적하세요.">
+    <meta property="og:image" content="https://vi7al.com/og-image.png">
+    <meta property="og:site_name" content="VitalGuide">
+    <script type="application/ld+json">
+    {"@context":"https://schema.org","@type":"WebApplication","name":"오늘의 건강 체크인","description":"매일 30초 자가진단 + 30일 트렌드 추적","url":"https://vi7al.com/daily-checkin.html","applicationCategory":"HealthApplication","operatingSystem":"All","provider":{"@type":"Organization","name":"VitalGuide","url":"https://vi7al.com/"}}
+    </script>
+    <style>
+        .day-streak { display:inline-flex; align-items:center; gap:6px; background:linear-gradient(135deg, #f59e0b, #ef4444); color:white; padding:6px 14px; border-radius:20px; font-weight:800; font-size:0.85rem; }
+        .question-card { background: var(--card-bg); border: 1px solid var(--border-color); border-radius: 18px; padding: 24px 26px; margin-bottom: 18px; }
+        .question-label { font-size: 1rem; font-weight: 800; margin-bottom: 14px; display: flex; align-items: center; gap: 10px; color: var(--text-color); }
+        .question-label .emoji { font-size: 1.4rem; }
+        .choice-row { display: grid; grid-template-columns: repeat(auto-fit, minmax(95px, 1fr)); gap: 8px; }
+        .choice-btn { background: var(--bg-color); border: 1.5px solid var(--border-color); border-radius: 12px; padding: 12px 8px; cursor: pointer; transition: all 0.15s; text-align: center; font-size: 0.85rem; font-weight: 600; color: var(--text-color); user-select: none; }
+        .choice-btn:hover { border-color: var(--primary-color); }
+        .choice-btn.selected { background: var(--primary-color); color: white; border-color: var(--primary-color); transform: scale(1.03); }
+        .choice-btn .score-tag { display: block; font-size: 0.7rem; opacity: 0.7; margin-top: 4px; }
+        .score-circle { width: 160px; height: 160px; border-radius: 50%; display: flex; flex-direction: column; align-items: center; justify-content: center; color: white; margin: 0 auto 20px; box-shadow: 0 8px 28px rgba(0,0,0,0.18); }
+        .score-circle .num { font-size: 3rem; font-weight: 900; line-height: 1; }
+        .score-circle .lbl { font-size: 0.78rem; opacity: 0.9; margin-top: 6px; }
+        .chart-container { background: var(--card-bg); border-radius: 16px; padding: 22px; margin: 20px 0; border: 1px solid var(--border-color); }
+        #chart-svg { width: 100%; height: 220px; }
+        .chart-bar { fill: var(--primary-color); transition: opacity 0.2s; cursor: pointer; }
+        .chart-bar:hover { opacity: 0.75; }
+        .chart-grid { stroke: var(--border-color); stroke-width: 0.5; }
+        .chart-label { font-size: 9px; fill: var(--text-muted); }
+        .insight-card { background: linear-gradient(135deg, color-mix(in srgb, var(--primary-color) 12%, transparent), color-mix(in srgb, var(--primary-color) 4%, transparent)); border-radius: 14px; padding: 18px 22px; margin-bottom: 12px; border-left: 4px solid var(--primary-color); }
+        .submit-btn { background: var(--primary-color); color: white; border: none; border-radius: 14px; padding: 16px 40px; font-size: 1.05rem; font-weight: 800; cursor: pointer; display: block; margin: 28px auto 16px; width: 100%; max-width: 400px; }
+        .submit-btn:hover { opacity: 0.9; }
+        .submit-btn:disabled { opacity: 0.5; cursor: not-allowed; }
+        .stat-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 12px; margin: 16px 0; }
+        .stat-box { background: var(--card-bg); border-radius: 12px; padding: 14px 16px; text-align: center; border: 1px solid var(--border-color); }
+        .stat-box .num { font-size: 1.6rem; font-weight: 900; color: var(--primary-color); display: block; }
+        .stat-box .lbl { font-size: 0.75rem; color: var(--text-muted); margin-top: 2px; }
+        .badge-row { display: flex; flex-wrap: wrap; gap: 10px; justify-content: center; margin: 16px 0; }
+        .achievement-badge { padding: 10px 16px; background: var(--card-bg); border: 1px solid var(--border-color); border-radius: 99px; font-size: 0.82rem; font-weight: 700; display: inline-flex; align-items: center; gap: 6px; }
+        .achievement-badge.earned { background: linear-gradient(135deg, #fbbf24, #f59e0b); color: white; border-color: transparent; }
+    </style>
+</head>
+<body data-lang="ko">
+    <header>
+        <div class="container header-flex">
+            <a href="/" class="logo">VitalGuide</a>
+            <div class="controls-bar">
+                <button id="lang-toggle" class="control-btn">EN</button>
+                <button id="theme-toggle" class="control-btn"><i class="fas fa-moon"></i></button>
+            </div>
+        </div>
+        <nav>
+            <a href="/">맞춤 영양분석</a>
+            <a href="exercise.html">운동가이드</a>
+            <a href="health-type-test.html">건강유형테스트</a>
+            <a href="nutrient-quiz.html">영양소 퀴즈</a>
+            <a href="blog.html">건강가이드</a>
+        </nav>
+    </header>
+
+    <main class="container" style="max-width: 760px;">
+        <nav style="margin: 30px 0 0; font-size: 0.85rem; color: var(--text-muted);">
+            <a href="/" style="color: var(--text-muted); text-decoration: none;">홈</a>
+            <span style="margin: 0 8px;">›</span>
+            <span>오늘의 건강 체크인</span>
+        </nav>
+
+        <!-- HEADER CARD -->
+        <div class="luxury-report-card" style="margin-top: 24px; padding: 36px;">
+            <div style="display:flex; justify-content:space-between; align-items:flex-start; flex-wrap:wrap; gap:12px; margin-bottom: 12px;">
+                <div>
+                    <div class="report-badge" style="background: #f59e0b; margin-bottom: 10px;">Daily Check-in</div>
+                    <h1 style="font-size: 1.7rem; line-height: 1.4; margin: 0;">오늘의 건강 체크인</h1>
+                </div>
+                <div id="streak-display" style="text-align:right;"></div>
+            </div>
+            <p style="color: var(--text-muted); line-height: 1.75; margin: 12px 0 0;">매일 30초만 투자하세요. 30일이 쌓이면 당신만의 건강 패턴이 보입니다. <strong>모든 데이터는 브라우저에만 저장</strong>되며 어디로도 전송되지 않습니다.</p>
+        </div>
+
+        <!-- TODAY'S CHECK-IN -->
+        <div id="checkin-view">
+            <h2 style="font-size: 1.15rem; margin: 30px 0 16px; display: flex; align-items: center; gap: 10px;">
+                <span id="today-emoji">✨</span> <span id="today-date">오늘의 질문</span>
+            </h2>
+
+            <div id="checkin-form">
+                <!-- Q1: Sleep -->
+                <div class="question-card">
+                    <div class="question-label"><span class="emoji">😴</span> 어제 잠을 몇 시간 잤나요?</div>
+                    <div class="choice-row" data-q="sleep">
+                        <div class="choice-btn" data-v="0">5시간 미만<span class="score-tag">-10</span></div>
+                        <div class="choice-btn" data-v="1">5~6시간<span class="score-tag">+5</span></div>
+                        <div class="choice-btn" data-v="2">7~8시간<span class="score-tag">+20</span></div>
+                        <div class="choice-btn" data-v="3">9시간 이상<span class="score-tag">+10</span></div>
+                    </div>
+                </div>
+
+                <!-- Q2: Water -->
+                <div class="question-card">
+                    <div class="question-label"><span class="emoji">💧</span> 오늘 물을 얼마나 마셨나요?</div>
+                    <div class="choice-row" data-q="water">
+                        <div class="choice-btn" data-v="0">2컵 이하<span class="score-tag">-5</span></div>
+                        <div class="choice-btn" data-v="1">3~5컵<span class="score-tag">+5</span></div>
+                        <div class="choice-btn" data-v="2">6~8컵<span class="score-tag">+15</span></div>
+                        <div class="choice-btn" data-v="3">9컵 이상<span class="score-tag">+15</span></div>
+                    </div>
+                </div>
+
+                <!-- Q3: Vegetables -->
+                <div class="question-card">
+                    <div class="question-label"><span class="emoji">🥗</span> 오늘 채소를 몇 끼니 먹었나요?</div>
+                    <div class="choice-row" data-q="veggies">
+                        <div class="choice-btn" data-v="0">없음<span class="score-tag">-10</span></div>
+                        <div class="choice-btn" data-v="1">1끼니<span class="score-tag">+5</span></div>
+                        <div class="choice-btn" data-v="2">2끼니<span class="score-tag">+15</span></div>
+                        <div class="choice-btn" data-v="3">3끼니 이상<span class="score-tag">+20</span></div>
+                    </div>
+                </div>
+
+                <!-- Q4: Exercise -->
+                <div class="question-card">
+                    <div class="question-label"><span class="emoji">🏃</span> 오늘 얼마나 움직였나요?</div>
+                    <div class="choice-row" data-q="exercise">
+                        <div class="choice-btn" data-v="0">앉아만 있음<span class="score-tag">-10</span></div>
+                        <div class="choice-btn" data-v="1">가벼운 산책<span class="score-tag">+5</span></div>
+                        <div class="choice-btn" data-v="2">30분 운동<span class="score-tag">+15</span></div>
+                        <div class="choice-btn" data-v="3">1시간 이상<span class="score-tag">+20</span></div>
+                    </div>
+                </div>
+
+                <!-- Q5: Stress -->
+                <div class="question-card">
+                    <div class="question-label"><span class="emoji">😤</span> 오늘 스트레스 수준은?</div>
+                    <div class="choice-row" data-q="stress">
+                        <div class="choice-btn" data-v="0">매우 높음<span class="score-tag">-15</span></div>
+                        <div class="choice-btn" data-v="1">높음<span class="score-tag">-5</span></div>
+                        <div class="choice-btn" data-v="2">보통<span class="score-tag">+5</span></div>
+                        <div class="choice-btn" data-v="3">낮음<span class="score-tag">+15</span></div>
+                    </div>
+                </div>
+
+                <!-- Q6: Mood -->
+                <div class="question-card">
+                    <div class="question-label"><span class="emoji">🌈</span> 오늘 전반적인 컨디션은?</div>
+                    <div class="choice-row" data-q="mood">
+                        <div class="choice-btn" data-v="0">매우 나쁨<span class="score-tag">-15</span></div>
+                        <div class="choice-btn" data-v="1">나쁨<span class="score-tag">-5</span></div>
+                        <div class="choice-btn" data-v="2">보통<span class="score-tag">+10</span></div>
+                        <div class="choice-btn" data-v="3">좋음<span class="score-tag">+20</span></div>
+                    </div>
+                </div>
+
+                <button class="submit-btn" id="submit-btn" onclick="submitCheckin()" disabled>
+                    <i class="fas fa-check-circle"></i> &nbsp;오늘 체크인 완료
+                </button>
+            </div>
+
+            <!-- Already done today message -->
+            <div id="done-today" style="display:none; background: linear-gradient(135deg, #d1fae5, #a7f3d0); border-radius: 18px; padding: 28px; text-align: center; margin: 20px 0;">
+                <div style="font-size: 3rem; margin-bottom: 10px;">✅</div>
+                <p style="font-size: 1.1rem; font-weight: 800; color: #065f46; margin: 0 0 6px;">오늘 체크인 완료!</p>
+                <p style="color: #047857; margin: 0; font-size: 0.9rem;">내일 다시 만나요. 30일 트렌드를 아래에서 확인하세요.</p>
+                <button onclick="redoToday()" style="margin-top:14px; background:transparent; border:1.5px solid #047857; color:#047857; padding:8px 18px; border-radius:10px; font-weight:700; cursor:pointer;">오늘 체크인 다시 하기</button>
+            </div>
+        </div>
+
+        <!-- DASHBOARD -->
+        <div id="dashboard" style="display:none;">
+            <h2 style="font-size: 1.3rem; margin: 36px 0 18px;">📊 내 건강 트렌드</h2>
+
+            <div class="luxury-report-card" style="padding:30px;">
+                <div id="today-score-display"></div>
+                <div class="stat-grid" id="stat-summary"></div>
+            </div>
+
+            <div class="chart-container">
+                <p style="font-weight:800; margin:0 0 10px; font-size:0.95rem;">📈 최근 30일 점수 트렌드</p>
+                <svg id="chart-svg" viewBox="0 0 600 220" preserveAspectRatio="none"></svg>
+                <p style="font-size:0.75rem; color:var(--text-muted); text-align:right; margin:6px 0 0;">막대 위에 마우스를 올리면 상세 정보</p>
+            </div>
+
+            <h3 style="font-size: 1.1rem; margin: 28px 0 14px;">💡 이번주 인사이트</h3>
+            <div id="insights"></div>
+
+            <h3 style="font-size: 1.1rem; margin: 28px 0 14px;">🏆 달성 뱃지</h3>
+            <div class="badge-row" id="badges"></div>
+
+            <div style="margin-top: 28px; display:flex; gap:10px; flex-wrap:wrap; justify-content:center;">
+                <button onclick="exportData()" style="background:transparent; border:1.5px solid var(--border-color); color:var(--text-color); padding:10px 20px; border-radius:10px; font-weight:700; cursor:pointer; font-size:0.85rem;"><i class="fas fa-download"></i> 데이터 내보내기 (JSON)</button>
+                <button onclick="clearAllData()" style="background:transparent; border:1.5px solid #dc2626; color:#dc2626; padding:10px 20px; border-radius:10px; font-weight:700; cursor:pointer; font-size:0.85rem;"><i class="fas fa-trash"></i> 모든 데이터 삭제</button>
+            </div>
+        </div>
+
+        <!-- Educational Content -->
+        <div class="luxury-report-card" style="margin: 30px 0; padding: 38px;">
+            <h2 style="font-size: 1.3rem; font-weight: 900; margin-bottom: 16px; color: var(--primary-color);">왜 매일 체크인이 중요할까요?</h2>
+            <p style="line-height: 1.85; color: var(--text-muted); margin-bottom: 18px;">건강은 단발성 의지가 아니라 <strong>일상의 작은 행동들이 누적된 결과</strong>입니다. 1990년대부터 행동의학(Behavioral Medicine) 연구는 일관되게 다음을 보여줍니다: <strong>매일 자신의 상태를 1분이라도 점검하는 사람은, 그렇지 않은 사람보다 1년 후 체중·혈압·수면의 질이 통계적으로 유의미하게 개선됩니다</strong>(Wing & Phelan, 2005, <em>Am J Clin Nutr</em>).</p>
+            <p style="line-height: 1.85; color: var(--text-muted); margin-bottom: 18px;">이 도구는 의학적 진단이 아닌 <strong>자기 인식(self-awareness)</strong>을 위한 도구입니다. 한 주, 한 달, 일 년이 지나면 자신의 패턴을 객관적으로 볼 수 있습니다 — "월요일마다 컨디션이 떨어지는구나", "수면이 6시간 미만인 날은 그 다음날 스트레스가 높구나" 같은 통찰이 보입니다.</p>
+            <h3 style="font-size: 1.05rem; margin: 22px 0 12px;">⭐ 6가지 항목을 고른 이유</h3>
+            <ul style="line-height: 2.1; color: var(--text-muted); font-size: 0.92rem; padding-left: 22px; margin: 0;">
+                <li><strong>수면</strong>: 면역, 호르몬, 인지 기능, 체중 관리의 기초</li>
+                <li><strong>수분</strong>: 인지 기능과 신장 기능 유지의 핵심</li>
+                <li><strong>채소</strong>: 식이섬유, 비타민, 미네랄, 항산화 물질의 주요 공급원</li>
+                <li><strong>운동</strong>: 심혈관·정신 건강·근감소증 예방의 결정적 요소</li>
+                <li><strong>스트레스</strong>: 코르티솔, 만성염증, 자가면역, 수면 등 모든 시스템에 영향</li>
+                <li><strong>컨디션</strong>: 주관적 건강 인식. 객관 지표와 강한 상관관계 (메타분석 2017)</li>
+            </ul>
+        </div>
+
+        <div style="text-align:center; margin: 0 0 60px;">
+            <a href="blog.html" class="luxury-btn" style="display:inline-block; text-decoration:none;">← 건강가이드 목록으로</a>
+        </div>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2026 VitalGuide. 과학 기반 건강 정보 가이드.</p>
+            <div style="margin-top: 20px; display: flex; justify-content: center; gap: 20px; font-size: 0.8rem;">
+                <a href="about.html#editorial" style="color: var(--text-muted); text-decoration: none;">편집 원칙</a>
+                <a href="privacy.html" style="color: var(--text-muted); text-decoration: none;">Privacy</a>
+                <a href="terms.html" style="color: var(--text-muted); text-decoration: none;">Terms</a>
+                <a href="about.html" style="color: var(--text-muted); text-decoration: none;">About</a>
+                <a href="contact.html" style="color: var(--text-muted); text-decoration: none;">Contact</a>
+            </div>
+        </div>
+    </footer>
+
+    <script src="theme.js"></script>
+    <script src="cookie-consent.js"></script>
+    <script>
+    const STORAGE_KEY = 'vg-daily-checkin';
+    const QUESTION_SCORES = {
+        sleep: [-10, 5, 20, 10],
+        water: [-5, 5, 15, 15],
+        veggies: [-10, 5, 15, 20],
+        exercise: [-10, 5, 15, 20],
+        stress: [-15, -5, 5, 15],
+        mood: [-15, -5, 10, 20]
+    };
+    let answers = {};
+
+    function todayKey() {
+        const d = new Date();
+        return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;
+    }
+
+    function loadAll() {
+        try { return JSON.parse(localStorage.getItem(STORAGE_KEY)) || {}; }
+        catch { return {}; }
+    }
+
+    function saveAll(data) { localStorage.setItem(STORAGE_KEY, JSON.stringify(data)); }
+
+    function init() {
+        const today = todayKey();
+        const all = loadAll();
+        // Date display
+        const d = new Date();
+        const dayNames = ['일','월','화','수','목','금','토'];
+        document.getElementById('today-date').textContent = `${d.getMonth()+1}월 ${d.getDate()}일 (${dayNames[d.getDay()]}) 체크인`;
+        const hour = d.getHours();
+        document.getElementById('today-emoji').textContent =
+            hour < 6 ? '🌌' : hour < 11 ? '☀️' : hour < 17 ? '🌤️' : hour < 21 ? '🌅' : '🌙';
+
+        // Streak
+        renderStreak(all);
+
+        // Check if already done today
+        if (all[today]) {
+            document.getElementById('checkin-form').style.display = 'none';
+            document.getElementById('done-today').style.display = 'block';
+            renderDashboard(all);
+        } else {
+            setupChoiceListeners();
+        }
+        // Show dashboard if any history exists
+        if (Object.keys(all).length > 0) renderDashboard(all);
+    }
+
+    function setupChoiceListeners() {
+        document.querySelectorAll('.choice-row').forEach(row => {
+            const q = row.dataset.q;
+            row.querySelectorAll('.choice-btn').forEach(btn => {
+                btn.onclick = () => {
+                    row.querySelectorAll('.choice-btn').forEach(b => b.classList.remove('selected'));
+                    btn.classList.add('selected');
+                    answers[q] = parseInt(btn.dataset.v);
+                    checkAllAnswered();
+                };
+            });
+        });
+    }
+
+    function checkAllAnswered() {
+        const required = ['sleep','water','veggies','exercise','stress','mood'];
+        const allDone = required.every(q => q in answers);
+        document.getElementById('submit-btn').disabled = !allDone;
+    }
+
+    function calcScore(ans) {
+        let score = 50; // baseline
+        for (const q in QUESTION_SCORES) {
+            if (q in ans) score += QUESTION_SCORES[q][ans[q]];
+        }
+        return Math.max(0, Math.min(100, score));
+    }
+
+    function submitCheckin() {
+        const all = loadAll();
+        const today = todayKey();
+        const score = calcScore(answers);
+        all[today] = { ...answers, score, ts: Date.now() };
+        saveAll(all);
+        document.getElementById('checkin-form').style.display = 'none';
+        document.getElementById('done-today').style.display = 'block';
+        renderStreak(all);
+        renderDashboard(all);
+        document.getElementById('dashboard').scrollIntoView({ behavior:'smooth' });
+    }
+
+    function redoToday() {
+        if (!confirm('오늘 체크인을 다시 하시겠습니까? 이전 답변은 덮어쓰입니다.')) return;
+        const all = loadAll();
+        delete all[todayKey()];
+        saveAll(all);
+        answers = {};
+        document.getElementById('checkin-form').style.display = 'block';
+        document.getElementById('done-today').style.display = 'none';
+        document.querySelectorAll('.choice-btn').forEach(b => b.classList.remove('selected'));
+        setupChoiceListeners();
+        checkAllAnswered();
+    }
+
+    function getRecentDays(all, n) {
+        const result = [];
+        const today = new Date();
+        for (let i = n - 1; i >= 0; i--) {
+            const d = new Date(today);
+            d.setDate(d.getDate() - i);
+            const key = `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;
+            result.push({ date: key, day: d.getDate(), data: all[key] });
+        }
+        return result;
+    }
+
+    function computeStreak(all) {
+        let streak = 0;
+        const today = new Date();
+        for (let i = 0; i < 365; i++) {
+            const d = new Date(today);
+            d.setDate(d.getDate() - i);
+            const key = `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;
+            if (all[key]) streak++;
+            else if (i > 0) break; // allow today not done yet
+        }
+        return streak;
+    }
+
+    function renderStreak(all) {
+        const streak = computeStreak(all);
+        if (streak > 0) {
+            document.getElementById('streak-display').innerHTML = `
+                <div class="day-streak"><i class="fas fa-fire"></i> ${streak}일 연속</div>
+            `;
+        } else {
+            document.getElementById('streak-display').innerHTML = '';
+        }
+    }
+
+    function renderDashboard(all) {
+        document.getElementById('dashboard').style.display = 'block';
+        const today = todayKey();
+        const todayData = all[today];
+
+        // Today score
+        if (todayData) {
+            const lbl = todayData.score >= 80 ? '우수한 하루' : todayData.score >= 60 ? '양호' : todayData.score >= 40 ? '관리 필요' : '회복이 필요해요';
+            const color = todayData.score >= 80 ? '#059669' : todayData.score >= 60 ? '#0891b2' : todayData.score >= 40 ? '#d97706' : '#dc2626';
+            document.getElementById('today-score-display').innerHTML = `
+                <div class="score-circle" style="background:linear-gradient(135deg, ${color}, color-mix(in srgb, ${color} 70%, black));">
+                    <div class="num">${todayData.score}</div>
+                    <div class="lbl">오늘의 점수</div>
+                </div>
+                <p style="text-align:center; font-weight:800; font-size:1.05rem; margin:0;">${lbl}</p>
+            `;
+        } else {
+            document.getElementById('today-score-display').innerHTML = `
+                <p style="text-align:center; color:var(--text-muted); font-size:0.92rem;">오늘 체크인을 완료하면 점수를 확인할 수 있어요</p>
+            `;
+        }
+
+        // Statistics summary
+        const days = Object.values(all);
+        const avg = days.length ? Math.round(days.reduce((s, d) => s + d.score, 0) / days.length) : 0;
+        const best = days.length ? Math.max(...days.map(d => d.score)) : 0;
+        const worst = days.length ? Math.min(...days.map(d => d.score)) : 0;
+        document.getElementById('stat-summary').innerHTML = `
+            <div class="stat-box"><span class="num">${days.length}</span><div class="lbl">총 체크인 일수</div></div>
+            <div class="stat-box"><span class="num">${avg}</span><div class="lbl">평균 점수</div></div>
+            <div class="stat-box"><span class="num">${best}</span><div class="lbl">최고 점수</div></div>
+            <div class="stat-box"><span class="num">${worst}</span><div class="lbl">최저 점수</div></div>
+        `;
+
+        // 30-day chart
+        renderChart(all);
+
+        // Insights
+        renderInsights(all);
+
+        // Badges
+        renderBadges(all);
+    }
+
+    function renderChart(all) {
+        const recent = getRecentDays(all, 30);
+        const W = 600, H = 220, padL = 28, padR = 8, padT = 16, padB = 22;
+        const chartW = W - padL - padR, chartH = H - padT - padB;
+        const barW = chartW / 30 * 0.75;
+        let svg = '';
+        // Gridlines
+        for (let v of [0,25,50,75,100]) {
+            const y = padT + chartH * (1 - v/100);
+            svg += `<line class="chart-grid" x1="${padL}" y1="${y}" x2="${W-padR}" y2="${y}"/>`;
+            svg += `<text class="chart-label" x="4" y="${y+3}">${v}</text>`;
+        }
+        // Bars
+        recent.forEach((day, i) => {
+            const x = padL + (chartW / 30) * i + ((chartW/30 - barW) / 2);
+            if (day.data) {
+                const h = chartH * day.data.score / 100;
+                const y = padT + chartH - h;
+                const color = day.data.score >= 80 ? '#059669' : day.data.score >= 60 ? '#0891b2' : day.data.score >= 40 ? '#d97706' : '#dc2626';
+                svg += `<rect class="chart-bar" x="${x}" y="${y}" width="${barW}" height="${h}" rx="2" style="fill:${color}"><title>${day.date}: ${day.data.score}점</title></rect>`;
+            } else {
+                svg += `<rect x="${x}" y="${padT+chartH-2}" width="${barW}" height="2" rx="1" style="fill:var(--border-color)"/>`;
+            }
+            if (i % 5 === 0 || i === 29) {
+                svg += `<text class="chart-label" x="${x + barW/2}" y="${H-6}" text-anchor="middle">${day.day}</text>`;
+            }
+        });
+        document.getElementById('chart-svg').innerHTML = svg;
+    }
+
+    function renderInsights(all) {
+        const recent7 = getRecentDays(all, 7).filter(d => d.data).map(d => d.data);
+        const insights = [];
+
+        if (recent7.length < 3) {
+            insights.push({ icon:'📅', text:'3일 이상 체크인하면 패턴 분석이 시작됩니다. 지금 첫 걸음을 떼셨어요!' });
+        } else {
+            const avg = (key) => recent7.reduce((s,d) => s + (d[key]||0), 0) / recent7.length;
+
+            const sleepAvg = avg('sleep');
+            if (sleepAvg < 1.5) insights.push({ icon:'😴', text:`최근 7일 중 수면이 부족한 날이 많았어요. 수면 부족은 다음날 식욕 호르몬(그렐린)을 16% 증가시켜 과식을 유발합니다.` });
+            else if (sleepAvg >= 2.5) insights.push({ icon:'🌟', text:'수면 패턴이 매우 안정적이에요! 면역과 호르몬 균형에 큰 도움이 됩니다.' });
+
+            const waterAvg = avg('water');
+            if (waterAvg < 1.5) insights.push({ icon:'💧', text:'수분 섭취가 부족해요. 만성 탈수는 집중력을 20% 떨어뜨립니다. 책상 옆에 물병을 두는 것부터 시작하세요.' });
+
+            const veggiesAvg = avg('veggies');
+            if (veggiesAvg < 1.5) insights.push({ icon:'🥗', text:'채소 섭취가 부족합니다. 매끼 손바닥 1개 분량의 채소만 추가해도 식이섬유·마그네슘·항산화 물질을 크게 보충할 수 있어요.' });
+
+            const exerciseAvg = avg('exercise');
+            if (exerciseAvg < 1.5) insights.push({ icon:'🏃', text:'운동량이 적은 한 주였어요. 하루 20분 빠르게 걷기만으로도 심혈관 질환 위험이 30% 감소합니다.' });
+
+            const stressAvg = avg('stress');
+            if (stressAvg < 1.5) insights.push({ icon:'😤', text:'스트레스 수준이 높았어요. 만성 코르티솔 상승은 복부지방·인슐린 저항성·면역저하를 유발합니다. 5분 호흡 명상을 시도해보세요.' });
+
+            // Pattern: low sleep -> next day low energy
+            const days = Object.entries(all).sort();
+            for (let i = 1; i < Math.min(days.length, 30); i++) {
+                const prev = days[i-1][1], curr = days[i][1];
+                if (prev.sleep <= 1 && curr.mood <= 1) {
+                    insights.push({ icon:'🔗', text:'수면이 부족한 다음날 컨디션이 떨어지는 패턴이 보입니다. 평일 7시간 수면 확보가 가장 효율적인 컨디션 관리법입니다.' });
+                    break;
+                }
+            }
+        }
+
+        if (insights.length === 0) insights.push({ icon:'✨', text:'균형 잡힌 한 주를 보내고 있어요! 현재 패턴을 유지해 보세요.' });
+
+        document.getElementById('insights').innerHTML = insights.slice(0,4).map(ins => `
+            <div class="insight-card">
+                <p style="font-size:0.92rem; line-height:1.8; margin:0; color:var(--text-color);"><span style="font-size:1.2rem; margin-right:8px;">${ins.icon}</span>${ins.text}</p>
+            </div>
+        `).join('');
+    }
+
+    function renderBadges(all) {
+        const days = Object.values(all);
+        const streak = computeStreak(all);
+        const goodDays = days.filter(d => d.score >= 80).length;
+        const avgScore = days.length ? days.reduce((s,d)=>s+d.score,0) / days.length : 0;
+
+        const badges = [
+            { key:'first', label:'첫 체크인', icon:'🌱', earned: days.length >= 1 },
+            { key:'streak3', label:'3일 연속', icon:'🔥', earned: streak >= 3 },
+            { key:'streak7', label:'1주일 연속', icon:'⚡', earned: streak >= 7 },
+            { key:'streak30', label:'한 달 연속', icon:'💎', earned: streak >= 30 },
+            { key:'good5', label:'우수일 5회', icon:'⭐', earned: goodDays >= 5 },
+            { key:'good10', label:'우수일 10회', icon:'🌟', earned: goodDays >= 10 },
+            { key:'avg70', label:'평균 70+', icon:'🏆', earned: avgScore >= 70 },
+            { key:'avg80', label:'평균 80+', icon:'👑', earned: avgScore >= 80 },
+        ];
+        document.getElementById('badges').innerHTML = badges.map(b => `
+            <div class="achievement-badge ${b.earned ? 'earned' : ''}" title="${b.earned ? '달성!' : '미달성'}">
+                <span>${b.icon}</span> ${b.label}
+            </div>
+        `).join('');
+    }
+
+    function exportData() {
+        const all = loadAll();
+        const blob = new Blob([JSON.stringify(all, null, 2)], {type:'application/json'});
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = `vitalguide-checkin-${todayKey()}.json`;
+        a.click();
+        URL.revokeObjectURL(url);
+    }
+
+    function clearAllData() {
+        if (!confirm('모든 체크인 데이터를 삭제하시겠습니까? 되돌릴 수 없습니다.')) return;
+        localStorage.removeItem(STORAGE_KEY);
+        location.reload();
+    }
+
+    init();
+    </script>
+</body>
+</html>
