@@ -9,6 +9,6 @@
 
 # Removed pages
 /community.html            /                              301
-/admin.html                /                              404
+/admin.html                /                              301
 /leaderboard.html          /                              301
 /profile.html              /                              301
