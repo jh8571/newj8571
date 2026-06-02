@@ -24,7 +24,7 @@ document.addEventListener('DOMContentLoaded', () => {
     };
 
     // Load Tests
-    fetch('tests.json')
+    fetch('/tests.json')
         .then(r => r.json())
         .then(data => {
             testData = data;
