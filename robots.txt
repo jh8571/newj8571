@@ -1,4 +1,10 @@
 User-agent: *
 Allow: /
+Disallow: /fun/
+Disallow: /admin/
+Disallow: /e1/
+
+# Block sensitive / dev files
+Disallow: /*.log$
 
 Sitemap: https://vi7al.com/sitemap.xml

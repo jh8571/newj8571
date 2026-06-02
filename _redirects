@@ -1,0 +1,14 @@
+# Entertainment pages moved to /fun/ subdirectory (separated from main health site)
+# These will be moved to a separate subdomain (e.g., fun.vi7al.com) in the future.
+/fortune.html              /fun/fortune.html              301
+/games.html                /fun/games.html                301
+/mbti.html                 /fun/mbti.html                 301
+/psychology.html           /fun/psychology.html           301
+/animal.html               /fun/animal.html               301
+/quiz.html                 /fun/quiz.html                 301
+
+# Removed pages
+/community.html            /                              301
+/admin.html                /                              404
+/leaderboard.html          /                              301
+/profile.html              /                              301
